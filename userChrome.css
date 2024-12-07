@@ -463,3 +463,9 @@
     border-bottom: none !important;
   }
 }
+
+@media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
+  #identity-box {
+    margin-inline-end: 5px !important;
+  }
+}
