@@ -470,6 +470,12 @@
   }
 }
 
-#alltabs-button .toolbarbutton-badge {
-  display: none !important;
+#alltabs-button {
+  & .toolbarbutton-badge {
+    display: none !important;
+  }
+  
+  & .toolbarbutton-badge-stack {
+    background-color: transparent !important;
+  }
 }
