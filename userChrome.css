@@ -469,3 +469,7 @@
     margin-inline-end: 5px !important;
   }
 }
+
+#alltabs-button .toolbarbutton-badge {
+  display: none !important;
+}
