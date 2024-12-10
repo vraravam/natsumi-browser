@@ -454,6 +454,12 @@
   }
 }
 
+#zen-essentials-container .tabbrowser-tab:active {
+  & .tab-stack {
+    transform: scale(0.90, 0.90) !important;
+  }
+}
+
 #sidebar-box {
   background-color: transparent !important;
   border: none !important;
