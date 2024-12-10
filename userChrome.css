@@ -1,3 +1,11 @@
+:root {
+  &:is([inFullscreen="true"], inDOMFullscreen="true") {
+    #navigator-toolbox {
+      padding-top: 0 !important;
+    }
+  }
+}
+
 @media (-moz-bool-pref: "zen.view.use-single-toolbar") or (not (-moz-bool-pref: "zen.tabs.vertical")) {
   #urlbar {
     transform: translateY(0px) !important;
@@ -23,14 +31,6 @@
 .tabbrowser-tab[pinned] .tab-background {
 	border-top: 1px solid #ffffff1f !important;
 	border-bottom: 1px solid #0000001f !important;
-}
-
-@media (-moz-bool-pref: "zen.tabs.vertical") {
-  #navigator-toolbox:is(#navigator-toolbox[zen-user-hover="true"][zen-has-hover], #navigator-toolbox[zen-user-hover="true"]:focus-within, #navigator-toolbox[zen-user-hover="true"][movingtab], #navigator-toolbox[zen-user-hover="true"][flash-popup], #navigator-toolbox[zen-user-hover="true"][has-popup-menu], #navigator-toolbox[zen-user-hover="true"]:has([open="true"]:not(tab):not(#zen-sidepanel-button)), #navigator-toolbox[zen-expanded="true"]:not([zen-user-hover="true"])) {
-    & #zen-essentials-container {
-      --tab-min-height: 47px !important;
-    }
-  }
 }
 
 .tab-icon-overlay {
@@ -478,4 +478,19 @@
   & .toolbarbutton-badge-stack {
     background-color: transparent !important;
   }
+}
+
+@media (-moz-bool-pref: "zen.view.sidebar-expanded") {
+  #zen-sidebar-top-buttons-customization-target {
+    toolbarbutton {
+      margin: 1px !important;
+    }
+    toolbarbutton:first-child {
+      margin-left: 5px !important;
+    }
+  }
+}
+
+#PersonalToolbar {
+  padding-left: 0 !important;
 }
