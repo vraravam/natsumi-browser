@@ -203,14 +203,23 @@
     & tab {
       background: color-mix(in srgb, var(--tab-group-color-invert) 12%, transparent) !important;
       border: 2px solid color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
+      border-radius: 0 !important;
+      border-left: 0 !important;
+      border-right: 0 !important;
+    }
+    
+    & tab:last-child {
+      border: 2px solid color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
+      border-left: 0 !important;
+      border-radius: 0 calc(var(--border-radius-medium) + 2px) calc(var(--border-radius-medium) + 2px) 0 !important;
     }
     
     & .tab-group-label-container {
-      border-radius: calc(var(--border-radius-medium) + 2px) !important;
       transition: transform 0.2s ease;
       background: color-mix(in srgb, var(--tab-group-color-invert) 12%, transparent) !important;
-      border-radius: calc(var(--border-radius-medium) + 2px) !important;
       border: 2px solid color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
+      border-radius: calc(var(--border-radius-medium) + 2px) 0 0 calc(var(--border-radius-medium) + 2px) !important;
+      border-right: 0 !important;
       
       &:hover {
         background-color: var(--tab-hover-background-color) !important;
@@ -261,6 +270,10 @@
       }
     }
     &[collapsed] {
+      & .tab-group-label-container {
+        border-radius: calc(var(--border-radius-medium) + 2px) !important;
+        border: 2px solid color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
+      }
       & tab {
         display: none;
       }
@@ -505,16 +518,36 @@
   #urlbar-input {
     font-size: 13.75px !important;
   }
-  
-  &:after {
-    content: "";
-    position: fixed;
-    pointer-events: none;
-    width: 100vw;
-    height: 100vh;
-    top: 0px;
-    left: 0px;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: -1;
+}
+
+@media (-moz-bool-pref: "custom.theme.findbar-patch") {
+  findbar {
+    max-height: 70px !important;
   }
+  
+  @media (-moz-bool-pref: "custom.theme.findbar-zoom") {
+    findbar {
+      opacity: 1;
+      transition: opacity 0.1s ease, scale 0.1s ease, left 0.1s ease !important;
+    }
+
+    findbar[hidden] {
+      opacity: 0;
+      left: 33.5% !important;
+      scale: 0.5 0.5;
+    }
+  }
+}
+
+.toolbarbutton-badge-stack, toolbarbutton image {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+toolbarbutton:active {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+  transform: scale(0.90,0.90) !important;
+}
+
+toolbarbutton[open] {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
 }
