@@ -127,6 +127,17 @@ their author(s) have been provided above the used code.
   border: 1px solid #ffffff0c !important;
 }
 
+/* Close button hover background */
+
+.close-icon {
+  transition: background-color 0.1s ease-out;
+}
+  
+.close-icon:hover {
+  background-color: rgba(255, 100, 100, 0.90) !important;
+  transition: background-color 0.1s ease-in;
+}
+
 .titlebar-button > .toolbarbutton-icon {
   background: #ffffff1f !important;
   list-style-image: none;
@@ -1131,17 +1142,20 @@ toolbarbutton[open] {
   }
 
   .urlbarView-action, .urlbarView-button,
-  .searchbar-engine-one-off-item{
+  .searchbar-engine-one-off-item {
     transition: background-color 0.2s ease !important;
   }
-
+  
+  /* Results URL display */
+  
   .urlbarView-url {
+    --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
     color: var(--zen-colors-primary-foreground) !important;
   }
-
-  @media (prefers-color-scheme: dark) {
-    .urlbarView-body-inner, .search-one-offs {
-      border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
-    }
+  
+  /* Make borders more visible */
+  
+  .urlbarView-body-inner, .search-one-offs {
+    border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
   }
 }
