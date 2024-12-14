@@ -1076,6 +1076,7 @@ toolbarbutton[open] {
 
   .urlbarView-action, .urlbarView-button,
   .searchbar-engine-one-off-item {
+    --urlbar-box-focus-bgcolor: color-mix(in srgb, currentColor 16%, transparent);
     transition: background-color 0.2s ease !important;
   }
   
