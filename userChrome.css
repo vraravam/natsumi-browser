@@ -619,152 +619,6 @@ toolbarbutton[open] {
   transition: background-color 0.2s ease, transform 0.2s ease !important;
 }
 
-/* Arc Command Bar */
-
-@media (-moz-bool-pref: "custom.urlbar.arc") {
-  * {
-    --urlbarView-item-inline-padding: 8px !important;
-    --urlbarView-item-block-padding: 12px !important;
-  }
-
-  #urlbar[breakout-extend] {
-    #identity-permission-box, #tracking-protection-icon-container, #page-action-buttons {
-      display: none !important;
-    }
-
-    #identity-icon-box {
-      margin-right: 8px !important;
-      padding-left: 9px !important;
-      padding-right: 3px !important;
-    }
-
-    #identity-box {
-      margin: 0 !important;
-    }
-
-    #urlbar-input {
-      font-size: 20px !important;
-      margin-left: 5px !important;
-      margin-right: 5px !important;
-    }
-  }
-  
-  .urlbarView-row-inner {
-    border-radius: calc(var(--urlbarView-row-gutter) + var(--toolbarbutton-border-radius));
-  }
-
-  .urlbarView-title, .urlbarView-title-separator, .urlbarView-action, .urlbarView-url {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
-  }
-
-  .urlbarView-title {
-    font-size: 14px !important;
-    font-weight: 500 !important;
-  }
-
-  .urlbarView-url, .urlbarView-title-separator::before {
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    color: #aaa !important;
-  }
-
-  .urlbarView-favicon {
-    margin-left: 0 !important;
-    margin-right: 12px !important;
-    padding: 6px !important;
-    border-radius: 6px !important;
-  }
-
-  .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) .urlbarView-action {
-    margin-left: auto !important;
-    margin-right: 0 !important;
-  }
-
-  .urlbarView-row:hover, .urlbarView-row-inner[selected] {
-    background-color: var(--zen-colors-primary) !important;
-
-    .urlbarView-favicon {
-      background-color: white !important;
-    }
-
-    .urlbarView-url, .urlbarView-title-separator::before {
-      color: color-mix(in srgb, var(--zen-colors-primary) 30%, lightgray) !important;
-    }
-  }
-  
-  .urlbarView-row:hover {
-    background: transparent !important;
-
-    .urlbarView-row-inner {
-      background: var(--zen-colors-primary) !important;
-    }
-  }
-}
-
-/* Undo Arc Command Bar (WIP) */
-
-@media (-moz-bool-pref: "custom.urlbar.revert-arc") {
-  * {
-    --urlbarView-item-inline-padding: var(--urlbar-icon-padding) !important;
-    --urlbarView-item-block-padding: 6px !important;
-  }
-
-  .urlbarView-row {
-    display: flex !important;
-
-    &:hover {
-      .urlbarView-url {
-        color: var(--zen-colors-primary-foreground) !important;
-      }
-
-      .urlbarView-favicon {
-        background-color: transparent !important;
-      }
-    }
-  }
-
-  .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) .urlbarView-action {
-    margin-left: 8px !important;
-  }
-
-  .urlbarView-favicon {
-    margin-left: var(--urlbarView-icon-margin-start) !important;
-    margin-right: var(--urlbarView-icon-margin-end) !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-  }
-
-  #urlbar[breakout-extend] {
-    #identity-icon-box {
-      margin-right: 0 !important;
-    }
-
-    #identity-box {
-      margin-right: 5px !important;
-    }
-
-    .urlbarView-title {
-      font-size: unset !important;
-    }
-
-    .urlbarView-url {
-      font-size: var(--urlbarView-small-font-size) !important;
-    }
-
-    .urlbarView-title-separator::before {
-      font-size: unset !important;
-      font-weight: unset !important;
-      color: unset !important;
-    }
-
-    .urlbarView-action {
-      margin-top: -2px !important;
-      margin-bottom: -2px !important;
-    }
-  }
-}
-
 /* ==== Natsumi URLbar ==== */
 
 /* Animations */
@@ -846,9 +700,92 @@ toolbarbutton[open] {
   }
 }
 
+/* Adds new URLbar style if missing */
+
+@media (-moz-bool-pref: "natsumi.debug.legacy") {
+  * {
+    --urlbarView-item-inline-padding: 8px !important;
+    --urlbarView-item-block-padding: 12px !important;
+  }
+
+  #urlbar[breakout-extend] {
+    #identity-permission-box, #tracking-protection-icon-container, #page-action-buttons {
+      display: none !important;
+    }
+
+    #identity-icon-box {
+      margin-right: 8px !important;
+      padding-left: 9px !important;
+      padding-right: 3px !important;
+    }
+
+    #identity-box {
+      margin: 0 !important;
+    }
+
+    #urlbar-input {
+      font-size: 20px !important;
+      margin-left: 5px !important;
+      margin-right: 5px !important;
+    }
+  }
+  
+  .urlbarView-row-inner {
+    border-radius: calc(var(--urlbarView-row-gutter) + var(--toolbarbutton-border-radius));
+  }
+
+  .urlbarView-title, .urlbarView-title-separator, .urlbarView-action, .urlbarView-url {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+  }
+
+  .urlbarView-title {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+  }
+
+  .urlbarView-url, .urlbarView-title-separator::before {
+    font-size: 14px !important;
+    font-weight: 500 !important;
+    color: #aaa !important;
+  }
+
+  .urlbarView-favicon {
+    margin-left: 0 !important;
+    margin-right: 12px !important;
+    padding: 6px !important;
+    border-radius: 6px !important;
+  }
+
+  .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) .urlbarView-action {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+  }
+
+  .urlbarView-row:hover, .urlbarView-row-inner[selected] {
+    background-color: var(--zen-colors-primary) !important;
+
+    .urlbarView-favicon {
+      background-color: white !important;
+    }
+
+    .urlbarView-url, .urlbarView-title-separator::before {
+      color: color-mix(in srgb, var(--zen-colors-primary) 30%, lightgray) !important;
+    }
+  }
+  
+  .urlbarView-row:hover {
+    background: transparent !important;
+
+    .urlbarView-row-inner {
+      background: var(--zen-colors-primary) !important;
+    }
+  }
+}
+
 /* URLbar styling */
 
-@media (-moz-bool-pref: "natsumi.urlbar.enabled") {
+@media not (-moz-bool-pref: "natsumi.urlbar.disabled") {
   * {
     --urlbarView-item-block-padding: 4px !important;
     --urlbarView-item-inline-padding: 4px !important;
@@ -1001,10 +938,6 @@ toolbarbutton[open] {
         &::-moz-selection {
           background: light-dark(var(--zen-primary-color), color-mix(in srgb, var(--zen-colors-primary) 60%, white)) !important;
         }
-
-        @media (-moz-bool-pref: "custom.urlbar.arc-unpatch-v2") {
-          margin-left: 6px !important;
-        }
       }
 
       #identity-permission-box, #tracking-protection-icon-container, #page-action-buttons {
@@ -1016,11 +949,6 @@ toolbarbutton[open] {
         padding-left: 6px !important;
         padding-right: 6px !important;
 
-        @media (-moz-bool-pref: "custom.urlbar.arc-unpatch-v2") {
-          padding-left: 4px !important;
-          padding-right: 4px !important;
-        }
-
         border-radius: var(--urlbar-icon-border-radius) !important;
       }
 
@@ -1031,10 +959,6 @@ toolbarbutton[open] {
       }
 
       #identity-box {
-        @media (-moz-bool-pref: "custom.urlbar.arc-unpatch-v2") {
-          margin-right: 8px !important;
-        }
-
         &:is([pageproxystate="invalid"]).verifiedDomain {
           image {
             list-style-image: url('chrome://global/skin/icons/search-glass.svg') !important;
@@ -1047,6 +971,15 @@ toolbarbutton[open] {
         background: color-mix(in srgb, var(--zen-colors-secondary) 75%, transparent) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
       }
+      
+      @media not (-moz-bool-pref: "natsumi.debug.legacy") {
+        #identity-box {
+          margin-right: 10px !important;
+        }
+        
+        .urlbar-input-container {
+          padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
+        }
     }
     
     &:is([pageproxystate='invalid']):is([usertyping]) {
