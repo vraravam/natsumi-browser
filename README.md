@@ -49,6 +49,8 @@ details.
   Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
+- `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
+  have both Zen Sidebar and Natsumi URLbar opened at the same time.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
