@@ -34,6 +34,13 @@ Groups. Group away to keep things organized!
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.gif?raw=true)
 
+## Installation
+This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
+install it by making the chrome.css file your userChrome.css file.
+
+Read the [guide for live editing Zen Browser](https://docs.zen-browser.app/guides/live-editing) for more
+details.
+
 ## Configs
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
   Zen Browser lags too much.
