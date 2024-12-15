@@ -47,6 +47,7 @@ as they use the correct format.
 /* Individual result appear animation */
 .urlbarView-row {
   --animation-duration: 1.0s;
+  --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
   --animation-delay: 0.1s;
   --animation-delay-offset: 0.3s;
 }
@@ -710,6 +711,23 @@ toolbarbutton[open] {
   }
 }
 
+@keyframes individual-result-appear-subtle {
+  0%   {
+    opacity: 1;
+    scale: 1;
+    background: transparent;
+  }
+  60% {
+    scale: 1.05;
+    background: light-dark(var(--zen-primary-color), var(--zen-colors-primary));
+  }
+  100% {
+    opacity: 1;
+    scale: 1;
+    background: transparent;
+  }
+}
+
 @keyframes pinned-icon-appear {
   0% {
     opacity: 0;
@@ -823,6 +841,11 @@ toolbarbutton[open] {
     backdrop-filter: none;
     background: color-mix(in srgb, var(--zen-branding-bg) 75%, transparent);
     transition: backdrop-filter 0s ease, background 0s ease;
+    
+    @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
+      background: var(--zen-branding-bg);
+      transition: none;
+    }
   }
 
   #urlbar {
@@ -860,7 +883,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(1) {
-            animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset) + var(--animation-duration));
@@ -868,7 +891,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(2) {
-            animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset) + var(--animation-duration));
@@ -876,7 +899,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(3) {
-            animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset) + var(--animation-duration));
@@ -884,7 +907,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(4) {
-            animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset) + var(--animation-duration));
@@ -892,7 +915,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(5) {
-            animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset) + var(--animation-duration));
@@ -900,7 +923,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(6) {
-            animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset) + var(--animation-duration));
@@ -908,7 +931,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(7) {
-            animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset) + var(--animation-duration));
@@ -916,7 +939,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(8) {
-            animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset) + var(--animation-duration));
@@ -924,7 +947,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(9) {
-            animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset) + var(--animation-duration));
@@ -932,7 +955,7 @@ toolbarbutton[open] {
           }
           
           .urlbarView-row:nth-child(10) {
-            animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset)); !important;
+            animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset));
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset) + var(--animation-duration));
@@ -988,6 +1011,12 @@ toolbarbutton[open] {
         backdrop-filter: blur(10px);
         background: color-mix(in srgb, var(--zen-colors-secondary) 75%, transparent) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
+        
+        @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
+          transition: none;
+          backdrop-filter: none;
+          background: var(--zen-colors-secondary) !important;
+        }
       }
       
       @media not (-moz-bool-pref: "natsumi.debug.legacy") {
@@ -997,6 +1026,24 @@ toolbarbutton[open] {
         
         .urlbar-input-container {
           padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
+        }
+      }
+      
+      @media (-moz-bool-pref: "natsumi.urlbar.force-nowrap") {
+        .urlbarView-no-wrap {
+          flex-basis: unset !important;
+        }
+
+        .urlbarView-row-inner {
+          flex-wrap: nowrap !important;
+        }
+
+        .urlbarView-title-separator {
+          display: flex !important;
+        }
+
+        .urlbarView-url {
+          margin-left: 0 !important;
         }
       }
       
@@ -1022,14 +1069,20 @@ toolbarbutton[open] {
     }
     
     &:is([pageproxystate='invalid']):is([usertyping]) {
-      .urlbarView {
-        overflow: clip !important;
-      }
-
       .urlbarView-row, .urlbarView-row .urlbarView-type-icon {
         animation: none !important;
         opacity: 1 !important;
       }
+      
+      /*
+      this is still in the oven
+      
+      .urlbarView-row {
+        animation-name: individual-result-appear-subtle !important;
+        animation-duration: var(--animation-duration-subtle) !important;
+        animation-delay: 0s !important;
+      }
+      */
     }
   }
 
@@ -1140,5 +1193,14 @@ toolbarbutton[open] {
   
   .urlbarView-body-inner, .search-one-offs {
     border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
+  }
+  
+  .urlbarView-title-separator::before {
+    color: rgba(20, 20, 20, 0.2) !important;
+    opacity: 1 !important;
+
+    @media (prefers-color-scheme: dark) {
+      color: rgba(235, 235, 235, 0.2) !important;
+    }
   }
 }
