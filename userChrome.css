@@ -1026,11 +1026,9 @@ toolbarbutton[open] {
         overflow: clip !important;
       }
 
-      .urlbarView-row {
-        .urlbarView-row-inner, .urlbarView-type-icon {
-          animation: none !important;
-          opacity: 1 !important;
-        }
+      .urlbarView-row, .urlbarView-row .urlbarView-type-icon {
+        animation: none !important;
+        opacity: 1 !important;
       }
     }
   }
@@ -1073,6 +1071,10 @@ toolbarbutton[open] {
     &:active {
       transform: scale(0.95, 0.95);
     }
+    
+    &[selected] {
+      background: transparent !important;
+    }
 
     &:hover {    
       background: transparent !important;
@@ -1080,6 +1082,7 @@ toolbarbutton[open] {
       .urlbarView-row-inner {
         background: var(--urlbarView-hover-background) !important;
       }
+      
       .urlbarView-button {
         max-width: 24px !important;
         max-height: 24px !important;
@@ -1125,6 +1128,12 @@ toolbarbutton[open] {
   .urlbarView-url {
     --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
     color: var(--zen-colors-primary-foreground) !important;
+  }
+  
+  /* Wrapped indents fix */
+  
+  .urlbarView-action {
+    --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
   }
   
   /* Make borders more visible */
