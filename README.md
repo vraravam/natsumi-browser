@@ -1,5 +1,5 @@
 # Natsumi Browser
-A userchrome for Zen Browser that makes things _flow_.
+A userchrome for Zen Browser that makes things **_\~flow\~_**.
 
 ## Features
 ### Polished look
