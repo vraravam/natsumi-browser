@@ -27,6 +27,30 @@ their author(s) have been provided above the used code.
 
 */
 
+/* ==== Config ==== */
+
+/*
+Feel free to change these values to whatever you want, as long
+as they use the correct format.
+*/
+
+/* URL bar appear animation */
+#urlbar {
+  --animation-duration: 0.25s;
+}
+
+/* Results appear animation */
+#urlbar-results {
+  --animation-duration: 0.5s;
+}
+
+/* Individual result appear animation */
+.urlbarView-row-inner {
+  --animation-duration: 1.0s;
+  --animation-delay: 0.1s;
+  --animation-delay-offset: 0.3s;
+}
+
 /* ==== Pre-style patches ==== */
 
 /* Allow URLbar and Zen Sidebar blurring */
@@ -623,12 +647,6 @@ toolbarbutton[open] {
 
 /* Animations */
 
-@property --animation-delay {
-  syntax: '<number>';
-  initial-value: 0.3;
-  inherits: false;
-}
-
 @keyframes urlbar-appear {
   0% {
     margin-top: calc(var(--zen-toolbar-height) * -2);
@@ -641,14 +659,26 @@ toolbarbutton[open] {
   }
 }
 
+@keyframes urlbar-appear-sideways {
+  0% {
+    margin-left: -28vw;
+  }
+  75% {
+    margin-left: 20px;
+  }
+  100% {
+    margin-left: calc(-1 * var(--urlbar-margin-inline));
+  }
+}
+
 @keyframes results-appear {
   0% {
     opacity: 0;
-    margin-top: -52vh;
+    margin-top: -90vh;
   }
   50% {
     opacity: 0;
-    margin-top: -52vh;
+    margin-top: -90vh;
   }
   75% {
     opacity: 0;
@@ -656,7 +686,6 @@ toolbarbutton[open] {
   }
   100% {
     opacity: 1;
-    margin-top: 0;
   }
 }
 
@@ -807,15 +836,20 @@ toolbarbutton[open] {
         /* URLbar animations, toggleable to make things lighter. */
         
         animation-name: urlbar-appear;
-        animation-duration: 0.25s;
+        animation-duration: var(--animation-duration);
+        
+        @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+          animation-name: urlbar-appear-sideways;
+        }
+        
         #urlbar-results {
           animation-name: results-appear;
-          animation-duration: 0.5s;
+          animation-duration: var(--animation-duration);
 
           .urlbarView-row {
             .urlbarView-row-inner {
               animation-name: individual-result-appear;
-              animation-duration: 1s;
+              animation-duration: var(--animation-duration);
               animation-fill-mode: forwards; 
               opacity: 0;
             }
@@ -830,101 +864,101 @@ toolbarbutton[open] {
 
           .urlbarView-row:nth-child(1) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.0s); !important;
+              animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.0s); !important;
+              animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(2) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.1s); !important;
+              animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.1s); !important;
+              animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(3) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.2s); !important;
+              animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.2s); !important;
+              animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(4) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.3s); !important;
+              animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.3s); !important;
+              animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(5) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.4s); !important;
+              animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.4s); !important;
+              animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(6) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.5s); !important;
+              animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.5s); !important;
+              animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(7) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.6s); !important;
+              animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.6s); !important;
+              animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(8) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.7s); !important;
+              animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.7s); !important;
+              animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
 
           .urlbarView-row:nth-child(9) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.8s); !important;
+              animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.8s); !important;
+              animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
           
           .urlbarView-row:nth-child(10) {
             .urlbarView-row-inner {
-              animation-delay: calc(var(--animation-delay) * 1s + 0.9s); !important;
+              animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset)); !important;
             }
 
             .urlbarView-type-icon {
-              animation-delay: calc(var(--animation-delay) * 1s + 1.9s); !important;
+              animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
         }
@@ -934,6 +968,10 @@ toolbarbutton[open] {
         font-size: 20px !important;
         margin-left: 2px !important;
         margin-right: 0 !important;
+        
+        @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+          margin-left: 4px !important;
+        }
         
         &::-moz-selection {
           background: light-dark(var(--zen-primary-color), color-mix(in srgb, var(--zen-colors-primary) 60%, white)) !important;
@@ -948,8 +986,11 @@ toolbarbutton[open] {
         margin-left: 1px !important;
         padding-left: 6px !important;
         padding-right: 6px !important;
-
         border-radius: var(--urlbar-icon-border-radius) !important;
+        
+        @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+          margin-left: 3px !important;
+        }
       }
 
       .verifiedDomain {
@@ -981,11 +1022,21 @@ toolbarbutton[open] {
           padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
         }
       }
-    }
-    
-    &:not([zen-floating-urlbar="true"]) {
-      @media not (-moz-bool-pref: "natsumi.debug.legacy") {
-        animation: none !important;
+      
+      &:not([zen-floating-urlbar="true"]) {
+        @media not (-moz-bool-pref: "natsumi.debug.legacy") {
+          animation: none !important;
+        }
+
+        @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+          #identity-icon-box {
+            margin-left: 12px !important;
+          }
+
+          #urlbar-input {
+            margin-left: 4px !important;
+          }
+        }
       }
     }
     
