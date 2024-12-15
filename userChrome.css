@@ -45,7 +45,7 @@ as they use the correct format.
 }
 
 /* Individual result appear animation */
-.urlbarView-row-inner {
+.urlbarView-row {
   --animation-duration: 1.0s;
   --animation-delay: 0.1s;
   --animation-delay-offset: 0.3s;
@@ -707,7 +707,6 @@ toolbarbutton[open] {
     opacity: 1;
     scale: 1;
     background: transparent;
-    box-shadow: none;
   }
 }
 
@@ -804,7 +803,7 @@ toolbarbutton[open] {
   }
   
   .urlbarView-row:hover {
-    background: transparent !important;
+    background: transparent;
 
     .urlbarView-row-inner {
       background: var(--zen-colors-primary) !important;
@@ -847,12 +846,10 @@ toolbarbutton[open] {
           animation-duration: var(--animation-duration);
 
           .urlbarView-row {
-            .urlbarView-row-inner {
-              animation-name: individual-result-appear;
-              animation-duration: var(--animation-duration);
-              animation-fill-mode: forwards; 
-              opacity: 0;
-            }
+            animation-name: individual-result-appear;
+            animation-duration: var(--animation-duration);
+            animation-fill-mode: forwards; 
+            opacity: 0;
 
             .urlbarView-type-icon {
               animation-name: pinned-icon-appear;
@@ -863,9 +860,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(1) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 0) + var(--animation-delay-offset) + var(--animation-duration));
@@ -873,9 +868,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(2) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 1) + var(--animation-delay-offset) + var(--animation-duration));
@@ -883,9 +876,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(3) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 2) + var(--animation-delay-offset) + var(--animation-duration));
@@ -893,9 +884,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(4) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 3) + var(--animation-delay-offset) + var(--animation-duration));
@@ -903,9 +892,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(5) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 4) + var(--animation-delay-offset) + var(--animation-duration));
@@ -913,9 +900,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(6) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 5) + var(--animation-delay-offset) + var(--animation-duration));
@@ -923,9 +908,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(7) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 6) + var(--animation-delay-offset) + var(--animation-duration));
@@ -933,9 +916,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(8) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 7) + var(--animation-delay-offset) + var(--animation-duration));
@@ -943,9 +924,7 @@ toolbarbutton[open] {
           }
 
           .urlbarView-row:nth-child(9) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset) + var(--animation-duration));
@@ -953,9 +932,7 @@ toolbarbutton[open] {
           }
           
           .urlbarView-row:nth-child(10) {
-            .urlbarView-row-inner {
-              animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset)); !important;
-            }
+            animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset)); !important;
 
             .urlbarView-type-icon {
               animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset) + var(--animation-duration));
@@ -1059,7 +1036,6 @@ toolbarbutton[open] {
   }
 
   .urlbarView-row {
-    background: transparent !important;
     transition: transform 0.2s ease;
 
     .urlbarView-row-inner {
@@ -1099,6 +1075,8 @@ toolbarbutton[open] {
     }
 
     &:hover {    
+      background: transparent !important;
+      
       .urlbarView-row-inner {
         background: var(--urlbarView-hover-background) !important;
       }
