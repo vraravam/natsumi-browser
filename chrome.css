@@ -1027,6 +1027,10 @@ toolbarbutton[open] {
         @media not (-moz-bool-pref: "natsumi.debug.legacy") {
           animation: none !important;
         }
+        
+        #identity-icon-box {
+          margin-left: 10px !important;
+        }
 
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           #identity-icon-box {
