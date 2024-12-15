@@ -4,7 +4,7 @@
   Natsumi Browser
 </h1>
 
-<p align="center">A userchrome for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
+<p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-preview.png?raw=true)
 
