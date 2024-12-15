@@ -9,7 +9,7 @@
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-preview.png?raw=true)
 
 ## What is Natsumi Browser?
-Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zen
+Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zena
 Browser](https://zen-browser.app) that adds lots of polish to the design by incorporating animations,
 blurs and more. It's pretty much the userchrome I personally use, but made public.
 
@@ -54,3 +54,16 @@ details.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
+
+## Troubleshooting
+### "URLbar blur won't work!"
+Make sure both `layout.css.backdrop-filter.enabled` and `layout.css.backdrop-filter.force-enabled` are
+set to true. Also make sure that you're using WebRender and hardware rendering.
+
+### "Zen Browser lags a lot!"
+This may be due to the URLbar blurring or animations (likely the blur). Set `natsumi.theme.disable-blur`
+to false to disable the blur, and `natsumi.urlbar.light` to true to disable the animations.
+
+### "I don't see any of those options in about:config!"
+These are custom options which you need to create. Type in the exact name, then press the plus button on
+the right to create the config.
