@@ -50,6 +50,9 @@ and delay, change the variables in the userChrome.css file.
   [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better Find
   Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
+- `natsumi.urlbar.disable-transparency`: Disables URLbar background transparency.
+- `natsumi.urlbar.force-nowrap`: Prevents wrapping to make things more compact regardless of window
+  width.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
