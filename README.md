@@ -41,7 +41,9 @@ install it by applying the userChrome.css file to the browser.
 Read the [guide for live editing Zen Browser](https://docs.zen-browser.app/guides/live-editing) for more
 details.
 
-## Configs
+## Browser configs (in about:config)
+These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
+and delay, change the variables in the userChrome.css file.
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
   Zen Browser lags too much.
 - `natsumi.theme.better-findbar-addon`: Enables some tweaks to
