@@ -6,18 +6,25 @@
 
 <p align="center">A userchrome for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
+## What is Natsumi Browser?
+Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zen
+Browser](https://zen-browser.app) that adds lots of polish to the design by incorporating animations,
+blurs and more.
+
+Natsumi is NOT a standalone browser. I don't even intend on making one.
+
 ## Features
 ### Polished look
 Natsumi Browser's looks are based on asev's [ZenCss](https://github.com/lunar-os/ZenCss), with some
 additional tweaks and patches added on top to create a beautiful and polished experience.
 
-### Better expanded URLbar
-Natsumi Browser gives the expanded URLbar a completely fresh new look, so it feels very cozy while
-also having lots of room for search suggestions.
+### Natsumi URLbar
+With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
+cozy while also having lots of room for search suggestions.
 
 ### Tab Groups
-Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for
-Tab Groups. Group away!
+Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
+Groups. Group away to keep things organized!
 
 ## Configs
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
