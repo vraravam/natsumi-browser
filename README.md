@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/icon.png?raw=true">
+  <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
   <br>
   Natsumi Browser
 </h1>
