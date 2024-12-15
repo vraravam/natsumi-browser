@@ -67,3 +67,11 @@ to false to disable the blur, and `natsumi.urlbar.light` to true to disable the 
 ### "I don't see any of those options in about:config!"
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
+
+## Acknowledgements
+Thank you to:
+- [asev](https://github.com/lunar-os) for ZenCss, which serves as the base for Natsumi Browser's base
+  CSS, and the tab appear animation
+- [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
+- [mr-cheff](https://github.com/mr-cheff) and Zen's
+  [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
