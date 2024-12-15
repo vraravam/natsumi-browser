@@ -11,7 +11,7 @@
 ## What is Natsumi Browser?
 Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zen
 Browser](https://zen-browser.app) that adds lots of polish to the design by incorporating animations,
-blurs and more.
+blurs and more. It's pretty much the userchrome I personally use, but made public.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
