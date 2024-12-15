@@ -18,13 +18,19 @@ Natsumi is NOT a standalone browser. I don't even intend on making one.
 Natsumi Browser's looks are based on asev's [ZenCss](https://github.com/lunar-os/ZenCss), with some
 additional tweaks and patches added on top to create a beautiful and polished experience.
 
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.gif?raw=true)
+
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
 cozy while also having lots of room for search suggestions.
 
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.gif?raw=true)
+
 ### Tab Groups
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.gif?raw=true)
 
 ## Configs
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
