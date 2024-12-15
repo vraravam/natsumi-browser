@@ -46,6 +46,8 @@ These are the configs you can use to tweak Natsumi Browser. If you want to tweak
 and delay, change the variables in the userChrome.css file.
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
   Zen Browser lags too much.
+- `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs. Recommended if you
+  don't have a good GPU.
 - `natsumi.theme.better-findbar-addon`: Enables some tweaks to
   [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better Find
   Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
@@ -56,6 +58,8 @@ and delay, change the variables in the userChrome.css file.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
+- `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
+  normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
