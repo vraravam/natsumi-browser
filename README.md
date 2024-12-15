@@ -1,5 +1,10 @@
-# Natsumi Browser
-A userchrome for Zen Browser that makes things **_\~flow\~_**.
+<h1 align="center">
+  <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/icon.png?raw=true">
+  <br>
+  Natsumi Browser
+</h1>
+
+<p align="center">A userchrome for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
 ## Features
 ### Polished look
