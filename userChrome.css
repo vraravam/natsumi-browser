@@ -73,8 +73,6 @@ browser, .browserSidebarContainer.deck-selected {
 }
 
 :root {
-  --natsumi-padding: 0px;
-  
   &:where([inFullscreen="true"], inDOMFullscreen="true") {
     /* Patches collapsed view */
     #navigator-toolbox {
