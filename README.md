@@ -36,7 +36,7 @@ Groups. Group away to keep things organized!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
-install it by making the chrome.css file your userChrome.css file.
+install it by applying the userChrome.css file to the browser.
 
 Read the [guide for live editing Zen Browser](https://docs.zen-browser.app/guides/live-editing) for more
 details.
