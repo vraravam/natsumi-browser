@@ -66,9 +66,12 @@ set to true. Also make sure that you're using WebRender and hardware rendering.
 This may be due to the URLbar blurring or animations (likely the blur). Set `natsumi.theme.disable-blur`
 to false to disable the blur, and `natsumi.urlbar.light` to true to disable the animations.
 
-### "I don't see any of those options in about:config!"
+### "I don't see any of the Natsumi options in about:config!"
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
+
+### "Tab groups aren't working!"
+Set `browser.tabs.groups.enabled` to true.
 
 ## Acknowledgements
 Thank you to:
