@@ -61,6 +61,7 @@ browser, .browserSidebarContainer.deck-selected {
 }
 
 
+
 /* ==== Pre-style patches ==== */
 
 /* Allow URLbar and Zen Sidebar blurring */
@@ -91,7 +92,9 @@ browser, .browserSidebarContainer.deck-selected {
   }
 }
 
-/* ==== Sidebars and tabs ==== */
+
+
+/* ==== Base UI (Sidebars and tabs) ==== */
 /* Based on https://github.com/lunar-os/ZenCss with my own tweaks added */
 
 .browserSidebarContainer {
@@ -248,12 +251,147 @@ browser, .browserSidebarContainer.deck-selected {
 	border: 1px solid #ffffff13 !important;
 }
 
-/* Tab behavior on vertical tabs */
+/* Shrink on click */
+/* Zen already has this, but this increases the shrink magnitude */
+
+.tabbrowser-tab {
+  & .tab-stack {
+    opacity: 1;
+    transition: transform 0.2s ease;
+    
+    & .tab-background, .tab-content .tab-icon-stack, .tab-content .tab-label-container {
+      opacity: 1 !important;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+  }
+}
+
+.tabbrowser-tab:active {
+  scale: unset !important;
+  
+  & .tab-stack {
+    transform: scale(0.95, 0.95) !important;
+    
+    &:has(.tab-close-button:active) {
+      & .tab-background, .tab-content .tab-icon-stack, .tab-content .tab-label-container {
+        opacity: 0.3 !important;
+      }
+      
+      transform: unset !important;
+    }
+  }
+}
+
+/* Shrink essentials more */
+
+#zen-essentials-container .tabbrowser-tab:active {
+  & .tab-stack {
+    transform: scale(0.90, 0.90) !important;
+  }
+}
+
+/* Reset pinned tabs icon transition */
+
+.reset-icon {
+	transition: background-color 0.1s ease-out;
+}
+
+.reset-icon:hover {
+	transition: background-color 0.1s ease-in;
+}
+
+/* Firefox sidebar panel transparency */
+
+@media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+  #sidebar-box {
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    #sidebar-header {
+      border-bottom: none !important;
+    }
+  }
+}
+
+/* Multiple toolbars patch */
+
+@media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
+  #identity-box {
+    margin-inline-end: 5px !important;
+  }
+}
+
+/* Patch and restore List all tabs button */
+
+#alltabs-button {
+  display: flex !important;
+  
+  & .toolbarbutton-badge {
+    display: none !important;
+  }
+  
+  & .toolbarbutton-badge-stack {
+    background-color: transparent !important;
+  }
+}
+
+/* Toolbar patches */
+
+@media (-moz-bool-pref: "zen.view.sidebar-expanded") {
+  #zen-sidebar-top-buttons-customization-target {
+    toolbarbutton {
+      margin: 1px !important;
+    }
+    toolbarbutton:first-child {
+      margin-left: 5px !important;
+    }
+  }
+}
+
+#PersonalToolbar {
+  padding-left: 0 !important;
+}
+
+@media (-moz-bool-pref: "natsumi.theme.better-findbar-addon") {
+  findbar {
+    opacity: 1;
+    transition: opacity 0.1s ease, scale 0.1s ease, left 0.1s ease !important;
+  }
+
+  findbar[hidden] {
+    opacity: 0;
+    left: 33.5% !important;
+    scale: 0.5 0.5;
+  }
+}
+
+.toolbarbutton-badge-stack, toolbarbutton image {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+toolbarbutton:active {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+toolbarbutton[open] {
+  transition: background-color 0.2s ease, transform 0.2s ease !important;
+}
+
+
+
+/* ==== Tab groups ==== */
+/* Based on code by https://github.com/vicky5124 with my own tweaks added */
+
+/* Make groups workspace specific */
+
+tab-group:has(tab[hidden]) {
+  display: none !important;
+}
+
+/* Tab groups on vertical tabs */
 
 @media (-moz-bool-pref: "zen.tabs.vertical") {
-  /* Tab groups implementation */
-  /* Based on code by https://github.com/vicky5124 with my own tweaks added */
-  
   tab-group {
     display: grid !important;
     background: color-mix(in srgb, var(--tab-group-color-invert) 12%, transparent) !important;
@@ -388,7 +526,7 @@ browser, .browserSidebarContainer.deck-selected {
   }
 }
 
-/* Tab behavior on horizontal tabs */
+/* Tab groups on horizontal tabs */
 
 @media not (-moz-bool-pref: "zen.tabs.vertical") {
   tab:not([fadein]) {
@@ -490,9 +628,13 @@ browser, .browserSidebarContainer.deck-selected {
       }
     }
   }
-  
-  /* Horizontal tabs patches */
-  
+}
+
+
+
+/* ==== Horizontal tabs patches ==== */
+
+@media not (-moz-bool-pref: "zen.tabs.vertical") {
   #zen-essentials-container, #vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
     min-height: 36px;
   }
@@ -523,116 +665,7 @@ browser, .browserSidebarContainer.deck-selected {
   }
 }
 
-/* Shrink on click */
-/* Zen already has this, but this increases the shrink magnitude */
 
-.tabbrowser-tab {
-  & .tab-stack {
-    transition: transform 0.2s ease;
-  }
-}
-
-.tabbrowser-tab:active {
-  & .tab-stack {
-    transform: scale(0.95, 0.95) !important;
-  }
-}
-
-/* Shrink essentials more */
-
-#zen-essentials-container .tabbrowser-tab:active {
-  & .tab-stack {
-    transform: scale(0.90, 0.90) !important;
-  }
-}
-
-/* Reset pinned tabs icon transition */
-
-.reset-icon {
-	transition: background-color 0.1s ease-out;
-}
-
-.reset-icon:hover {
-	transition: background-color 0.1s ease-in;
-}
-
-/* Firefox sidebar panel transparency */
-
-@media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
-  #sidebar-box {
-    background-color: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-
-    #sidebar-header {
-      border-bottom: none !important;
-    }
-  }
-}
-
-/* Multiple toolbars patch */
-
-@media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
-  #identity-box {
-    margin-inline-end: 5px !important;
-  }
-}
-
-/* Patch and restore List all tabs button */
-
-#alltabs-button {
-  display: flex !important;
-  
-  & .toolbarbutton-badge {
-    display: none !important;
-  }
-  
-  & .toolbarbutton-badge-stack {
-    background-color: transparent !important;
-  }
-}
-
-/* Toolbar patches */
-
-@media (-moz-bool-pref: "zen.view.sidebar-expanded") {
-  #zen-sidebar-top-buttons-customization-target {
-    toolbarbutton {
-      margin: 1px !important;
-    }
-    toolbarbutton:first-child {
-      margin-left: 5px !important;
-    }
-  }
-}
-
-#PersonalToolbar {
-  padding-left: 0 !important;
-}
-
-@media (-moz-bool-pref: "natsumi.theme.better-findbar-addon") {
-  findbar {
-    opacity: 1;
-    transition: opacity 0.1s ease, scale 0.1s ease, left 0.1s ease !important;
-  }
-
-  findbar[hidden] {
-    opacity: 0;
-    left: 33.5% !important;
-    scale: 0.5 0.5;
-  }
-}
-
-.toolbarbutton-badge-stack, toolbarbutton image {
-  transition: background-color 0.2s ease, transform 0.2s ease !important;
-}
-
-toolbarbutton:active {
-  transition: background-color 0.2s ease, transform 0.2s ease !important;
-}
-
-toolbarbutton[open] {
-  transition: background-color 0.2s ease, transform 0.2s ease !important;
-}
 
 /* ==== Natsumi URLbar ==== */
 
@@ -1201,6 +1234,8 @@ toolbarbutton[open] {
   }
 }
 
+
+
 /* ==== Natsumi loading animation ==== */
 
 @media not (-moz-bool-pref: "natsumi.theme.disable-loading-animations") {
@@ -1252,7 +1287,7 @@ toolbarbutton[open] {
     }
   }
 
-  browser {
+  .browserStack browser {
     animation-name: browser-margin-reverse;
     animation-duration: var(--animation-exit-duration);
     border-radius: var(--zen-border-radius);
@@ -1289,7 +1324,7 @@ toolbarbutton[open] {
         animation-fill-mode: forwards;
       }
       
-      browser {
+      .browserStack browser {
         animation-name: browser-margin;
         animation-duration: var(--animation-duration);
         animation-fill-mode: forwards;
@@ -1303,12 +1338,16 @@ toolbarbutton[open] {
   }
 }
 
+
+
 /* ==== Easier to see tab labels ==== */
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-bigger-tab-label") {
   .tab-text {
     font-size: 12px;
   }
 }
+
+
 
 /* ==== Better Split View ==== */
 #zen-tabbox-wrapper:has(#tabbrowser-tabpanels[zen-split-view="true"]) {
