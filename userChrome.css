@@ -57,7 +57,7 @@ browser, .browserSidebarContainer.deck-selected {
   --animation-duration: 0.2s;
   --animation-rotation-duration: 2.0s;
   --animation-exit-duration: 1.0s;
-  --browser-margin: 8px;
+  --browser-margin: 4px;
 }
 
 
@@ -74,7 +74,7 @@ browser, .browserSidebarContainer.deck-selected {
 }
 
 :root {
-  &:where([inFullscreen="true"], inDOMFullscreen="true") {
+  &:is([inDOMFullscreen="true"]) {
     /* Patches collapsed view */
     #navigator-toolbox {
       padding-top: 0px !important;
@@ -87,6 +87,7 @@ browser, .browserSidebarContainer.deck-selected {
     @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
       browser {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+        border-radius: 0 !important;
       }
     }
   }
@@ -1338,6 +1339,11 @@ tab-group:has(tab[hidden]) {
   }
 }
 
+/* Disable animations */
+
+browser.dialogFrame {
+  animation-name: none !important;
+}
 
 
 /* ==== Easier to see tab labels ==== */
