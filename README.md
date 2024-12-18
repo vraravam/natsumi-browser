@@ -75,6 +75,8 @@ and delay, change the variables in the userChrome.css file.
   border. Selected tabs will always use solid border.
 - `natsumi.sidebar.containers-right-gradient`: Moves container tabs indicator gradient to the right.
 - `natsumi.sidebar.containers-thicker-gradient`: Makes container tabs indicator gradient "thicker".
+- `natsumi.sidebar.containers-no-inactive-border`: Hides the container tabs indicator border when the
+  tab is not selected.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
