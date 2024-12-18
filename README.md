@@ -101,7 +101,11 @@ These are custom options which you need to create. Type in the exact name, then 
 the right to create the config.
 
 ### "Tab groups aren't working!"
-Set `browser.tabs.groups.enabled` to true.
+> [!WARNING]
+> The developer of Zen Browser recommends **against** using custom CSS to implement Tab Groups like
+> Natsumi's for the time being. Proceed at your own risk.
+
+Set `browser.tabs.groups.enabled` and `natsumi.sidebar.enable-tab-groups` to true.
 
 ## Acknowledgements
 Thank you to:
