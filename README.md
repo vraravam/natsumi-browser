@@ -48,6 +48,9 @@ These are the configs you can use to tweak Natsumi Browser. If you want to tweak
 and delay, change the variables in the userChrome.css file.
 
 ### Base theme
+- `natsumi.theme.clip-path-force-polygon`: Uses polygon instead of inset for URLbar and Zen Sidebar
+  blurring. Enable this if you need this for compatibility with other userchromes/Mods like
+  [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
   Zen Browser lags too much.
 - `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs.
