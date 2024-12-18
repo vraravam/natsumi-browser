@@ -15,7 +15,7 @@ blurs and more. It's pretty much the userchrome I personally use, but made publi
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.2` (Beta) and `1.0.2-t.3` (Twilight).
+Natsumi has been tested on `1.0.2-b.2` (Beta) and `1.0.2-t.3 2024-12-18` (Twilight).
 
 ## Features
 ### Polished look
