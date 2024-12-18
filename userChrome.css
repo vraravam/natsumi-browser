@@ -891,6 +891,27 @@ tab-group:not(:has(tab)) {
   #urlbar {
     .urlbarView {
       overflow: initial !important;
+      
+      .urlbarView-title-separator::before {
+        color: rgba(20, 20, 20, 0.2) !important;
+        opacity: 1 !important;
+
+        @media (prefers-color-scheme: dark) {
+          color: rgba(235, 235, 235, 0.2) !important;
+        }
+      }
+      
+      &:not([action-override]) {
+        .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) {
+          .urlbarView-action {
+            margin-left: 8px !important;
+          }
+
+          .urlbarView-title-separator::before {
+            opacity: 0 !important;
+          }
+        }
+      }
     }
     
     &[breakout-extend] {
@@ -1212,25 +1233,6 @@ tab-group:not(:has(tab)) {
       background: var(--urlbarView-hover-background) !important;
     }
   }
-  
-  .urlbarView-title-separator::before {
-    color: rgba(20, 20, 20, 0.2) !important;
-    opacity: 1 !important;
-
-    @media (prefers-color-scheme: dark) {
-      color: rgba(235, 235, 235, 0.2) !important;
-    }
-  }
-  
-  .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) {
-    .urlbarView-action {
-      margin-left: 8px !important;
-    }
-    
-    .urlbarView-title-separator::before {
-      opacity: 0 !important;
-    }
-  }
 
   .urlbarView-row-inner .urlbarView-url {
     color: light-dark(var(--zen-colors-primary), var(--zen-colors-primary-foreground)) !important;
@@ -1548,6 +1550,7 @@ tab-group:not(:has(tab)) {
 
 .tabbrowser-tab[usercontextid], .tabbrowser-tab[usercontextid][pinned]:not([zen-essential="true"]) {
   --gradient-width: var(--container-gradient-width);
+  --offset-margin: 0;
   
   .tab-background {
     overflow: hidden !important;
@@ -1559,12 +1562,11 @@ tab-group:not(:has(tab)) {
     
     .tab-context-line {
       --container-angle: 90deg;
-      --offset-margin: 0;
       @media (-moz-bool-pref: "natsumi.sidebar.containers-right-gradient") {
         --container-angle: 270deg;
-        --offset-margin: 95%;
+        --offset-margin: calc(100% - var(--gradient-width));
       }
-      transition: width 0.2s ease;
+      transition: width 0.2s ease, margin-left 0.2s ease;
       width: var(--gradient-width) !important;
       height: 100% !important;
       margin-left: var(--offset-margin) !important;
@@ -1590,6 +1592,77 @@ tab-group:not(:has(tab)) {
     .tab-background {
       border: 1px solid var(--identity-icon-color) !important;
     }
+  }
+}
+
+/* ==== Dialog box animation ==== */
+
+@keyframes overlay-appear {
+  0% {
+    background-color: transparent;
+  }
+  
+  100% {
+    background-color: rgba(28, 27, 34, 0.45);
+  }
+}
+
+@keyframes dialog-appear {
+  0% {
+    opacity: 0;
+    margin-top: 50px;
+    margin-bottom: -50px;
+  }
+  
+  100% {
+    opacity: 1;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
+.browserStack .dialogOverlay:not([hidden="true"]) {
+  animation: overlay-appear 0.3s ease;
+  
+  .dialogBox {
+    animation: dialog-appear 0.3s ease;
+  }
+}
+
+/* can't get bg fadein to work here for some reason, help would be appreciated */
+
+@keyframes menupopup-appear {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
+}
+
+#window-modal-dialog[open] {
+  animation: dialog-appear 0.3s ease;
+}
+
+.dialog-button-box button, menulist, richlistitem, .urlbar-page-action,
+#tracking-protection-icon-container, .identity-box-button,
+.panel-subview-body toolbarbutton, .panel-subview-footer-button,
+.subviewbutton-back, .panel-info-button, .protections-popup-footer-button,
+.bookmark-item {
+  transition: background-color 0.2s ease;
+}
+
+menulist[open="true"] menupopup {
+  animation: menupopup-appear 0.2s ease;
+}
+
+#downloadsHistory, .downloadButton, #editBookmarkPanelRemoveButton, #editBookmarkPanelDoneButton {
+  transition: 0.2s ease !important;
+}
+
+.tabbrowser-tab[attention] {
+  .tab-background {
+    animation: alert 2s ease infinite;
+  }
+  
+  .tab-content {
+    background: none !important;
   }
 }
 
