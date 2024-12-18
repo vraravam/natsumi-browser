@@ -79,6 +79,8 @@ and delay, change the variables in the userChrome.css file.
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
+- `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
+  not recommend using custom CSS to implement Tab Groups at the moment.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
