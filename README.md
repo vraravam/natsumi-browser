@@ -102,6 +102,10 @@ Mod also uses the same userchrome I used.
 Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
 userchrome alongside Natsumi Browser.
 
+### "Can I disable individual features?"
+You're free to disable loading certain modules (CSS files) if you feel like it. But you will still need
+to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
+
 ## Troubleshooting
 ### "URLbar blur won't work!"
 Make sure both `layout.css.backdrop-filter.enabled` and `layout.css.backdrop-filter.force-enabled` are
