@@ -38,7 +38,7 @@ Groups. Group away to keep things organized!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
-install it by copying the files to your profile.
+install it by copying the files to your profile's chrome folder.
 
 ### If you already have a userChrome.css file
 1. Copy natsumi-config.css and natsumi folder to your chrome folder.
@@ -109,6 +109,11 @@ userchrome alongside Natsumi Browser.
 ### "Can I disable individual features?"
 You're free to disable loading certain modules (CSS files) if you feel like it. But you will still need
 to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
+
+### "Why is userChrome.css so empty?"
+Natsumi Browser uses a system where the userChrome.css file acts as a loader that loads the skin,
+instead of being the file that contains all rules. This way, it's easier for users to quickly enable and
+disable custom CSS.
 
 ## Troubleshooting
 ### "URLbar blur won't work!"
