@@ -6,7 +6,7 @@
 
 <p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-2.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-3.png?raw=true)
 
 ## What is Natsumi Browser?
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
