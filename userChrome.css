@@ -74,3 +74,5 @@ their author(s) have been provided above the used code.
   animation: natsumi-not-installed-fadeout ease 10s;
   animation-fill-mode: forwards;
 }
+
+/* If you have your own userchrome, you can add it below. */
