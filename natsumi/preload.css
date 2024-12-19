@@ -27,51 +27,54 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
-/* ==== Hide Natsumi not loaded banner (load was successful) ==== */
-* {
-  --natsumi-fail-display: none !important;
-}
-
-
-
 /* ==== Apply config ==== */
+
+/*
+NOTE: DO NOT USE THIS AS YOUR CONFIG FILE.
+
+The below code applies your config (or default values if needed) and they should never be modified.
+Edit the config.css file instead.
+ */
+
+/* Accent color */
+* {
+  --natsumi-primary-color: var(--natsumi-accent-color, var(--zen-primary-color));
+}
 
 /* URL bar appear animation */
 #urlbar {
-  --animation-duration: 0.25s;
+  --animation-duration: var(--urlbar-appear-animation-duration, 0.25s);
 }
 
 /* Results appear animation */
 #urlbar-results {
-  --animation-duration: 0.5s;
+  --animation-duration: var(--urlbar-results-animation-duration, 0.5s);
 }
 
 /* Individual result appear animation */
 .urlbarView-row {
-  --animation-duration: 1.0s;
+  --animation-duration: var(--urlbar-individual-result-animation-duration, 1.0s);
   --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
-  --animation-delay: 0.1s;
-  --animation-delay-offset: 0.3s;
+  --animation-delay: var(--urlbar-individual-result-animation-delay, 0.1s);
+  --animation-delay-offset: var(--urlbar-individual-result-animation-delay-offset, 0.3s);
 }
 
 /* Reload border animation */
 browser, .browserSidebarContainer.deck-selected {
-  --animation-duration: 0.2s;
-  --animation-rotation-duration: 2.0s;
-  --animation-exit-duration: 1.0s;
-  --browser-margin: 4px;
+  --animation-duration: var(--reload-border-animation-duration, 0.2s);
+  --animation-rotation-duration: var(--reload-border-animation-rotation-duration, 2.0s);
+  --animation-exit-duration: var(--reload-border-animation-exit-duration, 1.0s);
+  --browser-margin: var(--reload-border-margin, 4px);
 }
 
 /* Reload URLbar animation */
 #urlbar-background {
-  --fadein-duration: 0.5s;
-  --animation-duration: 1s;
+  --fadein-duration: var(--reload-urlbar-animation-duration, 0.5s);
+  --animation-duration: var(--reload-urlbar-animation-fadein-duration, 1s);
 }
 
 /* Container tabs gradient */
 .tabbrowser-tab {
-  --container-gradient-width: 25%;
-  --container-gradient-width-expanded: 50%;
+  --container-gradient-width: var(--container-tabs-normal-gradient-width, 25%);
+  --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
 }

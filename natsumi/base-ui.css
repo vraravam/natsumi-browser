@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Base UI (Sidebars and tabs) ==== */
 /* Based on https://github.com/lunar-os/ZenCss with my own tweaks added */
 
@@ -333,7 +331,7 @@ toolbarbutton[open] {
   }
   
   50% {
-    background: var(--zen-primary-color);
+    background: var(--natsumi-primary-color);
   }
   
   100% {
@@ -424,7 +422,7 @@ toolbarbutton[open] {
     width: 0;
     background: linear-gradient(
       90deg,
-      color-mix(in srgb, var(--zen-primary-color) 35%, transparent) 0%,
+      color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
       transparent
     );
     transition: width 0.1s ease;
@@ -432,7 +430,7 @@ toolbarbutton[open] {
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
       background: linear-gradient(
         270deg,
-        color-mix(in srgb, var(--zen-primary-color) 35%, transparent) 0%,
+        color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
         transparent
       );
       margin-left: auto;

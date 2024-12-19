@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Hide Natsumi not loaded banner (load was successful) ==== */
 * {
   --natsumi-fail-display: none !important;

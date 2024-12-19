@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Natsumi loading animation ==== */
 
 @media not (-moz-bool-pref: "natsumi.theme.disable-loading-animations") {
@@ -104,7 +102,7 @@ their author(s) have been provided above the used code.
           --offset: calc(var(--size) / -4);
           content: "";
           position: absolute;
-          background-color: color-mix(in srgb, var(--zen-primary-color) 40%, transparent);
+          background-color: color-mix(in srgb, var(--natsumi-primary-color) 40%, transparent);
           z-index: 0;
           width: var(--size);
           height: var(--size);
@@ -130,8 +128,8 @@ their author(s) have been provided above the used code.
         height: 100%;
         position: absolute;
         background: light-dark(
-          var(--zen-primary-color),
-          color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+          var(--natsumi-primary-color),
+          color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
         ) !important;
       }
     }
@@ -145,7 +143,7 @@ their author(s) have been provided above the used code.
         &::before {
           background: linear-gradient(
             90deg,
-            var(--zen-primary-color) 0%,
+            var(--natsumi-primary-color) 0%,
             var(--zen-colors-secondary) 100%
           );
           animation: browser-loading var(--animation-rotation-duration) linear infinite;
@@ -174,13 +172,13 @@ their author(s) have been provided above the used code.
           background: linear-gradient(
             90deg,
             light-dark(
-              var(--zen-primary-color),
-              color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+              var(--natsumi-primary-color),
+              color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 0%,
             var(--zen-colors-secondary) 33%,
             light-dark(
-              var(--zen-primary-color),
-              color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+              var(--natsumi-primary-color),
+              color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 66%,
             var(--zen-colors-secondary) 100%
           ) !important;

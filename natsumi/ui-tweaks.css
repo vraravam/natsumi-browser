@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Easier to see tab labels ==== */
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-bigger-tab-label") {
   .tab-text {
@@ -51,7 +49,7 @@ their author(s) have been provided above the used code.
   &::before {
     opacity: 0.4 !important;
     transition: opacity 0.2s ease;
-    background: var(--zen-primary-color) !important;
+    background: var(--natsumi-primary-color) !important;
   }
   
   &:hover::before {

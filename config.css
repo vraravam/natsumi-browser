@@ -5,40 +5,28 @@ Feel free to change these values to whatever you want, as long
 as they use the correct format.
 */
 
-/* URL bar appear animation */
-#urlbar {
-  --animation-duration: 0.25s;
-}
+* {
+  /* Accent color */
+  --natsumi-accent-color: var(--zen-primary-color);
 
-/* Results appear animation */
-#urlbar-results {
-  --animation-duration: 0.5s;
-}
+  /* Natsumi URLbar appear animations */
+  --urlbar-appear-animation-duration: 0.25s;
+  --urlbar-results-animation-duration: 0.5s;
+  --urlbar-individual-result-animation-duration: 1s;
+  --urlbar-individual-result-animation-delay: 0.1s;
+  --urlbar-individual-result-animation-delay-offset: 0.3s;
 
-/* Individual result appear animation */
-.urlbarView-row {
-  --animation-duration: 1.0s;
-  --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
-  --animation-delay: 0.1s;
-  --animation-delay-offset: 0.3s;
-}
+  /* Natsumi border reload animations */
+  --reload-border-animation-duration: 0.2s;
+  --reload-border-animation-rotation-duration: 2s;
+  --reload-border-animation-exit-duration: 1s;
+  --reload-border-margin: 4px;
 
-/* Reload border animation */
-browser, .browserSidebarContainer.deck-selected {
-  --animation-duration: 0.2s;
-  --animation-rotation-duration: 2.0s;
-  --animation-exit-duration: 1.0s;
-  --browser-margin: 4px;
-}
+  /* Natsumi URLbar reload animations */
+  --reload-urlbar-animation-duration: 0.2s;
+  --reload-urlbar-animation-fadein-duration: 2s;
 
-/* Reload URLbar animation */
-#urlbar-background {
-  --fadein-duration: 0.5s;
-  --animation-duration: 1s;
-}
-
-/* Container tabs gradient */
-.tabbrowser-tab {
-  --container-gradient-width: 25%;
-  --container-gradient-width-expanded: 50%;
+  /* Container tabs gradient */
+  --container-tabs-normal-gradient-width: 25%;
+  --container-tabs-expanded-gradient-width: 50%;
 }
