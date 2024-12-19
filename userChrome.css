@@ -1743,7 +1743,9 @@ toolbarbutton[open] {
 .panel-subview-body toolbarbutton, .panel-subview-footer-button,
 .subviewbutton-back, .panel-info-button, .protections-popup-footer-button,
 .bookmark-item, .zen-workspace-button, #PanelUI-zen-workspaces-reorder-mode,
-#PanelUI-zen-workspaces-new, menupopup menuitem, menupopup menu {
+#PanelUI-zen-workspaces-new, menupopup menuitem, menupopup menu,
+#PanelUI-zen-profiles-list .PanelUI-zen-profiles-item,
+#PanelUI-zen-profiles-actions toolbarbutton {
   transition: background-color 0.2s ease;
 }
 
@@ -1771,10 +1773,6 @@ menulist[open="true"] menupopup {
       }
     }
   }
-}
-
-.zen-sidebar-panel-button:hover image {
-  background-color: var(--tab-hover-background-color) !important;
 }
 
 /* ==== WIP features (do not touch yet) ==== */
