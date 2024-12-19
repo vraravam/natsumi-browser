@@ -27,52 +27,8 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Load Natsumi Browser ==== */
 
-@import "config.css";
-@import "natsumi/preload.css";
-@import "natsumi/patches.css";
-@import "natsumi/base-ui.css";
-@import "natsumi/tab-groups.css";
-@import "natsumi/horizontal-tabs.css";
-@import "natsumi/natsumi-urlbar.css";
-@import "natsumi/natsumi-loading.css";
-@import "natsumi/ui-tweaks.css";
-@import "natsumi/postload.css";
+@import "natsumi/natsumi.css";
 
-
-
-/* ==== Natsumi Browser not installed warning ==== */
-
-* {
-  --natsumi-fail-display: flex;
-}
-
-@keyframes natsumi-not-installed-fadeout {
-  0% {opacity: 1;}
-  90% {opacity: 1;}
-  99% {opacity: 0; height: 20%;}
-  100% {opacity: 0; height: 0; display: none;}
-}
-
-#tabbrowser-arrowscrollbox::after {
-  display: var(--natsumi-fail-display);
-  box-sizing: border-box;
-  contain: size;
-  padding: 10px;
-  font-size: 12px;
-  color: black;
-  content: "WARNING: Natsumi Browser loader is installed but it could not load Natsumi Browser.\
-    Please add the natsumi folder to your profile's chrome folder, then restart Zen Browser!\
-  ";
-  width: 100%;
-  height: 20%;
-  border-radius: var(--border-radius-medium);
-  border: 1px solid;
-  background-color: #ffdd00;
-  text-align: center;
-  animation: natsumi-not-installed-fadeout ease 10s;
-  animation-fill-mode: forwards;
-}
-
-/* You can enter any additional CSS below this comment. */
+/* You can import additional mods above, or add your own userchrome CSS below. */

@@ -38,14 +38,18 @@ Groups. Group away to keep things organized!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
-install it by applying the userChrome.css file to the browser.
+install it by copying the files to your profile.
 
-1. Create a new chrome folder in your profile folder
+### If you already have a userChrome.css file
+1. Copy natsumi-config.css and natsumi folder to your chrome folder.
+2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file.
+3. Restart Zen Browser and enjoy!
+
+### If you don't have a userChrome.css file
+1. Create a new chrome folder in your profile folder, if you haven't already.
    ([guide](https://docs.zen-browser.app/guides/live-editing))
-2. Copy userChrome.css to the chrome folder. If the userChrome works, you should get a warning after you
-   restart Zen Browser that you need to copy the natsumi folder to your chrome folder. If this doesn't
-   show up, enable `toolkit.legacyUserProfileCustomizations.stylesheets` and retry.
-3. Copy config.css and natsumi folder to the chrome folder.
+2. Copy userChrome.css to the chrome folder.
+3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
