@@ -75,6 +75,7 @@ Edit the config.css file instead.
   --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
   --animation-delay: var(--urlbar-individual-result-animation-delay, 0.1s);
   --animation-delay-offset: var(--urlbar-individual-result-animation-delay-offset, 0.3s);
+  --expand-width: var(--urlbar-individual-result-expand-size, 1.1);
 }
 
 /* Reload border animation */

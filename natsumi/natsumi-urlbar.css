@@ -86,7 +86,7 @@ their author(s) have been provided above the used code.
   }
   60% {
     opacity: 1;
-    scale: 1.1;
+    scale: var(--expand-width);
     background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
   }
   100% {
