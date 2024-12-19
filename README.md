@@ -9,9 +9,9 @@
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-2.png?raw=true)
 
 ## What is Natsumi Browser?
-Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zen
-Browser](https://zen-browser.app) that adds lots of polish to the design by incorporating animations,
-blurs and more. It's pretty much the userchrome I personally use, but made public.
+Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
+that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
+the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
@@ -40,12 +40,17 @@ Groups. Group away to keep things organized!
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
 install it by applying the userChrome.css file to the browser.
 
-Read the [guide for live editing Zen Browser](https://docs.zen-browser.app/guides/live-editing) for more
-details.
+1. Create a new chrome folder in your profile folder
+   ([guide](https://docs.zen-browser.app/guides/live-editing))
+2. Copy userChrome.css to the chrome folder. If the userChrome works, you should get a warning after you
+   restart Zen Browser that you need to copy the natsumi folder to your chrome folder. If this doesn't
+   show up, enable `toolkit.legacyUserProfileCustomizations.stylesheets` and retry.
+3. Copy config.css and natsumi folder to the chrome folder.
+4. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
-and delay, change the variables in the userChrome.css file.
+and delay, change the variables in the config.css file.
 
 ### Base theme
 - `natsumi.theme.clip-path-force-polygon`: Uses polygon instead of inset for URLbar and Zen Sidebar
