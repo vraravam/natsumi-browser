@@ -57,6 +57,7 @@ their author(s) have been provided above the used code.
   }
 }
 
+/*noinspection CssInvalidFunction*/
 @keyframes results-appear {
   0% {
     opacity: 0;
@@ -75,6 +76,7 @@ their author(s) have been provided above the used code.
   }
 }
 
+/*noinspection CssInvalidFunction*/
 @keyframes individual-result-appear {
   0%   {
     opacity: 0;
@@ -96,6 +98,7 @@ their author(s) have been provided above the used code.
   }
 }
 
+/*noinspection CssInvalidFunction*/
 @keyframes individual-result-appear-subtle {
   0%   {
     opacity: 1;
@@ -387,7 +390,8 @@ their author(s) have been provided above the used code.
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           margin-left: 4px !important;
         }
-        
+
+        /*noinspection CssInvalidFunction*/
         &::-moz-selection {
           background: light-dark(var(--zen-primary-color), color-mix(in srgb, var(--zen-colors-primary) 60%, white)) !important;
         }
@@ -579,15 +583,18 @@ their author(s) have been provided above the used code.
     }
   }
 
+  /*noinspection CssInvalidFunction*/
   .urlbarView-row-inner .urlbarView-url {
     color: light-dark(var(--zen-colors-primary), var(--zen-colors-primary-foreground)) !important;
   }
 
   .urlbarView-row:hover .urlbarView-row-inner, .urlbarView-row-inner[selected] {
+    /*noinspection CssInvalidFunction*/
     .urlbarView-no-wrap .urlbarView-favicon {
       background-color: color-mix(in srgb, light-dark(var(--zen-primary-color), var(--zen-colors-primary-foreground)) 50%, transparent) !important;
     }
 
+    /*noinspection CssInvalidFunction*/
     .urlbarView-url {
       color: light-dark(var(--zen-colors-primary), var(--zen-colors-primary-foreground)) !important;
     }
@@ -613,7 +620,8 @@ their author(s) have been provided above the used code.
   }
   
   /* Make borders more visible */
-  
+
+  /*noinspection CssInvalidFunction*/
   .urlbarView-body-inner, .search-one-offs {
     border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
   }

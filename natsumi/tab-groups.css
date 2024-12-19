@@ -67,12 +67,12 @@ their author(s) have been provided above the used code.
       }
 
       & .tab-group-label-container{
-        margin-inline: 0px !important;
+        margin-inline: 0 !important;
         width: 100%;
 
         &:after{
           display: none;
-          padding: 0px !important;
+          padding: 0 !important;
           transform: scaleX(1) !important;
           background-color: color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
           transition: transform 0.2s ease-out !important;
@@ -109,7 +109,7 @@ their author(s) have been provided above the used code.
 
       & tab {
         opacity: 1 !important;
-        font-size: 1 !important;
+        font-size: 1px !important;
         max-height: 5em !important;
         margin-left: 8px !important;
         transition: font-size 0.25s,
@@ -215,11 +215,11 @@ their author(s) have been provided above the used code.
       }
 
       & .tab-group-label-container{
-        margin-inline: 0px !important;
+        margin-inline: 0 !important;
 
-        &:after{
+        &:after {
           display: none;
-          padding: 0px !important;
+          padding: 0 !important;
           transform: scaleX(1) !important;
           background-color: color-mix(in srgb, var(--tab-group-color) 50%, transparent) !important;
           transition: transform 0.2s ease-out !important;

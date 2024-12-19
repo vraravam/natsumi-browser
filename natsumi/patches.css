@@ -48,7 +48,7 @@ their author(s) have been provided above the used code.
   &:is([inDOMFullscreen="true"]) {
     /* Patches collapsed view */
     #navigator-toolbox {
-      padding-top: 0px !important;
+      padding-top: 0 !important;
     }
 
     #zen-sidebar-top-buttons-customization-target {

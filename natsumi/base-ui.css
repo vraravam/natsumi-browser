@@ -96,7 +96,7 @@ their author(s) have been provided above the used code.
 
 #zen-workspaces-button {
   background-color: rgba(255, 255, 255, 0.04) !important;
-  box-shadow: 0px 1px 10px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.1) !important;
   border-radius: 8px !important;
   border: 1px solid #ffffff0c !important;
 }
@@ -155,7 +155,7 @@ their author(s) have been provided above the used code.
       background: rgba(255, 255, 255, 0.1) !important;
       transition: 0.3s !important;
       border: 1px solid #ffffff0a !important;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.062) !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.062) !important;
 
       @media (prefers-color-scheme: light) {
         background: rgba(255, 255, 255, 0.7) !important;
@@ -238,11 +238,13 @@ their author(s) have been provided above the used code.
 /* Firefox sidebar panel transparency */
 
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+  /*noinspection CssUnknownProperty*/
   #sidebar-box {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 
+    /*noinspection CssUnknownProperty*/
     #sidebar-header {
       border-bottom: none !important;
     }

@@ -116,11 +116,12 @@ their author(s) have been provided above the used code.
       }
     }
   }
-  
+
   @media not (-moz-bool-pref: "natsumi.theme.disable-urlbar-animation") {
     #urlbar-background {
       overflow: hidden;
 
+      /*noinspection CssInvalidFunction*/
       &::before {
         content: "";
         transition: opacity var(--fadein-duration) ease !important;
@@ -163,9 +164,10 @@ their author(s) have been provided above the used code.
         }
       }
     }
-    
+
     @media not (-moz-bool-pref: "natsumi.theme.disable-urlbar-animation") {
       #urlbar-background {
+        /*noinspection CssInvalidFunction*/
         &::before {
           animation: browser-urlbar-loading var(--animation-duration) linear infinite;
           opacity: 1;
