@@ -87,10 +87,20 @@ and delay, change the variables in the config.css file.
   (e.g. Bookmarks).
 - `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
   not recommend using custom CSS to implement Tab Groups at the moment.
-- `natsumi.sidebar.right-gradient`: Moves tabs indicator gradients to the right.
+- `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
+
+## FAQs
+### "Mod xyz has a similar look as Natsumi, did they copy you?"
+Like I've said in the Features section, Natsumi's base UI CSS comes from asev's ZenCss repository.
+This is actually a very popular userchrome among the Zen Browser community, so it's likely that the
+Mod also uses the same userchrome I used.
+
+### "Can I use other userchromes with Natsumi?"
+Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
+userchrome alongside Natsumi Browser.
 
 ## Troubleshooting
 ### "URLbar blur won't work!"
