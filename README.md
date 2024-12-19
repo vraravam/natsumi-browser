@@ -6,12 +6,12 @@
 
 <p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-preview.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-3.png?raw=true)
 
 ## What is Natsumi Browser?
-Natsumi Browser (or Natsumi, for short) is a userchrome made for [Zen
-Browser](https://zen-browser.app) that adds lots of polish to the design by incorporating animations,
-blurs and more. It's pretty much the userchrome I personally use, but made public.
+Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
+that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
+the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
@@ -40,14 +40,22 @@ Groups. Group away to keep things organized!
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
 install it by applying the userChrome.css file to the browser.
 
-Read the [guide for live editing Zen Browser](https://docs.zen-browser.app/guides/live-editing) for more
-details.
+1. Create a new chrome folder in your profile folder
+   ([guide](https://docs.zen-browser.app/guides/live-editing))
+2. Copy userChrome.css to the chrome folder. If the userChrome works, you should get a warning after you
+   restart Zen Browser that you need to copy the natsumi folder to your chrome folder. If this doesn't
+   show up, enable `toolkit.legacyUserProfileCustomizations.stylesheets` and retry.
+3. Copy config.css and natsumi folder to the chrome folder.
+4. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
-and delay, change the variables in the userChrome.css file.
+and delay, change the variables in the config.css file.
 
 ### Base theme
+- `natsumi.theme.clip-path-force-polygon`: Uses polygon instead of inset for URLbar and Zen Sidebar
+  blurring. Enable this if you need this for compatibility with other userchromes/Mods like
+  [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
 - `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
   Zen Browser lags too much.
 - `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs.
@@ -70,12 +78,16 @@ and delay, change the variables in the userChrome.css file.
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
 - `natsumi.sidebar.containers-dashed-border`: Uses dashed border for container tabs instead of solid
   border. Selected tabs will always use solid border.
-- `natsumi.sidebar.containers-right-gradient`: Moves container tabs indicator gradient to the right.
 - `natsumi.sidebar.containers-thicker-gradient`: Makes container tabs indicator gradient "thicker".
+- `natsumi.sidebar.containers-no-inactive-border`: Hides the container tabs indicator border when the
+  tab is not selected.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
+- `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
+  not recommend using custom CSS to implement Tab Groups at the moment.
+- `natsumi.sidebar.right-gradient`: Moves tabs indicator gradients to the right.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
@@ -94,7 +106,11 @@ These are custom options which you need to create. Type in the exact name, then 
 the right to create the config.
 
 ### "Tab groups aren't working!"
-Set `browser.tabs.groups.enabled` to true.
+> [!WARNING]
+> The developer of Zen Browser recommends **against** using custom CSS to implement Tab Groups like
+> Natsumi's for the time being. Proceed at your own risk.
+
+Set `browser.tabs.groups.enabled` and `natsumi.sidebar.enable-tab-groups` to true.
 
 ## Acknowledgements
 Thank you to:
