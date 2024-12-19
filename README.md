@@ -73,7 +73,6 @@ and delay, change the variables in the userChrome.css file.
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
 - `natsumi.sidebar.containers-dashed-border`: Uses dashed border for container tabs instead of solid
   border. Selected tabs will always use solid border.
-- `natsumi.sidebar.containers-right-gradient`: Moves container tabs indicator gradient to the right.
 - `natsumi.sidebar.containers-thicker-gradient`: Makes container tabs indicator gradient "thicker".
 - `natsumi.sidebar.containers-no-inactive-border`: Hides the container tabs indicator border when the
   tab is not selected.
@@ -83,6 +82,7 @@ and delay, change the variables in the userChrome.css file.
   (e.g. Bookmarks).
 - `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
   not recommend using custom CSS to implement Tab Groups at the moment.
+- `natsumi.sidebar.right-gradient`: Moves tabs indicator gradients to the right.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
