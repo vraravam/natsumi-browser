@@ -79,7 +79,7 @@ their author(s) have been provided above the used code.
   0%   {
     opacity: 0;
     scale: 0.5;
-    background: var(--zen-colors-tertiary);
+    background: var(--natsumi-colors-tertiary);
   }
   50% {
     opacity: 1;
@@ -87,7 +87,7 @@ their author(s) have been provided above the used code.
   60% {
     opacity: 1;
     scale: 1.1;
-    background: light-dark(var(--natsumi-primary-color), var(--zen-colors-primary));
+    background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
   }
   100% {
     opacity: 1;
@@ -105,7 +105,7 @@ their author(s) have been provided above the used code.
   }
   60% {
     scale: 1.05;
-    background: light-dark(var(--natsumi-primary-color), var(--zen-colors-primary));
+    background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
   }
   100% {
     opacity: 1;
@@ -161,7 +161,7 @@ their author(s) have been provided above the used code.
       margin-right: 5px !important;
     }
   }
-  
+
   .urlbarView-row-inner {
     border-radius: calc(var(--urlbarView-row-gutter) + var(--toolbarbutton-border-radius));
   }
@@ -195,22 +195,22 @@ their author(s) have been provided above the used code.
   }
 
   .urlbarView-row:hover, .urlbarView-row-inner[selected] {
-    background-color: var(--zen-colors-primary) !important;
+    background-color: var(--natsumi-colors-primary) !important;
 
     .urlbarView-favicon {
       background-color: white !important;
     }
 
     .urlbarView-url, .urlbarView-title-separator::before {
-      color: color-mix(in srgb, var(--zen-colors-primary) 30%, lightgray) !important;
+      color: color-mix(in srgb, var(--natsumi-colors-primary) 30%, lightgray) !important;
     }
   }
-  
+
   .urlbarView-row:hover {
     background: transparent;
 
     .urlbarView-row-inner {
-      background: var(--zen-colors-primary) !important;
+      background: var(--natsumi-colors-primary) !important;
     }
   }
 }
@@ -227,7 +227,7 @@ their author(s) have been provided above the used code.
     backdrop-filter: none;
     background: color-mix(in srgb, var(--zen-branding-bg) 75%, transparent);
     transition: backdrop-filter 0s ease, background 0s ease;
-    
+
     @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
       background: var(--zen-branding-bg);
       transition: none;
@@ -237,7 +237,7 @@ their author(s) have been provided above the used code.
   #urlbar {
     .urlbarView {
       overflow: initial !important;
-      
+
       .urlbarView-title-separator::before {
         color: rgba(20, 20, 20, 0.2) !important;
         opacity: 1 !important;
@@ -246,7 +246,7 @@ their author(s) have been provided above the used code.
           color: rgba(235, 235, 235, 0.2) !important;
         }
       }
-      
+
       &:not([action-override]) {
         .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) {
           .urlbarView-action {
@@ -259,18 +259,18 @@ their author(s) have been provided above the used code.
         }
       }
     }
-    
+
     &[breakout-extend] {
       @media not (-moz-bool-pref: "natsumi.urlbar.light") {
         /* URLbar animations, toggleable to make things lighter. */
-        
+
         animation-name: urlbar-appear;
         animation-duration: var(--animation-duration);
-        
+
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           animation-name: urlbar-appear-sideways;
         }
-        
+
         #urlbar-results {
           animation-name: results-appear;
           animation-duration: var(--animation-duration);
@@ -279,13 +279,13 @@ their author(s) have been provided above the used code.
           .urlbarView-row {
             animation-name: individual-result-appear;
             animation-duration: var(--animation-duration);
-            animation-fill-mode: forwards; 
+            animation-fill-mode: forwards;
             opacity: 0;
 
             .urlbarView-type-icon {
               animation-name: pinned-icon-appear;
               animation-duration: 0.5s;
-              animation-fill-mode: forwards; 
+              animation-fill-mode: forwards;
               opacity: 0;
             }
           }
@@ -361,7 +361,7 @@ their author(s) have been provided above the used code.
               animation-delay: calc((var(--animation-delay) * 8) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
-          
+
           .urlbarView-row:nth-child(10) {
             animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset));
 
@@ -369,7 +369,7 @@ their author(s) have been provided above the used code.
               animation-delay: calc((var(--animation-delay) * 9) + var(--animation-delay-offset) + var(--animation-duration));
             }
           }
-          
+
           .urlbarView-row:nth-child(n+11) {
             animation-delay: calc((var(--animation-delay) * 10) + var(--animation-delay-offset));
 
@@ -384,14 +384,14 @@ their author(s) have been provided above the used code.
         font-size: 20px !important;
         margin-left: 2px !important;
         margin-right: 0 !important;
-        
+
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           margin-left: 4px !important;
         }
 
         /*noinspection CssInvalidFunction*/
         &::-moz-selection {
-          background: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--zen-colors-primary) 60%, white)) !important;
+          background: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 60%, white)) !important;
         }
       }
 
@@ -404,7 +404,7 @@ their author(s) have been provided above the used code.
         padding-left: 6px !important;
         padding-right: 6px !important;
         border-radius: var(--urlbar-icon-border-radius) !important;
-        
+
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           margin-left: 3px !important;
         }
@@ -426,26 +426,26 @@ their author(s) have been provided above the used code.
 
       #urlbar-background {
         backdrop-filter: blur(10px);
-        background: color-mix(in srgb, var(--zen-colors-secondary) 75%, transparent) !important;
+        background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
-        
+
         @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
           transition: none;
           backdrop-filter: none;
-          background: var(--zen-colors-secondary) !important;
+          background: var(--natsumi-colors-secondary) !important;
         }
       }
-      
+
       @media not (-moz-bool-pref: "natsumi.debug.legacy") {
         #identity-box {
           margin-right: 10px !important;
         }
-        
+
         .urlbar-input-container {
           padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
         }
       }
-      
+
       @media (-moz-bool-pref: "natsumi.urlbar.force-nowrap") {
         .urlbarView-no-wrap {
           flex-basis: unset !important;
@@ -463,12 +463,12 @@ their author(s) have been provided above the used code.
           margin-left: 0 !important;
         }
       }
-      
+
       &:not([zen-floating-urlbar="true"]) {
         @media not (-moz-bool-pref: "natsumi.debug.legacy") {
           animation: none !important;
         }
-        
+
         #identity-icon-box {
           margin-left: 10px !important;
         }
@@ -484,13 +484,13 @@ their author(s) have been provided above the used code.
         }
       }
     }
-    
+
     &:is([pageproxystate='invalid']):is([usertyping]) {
       .urlbarView-row, .urlbarView-row .urlbarView-type-icon {
         animation: none !important;
         opacity: 1 !important;
       }
-      
+
       /*
       this is still in the oven
       
@@ -501,9 +501,9 @@ their author(s) have been provided above the used code.
       }
       */
     }
-    
+
     /* URLbar hover animation */
-    
+
     &:not([breakout-extend="true"]) {
       #urlbar-background {
         transition: background 0.2s ease;
@@ -553,18 +553,18 @@ their author(s) have been provided above the used code.
     &:active {
       transform: scale(0.95, 0.95);
     }
-    
+
     &[selected] {
       background: transparent !important;
     }
 
-    &:hover {    
+    &:hover {
       background: transparent !important;
-      
+
       .urlbarView-row-inner {
         background: var(--urlbarView-hover-background) !important;
       }
-      
+
       .urlbarView-button {
         max-width: 24px !important;
         max-height: 24px !important;
@@ -583,18 +583,18 @@ their author(s) have been provided above the used code.
 
   /*noinspection CssInvalidFunction*/
   .urlbarView-row-inner .urlbarView-url {
-    color: light-dark(var(--zen-colors-primary), var(--zen-colors-primary-foreground)) !important;
+    color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
   }
 
   .urlbarView-row:hover .urlbarView-row-inner, .urlbarView-row-inner[selected] {
     /*noinspection CssInvalidFunction*/
     .urlbarView-no-wrap .urlbarView-favicon {
-      background-color: color-mix(in srgb, light-dark(var(--natsumi-primary-color), var(--zen-colors-primary-foreground)) 50%, transparent) !important;
+      background-color: color-mix(in srgb, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
     }
 
     /*noinspection CssInvalidFunction*/
     .urlbarView-url {
-      color: light-dark(var(--zen-colors-primary), var(--zen-colors-primary-foreground)) !important;
+      color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
     }
   }
 
@@ -603,20 +603,20 @@ their author(s) have been provided above the used code.
     --urlbar-box-focus-bgcolor: color-mix(in srgb, currentColor 16%, transparent);
     transition: background-color 0.2s ease !important;
   }
-  
+
   /* Results URL display */
-  
+
   .urlbarView-url {
     --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
-    color: var(--zen-colors-primary-foreground) !important;
+    color: var(--natsumi-colors-primary-foreground) !important;
   }
-  
+
   /* Wrapped indents fix */
-  
+
   .urlbarView-action {
     --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
   }
-  
+
   /* Make borders more visible */
 
   /*noinspection CssInvalidFunction*/

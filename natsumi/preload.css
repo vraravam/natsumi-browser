@@ -36,9 +36,27 @@ The below code applies your config (or default values if needed) and they should
 Edit the config.css file instead.
  */
 
-/* Accent color */
+/* Colors */
 * {
   --natsumi-primary-color: var(--natsumi-accent-color, var(--zen-primary-color));
+  --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+  --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
+  --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);
+  --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, var(--zen-dark-color-mix-base) 80%);
+    --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, var(--zen-dark-color-mix-base) 70%);
+    --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, var(--zen-dark-color-mix-base) 99%);
+    --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+
+    @media (-moz-bool-pref: 'zen.theme.color-prefs.colorful') {
+      --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
+      --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
+      --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);
+      --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+    }
+  }
 }
 
 /* URL bar appear animation */

@@ -144,7 +144,7 @@ their author(s) have been provided above the used code.
           background: linear-gradient(
             90deg,
             var(--natsumi-primary-color) 0%,
-            var(--zen-colors-secondary) 100%
+            var(--natsumi-colors-secondary) 100%
           );
           animation: browser-loading var(--animation-rotation-duration) linear infinite;
           animation-fill-mode: forwards;
@@ -175,12 +175,12 @@ their author(s) have been provided above the used code.
               var(--natsumi-primary-color),
               color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 0%,
-            var(--zen-colors-secondary) 33%,
+            var(--natsumi-colors-secondary) 33%,
             light-dark(
               var(--natsumi-primary-color),
               color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 66%,
-            var(--zen-colors-secondary) 100%
+            var(--natsumi-colors-secondary) 100%
           ) !important;
           transform: translateX(calc(var(--urlbar-width) * -2));
         }
