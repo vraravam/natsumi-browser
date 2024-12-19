@@ -1765,6 +1765,10 @@ menulist[open="true"] menupopup {
           display: none;
         }
       }
+      
+      .zen-workspace-name {
+        color: color-mix(in srgb, var(--toolbarbutton-icon-fill-attention) 70%, light-dark(black, white)) !important;
+      }
     }
   }
 }
