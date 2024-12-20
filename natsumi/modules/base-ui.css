@@ -412,6 +412,23 @@ toolbarbutton[open] {
   }
 }
 
+@keyframes playing-animation {
+  0% {
+    width: 0;
+    opacity: 0;
+  }
+
+  50% {
+    width: 50%;
+    opacity: 1;
+  }
+
+  100% {
+    width: 0;
+    opacity: 0;
+  }
+}
+
 /* Tab hover effect */
 
 .tabbrowser-tab:not([usercontextid]) {
@@ -420,11 +437,6 @@ toolbarbutton[open] {
     display: flex !important;
     height: 100%;
     width: 0;
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
-      transparent
-    );
     transition: width 0.1s ease;
     
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
@@ -440,12 +452,35 @@ toolbarbutton[open] {
   &:is([selected], [multiselected]) {
     .tab-background::before {
       width: 50% !important;
+      animation: none !important;
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
+        transparent
+      ) !important;
     }
   }
   
   &:hover {
     .tab-background::before {
       width: 25%;
+      animation: none !important;
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
+        transparent
+      ) !important;
+    }
+  }
+
+  &:is([soundplaying]):not([muted]) {
+    .tab-background::before {
+      background: linear-gradient(
+        90deg,
+        color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent) 0%,
+        transparent
+      );
+      animation: playing-animation 5s ease-in-out infinite;
     }
   }
 }
