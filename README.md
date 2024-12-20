@@ -88,6 +88,8 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
   not recommend using custom CSS to implement Tab Groups at the moment.
 - `natsumi.sidebar.right-gradient`: Moves tabs indicator gradients to the right.
+- `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown in the
+  pinned section of the vertical tabs.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
