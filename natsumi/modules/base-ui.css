@@ -269,7 +269,9 @@ toolbarbutton[badged="true"]:not([badge]) {
   & .toolbarbutton-badge {
     display: none !important;
   }
-  
+}
+
+#navigator-toolbox toolbarbutton[badged="true"]:not([badge]) {
   & .toolbarbutton-badge-stack {
     background-color: transparent !important;
   }
