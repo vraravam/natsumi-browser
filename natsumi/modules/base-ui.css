@@ -412,23 +412,6 @@ toolbarbutton[open] {
   }
 }
 
-@keyframes playing-animation {
-  0% {
-    width: 0;
-    opacity: 0;
-  }
-
-  50% {
-    width: 50%;
-    opacity: 1;
-  }
-
-  100% {
-    width: 0;
-    opacity: 0;
-  }
-}
-
 /* Tab hover effect */
 
 .tabbrowser-tab:not([usercontextid]) {
@@ -470,17 +453,6 @@ toolbarbutton[open] {
         color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
         transparent
       ) !important;
-    }
-  }
-
-  &:is([soundplaying]):not([muted]) {
-    .tab-background::before {
-      background: linear-gradient(
-        90deg,
-        color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent) 0%,
-        transparent
-      );
-      animation: playing-animation 5s ease-in-out infinite;
     }
   }
 }
