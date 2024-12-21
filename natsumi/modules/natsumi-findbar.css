@@ -34,7 +34,7 @@ their author(s) have been provided above the used code.
   findbar {
     position: absolute;
     top: 20px;
-    width: 620px;
+    width: min(620px, 90%);
     right: 20px;
     min-height: 70px;
     height: auto !important;
@@ -44,18 +44,22 @@ their author(s) have been provided above the used code.
     backdrop-filter: blur(10px);
     border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
     opacity: 1 !important;
-    transition: background 0.2s ease, opacity 0.2s ease, top 0.2s ease !important;
+    transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease !important;
+    box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
 
     /*noinspection CssInvalidPropertyValue*/
     &:is([hidden="true"]) {
       visibility: inherit !important;
+      pointer-events: none !important;
       opacity: 0 !important;
       top: 0 !important;
     }
 
+    /*noinspection CssInvalidFunction*/
     &:has(.findbar-textbox:is([status="notfound"])) {
       @media not (-moz-bool-pref: "natsumi.urlbar.disable-not-found-bg") {
-        background: color-mix(in srgb, rgb(255, 100, 100) 75%, transparent) !important;
+        background: color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, transparent) !important;
+        box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
       }
     }
 
