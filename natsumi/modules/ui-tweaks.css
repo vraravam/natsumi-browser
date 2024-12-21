@@ -176,7 +176,8 @@ their author(s) have been provided above the used code.
 #PanelUI-zen-workspaces-new, menupopup menuitem, menupopup menu,
 #PanelUI-zen-profiles-list .PanelUI-zen-profiles-item,
 #PanelUI-zen-profiles-actions toolbarbutton,
-#TabsToolbar-customization-target toolbarbutton, .findbar-container toolbarbutton {
+#TabsToolbar-customization-target toolbarbutton, .findbar-container toolbarbutton,
+#sidebar-switcher-target {
   transition: background-color 0.2s ease;
 }
 
