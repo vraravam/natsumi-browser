@@ -43,12 +43,17 @@ their author(s) have been provided above the used code.
 }
 
 :root {
-  &:is([inDOMFullscreen="true"]) {
-    /* Patches collapsed view */
-    #navigator-toolbox {
-      padding-top: 0 !important;
+  &:is([inFullscreen]) {
+    /* Patches collapsed view on macOS */
+    @media (-moz-platform: macos) {
+      @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+        #navigator-toolbox {
+          margin-top: -3px !important;
+        }
+      }
     }
-
+  }
+  &:is([inDOMFullscreen="true"]) {
     #zen-sidebar-top-buttons-customization-target {
       padding-top: 3px !important;
     }
