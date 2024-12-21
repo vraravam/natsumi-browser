@@ -81,6 +81,10 @@ and delay, change the variables in the config.css file.
   width.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
 
+### Navbar
+- `natsumi.navbar.floating-navbar`: Makes the navbar float on compact mode.
+- `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
+
 ### Sidebar
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
@@ -95,11 +99,14 @@ and delay, change the variables in the config.css file.
   (e.g. Bookmarks).
 - `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
   not recommend using custom CSS to implement Tab Groups at the moment.
+- `natsumi.sidebar.floating-panel`: Makes the Firefox sidebar panel float.
+- `natsumi.sidebar.panel-glass-effect`: Adds glass effect to Firefox sidebar panel.
+- `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
+- `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
-- `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar so it's consistent with
-  Natsumi URLbar and Natsumi Findbar.
+- `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.

@@ -389,11 +389,7 @@ toolbarbutton[open] {
     transition: width 0.1s ease, background-color 0.2s ease;
 
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
-      background: linear-gradient(
-        270deg,
-        color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
-        transparent
-      );
+      mask-image: linear-gradient(to left, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
       margin-left: auto;
     }
   }
