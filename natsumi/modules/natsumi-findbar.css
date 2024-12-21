@@ -160,6 +160,7 @@ their author(s) have been provided above the used code.
           justify-content: space-between !important;
           padding: 4px !important;
           margin-left: 4px !important;
+          margin-right: 0 !important;
         }
       }
 
