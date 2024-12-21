@@ -157,6 +157,12 @@ the right to create the config.
 
 Set `browser.tabs.groups.enabled` and `natsumi.sidebar.enable-tab-groups` to true.
 
+### "Something's bugged!"
+There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.
+Please disable these then try again.
+
+If the issue still persists, open an issue or report the bug to the developer through Discord.
+
 ## Acknowledgements
 Thank you to:
 - [asev](https://github.com/lunar-os) for ZenCss, which serves as the base for Natsumi Browser's base
