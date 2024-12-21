@@ -422,12 +422,9 @@ toolbarbutton[open] {
     display: flex !important;
     height: 100%;
     width: 0;
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--zen-primary-color) 35%, transparent) 0%,
-      transparent
-    );
-    transition: width 0.1s ease;
+    background-color: var(--zen-primary-color);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+    transition: width 0.1s ease, background-color 0.2s ease;
     
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
       background: linear-gradient(
@@ -450,6 +447,18 @@ toolbarbutton[open] {
     .tab-background::before {
       width: 25%;
       animation: none !important;
+    }
+  }
+
+  &:has(.tab-close-button:hover) {
+    .tab-background::before {
+      background-color: rgb(255, 100, 100);
+    }
+  }
+
+  &:has(.tab-reset-button:hover) {
+    .tab-background::before {
+      background-color: rgb(228, 170, 84);
     }
   }
 }
