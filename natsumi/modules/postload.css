@@ -27,37 +27,7 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
-/* ==== Horizontal tabs patches ==== */
-
-@media not (-moz-bool-pref: "zen.tabs.vertical") {
-  #zen-essentials-container, #vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
-    min-height: 36px;
-  }
-  
-  .tabbrowser-tab[selected] {
-    flex: 2 1 150px !important;
-  }
-  #tabbrowser-arrowscrollbox .tabbrowser-tab[selected] {
-    flex: 2 0 150px !important;
-    transition: scale 0.1s ease-in-out, flex 0.2s ease !important;
-  }
-  #urlbar-container {
-    margin-top: 5px;
-  }
-  #zen-essentials-container .tabbrowser-tab {
-    --tab-min-height: 10px !important;
-  }
-  
-  #vertical-pinned-tabs-container .tab-icon-image {
-    margin-inline-end: calc(var(--toolbarbutton-inner-padding) / 4) !important;
-  }
-  #nav-bar {
-    min-width: 300px !important;
-  }
-  
-  #tabbrowser-tabs {
-    display: flex !important;
-  }
+/* ==== Hide Natsumi not loaded banner (load was successful) ==== */
+* {
+  --natsumi-fail-display: none !important;
 }

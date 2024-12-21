@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Base UI (Sidebars and tabs) ==== */
 /* Based on https://github.com/lunar-os/ZenCss with my own tweaks added */
 
@@ -40,7 +38,7 @@ their author(s) have been provided above the used code.
   #zen-sidebar-web-panel[pinned] {
     /* Zen Sidebar transparency. May cause lag when URLbar is also opened. */
     
-    background: color-mix(in srgb, var(--zen-colors-tertiary) 80%, transparent) !important;
+    background: color-mix(in srgb, var(--natsumi-colors-tertiary) 80%, transparent) !important;
     backdrop-filter: blur(10px);
   }
 }
@@ -96,7 +94,7 @@ their author(s) have been provided above the used code.
 
 #zen-workspaces-button {
   background-color: rgba(255, 255, 255, 0.04) !important;
-  box-shadow: 0px 1px 10px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.1) !important;
   border-radius: 8px !important;
   border: 1px solid #ffffff0c !important;
 }
@@ -155,7 +153,7 @@ their author(s) have been provided above the used code.
       background: rgba(255, 255, 255, 0.1) !important;
       transition: 0.3s !important;
       border: 1px solid #ffffff0a !important;
-      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.062) !important;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.062) !important;
 
       @media (prefers-color-scheme: light) {
         background: rgba(255, 255, 255, 0.7) !important;
@@ -238,11 +236,13 @@ their author(s) have been provided above the used code.
 /* Firefox sidebar panel transparency */
 
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+  /*noinspection CssUnknownProperty*/
   #sidebar-box {
     background-color: transparent !important;
     border: none !important;
     box-shadow: none !important;
 
+    /*noinspection CssUnknownProperty*/
     #sidebar-header {
       border-bottom: none !important;
     }
@@ -269,7 +269,9 @@ toolbarbutton[badged="true"]:not([badge]) {
   & .toolbarbutton-badge {
     display: none !important;
   }
-  
+}
+
+#navigator-toolbox toolbarbutton[badged="true"]:not([badge]) {
   & .toolbarbutton-badge-stack {
     background-color: transparent !important;
   }
@@ -298,19 +300,6 @@ toolbarbutton[badged="true"]:not([badge]) {
   padding-left: 0 !important;
 }
 
-@media (-moz-bool-pref: "natsumi.theme.better-findbar-addon") {
-  findbar {
-    opacity: 1;
-    transition: opacity 0.1s ease, scale 0.1s ease, left 0.1s ease !important;
-  }
-
-  findbar[hidden] {
-    opacity: 0;
-    left: 33.5% !important;
-    scale: 0.5 0.5;
-  }
-}
-
 .toolbarbutton-badge-stack, toolbarbutton image {
   transition: background-color 0.2s ease, transform 0.2s ease !important;
 }
@@ -329,11 +318,11 @@ toolbarbutton[open] {
   0% {
     background: transparent;
   }
-  
+
   50% {
-    background: var(--zen-primary-color);
+    background: var(--natsumi-primary-color);
   }
-  
+
   100% {
     background: transparent;
   }
@@ -343,7 +332,7 @@ toolbarbutton[open] {
   .tab-background {
     animation: alert 2s ease infinite;
   }
-  
+
   .tab-content {
     background: none !important;
   }
@@ -353,19 +342,19 @@ toolbarbutton[open] {
 
 .tabbrowser-tab[usercontextid], .tabbrowser-tab[usercontextid][pinned]:not([zen-essential="true"]) {
   --gradient-width: var(--container-gradient-width);
-  
+
   .tab-background {
     overflow: hidden !important;
     border: 1px solid var(--identity-icon-color) !important;
-    
+
     @media (-moz-bool-pref: "natsumi.sidebar.containers-dashed-border") {
       border: 1px dashed var(--identity-icon-color) !important;
     }
-    
+
     @media (-moz-bool-pref: "natsumi.sidebar.containers-no-inactive-border") {
       border: none !important;
     }
-    
+
     .tab-context-line {
       --container-angle: 90deg;
       @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
@@ -380,31 +369,31 @@ toolbarbutton[open] {
         color-mix(in srgb, var(--identity-icon-color) 50%, transparent) 0%,
         transparent
       ) !important;
-      
+
       @media (-moz-bool-pref: "natsumi.sidebar.containers-thicker-gradient") {
         background: linear-gradient(var(--container-angle), var(--identity-icon-color), var(--identity-icon-color), transparent) !important;
       }
     }
   }
-  
+
   &:hover {
     --gradient-width: var(--container-gradient-width-expanded);
   }
-  
+
   &:is([selected="true"]) {
     --gradient-width: var(--container-gradient-width-expanded);
-    
+
     .tab-background {
       border: 1px solid var(--identity-icon-color) !important;
     }
   }
-  
+
   &:is([zenDefaultUserContextId="true"]) {
     @media (-moz-bool-pref: "zen.workspaces.hide-default-container-indicator") {
       .tab-background {
         border: none !important;
       }
-      
+
       .tab-context-line {
         display: none !important;
       }
@@ -420,32 +409,43 @@ toolbarbutton[open] {
     display: flex !important;
     height: 100%;
     width: 0;
-    background: linear-gradient(
-      90deg,
-      color-mix(in srgb, var(--zen-primary-color) 35%, transparent) 0%,
-      transparent
-    );
-    transition: width 0.1s ease;
-    
+    background-color: var(--zen-primary-color);
+    mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
+    transition: width 0.1s ease, background-color 0.2s ease;
+
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
       background: linear-gradient(
         270deg,
-        color-mix(in srgb, var(--zen-primary-color) 35%, transparent) 0%,
+        color-mix(in srgb, var(--natsumi-primary-color) 35%, transparent) 0%,
         transparent
       );
       margin-left: auto;
     }
   }
-  
+
   &:is([selected], [multiselected]) {
     .tab-background::before {
       width: 50% !important;
+      animation: none !important;
     }
   }
-  
+
   &:hover {
     .tab-background::before {
       width: 25%;
+      animation: none !important;
+    }
+  }
+
+  &:has(.tab-close-button:hover) {
+    .tab-background::before {
+      background-color: rgb(255, 100, 100);
+    }
+  }
+
+  &:has(.tab-reset-button:hover) {
+    .tab-background::before {
+      background-color: rgb(228, 170, 84);
     }
   }
 }

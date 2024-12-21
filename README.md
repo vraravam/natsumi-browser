@@ -15,7 +15,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.2` (Beta) and `1.0.2-t.3 2024-12-18` (Twilight).
+Natsumi has been tested on `1.0.2-b.3` (Beta) and `1.0.2-t.4 2024-12-19` (Twilight).
 
 ## Features
 ### Polished look
@@ -30,6 +30,13 @@ cozy while also having lots of room for search suggestions.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.gif?raw=true)
 
+### Natsumi Findbar
+Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
+the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better
+Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
+
 ### Tab Groups
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
@@ -38,14 +45,18 @@ Groups. Group away to keep things organized!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
-install it by applying the userChrome.css file to the browser.
+install it by copying the files to your profile's chrome folder.
 
-1. Create a new chrome folder in your profile folder
+### If you already have a userChrome.css file
+1. Copy natsumi-config.css and natsumi folder to your chrome folder.
+2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file.
+3. Restart Zen Browser and enjoy!
+
+### If you don't have a userChrome.css file
+1. Create a new chrome folder in your profile folder, if you haven't already.
    ([guide](https://docs.zen-browser.app/guides/live-editing))
-2. Copy userChrome.css to the chrome folder. If the userChrome works, you should get a warning after you
-   restart Zen Browser that you need to copy the natsumi folder to your chrome folder. If this doesn't
-   show up, enable `toolkit.legacyUserProfileCustomizations.stylesheets` and retry.
-3. Copy config.css and natsumi folder to the chrome folder.
+2. Copy userChrome.css to the chrome folder.
+3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
@@ -62,9 +73,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
   quite some GPU.
-- `natsumi.theme.better-findbar-addon`: Enables some tweaks to
-  [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better Find
-  Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 
 ### URLbar
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
@@ -87,12 +95,36 @@ and delay, change the variables in the config.css file.
   (e.g. Bookmarks).
 - `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
   not recommend using custom CSS to implement Tab Groups at the moment.
-- `natsumi.sidebar.right-gradient`: Moves tabs indicator gradients to the right.
-- `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown in the
-  pinned section of the vertical tabs.
+- `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
+- `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
+  in the pinned section of the vertical tabs.
+
+### Findbar
+- `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
+- `natsumi.urlbar.disable-not-found-bg`: Disables red background that appears when there are no
+  results.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
+
+## FAQs
+### "Mod xyz has a similar look as Natsumi, did they copy you?"
+Like I've said in the Features section, Natsumi's base UI CSS comes from asev's ZenCss repository.
+This is actually a very popular userchrome among the Zen Browser community, so it's likely that the
+Mod also uses the same userchrome I used.
+
+### "Can I use other userchromes with Natsumi?"
+Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
+userchrome alongside Natsumi Browser.
+
+### "Can I disable individual features?"
+You're free to disable loading certain modules (CSS files) if you feel like it. But you will still need
+to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
+
+### "Why is userChrome.css so empty?"
+Natsumi Browser uses a system where the userChrome.css file acts as a loader that loads the skin,
+instead of being the file that contains all rules. This way, it's easier for users to quickly enable and
+disable custom CSS.
 
 ## Troubleshooting
 ### "URLbar blur won't work!"

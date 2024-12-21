@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Easier to see tab labels ==== */
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-bigger-tab-label") {
   .tab-text {
@@ -51,17 +49,17 @@ their author(s) have been provided above the used code.
   &::before {
     opacity: 0.4 !important;
     transition: opacity 0.2s ease;
-    background: var(--zen-primary-color) !important;
+    background: var(--natsumi-primary-color) !important;
   }
-
+  
   &:hover::before {
     opacity: 1 !important;
   }
-
+  
   &:is([orient="horizontal"]) {
     margin-top: calc(var(--zen-split-column-gap) / -1.4) !important;
     height: calc(var(--zen-element-separation) * 2 - 3px) !important;
-
+    
     &::before {
       height: 3px;
       width: 30px;
@@ -99,7 +97,7 @@ their author(s) have been provided above the used code.
     opacity: 0;
     transform: translateX(-200px);
   }
-
+  
   100% {
     opacity: 1;
     transform: translateX(0);
@@ -128,7 +126,7 @@ their author(s) have been provided above the used code.
   0% {
     background-color: transparent;
   }
-
+  
   100% {
     background-color: rgba(28, 27, 34, 0.45);
   }
@@ -140,7 +138,7 @@ their author(s) have been provided above the used code.
     margin-top: 50px;
     margin-bottom: -50px;
   }
-
+  
   100% {
     opacity: 1;
     margin-top: 0;
@@ -150,7 +148,7 @@ their author(s) have been provided above the used code.
 
 .browserStack .dialogOverlay:not([hidden="true"]) {
   animation: overlay-appear 0.3s ease;
-
+  
   .dialogBox {
     animation: dialog-appear 0.3s ease;
   }
@@ -177,7 +175,8 @@ their author(s) have been provided above the used code.
 .bookmark-item, .zen-workspace-button, #PanelUI-zen-workspaces-reorder-mode,
 #PanelUI-zen-workspaces-new, menupopup menuitem, menupopup menu,
 #PanelUI-zen-profiles-list .PanelUI-zen-profiles-item,
-#PanelUI-zen-profiles-actions toolbarbutton {
+#PanelUI-zen-profiles-actions toolbarbutton,
+#TabsToolbar-customization-target toolbarbutton, .findbar-container toolbarbutton {
   transition: background-color 0.2s ease;
 }
 
@@ -185,7 +184,8 @@ menulist[open="true"] menupopup {
   animation: menupopup-appear 0.2s ease;
 }
 
-#downloadsHistory, .downloadButton, #editBookmarkPanelRemoveButton, #editBookmarkPanelDoneButton {
+#downloadsHistory, .downloadButton, #editBookmarkPanelRemoveButton, #editBookmarkPanelDoneButton,
+.findbar-closebutton {
   transition: 0.2s ease !important;
 }
 
@@ -200,6 +200,7 @@ menulist[open="true"] menupopup {
         }
       }
 
+      /*noinspection CssInvalidFunction*/
       .zen-workspace-name {
         color: color-mix(in srgb, var(--toolbarbutton-icon-fill-attention) 70%, light-dark(black, white)) !important;
       }

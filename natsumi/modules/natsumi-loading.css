@@ -27,8 +27,6 @@ their author(s) have been provided above the used code.
 
 */
 
-
-
 /* ==== Natsumi loading animation ==== */
 
 @media not (-moz-bool-pref: "natsumi.theme.disable-loading-animations") {
@@ -104,7 +102,7 @@ their author(s) have been provided above the used code.
           --offset: calc(var(--size) / -4);
           content: "";
           position: absolute;
-          background-color: color-mix(in srgb, var(--zen-primary-color) 40%, transparent);
+          background-color: color-mix(in srgb, var(--natsumi-primary-color) 40%, transparent);
           z-index: 0;
           width: var(--size);
           height: var(--size);
@@ -116,11 +114,12 @@ their author(s) have been provided above the used code.
       }
     }
   }
-  
+
   @media not (-moz-bool-pref: "natsumi.theme.disable-urlbar-animation") {
     #urlbar-background {
       overflow: hidden;
 
+      /*noinspection CssInvalidFunction*/
       &::before {
         content: "";
         transition: opacity var(--fadein-duration) ease !important;
@@ -129,8 +128,8 @@ their author(s) have been provided above the used code.
         height: 100%;
         position: absolute;
         background: light-dark(
-          var(--zen-primary-color),
-          color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+          var(--natsumi-primary-color),
+          color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
         ) !important;
       }
     }
@@ -144,8 +143,8 @@ their author(s) have been provided above the used code.
         &::before {
           background: linear-gradient(
             90deg,
-            var(--zen-primary-color) 0%,
-            var(--zen-colors-secondary) 100%
+            var(--natsumi-primary-color) 0%,
+            var(--natsumi-colors-secondary) 100%
           );
           animation: browser-loading var(--animation-rotation-duration) linear infinite;
           animation-fill-mode: forwards;
@@ -163,24 +162,25 @@ their author(s) have been provided above the used code.
         }
       }
     }
-    
+
     @media not (-moz-bool-pref: "natsumi.theme.disable-urlbar-animation") {
       #urlbar-background {
+        /*noinspection CssInvalidFunction*/
         &::before {
           animation: browser-urlbar-loading var(--animation-duration) linear infinite;
           opacity: 1;
           background: linear-gradient(
             90deg,
             light-dark(
-              var(--zen-primary-color),
-              color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+              var(--natsumi-primary-color),
+              color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 0%,
-            var(--zen-colors-secondary) 33%,
+            var(--natsumi-colors-secondary) 33%,
             light-dark(
-              var(--zen-primary-color),
-              color-mix(in srgb, var(--zen-primary-color) 60%, transparent)
+              var(--natsumi-primary-color),
+              color-mix(in srgb, var(--natsumi-primary-color) 60%, transparent)
             ) 66%,
-            var(--zen-colors-secondary) 100%
+            var(--natsumi-colors-secondary) 100%
           ) !important;
           transform: translateX(calc(var(--urlbar-width) * -2));
         }
