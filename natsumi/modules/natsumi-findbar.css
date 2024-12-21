@@ -41,6 +41,20 @@ their author(s) have been provided above the used code.
   }
 }
 
+@keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
 @media not (-moz-bool-pref: "natsumi.findbar.disabled") {
   /*noinspection CssInvalidFunction*/
   findbar {
@@ -75,6 +89,8 @@ their author(s) have been provided above the used code.
       pointer-events: none !important;
       opacity: 0 !important;
       top: 0 !important;
+      animation: glass-disappear 0.2s linear !important;
+      animation-fill-mode: forwards !important;
     }
 
     /*noinspection CssInvalidFunction*/

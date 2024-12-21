@@ -29,6 +29,20 @@ their author(s) have been provided above the used code.
 
 /* ==== Firefox sidebar panel tweaks ==== */
 
+@keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
 @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
   /*noinspection CssUnknownProperty*/
   #sidebar-box {
@@ -74,7 +88,7 @@ their author(s) have been provided above the used code.
 
     @media (-moz-bool-pref: "natsumi.sidebar.panel-glass-effect") {
       background-color: var(--natsumi-glass-background) !important;
-      backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
+      backdrop-filter: blur(var(--natsumi-glass-blur-radius));
       border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
 
       /*noinspection CssInvalidFunction*/
@@ -97,10 +111,12 @@ their author(s) have been provided above the used code.
     }
 
     &:is([hidden]) {
-      display: flex !important;
+      display: flex;
       margin-left: 0;
       opacity: 0;
       pointer-events: none !important;
+      animation: glass-disappear 0.2s linear !important;
+      animation-fill-mode: forwards !important;
     }
   }
 }
@@ -115,6 +131,7 @@ their author(s) have been provided above the used code.
         #titlebar {
           background: var(--natsumi-glass-background) !important;
           border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+          backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
 
           /*noinspection CssInvalidFunction*/
           @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
@@ -133,7 +150,7 @@ their author(s) have been provided above the used code.
             background: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
           }
         }
-        }
+      }
     }
   }
 }
