@@ -39,10 +39,10 @@ their author(s) have been provided above the used code.
 @import "modules/natsumi-loading.css";
 @import "modules/natsumi-findbar.css";
 @import "modules/web-panel.css";
+@import "modules/sidebars.css";
+@import "modules/navbar.css";
 @import "modules/ui-tweaks.css";
 @import "modules/postload.css";
-
-
 
 /* ==== Natsumi Browser not installed warning ==== */
 
