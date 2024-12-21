@@ -77,7 +77,6 @@ their author(s) have been provided above the used code.
       row-gap: 10px;
 
       /*noinspection CssInvalidFunction*/
-
       & > :first-child {
         width: 100% !important;
         margin-top: 5px !important;
@@ -86,7 +85,8 @@ their author(s) have been provided above the used code.
 
         &::before {
           content: "";
-          width: 18px !important;
+          width: 16px !important;
+          min-width: 16px !important;
           background-image: url(chrome://global/skin/icons/search-glass.svg) !important;
           background-repeat: no-repeat;
           margin-top: 4px;
