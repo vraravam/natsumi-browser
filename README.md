@@ -73,9 +73,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
   quite some GPU.
-- `natsumi.theme.better-findbar-addon`: Enables some tweaks to
-  [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better Find
-  Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 
 ### URLbar
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.

@@ -300,19 +300,6 @@ toolbarbutton[badged="true"]:not([badge]) {
   padding-left: 0 !important;
 }
 
-@media (-moz-bool-pref: "natsumi.theme.better-findbar-addon") {
-  findbar {
-    opacity: 1;
-    transition: opacity 0.1s ease, scale 0.1s ease, left 0.1s ease !important;
-  }
-
-  findbar[hidden] {
-    opacity: 0;
-    left: 33.5% !important;
-    scale: 0.5 0.5;
-  }
-}
-
 .toolbarbutton-badge-stack, toolbarbutton image {
   transition: background-color 0.2s ease, transform 0.2s ease !important;
 }
@@ -331,11 +318,11 @@ toolbarbutton[open] {
   0% {
     background: transparent;
   }
-  
+
   50% {
     background: var(--natsumi-primary-color);
   }
-  
+
   100% {
     background: transparent;
   }
@@ -345,7 +332,7 @@ toolbarbutton[open] {
   .tab-background {
     animation: alert 2s ease infinite;
   }
-  
+
   .tab-content {
     background: none !important;
   }
@@ -355,19 +342,19 @@ toolbarbutton[open] {
 
 .tabbrowser-tab[usercontextid], .tabbrowser-tab[usercontextid][pinned]:not([zen-essential="true"]) {
   --gradient-width: var(--container-gradient-width);
-  
+
   .tab-background {
     overflow: hidden !important;
     border: 1px solid var(--identity-icon-color) !important;
-    
+
     @media (-moz-bool-pref: "natsumi.sidebar.containers-dashed-border") {
       border: 1px dashed var(--identity-icon-color) !important;
     }
-    
+
     @media (-moz-bool-pref: "natsumi.sidebar.containers-no-inactive-border") {
       border: none !important;
     }
-    
+
     .tab-context-line {
       --container-angle: 90deg;
       @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
@@ -382,31 +369,31 @@ toolbarbutton[open] {
         color-mix(in srgb, var(--identity-icon-color) 50%, transparent) 0%,
         transparent
       ) !important;
-      
+
       @media (-moz-bool-pref: "natsumi.sidebar.containers-thicker-gradient") {
         background: linear-gradient(var(--container-angle), var(--identity-icon-color), var(--identity-icon-color), transparent) !important;
       }
     }
   }
-  
+
   &:hover {
     --gradient-width: var(--container-gradient-width-expanded);
   }
-  
+
   &:is([selected="true"]) {
     --gradient-width: var(--container-gradient-width-expanded);
-    
+
     .tab-background {
       border: 1px solid var(--identity-icon-color) !important;
     }
   }
-  
+
   &:is([zenDefaultUserContextId="true"]) {
     @media (-moz-bool-pref: "zen.workspaces.hide-default-container-indicator") {
       .tab-background {
         border: none !important;
       }
-      
+
       .tab-context-line {
         display: none !important;
       }
@@ -425,7 +412,7 @@ toolbarbutton[open] {
     background-color: var(--zen-primary-color);
     mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0));
     transition: width 0.1s ease, background-color 0.2s ease;
-    
+
     @media (-moz-bool-pref: "natsumi.sidebar.right-gradient") {
       background: linear-gradient(
         270deg,
@@ -435,14 +422,14 @@ toolbarbutton[open] {
       margin-left: auto;
     }
   }
-  
+
   &:is([selected], [multiselected]) {
     .tab-background::before {
       width: 50% !important;
       animation: none !important;
     }
   }
-  
+
   &:hover {
     .tab-background::before {
       width: 25%;
