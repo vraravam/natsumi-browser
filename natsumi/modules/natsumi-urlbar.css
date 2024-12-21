@@ -485,6 +485,12 @@ their author(s) have been provided above the used code.
           }
         }
       }
+
+      /* Force icon size */
+      #identity-icon {
+        width: 16px !important;
+        height: 16px !important;
+      }
     }
 
     &:is([pageproxystate='invalid']):is([usertyping]) {
