@@ -101,7 +101,7 @@ and delay, change the variables in the config.css file.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
-- `natsumi.urlbar.disable-not-found-bg`: Disables red background that appears when there are no
+- `natsumi.findbar.disable-not-found-bg`: Disables red background that appears when there are no
   results.
 
 ### Misc
