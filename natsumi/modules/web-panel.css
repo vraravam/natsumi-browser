@@ -39,8 +39,12 @@ their author(s) have been provided above the used code.
 
     @media (-moz-bool-pref: "natsumi.sidebar.zen-sidebar-glass-effect") {
       background: var(--natsumi-glass-background) !important;
-      box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
       border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+
+      /*noinspection CssInvalidFunction*/
+      @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+        box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
+      }
 
       /*noinspection CssInvalidFunction*/
       #zen-sidebar-web-header, #zen-sidebar-panels-wrapper {

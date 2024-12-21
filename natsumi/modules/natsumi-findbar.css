@@ -57,8 +57,12 @@ their author(s) have been provided above the used code.
     border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
     opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease !important;
-    box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
     animation: initial-animation 0.2s ease;
+
+    /*noinspection CssInvalidFunction*/
+    @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+      box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
+    }
 
     /* Restore old width */
     @media (-moz-bool-pref: "natsumi.findbar.wider-findbar") {
@@ -77,7 +81,11 @@ their author(s) have been provided above the used code.
     &:has(.findbar-textbox:is([status="notfound"])) {
       @media not (-moz-bool-pref: "natsumi.findbar.disable-not-found-bg") {
         background: color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, transparent) !important;
-        box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
+
+        /*noinspection CssInvalidFunction*/
+        @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+          box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
+        }
       }
     }
 
