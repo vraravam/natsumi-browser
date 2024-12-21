@@ -59,4 +59,10 @@ their author(s) have been provided above the used code.
   #tabbrowser-tabs {
     display: flex !important;
   }
+
+  #TabsToolbar-customization-target {
+    toolbarbutton {
+      width: auto !important;
+    }
+  }
 }
