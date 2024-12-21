@@ -153,12 +153,55 @@ their author(s) have been provided above the used code.
         }
       }
 
+      .found-matches {
+        font-size: 14px !important;
+        margin-top: 10px !important;
+
+        &:not([hidden]) {
+          &::before {
+            background-image: url('chrome://browser/skin/zen-icons/search-page.svg') !important;
+            background-repeat: no-repeat !important;
+            padding-left: 25px !important;
+            color: black !important;
+
+            @media (prefers-color-scheme: dark) {
+              filter: invert();
+            }
+          }
+        }
+      }
+
       .findbar-find-status {
         display: none;
+        margin-left: 29px !important;
+
+        &:is([status="notfound"]) {
+          margin-left: 4px !important;
+          margin-top: 10px !important;
+          font-size: 14px !important;
+          font-weight: normal !important;
+          flex-basis: 100% !important;
+
+          &::before {
+            content: "";
+            min-width: 17px !important;
+            min-height: 17px !important;
+            background-image: url(chrome://global/skin/icons/close.svg) !important;
+            margin-right: 8px !important;
+
+            @media (prefers-color-scheme: dark) {
+              filter: invert();
+            }
+          }
+        }
 
         &:is([data-l10n-id]) {
           display: flex;
         }
+      }
+
+      .checkbox-label {
+        font-size: 12px !important;
       }
     }
   }
