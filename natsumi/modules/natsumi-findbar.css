@@ -29,6 +29,18 @@ their author(s) have been provided above the used code.
 
 /* ==== Findbar ==== */
 
+@keyframes initial-animation {
+  from {
+    top: 0;
+    opacity: 0;
+  }
+
+  to {
+    top: 20px;
+    opacity: 1;
+  }
+}
+
 @media not (-moz-bool-pref: "natsumi.findbar.disabled") {
   /*noinspection CssInvalidFunction*/
   findbar {
@@ -40,12 +52,13 @@ their author(s) have been provided above the used code.
     height: auto !important;
     flex-wrap: wrap;
     border-radius: var(--zen-border-radius);
-    background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent) !important;
+    background: var(--natsumi-glass-background) !important;
     backdrop-filter: blur(10px);
     border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-    opacity: 1 !important;
+    opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease !important;
     box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
+    animation: initial-animation 0.2s ease;
 
     /*noinspection CssInvalidPropertyValue*/
     &:is([hidden="true"]) {
