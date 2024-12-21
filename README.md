@@ -30,6 +30,13 @@ cozy while also having lots of room for search suggestions.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.gif?raw=true)
 
+### Natsumi Findbar
+Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
+the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better
+Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
+
 ### Tab Groups
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
