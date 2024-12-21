@@ -98,6 +98,8 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
+- `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar so it's consistent with
+  Natsumi URLbar and Natsumi Findbar.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.

@@ -37,7 +37,7 @@ their author(s) have been provided above the used code.
     background: color-mix(in srgb, var(--natsumi-colors-tertiary) 80%, transparent) !important;
     backdrop-filter: blur(10px);
 
-    @media (-moz-bool-pref: "natsumi.sidebar.glass-effect") {
+    @media (-moz-bool-pref: "natsumi.sidebar.zen-sidebar-glass-effect") {
       background: var(--natsumi-glass-background) !important;
       box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
       border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
