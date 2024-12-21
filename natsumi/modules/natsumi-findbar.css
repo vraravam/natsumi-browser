@@ -53,7 +53,7 @@ their author(s) have been provided above the used code.
     flex-wrap: wrap;
     border-radius: var(--zen-border-radius);
     background: var(--natsumi-glass-background) !important;
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
     border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
     opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease !important;
@@ -61,7 +61,7 @@ their author(s) have been provided above the used code.
 
     /*noinspection CssInvalidFunction*/
     @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-      box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
     }
 
     /* Restore old width */

@@ -60,6 +60,9 @@ Edit the natsumi-config.css file instead.
 
   /* Glass effect */
   --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+  --natsumi-glass-blur-radius: var(--glass-blur-radius, 10px);
+  --natsumi-glass-shadow-size: var(--glass-shadow-size, 10px);
+  --natsumi-glass-shadow-opacity: var(--glass-shadow-opacity, 75%);
 }
 
 /* URL bar appear animation */

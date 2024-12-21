@@ -45,10 +45,12 @@ their author(s) have been provided above the used code.
       #zen-appcontent-navbar-container {
         background: var(--natsumi-glass-background) !important;
         border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
 
         /*noinspection CssInvalidFunction*/
         @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-          box-shadow: 0 0 10px color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white)) !important;
+          backdrop-filter: none !important;
+          box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
         }
 
         @media not (-moz-bool-pref: "natsumi.navbar.floating-navbar") {
