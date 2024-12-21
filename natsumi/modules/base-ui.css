@@ -449,3 +449,36 @@ toolbarbutton[open] {
     }
   }
 }
+
+@media (-moz-platform: macos) {
+  menuitem, menu {
+    &::before {
+      display: none !important;
+    }
+
+    &:is([type="checkbox"], [type="radio"]) {
+      padding-left: 10px !important;
+
+      .menu-iconic-left {
+        display: none !important;
+      }
+
+      .menu-iconic-text {
+        padding-left: 12px !important;
+      }
+
+      &::before {
+        display: block !important;
+        content: "" !important;
+        padding: 0 !important;
+        min-width: 16px !important;
+      }
+
+      &:is([checked="true"]) {
+        &::before {
+          content: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+        }
+      }
+    }
+  }
+}
