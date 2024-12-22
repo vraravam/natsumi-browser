@@ -47,7 +47,7 @@ Groups. Group away to keep things organized!
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
 viewer, giving it the modern look it really deserves.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-pdf.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-pdf.png?raw=true)
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
