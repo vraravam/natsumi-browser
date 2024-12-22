@@ -58,6 +58,11 @@ their author(s) have been provided above the used code.
       border-bottom: none !important;
     }
   }
+
+  /* Force background to be transparent */
+  .sidebar-panel {
+    background: transparent !important;
+  }
 }
 
 @media (-moz-bool-pref: "natsumi.sidebar.floating-panel") {
