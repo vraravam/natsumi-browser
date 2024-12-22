@@ -102,6 +102,10 @@ and delay, change the variables in the config.css file.
   not recommend using custom CSS to implement Tab Groups at the moment.
 - `natsumi.sidebar.floating-panel`: Makes the Firefox sidebar panel float.
 - `natsumi.sidebar.panel-glass-effect`: Adds glass effect to Firefox sidebar panel.
+- `natsumi.sidebar.panel-position-center`: Vertically centers Firefox sidebar panel if it is floating.
+- `natsumi.sidebar.panel-position-bottom`: Moves Firefox sidebar panel to the bottom if it is floating.
+  Overrides `natsumi.sidebar.panel-position-center` if enabled.
+- `natsumi.sidebar.panel-position-right`: Moves the Firefox sidebar panel to the right if it is floating.
 - `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.

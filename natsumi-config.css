@@ -35,4 +35,8 @@ as they use the correct format.
   /* Container tabs gradient */
   --container-tabs-normal-gradient-width: 25%;
   --container-tabs-expanded-gradient-width: 50%;
+
+  /* Floating Firefox sidebar panels */
+  --ff-sidebar-x-offset: 20px;
+  --ff-sidebar-y-offset: 20px;
 }

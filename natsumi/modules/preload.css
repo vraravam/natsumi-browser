@@ -103,3 +103,8 @@ browser, .browserSidebarContainer.deck-selected {
   --container-gradient-width: var(--container-tabs-normal-gradient-width, 25%);
   --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
 }
+
+#sidebar-box {
+  --natsumi-sidebar-x-offset: var(--ff-sidebar-x-offset, 20px);
+  --natsumi-sidebar-y-offset: var(--ff-sidebar-y-offset, 20px);
+}
