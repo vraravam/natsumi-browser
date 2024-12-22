@@ -8,6 +8,7 @@ as they use the correct format.
 * {
   /* Accent color */
   --natsumi-accent-color: var(--zen-primary-color);
+  --natsumi-pages-accent-color: #a0d490;
 
   /* Natsumi Glass Effect */
   --glass-blur-radius: 10px;
@@ -39,4 +40,7 @@ as they use the correct format.
   /* Floating Firefox sidebar panels */
   --ff-sidebar-x-offset: 20px;
   --ff-sidebar-y-offset: 20px;
+
+  /* pdf.js */
+  --pdfjs-topbar-max-width: 750px; /* use calc(100% - 10px) for max width */
 }

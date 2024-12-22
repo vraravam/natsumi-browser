@@ -43,21 +43,40 @@ Groups. Group away to keep things organized!
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.gif?raw=true)
 
+### Natsumi PDF Viewer
+Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
+viewer, giving it the modern look it really deserves.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-pdf.png?raw=true)
+
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
 install it by copying the files to your profile's chrome folder.
 
-### If you already have a userChrome.css file
+### Natsumi Browser
+#### If you already have a userChrome.css file
 1. Copy natsumi-config.css and natsumi folder to your chrome folder.
 2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file.
 3. Restart Zen Browser and enjoy!
 
-### If you don't have a userChrome.css file
+#### If you don't have a userChrome.css file
 1. Create a new chrome folder in your profile folder, if you haven't already.
    ([guide](https://docs.zen-browser.app/guides/live-editing))
 2. Copy userChrome.css to the chrome folder.
 3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart Zen Browser and enjoy!
+
+### Natsumi Browser Pages
+Natsumi Browser is required.
+
+#### If you already have a userContent.css file
+1. Add `@import "natsumi-pages/natsumi-pages.css";` to the beginning of your userContent.css file.
+2. Restart Zen Browser and enjoy!
+
+#### If you don't have a userContent.css file
+1. Copy userContent.css to the chrome folder.
+2. Copy natsumi-pages folder to the chrome folder.
+3. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
@@ -118,6 +137,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.findbar.disable-not-found-bg`: Disables red background that appears when there are no
   results.
 - `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
+
+### PDF Viewer
+- `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
 
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
