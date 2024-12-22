@@ -138,6 +138,9 @@ and delay, change the variables in the config.css file.
   results.
 - `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
 
+### PDF Viewer
+- `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
+
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
 
