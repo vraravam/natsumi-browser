@@ -96,9 +96,10 @@ their author(s) have been provided above the used code.
   #toolbarContainer {
     position: absolute !important;
     top: 5px !important;
-    left: 5px !important;
-    right: 5px !important;
+    left: 50% !important;
+    transform: translate(-50%, 0);
     width: calc(100% - 10px) !important;
+    max-width: min(var(--natsumi-pdfjs-topbar-max-width), calc(100% - 10px)) !important;
     border-radius: 10px;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
@@ -176,6 +177,47 @@ their author(s) have been provided above the used code.
     #sidebarContent {
       margin-top: 10px !important;
       box-shadow: none !important;
+    }
+
+    .treeItem {
+      a, .treeItems {
+        border-radius: 5px !important;
+        transition: background-color 0.2s ease;
+      }
+
+      .treeItemToggler {
+        &::before {
+          background-color: transparent !important;
+          mask-image: none !important;
+          background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+
+          @media (prefers-color-scheme: dark) {
+            filter: invert();
+          }
+        }
+
+        &.treeItemsHidden::before {
+          background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+        }
+      }
+    }
+
+    .thumbnail{
+      margin-bottom: 22px !important;
+      transition: border-color 0.2s ease;
+
+      &::after {
+        content: attr(data-page-number);
+        display: block;
+        color: black;
+        width: 100%;
+        margin-top: 8px;
+        text-align: center;
+
+        @media (prefers-color-scheme: dark) {
+          color: white;
+        }
+      }
     }
   }
 
@@ -418,43 +460,5 @@ their author(s) have been provided above the used code.
 
   #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
     background-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
-  }
-}
-
-
-.treeItem {
-  a, .treeItems {
-    border-radius: 5px !important;
-    transition: background-color 0.2s ease;
-  }
-
-  .treeItemToggler {
-    &::before {
-      background-color: transparent !important;
-      mask-image: none !important;
-      background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
-
-      @media (prefers-color-scheme: dark) {
-        filter: invert();
-      }
-    }
-
-    &.treeItemsHidden::before {
-      background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
-    }
-  }
-}
-
-.thumbnail{
-  margin-bottom: 22px !important;
-  transition: border-color 0.2s ease;
-
-  &::after {
-    content: attr(data-page-number);
-    display: block;
-    color: white;
-    width: 100%;
-    margin-top: 8px;
-    text-align: center;
   }
 }

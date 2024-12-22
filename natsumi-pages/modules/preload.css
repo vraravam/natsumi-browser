@@ -63,4 +63,7 @@ Edit the natsumi-config.css file instead.
   --natsumi-glass-blur-radius: var(--glass-blur-radius, 10px);
   --natsumi-glass-shadow-size: var(--glass-shadow-size, 10px);
   --natsumi-glass-shadow-opacity: var(--glass-shadow-opacity, 75%);
+
+  /* pdf.js */
+  --natsumi-pdfjs-topbar-max-width: var(--pdfjs-topbar-max-width, 750px);
 }
