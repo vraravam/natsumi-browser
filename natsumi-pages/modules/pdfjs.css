@@ -117,7 +117,7 @@ their author(s) have been provided above the used code.
       padding-right: 5px;
     }
 
-    #secondaryToolbar {
+    .doorHangerRight {
       padding: 5px !important;
       top: 40px !important;
       right: -7px !important;
@@ -139,6 +139,14 @@ their author(s) have been provided above the used code.
 
       &::before, &::after {
         display: none !important;
+      }
+    }
+
+    .thicknessPicker {
+      &::before, &::after {
+        @media (prefers-color-scheme: dark) {
+          background-color: white !important;
+        }
       }
     }
   }
@@ -205,6 +213,14 @@ their author(s) have been provided above the used code.
 
     @media (prefers-color-scheme: dark) {
       border-color: rgba(235, 235, 235, 0.3) !important;
+    }
+  }
+
+  #editorHighlightVisibility .divider {
+    background-color: rgba(20, 20, 20, 0.2) !important;
+
+    @media (prefers-color-scheme: dark) {
+      background-color: rgba(235, 235, 235, 0.3) !important;
     }
   }
 
@@ -368,9 +384,12 @@ their author(s) have been provided above the used code.
     background-image: url('resource://pdf.js/web/images/secondaryToolbarButton-documentProperties.svg') !important;
   }
 
+  #editorStampAddImage::before {
+    background-image: url('chrome://browser/skin/zen-icons/plus.svg') !important;
+  }
+
   #secondaryToolbarToggleButton::before {
     background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
-
   }
 
   /* Sidebar buttons */
@@ -399,5 +418,43 @@ their author(s) have been provided above the used code.
 
   #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
     background-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+  }
+}
+
+
+.treeItem {
+  a, .treeItems {
+    border-radius: 5px !important;
+    transition: background-color 0.2s ease;
+  }
+
+  .treeItemToggler {
+    &::before {
+      background-color: transparent !important;
+      mask-image: none !important;
+      background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+
+      @media (prefers-color-scheme: dark) {
+        filter: invert();
+      }
+    }
+
+    &.treeItemsHidden::before {
+      background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+    }
+  }
+}
+
+.thumbnail{
+  margin-bottom: 22px !important;
+  transition: border-color 0.2s ease;
+
+  &::after {
+    content: attr(data-page-number);
+    display: block;
+    color: white;
+    width: 100%;
+    margin-top: 8px;
+    text-align: center;
   }
 }
