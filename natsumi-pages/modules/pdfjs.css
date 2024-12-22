@@ -127,7 +127,7 @@ their author(s) have been provided above the used code.
       border-radius: 10px !important;
       border: 1px solid rgba(20, 20, 20, 0.2) !important;
       box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), black) !important;
-      animation: secondary-appear 0.3s ease;
+      animation: secondary-appear 0.2s ease;
 
       &.hidden {
         animation: none !important;
