@@ -115,6 +115,10 @@ their author(s) have been provided above the used code.
         box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), white) !important;
       }
 
+      &:has(#loadingBar.hidden) {
+        overflow: visible !important;
+      }
+
       #toolbarViewer {
         padding-left: 5px;
         padding-right: 5px;
