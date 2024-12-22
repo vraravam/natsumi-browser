@@ -47,17 +47,30 @@ Groups. Group away to keep things organized!
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
 install it by copying the files to your profile's chrome folder.
 
-### If you already have a userChrome.css file
+### Natsumi Browser
+#### If you already have a userChrome.css file
 1. Copy natsumi-config.css and natsumi folder to your chrome folder.
 2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file.
 3. Restart Zen Browser and enjoy!
 
-### If you don't have a userChrome.css file
+#### If you don't have a userChrome.css file
 1. Create a new chrome folder in your profile folder, if you haven't already.
    ([guide](https://docs.zen-browser.app/guides/live-editing))
 2. Copy userChrome.css to the chrome folder.
 3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart Zen Browser and enjoy!
+
+### Natsumi Browser Pages
+Natsumi Browser is required.
+
+#### If you already have a userContent.css file
+1. Add `@import "natsumi-pages/natsumi-pages.css";` to the beginning of your userContent.css file.
+2. Restart Zen Browser and enjoy!
+
+#### If you don't have a userContent.css file
+1. Copy userContent.css to the chrome folder.
+2. Copy natsumi-pages folder to the chrome folder.
+3. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
