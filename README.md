@@ -67,8 +67,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.clip-path-force-polygon`: Uses polygon instead of inset for URLbar and Zen Sidebar
   blurring. Enable this if you need this for compatibility with other userchromes/Mods like
   [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
-- `natsumi.theme.disable-blur`: Disables blurring for Natsumi URLbar and Zen Sidebar. Use this if
-  Zen Browser lags too much.
+- `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
+  too much.
+- `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
 - `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
@@ -101,6 +102,10 @@ and delay, change the variables in the config.css file.
   not recommend using custom CSS to implement Tab Groups at the moment.
 - `natsumi.sidebar.floating-panel`: Makes the Firefox sidebar panel float.
 - `natsumi.sidebar.panel-glass-effect`: Adds glass effect to Firefox sidebar panel.
+- `natsumi.sidebar.panel-position-center`: Vertically centers Firefox sidebar panel if it is floating.
+- `natsumi.sidebar.panel-position-bottom`: Moves Firefox sidebar panel to the bottom if it is floating.
+  Overrides `natsumi.sidebar.panel-position-center` if enabled.
+- `natsumi.sidebar.panel-position-right`: Moves the Firefox sidebar panel to the right if it is floating.
 - `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
@@ -155,6 +160,12 @@ the right to create the config.
 > Natsumi's for the time being. Proceed at your own risk.
 
 Set `browser.tabs.groups.enabled` and `natsumi.sidebar.enable-tab-groups` to true.
+
+### "Something's bugged!"
+There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.
+Please disable these then try again.
+
+If the issue still persists, open an issue or report the bug to the developer through Discord.
 
 ## Acknowledgements
 Thank you to:

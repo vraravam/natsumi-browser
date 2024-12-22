@@ -60,6 +60,9 @@ Edit the natsumi-config.css file instead.
 
   /* Glass effect */
   --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+  --natsumi-glass-blur-radius: var(--glass-blur-radius, 10px);
+  --natsumi-glass-shadow-size: var(--glass-shadow-size, 10px);
+  --natsumi-glass-shadow-opacity: var(--glass-shadow-opacity, 75%);
 }
 
 /* URL bar appear animation */
@@ -99,4 +102,9 @@ browser, .browserSidebarContainer.deck-selected {
 .tabbrowser-tab {
   --container-gradient-width: var(--container-tabs-normal-gradient-width, 25%);
   --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
+}
+
+#sidebar-box {
+  --natsumi-sidebar-x-offset: var(--ff-sidebar-x-offset, 20px);
+  --natsumi-sidebar-y-offset: var(--ff-sidebar-y-offset, 20px);
 }
