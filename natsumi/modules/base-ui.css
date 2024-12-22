@@ -37,8 +37,8 @@ their author(s) have been provided above the used code.
 /* Add borders for pinned tabs (including Essentials) */
 
 .tabbrowser-tab[pinned] .tab-background {
-	border-top: 1px solid #ffffff1f !important;
-	border-bottom: 1px solid #0000001f !important;
+  border-top: 1px solid #ffffff1f !important;
+  border-bottom: 1px solid #0000001f !important;
 }
 
 .tab-icon-overlay {
@@ -50,7 +50,7 @@ their author(s) have been provided above the used code.
   border-top: 1px solid #ffffff2d !important;
   border-bottom: 1px solid #0000002d !important;
   background-color: rgba(255, 255, 255, 0.17);
-  
+
   @media (prefers-color-scheme: light) {
     border-top: 1px solid #8888882d !important;
     background-color: var(--tab-selected-bgcolor) !important;
@@ -58,8 +58,8 @@ their author(s) have been provided above the used code.
 }
 
 .tabbrowser-tab[pinned] .tab-background:is([selected], [multiselected]) {
-	border-top: 1px solid #ffffff1f !important;
-	border-bottom: 1px solid #0000001f !important;
+  border-top: 1px solid #ffffff1f !important;
+  border-bottom: 1px solid #0000001f !important;
 }
 
 .tabbrowser-tab .tab-background{
@@ -76,7 +76,7 @@ their author(s) have been provided above the used code.
   border-left: 0 !important;
   border-right: 0 !important;
   background-color: rgba(255, 255, 255, 0.17) !important;
-  
+
   @media (prefers-color-scheme: light) {
     border-top: 1px solid #8888882d !important;
     background-color: var(--tab-selected-bgcolor) !important;
@@ -95,7 +95,7 @@ their author(s) have been provided above the used code.
 .close-icon {
   transition: background-color 0.1s ease-out;
 }
-  
+
 .close-icon:hover {
   background-color: rgba(255, 100, 100, 0.90) !important;
   transition: background-color 0.1s ease-in;
@@ -164,7 +164,7 @@ their author(s) have been provided above the used code.
 
 #zen-current-workspace-indicator {
   padding: 10px calc(4px + var(--tab-inline-padding)) !important;
-  font-weight: 500 !important; 
+  font-weight: 500 !important;
 }
 
 .tab-label:not([fadein]){
@@ -172,7 +172,7 @@ their author(s) have been provided above the used code.
 }
 
 #urlbar-background {
-	border: 1px solid #ffffff13 !important;
+  border: 1px solid #ffffff13 !important;
 }
 
 /* Shrink on click */
@@ -182,7 +182,7 @@ their author(s) have been provided above the used code.
   & .tab-stack {
     opacity: 1;
     transition: transform 0.2s ease;
-    
+
     & .tab-background, .tab-content .tab-icon-stack, .tab-content .tab-label-container {
       opacity: 1 !important;
       transition: background 0.2s ease, opacity 0.2s ease;
@@ -192,15 +192,15 @@ their author(s) have been provided above the used code.
 
 .tabbrowser-tab:active {
   scale: unset !important;
-  
+
   & .tab-stack {
     transform: scale(0.95, 0.95) !important;
-    
+
     &:has(.tab-close-button:active) {
       & .tab-background, .tab-content .tab-icon-stack, .tab-content .tab-label-container {
         opacity: 0.3 !important;
       }
-      
+
       transform: unset !important;
     }
   }
@@ -217,11 +217,11 @@ their author(s) have been provided above the used code.
 /* Reset pinned tabs icon transition */
 
 .reset-icon {
-	transition: background-color 0.1s ease-out;
+  transition: background-color 0.1s ease-out;
 }
 
 .reset-icon:hover {
-	transition: background-color 0.1s ease-in;
+  transition: background-color 0.1s ease-in;
 }
 
 /* Multiple toolbars patch */
@@ -340,9 +340,9 @@ toolbarbutton[open] {
       width: var(--gradient-width) !important;
       height: 100% !important;
       background: linear-gradient(
-        var(--container-angle),
-        color-mix(in srgb, var(--identity-icon-color) 50%, transparent) 0%,
-        transparent
+              var(--container-angle),
+              color-mix(in srgb, var(--identity-icon-color) 50%, transparent) 0%,
+              transparent
       ) !important;
 
       @media (-moz-bool-pref: "natsumi.sidebar.containers-thicker-gradient") {
@@ -455,5 +455,23 @@ toolbarbutton[open] {
         }
       }
     }
+  }
+}
+
+/*noinspection CssInvalidFunction*/
+#fullscreen-warning {
+  background-color: var(--natsumi-glass-background) !important;
+  backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+  border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+  opacity: 1;
+  transition: transform 0.2s ease, opacity 0.4s ease !important;
+
+  &:not([onscreen]), &:is([hidden]) {
+    transform: translate(-50%, -10px) !important;
+    opacity: 0;
+  }
+
+  @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+    box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
   }
 }
