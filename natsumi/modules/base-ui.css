@@ -458,20 +458,28 @@ toolbarbutton[open] {
   }
 }
 
-/*noinspection CssInvalidFunction*/
-#fullscreen-warning {
-  background-color: var(--natsumi-glass-background) !important;
-  backdrop-filter: blur(var(--natsumi-glass-blur-radius));
-  border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-  opacity: 1;
-  transition: transform 0.2s ease, opacity 0.4s ease !important;
+@media (-moz-bool-pref: "natsumi.theme.fullscreen-glass-effect") {
+  /*noinspection CssInvalidFunction*/
+  #fullscreen-warning {
+    background-color: var(--natsumi-glass-background) !important;
+    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+    opacity: 1;
+    transition: transform 0.2s ease, opacity 0.4s ease !important;
 
-  &:not([onscreen]), &:is([hidden]) {
-    transform: translate(-50%, -10px) !important;
-    opacity: 0;
-  }
+    &:not([onscreen]), &:is([hidden]) {
+      transform: translate(-50%, -10px) !important;
+      opacity: 0;
+    }
 
-  @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-    box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
+    @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
+    }
+
+    @media (prefers-color-scheme: light) {
+      &::before, .pointerlockfswarning-domain-text {
+        color: black !important;
+      }
+    }
   }
 }
