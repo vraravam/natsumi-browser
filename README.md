@@ -67,16 +67,17 @@ install it by copying the files to your profile's chrome folder.
 4. Restart Zen Browser and enjoy!
 
 ### Natsumi Browser Pages
-Natsumi Browser is required.
-
 #### If you already have a userContent.css file
 1. Add `@import "natsumi-pages/natsumi-pages.css";` to the beginning of your userContent.css file.
 2. Restart Zen Browser and enjoy!
 
 #### If you don't have a userContent.css file
-1. Copy userContent.css to the chrome folder.
-2. Copy natsumi-pages folder to the chrome folder.
-3. Restart Zen Browser and enjoy!
+1. Create a new chrome folder in your profile folder, if you haven't already.
+   ([guide](https://docs.zen-browser.app/guides/live-editing))
+2. Copy userContent.css to the chrome folder.
+3. Copy natsumi-config.css to the chrome folder, if you haven't already.
+4. Copy natsumi-pages folder to the chrome folder.
+5. Restart Zen Browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration

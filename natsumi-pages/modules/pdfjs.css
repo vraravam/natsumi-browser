@@ -108,10 +108,15 @@ their author(s) have been provided above the used code.
       border: 1px solid rgba(20, 20, 20, 0.2) !important;
       box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), black) !important;
       animation: pdfjs-appear 0.3s ease;
+      overflow: hidden !important;
 
       @media (prefers-color-scheme: dark) {
         border-color: rgba(235, 235, 235, 0.3) !important;
         box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), white) !important;
+      }
+
+      &:has(#loadingBar.hidden) {
+        overflow: visible !important;
       }
 
       #toolbarViewer {
@@ -149,6 +154,16 @@ their author(s) have been provided above the used code.
           @media (prefers-color-scheme: dark) {
             background-color: white !important;
           }
+        }
+      }
+
+      #loadingBar {
+        top: unset !important;
+        bottom: 0 !important;
+        border: none !important;
+
+        .progress {
+          background-color: var(--natsumi-primary-color) !important;
         }
       }
     }
