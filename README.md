@@ -15,12 +15,12 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.3` (Beta) and `1.0.2-t.4 2024-12-19` (Twilight).
+Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.0.2-t.4 2024-12-19` (Twilight).
 
 ## Features
 ### Polished look
-Natsumi Browser's looks are based on asev's [ZenCss](https://github.com/lunar-os/ZenCss), with some
-additional tweaks and patches added on top to create a beautiful and polished experience.
+Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
+keeping much of Zen Browser's design.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.gif?raw=true)
 
@@ -193,8 +193,8 @@ If the issue still persists, open an issue or report the bug to the developer th
 
 ## Acknowledgements
 Thank you to:
-- [asev](https://github.com/lunar-os) for ZenCss, which serves as the base for Natsumi Browser's base
-  CSS, and the tab appear animation
+- [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
+  CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
