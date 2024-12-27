@@ -1,4 +1,4 @@
-name: Bento test
+name: Bento package
 
 on: [push, pull_request]
 
@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m zenbento package
           cd .zenbento
-          zip -r package.zip package
+          zip -r ../package.zip package
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
