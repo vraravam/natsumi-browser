@@ -16,5 +16,16 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install git+https://github.com/greeeen-dev/zenbento.py.git
+      - name: Install zip
+        run: |
+          apt-get update
+          apt-get install zip
       - name: Package
-        run: python -m zenbento package
+        run: |
+          python -m zenbento package
+          zip -r package.zip .zenbento/package
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: package
+          path: "package.zip"
