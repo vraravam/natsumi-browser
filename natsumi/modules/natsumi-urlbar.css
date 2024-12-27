@@ -217,6 +217,7 @@ their author(s) have been provided above the used code.
 
 /* URLbar styling */
 
+/*noinspection CssInvalidFunction*/
 @media not (-moz-bool-pref: "natsumi.urlbar.disabled") {
   * {
     --urlbarView-item-block-padding: 4px !important;
@@ -532,7 +533,7 @@ their author(s) have been provided above the used code.
 
     .urlbarView-row-inner {
       border-radius: 8px !important;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .urlbarView-title, .urlbarView-url {
@@ -574,7 +575,9 @@ their author(s) have been provided above the used code.
       background: transparent !important;
 
       .urlbarView-row-inner {
-        background: var(--urlbarView-hover-background) !important;
+        transform: scale(1.01, 1.01) !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
       }
 
       .urlbarView-button {
@@ -589,22 +592,21 @@ their author(s) have been provided above the used code.
     }
 
     .urlbarView-row-inner[selected] {
-      background: var(--urlbarView-hover-background) !important;
+      transform: scale(1.01, 1.01) !important;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+      background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
     }
   }
 
-  /*noinspection CssInvalidFunction*/
   .urlbarView-row-inner .urlbarView-url {
     color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
   }
 
   .urlbarView-row:hover .urlbarView-row-inner, .urlbarView-row-inner[selected] {
-    /*noinspection CssInvalidFunction*/
     .urlbarView-no-wrap .urlbarView-favicon {
-      background-color: color-mix(in srgb, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
+      background-color: color-mix(in srgb, light-dark(rgba(0, 0, 0, 0.3), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
     }
 
-    /*noinspection CssInvalidFunction*/
     .urlbarView-url {
       color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
     }

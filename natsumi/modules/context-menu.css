@@ -27,12 +27,45 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser Pages ==== */
+/* ==== Context menu (right click) patches ==== */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/pdfjs.css";
-@import "modules/ff-home.css";
-@import "modules/preferences.css";
+@media (-moz-platform: macos) {
+  menuitem, menu {
+    &::before {
+      display: none !important;
+    }
 
-/* Do NOT enter any additional CSS below. */
+    &:is([type="checkbox"], [type="radio"]) {
+      padding-left: 10px !important;
+
+      .menu-iconic-left {
+        display: none !important;
+      }
+
+      .menu-iconic-text {
+        padding-left: 12px !important;
+      }
+
+      &::before {
+        display: block !important;
+        content: "" !important;
+        padding: 0 !important;
+        min-width: 16px !important;
+      }
+
+      &:is([checked="true"]) {
+        &::before {
+          content: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+
+          @media (prefers-color-scheme: dark) {
+            filter: invert();
+          }
+        }
+      }
+    }
+  }
+
+  menupopup menupopup menuitem[checked="true"]::before {
+    filter: none !important;
+  }
+}

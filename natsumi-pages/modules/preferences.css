@@ -27,12 +27,11 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser Pages ==== */
+/* ==== Settings tweaks ==== */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/pdfjs.css";
-@import "modules/ff-home.css";
-@import "modules/preferences.css";
-
-/* Do NOT enter any additional CSS below. */
+@-moz-document url-prefix(about:preferences) {
+  /* Patch layout list width on small screens */
+  #zenLayoutList {
+    flex-wrap: wrap !important;
+  }
+}

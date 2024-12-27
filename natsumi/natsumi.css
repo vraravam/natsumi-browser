@@ -32,7 +32,7 @@ their author(s) have been provided above the used code.
 @import "../natsumi-config.css";
 @import "modules/preload.css";
 @import "modules/patches.css";
-@import "modules/base-ui.css";
+@import "modules/natsumi-base.css";
 @import "modules/tab-groups.css";
 @import "modules/horizontal-tabs.css";
 @import "modules/natsumi-urlbar.css";
@@ -41,6 +41,7 @@ their author(s) have been provided above the used code.
 @import "modules/web-panel.css";
 @import "modules/sidebars.css";
 @import "modules/navbar.css";
+@import "modules/context-menu.css";
 @import "modules/ui-tweaks.css";
 @import "modules/postload.css";
 
