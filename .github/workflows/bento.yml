@@ -18,12 +18,13 @@ jobs:
           pip install git+https://github.com/greeeen-dev/zenbento.py.git
       - name: Install zip
         run: |
-          sudo apt-get update
-          sudo apt-get install -y zip
+          apt-get update
+          apt-get install zip
       - name: Package
         run: |
           python -m zenbento package
-          zip -r package.zip .zenbento/package
+          cd .zenbento
+          zip -r package.zip package
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
