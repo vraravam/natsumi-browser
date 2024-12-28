@@ -326,6 +326,7 @@ their author(s) have been provided above the used code.
       overflow: hidden !important;
       resize: horizontal !important;
       margin-left: auto !important;
+      min-width: 80px !important;
     }
   }
 }
