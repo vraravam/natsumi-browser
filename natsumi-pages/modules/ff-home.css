@@ -43,6 +43,12 @@ their author(s) have been provided above the used code.
       }
     }
 
+    @media (-moz-bool-pref: "natsumi.home.custom-background") {
+      body {
+        background-image: var(--natsumi-home-bg) !important;
+      }
+    }
+
     .customize-menu {
       height: calc(100% - 20px) !important;
       top: 10px !important;

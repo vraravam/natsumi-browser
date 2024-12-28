@@ -144,6 +144,10 @@ and delay, change the variables in the config.css file.
 ### PDF Viewer
 - `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
 
+### Home
+- `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
+- `natsumi.home.custom-background`: Uses the custom background set as the home screen background.
+
 ### Misc
 - `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
 
