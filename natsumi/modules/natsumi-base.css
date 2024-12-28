@@ -186,6 +186,10 @@ their author(s) have been provided above the used code.
 #zen-essentials-container .tabbrowser-tab {
   overflow: visible !important;
 
+  @media not (-moz-bool-pref: "zen.workspaces.show-workspace-indicator") {
+    margin-bottom: 5px !important;
+  }
+
   .tab-background {
     box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.3) !important;
   }
