@@ -179,17 +179,30 @@ their author(s) have been provided above the used code.
 
 /* Essentials */
 
+#zen-essentials-container {
+  overflow: visible !important;
+}
+
 #zen-essentials-container .tabbrowser-tab {
+  overflow: visible !important;
+
   .tab-background {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-    border-bottom: 1px solid rgba(40, 40, 40, 0.3);
+    box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.3) !important;
+  }
 
-    &::before {
-      opacity: 0 !important;
+  &:not([usercontextid]) .tab-background {
+    border: 1px solid var(--natsumi-primary-color) !important;
+
+    @media (prefers-color-scheme: dark) {
+      border: 1px solid var(--natsumi-colors-primary) !important;
     }
+  }
 
-    &::after {
-      opacity: 0 !important;
+  &:not([selected]) .tab-background {
+    background: rgba(0, 0, 0, 0.05) !important;
+
+    @media (prefers-color-scheme: dark) {
+      background: transparent !important;
     }
   }
 
@@ -197,10 +210,6 @@ their author(s) have been provided above the used code.
     .tab-stack {
       transform: scale(0.94, 0.94) !important;
     }
-  }
-
-  &[selected]:not([usercontextid]) .tab-background {
-    border: none !important;
   }
 }
 
@@ -218,7 +227,7 @@ their author(s) have been provided above the used code.
       }
     }
 
-    &.unified-extensions-item-action-button, &#PanelUI-menu-button, &#zen-profile-button {
+    &.unified-extensions-item-action-button, &#PanelUI-menu-button, &#zen-profile-button, &#downloads-button {
       overflow: visible !important;
 
       .toolbarbutton-badge-stack {
