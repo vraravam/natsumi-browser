@@ -129,6 +129,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.panel-position-right`: Moves the Firefox sidebar panel to the right if it is floating.
 - `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
+- `natsumi.sidebar.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.

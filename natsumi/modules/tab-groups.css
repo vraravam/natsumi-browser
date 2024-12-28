@@ -282,7 +282,7 @@ their author(s) have been provided above the used code.
   }
 }
 
-@media (-moz-bool-pref: "natsumi.theme.resizable-tabs") {
+@media (-moz-bool-pref: "natsumi.sidebar.resizable-tabs") {
   #tabbrowser-arrowscrollbox {
     tab-group .tabbrowser-tab {
       /*noinspection CssInvalidPropertyValue*/
