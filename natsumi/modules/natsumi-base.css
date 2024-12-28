@@ -319,14 +319,16 @@ their author(s) have been provided above the used code.
 /* Resizable tabs (WARNING: very weird, not recommended) */
 
 @media (-moz-bool-pref: "natsumi.sidebar.resizable-tabs") {
-  #tabbrowser-arrowscrollbox {
-    .tabbrowser-tab:not(:has(tab-group)) {
-      /*noinspection CssInvalidPropertyValue*/
-      width: -moz-available;
-      overflow: hidden !important;
-      resize: horizontal !important;
-      margin-left: auto !important;
-      min-width: 80px !important;
+  @media (-moz-bool-pref: "zen.tabs.vertical") {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab:not(:has(tab-group)) {
+        /*noinspection CssInvalidPropertyValue*/
+        width: -moz-available;
+        overflow: hidden !important;
+        resize: horizontal !important;
+        margin-left: auto !important;
+        min-width: 80px !important;
+      }
     }
   }
 }

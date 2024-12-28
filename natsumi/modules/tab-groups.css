@@ -283,13 +283,15 @@ their author(s) have been provided above the used code.
 }
 
 @media (-moz-bool-pref: "natsumi.sidebar.resizable-tabs") {
-  #tabbrowser-arrowscrollbox {
-    tab-group .tabbrowser-tab {
-      /*noinspection CssInvalidPropertyValue*/
-      width: -moz-available !important;
-      overflow: visible !important;
-      resize: none !important;
-      margin-left: 8px !important;
+  @media (-moz-bool-pref: "zen.tabs.vertical") {
+    #tabbrowser-arrowscrollbox {
+      tab-group .tabbrowser-tab {
+        /*noinspection CssInvalidPropertyValue*/
+        width: -moz-available !important;
+        overflow: visible !important;
+        resize: none !important;
+        margin-left: 8px !important;
+      }
     }
   }
 }
