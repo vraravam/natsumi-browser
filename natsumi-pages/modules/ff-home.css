@@ -174,6 +174,10 @@ their author(s) have been provided above the used code.
         &:hover {
           background-color: var(--toolbarbutton-hover-background) !important;
         }
+
+        &:has(.context-menu) {
+          background-color: var(--toolbarbutton-active-background) !important;
+        }
       }
     }
 
