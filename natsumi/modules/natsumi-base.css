@@ -63,6 +63,7 @@ their author(s) have been provided above the used code.
 
 .tabbrowser-tab {
   scale: unset !important;
+  max-width: calc(var(--zen-sidebar-width) - 4px) !important; /* needed to prevent borking resizable tabs */
 
   .tab-stack {
     transition: transform 0.2s ease !important;
@@ -181,12 +182,12 @@ their author(s) have been provided above the used code.
   }
 }
 
-.tab-close-button {
+.tab-close-button, .tab-reset-button {
   transition: background 0.2s ease;
+}
 
-  &:hover {
-    background: rgb(255, 100, 100) !important;
-  }
+.tab-close-button &:hover {
+  background: rgb(255, 100, 100) !important;
 }
 
 /* Essentials */
@@ -238,6 +239,12 @@ their author(s) have been provided above the used code.
 
       @media (prefers-color-scheme: dark) {
         border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+    }
+
+    &[selected] {
+      .tab-background {
+        border: none !important;
       }
     }
   }
@@ -325,9 +332,12 @@ their author(s) have been provided above the used code.
         /*noinspection CssInvalidPropertyValue*/
         width: -moz-available;
         overflow: hidden !important;
-        resize: horizontal !important;
         margin-left: auto !important;
         min-width: 80px !important;
+
+        &:hover {
+          resize: horizontal !important;
+        }
       }
     }
   }
