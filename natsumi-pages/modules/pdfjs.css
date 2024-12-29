@@ -382,7 +382,7 @@ their author(s) have been provided above the used code.
     }
 
     #viewBookmark::before {
-      background-image: url('chrome://browser/skin/zen-icons/bookmark-hollow.svg') !important;
+      background-image: url('resource://pdf.js/web/images/toolbarButton-bookmark.svg') !important;
     }
 
     #firstPage::before {
