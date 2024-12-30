@@ -134,6 +134,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 - `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
+- `natsumi.sidebar.border-all`: Adds a border to all tabs irrespective of whether its the active tab or not.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.

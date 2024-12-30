@@ -114,7 +114,9 @@ their author(s) have been provided above the used code.
 
   &[usercontextid] {
     .tab-background {
-      border: 1px solid var(--identity-tab-color) !important;
+      @media (-moz-bool-pref: "natsumi.sidebar.border-all") {
+        border: 1px solid var(--identity-tab-color) !important;
+      }
 
       &::before {
         opacity: 1;
