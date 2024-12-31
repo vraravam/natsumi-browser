@@ -129,12 +129,12 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.panel-position-right`: Moves the Firefox sidebar panel to the right if it is floating.
 - `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.right-gradient`: Moves tabs and containers indicator gradients to the right.
-- `natsumi.sidebar.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 - `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
-- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether its the active tab or not.
+- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
+  active tab or not.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
@@ -149,8 +149,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
 - `natsumi.home.custom-background`: Uses the custom background set as the home screen background.
 
-### Misc
-- `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
+### Experiments
+- `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
+- `natsumi.sidebar.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"

@@ -42,6 +42,7 @@ their author(s) have been provided above the used code.
 @import "modules/sidebars.css";
 @import "modules/navbar.css";
 @import "modules/context-menu.css";
+@import "modules/experiments.css";
 @import "modules/ui-tweaks.css";
 @import "modules/postload.css";
 
