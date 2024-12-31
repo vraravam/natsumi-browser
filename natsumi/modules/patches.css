@@ -35,7 +35,7 @@ their author(s) have been provided above the used code.
 @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
   browser {
     clip-path: inset(0% 0% 0% 0% round var(--zen-webview-border-radius, var(--zen-border-radius)));
-    
+
     @media not (-moz-bool-pref: "natsumi.theme.clip-path-force-polygon") {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
@@ -116,6 +116,12 @@ toolbarbutton[badged="true"]:not([badge]) {
 
 #PersonalToolbar {
   padding-left: 0 !important;
+}
+
+#downloads-button image {
+  @media (prefers-color-scheme: light) {
+    --toolbarbutton-icon-fill-attention: color-mix(in srgb, var(--zen-primary-color) 75%, black) !important;
+  }
 }
 
 
