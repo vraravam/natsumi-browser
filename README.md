@@ -151,7 +151,7 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
-- `natsumi.sidebar.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
+- `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"
