@@ -335,10 +335,9 @@ their author(s) have been provided above the used code.
   }
 }
 
-/* Compact fullscreen alert */
+/* Compact alerts */
 
-/*noinspection CssInvalidFunction*/
-#fullscreen-warning {
+#fullscreen-warning, #pointerlock-warning {
   border-radius: 50px !important;
   padding: 8px 10px !important;
   background-color: var(--natsumi-glass-background) !important;
@@ -349,11 +348,23 @@ their author(s) have been provided above the used code.
   backdrop-filter: blur(10px) !important;
   opacity: 0;
 
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    color: light-dark(black, white);
+    font-size: 14px !important;
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+  }
+
   &[onscreen] {
     transform: translate(-50%, 30px) !important;
     opacity: 1;
   }
+}
 
+/* Fullscreen alert */
+
+/*noinspection CssInvalidFunction*/
+#fullscreen-warning {
   &::before {
     display: none !important;
   }
@@ -412,5 +423,23 @@ their author(s) have been provided above the used code.
     font-size: 14px !important;
     margin-left: 10px !important;
     margin-right: 0 !important;
+  }
+}
+
+/* Pointer lock alert */
+
+#pointerlock-warning {
+  &::before {
+    content: "";
+    width: 24px;
+    height: 24px;
+    background-size: 16px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url('chrome://browser/skin/zen-icons/security.svg') !important;
+  }
+
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    margin-left: 2px !important;
   }
 }
