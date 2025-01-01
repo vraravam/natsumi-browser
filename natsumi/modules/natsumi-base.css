@@ -31,6 +31,7 @@ their author(s) have been provided above the used code.
 
 /* Workspaces button */
 
+
 #zen-workspaces-button {
   border-radius: 8px !important;
   background-color: rgba(255,255,255,0.1) !important;
@@ -40,12 +41,16 @@ their author(s) have been provided above the used code.
   .subviewbutton {
     border-radius: 6px !important;
     transition: background-color 0.2s ease !important;
+    font-size: 16px !important;
+    filter: grayscale(0%) !important;
+
 
     /*noinspection CssInvalidFunction*/
     &[active] {
       background-color: light-dark(rgba(255,255,255,1), rgba(255,255,255,0.2)) !important;
       box-shadow: 0 0 4px rgba(0,0,0,0.2) !important;
       overflow: hidden !important;
+      filter: saturate(120%) brightness(110%) !important;
 
       &::before {
         content: "";
