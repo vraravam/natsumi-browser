@@ -50,7 +50,7 @@ their author(s) have been provided above the used code.
       background-color: light-dark(rgba(255,255,255,1), rgba(255,255,255,0.2)) !important;
       box-shadow: 0 0 4px rgba(0,0,0,0.2) !important;
       overflow: hidden !important;
-      filter: saturate(120%) brightness(110%) !important;
+      filter: none !important;
 
       &::before {
         content: "";
