@@ -205,7 +205,7 @@ their author(s) have been provided above the used code.
     }
 
     .tab-background {
-      box-shadow: 0 3px 4px 0 rgba(0, 0, 0, 0.3) !important;
+      box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
     }
 
     &:not([usercontextid]) .tab-background {
