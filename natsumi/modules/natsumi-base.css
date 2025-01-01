@@ -337,6 +337,7 @@ their author(s) have been provided above the used code.
 
 /* Compact alerts */
 
+/*noinspection CssInvalidFunction*/
 #fullscreen-warning, #pointerlock-warning {
   border-radius: 50px !important;
   padding: 8px 10px !important;
@@ -348,6 +349,7 @@ their author(s) have been provided above the used code.
   backdrop-filter: blur(10px) !important;
   opacity: 0;
 
+  /*noinspection CssInvalidFunction*/
   .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
     color: light-dark(black, white);
     font-size: 14px !important;
@@ -363,7 +365,6 @@ their author(s) have been provided above the used code.
 
 /* Fullscreen alert */
 
-/*noinspection CssInvalidFunction*/
 #fullscreen-warning {
   &::before {
     display: none !important;
