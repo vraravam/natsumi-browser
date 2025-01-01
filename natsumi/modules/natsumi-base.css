@@ -334,3 +334,83 @@ their author(s) have been provided above the used code.
     }
   }
 }
+
+/* Compact fullscreen alert */
+
+/*noinspection CssInvalidFunction*/
+#fullscreen-warning {
+  border-radius: 50px !important;
+  padding: 8px 10px !important;
+  background-color: var(--natsumi-glass-background) !important;
+  border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+  box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
+  transform: translate(-50%, 20px) !important;
+  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  backdrop-filter: blur(10px) !important;
+  opacity: 0;
+
+  &[onscreen] {
+    transform: translate(-50%, 30px) !important;
+    opacity: 1;
+  }
+
+  &::before {
+    display: none !important;
+  }
+
+  #fullscreen-exit-button {
+    order: -1;
+    border: none !important;
+    background: transparent !important;
+    appearance: none !important;
+    border-radius: 6px !important;
+    color: transparent !important;
+    width: 24px !important;
+    height: 24px !important;
+    font-size: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    transition: background 0.3s ease !important;
+
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute !important;
+      left: 14px !important;
+      top: 12px !important;
+      background-image: url('chrome://browser/skin/zen-icons/fullscreen.svg') !important;
+
+      @media (prefers-color-scheme: dark) {
+        filter: invert();
+      }
+    }
+
+    &:hover {
+      background: var(--toolbarbutton-hover-background) !important;
+    }
+
+    &:active {
+      background: var(--toolbarbutton-active-background) !important;
+
+      &::before {
+        left: 4px !important;
+        top: 4px !important;
+      }
+    }
+
+    &:hover, &:active {
+      &::before {
+        background-image: url('chrome://browser/skin/zen-icons/fullscreen-exit.svg') !important;
+      }
+    }
+  }
+
+  /*noinspection CssInvalidFunction*/
+  .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
+    color: light-dark(black, white);
+    font-size: 14px !important;
+    margin-left: 10px !important;
+    margin-right: 0 !important;
+  }
+}
