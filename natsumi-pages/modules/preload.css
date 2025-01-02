@@ -66,4 +66,7 @@ Edit the natsumi-config.css file instead.
 
   /* pdf.js */
   --natsumi-pdfjs-topbar-max-width: var(--pdfjs-topbar-max-width, 750px);
+
+  /* FF home */
+  --natsumi-home-bg: var(--home-background-url, none);
 }

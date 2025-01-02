@@ -132,91 +132,9 @@ their author(s) have been provided above the used code.
   }
 }
 
-/* Adds new URLbar style if missing */
-
-@media (-moz-bool-pref: "natsumi.debug.legacy") {
-  * {
-    --urlbarView-item-inline-padding: 8px !important;
-    --urlbarView-item-block-padding: 12px !important;
-  }
-
-  #urlbar[breakout-extend] {
-    #identity-permission-box, #tracking-protection-icon-container, #page-action-buttons {
-      display: none !important;
-    }
-
-    #identity-icon-box {
-      margin-right: 8px !important;
-      padding-left: 9px !important;
-      padding-right: 3px !important;
-    }
-
-    #identity-box {
-      margin: 0 !important;
-    }
-
-    #urlbar-input {
-      font-size: 20px !important;
-      margin-left: 5px !important;
-      margin-right: 5px !important;
-    }
-  }
-
-  .urlbarView-row-inner {
-    border-radius: calc(var(--urlbarView-row-gutter) + var(--toolbarbutton-border-radius));
-  }
-
-  .urlbarView-title, .urlbarView-title-separator, .urlbarView-action, .urlbarView-url {
-    margin-top: auto !important;
-    margin-bottom: auto !important;
-  }
-
-  .urlbarView-title {
-    font-size: 14px !important;
-    font-weight: 500 !important;
-  }
-
-  .urlbarView-url, .urlbarView-title-separator::before {
-    font-size: 14px !important;
-    font-weight: 500 !important;
-    color: #aaa !important;
-  }
-
-  .urlbarView-favicon {
-    margin-left: 0 !important;
-    margin-right: 12px !important;
-    padding: 6px !important;
-    border-radius: 6px !important;
-  }
-
-  .urlbarView-row[has-action]:is([type="switchtab"], [type="remotetab"], [type="clipboard"]) .urlbarView-action {
-    margin-left: auto !important;
-    margin-right: 0 !important;
-  }
-
-  .urlbarView-row:hover, .urlbarView-row-inner[selected] {
-    background-color: var(--natsumi-colors-primary) !important;
-
-    .urlbarView-favicon {
-      background-color: white !important;
-    }
-
-    .urlbarView-url, .urlbarView-title-separator::before {
-      color: color-mix(in srgb, var(--natsumi-colors-primary) 30%, lightgray) !important;
-    }
-  }
-
-  .urlbarView-row:hover {
-    background: transparent;
-
-    .urlbarView-row-inner {
-      background: var(--natsumi-colors-primary) !important;
-    }
-  }
-}
-
 /* URLbar styling */
 
+/*noinspection CssInvalidFunction*/
 @media not (-moz-bool-pref: "natsumi.urlbar.disabled") {
   * {
     --urlbarView-item-block-padding: 4px !important;
@@ -442,14 +360,12 @@ their author(s) have been provided above the used code.
         }
       }
 
-      @media not (-moz-bool-pref: "natsumi.debug.legacy") {
-        #identity-box {
-          margin-right: 10px !important;
-        }
+      #identity-box {
+        margin-right: 10px !important;
+      }
 
-        .urlbar-input-container {
-          padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
-        }
+      .urlbar-input-container {
+        padding-inline: calc(var(--urlbar-margin-inline) + var(--urlbar-container-padding) - 2px) !important;
       }
 
       @media (-moz-bool-pref: "natsumi.urlbar.force-nowrap") {
@@ -471,9 +387,7 @@ their author(s) have been provided above the used code.
       }
 
       &:not([zen-floating-urlbar="true"]) {
-        @media not (-moz-bool-pref: "natsumi.debug.legacy") {
-          animation: none !important;
-        }
+        animation: none !important;
 
         #identity-icon-box {
           margin-left: 10px !important;
@@ -532,7 +446,7 @@ their author(s) have been provided above the used code.
 
     .urlbarView-row-inner {
       border-radius: 8px !important;
-      transition: background 0.2s ease;
+      transition: background 0.2s ease, transform 0.2s ease;
     }
 
     .urlbarView-title, .urlbarView-url {
@@ -574,7 +488,9 @@ their author(s) have been provided above the used code.
       background: transparent !important;
 
       .urlbarView-row-inner {
-        background: var(--urlbarView-hover-background) !important;
+        transform: scale(1.01, 1.01) !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
       }
 
       .urlbarView-button {
@@ -589,22 +505,21 @@ their author(s) have been provided above the used code.
     }
 
     .urlbarView-row-inner[selected] {
-      background: var(--urlbarView-hover-background) !important;
+      transform: scale(1.01, 1.01) !important;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+      background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
     }
   }
 
-  /*noinspection CssInvalidFunction*/
   .urlbarView-row-inner .urlbarView-url {
     color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
   }
 
   .urlbarView-row:hover .urlbarView-row-inner, .urlbarView-row-inner[selected] {
-    /*noinspection CssInvalidFunction*/
     .urlbarView-no-wrap .urlbarView-favicon {
-      background-color: color-mix(in srgb, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
+      background-color: color-mix(in srgb, light-dark(rgba(0, 0, 0, 0.3), var(--natsumi-colors-primary-foreground)) 50%, transparent) !important;
     }
 
-    /*noinspection CssInvalidFunction*/
     .urlbarView-url {
       color: light-dark(var(--natsumi-colors-primary), var(--natsumi-colors-primary-foreground)) !important;
     }

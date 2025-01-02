@@ -6,7 +6,7 @@
 
 <p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-3.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview.png?raw=true)
 
 ## What is Natsumi Browser?
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
@@ -15,20 +15,20 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.3` (Beta) and `1.0.2-t.4 2024-12-19` (Twilight).
+Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.2-t.6 2024-12-31` (Twilight).
 
 ## Features
 ### Polished look
-Natsumi Browser's looks are based on asev's [ZenCss](https://github.com/lunar-os/ZenCss), with some
-additional tweaks and patches added on top to create a beautiful and polished experience.
+Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
+keeping much of Zen Browser's original design.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/interface.png?raw=true)
 
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
 cozy while also having lots of room for search suggestions.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/urlbar.png?raw=true)
 
 ### Natsumi Findbar
 Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
@@ -37,17 +37,23 @@ Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mo
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
 
-### Tab Groups
+### Tab Groups (experimental)
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/tab-groups.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
 viewer, giving it the modern look it really deserves.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-pdf.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/pdfjs.png?raw=true)
+
+### Enhanced sidebars
+Elevate your sidebars to the next level! Not only does Natsumi add a glass effect to both sidebars, it
+also makes the Firefox sidebar more customizable by adding customization for its size and position.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/sidebars.png?raw=true)
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
@@ -133,6 +139,8 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 - `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
+- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
+  active tab or not.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
@@ -143,8 +151,14 @@ and delay, change the variables in the config.css file.
 ### PDF Viewer
 - `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
 
-### Misc
-- `natsumi.debug.legacy`: Enables support for 1.0.2-b.0 and 1.0.2-b.1.
+### Home
+- `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
+- `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
+  background.
+
+### Experiments
+- `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
+- `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"
@@ -193,8 +207,8 @@ If the issue still persists, open an issue or report the bug to the developer th
 
 ## Acknowledgements
 Thank you to:
-- [asev](https://github.com/lunar-os) for ZenCss, which serves as the base for Natsumi Browser's base
-  CSS, and the tab appear animation
+- [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
+  CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
