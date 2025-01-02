@@ -6,7 +6,7 @@
 
 <p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview-3.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview.png?raw=true)
 
 ## What is Natsumi Browser?
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
@@ -20,15 +20,15 @@ Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.2-t.6 2024-12-31` (Twilight
 ## Features
 ### Polished look
 Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
-keeping much of Zen Browser's design.
+keeping much of Zen Browser's original design.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.png?raw=true)
 
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
 cozy while also having lots of room for search suggestions.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/urlbar.png?raw=true)
 
 ### Natsumi Findbar
 Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
@@ -37,17 +37,23 @@ Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mo
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
 
-### Tab Groups
+### Tab Groups (experimental)
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.gif?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
 viewer, giving it the modern look it really deserves.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-pdf.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/pdfjs.png?raw=true)
+
+### Enhanced sidebars
+Elevate your sidebars to the next level! Not only does Natsumi add a glass effect to both sidebars, it
+also makes the Firefox sidebar more customizable by adding customization for its size and position.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/sidebars.png?raw=true)
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
