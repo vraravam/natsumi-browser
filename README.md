@@ -158,6 +158,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
 - `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
 
+### Floating toolbar
+- `extras.floating-toolbar`: Adds a floating toolbar on the RHS top.
+
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"
 Like I've said in the Features section, Natsumi's base UI CSS comes from asev's ZenCss repository.
