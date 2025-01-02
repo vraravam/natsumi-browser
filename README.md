@@ -153,7 +153,8 @@ and delay, change the variables in the config.css file.
 
 ### Home
 - `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
-- `natsumi.home.custom-background`: Uses the custom background set as the home screen background.
+- `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
+  background.
 
 ### Experiments
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
