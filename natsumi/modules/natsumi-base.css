@@ -43,7 +43,15 @@ their author(s) have been provided above the used code.
     transition: background-color 0.2s ease !important;
     font-size: 16px !important;
     filter: grayscale(0%) !important;
+    --toolbarbutton-hover-background: color-mix(in srgb, var(--zen-branding-bg-reverse) 10%, transparent 90%) !important;
 
+    &:hover {
+      background-color: var(--toolbarbutton-hover-background) !important;
+    }
+
+    &:active {
+      background-color: var(--toolbarbutton-active-background) !important;
+    }
 
     /*noinspection CssInvalidFunction*/
     &[active] {
