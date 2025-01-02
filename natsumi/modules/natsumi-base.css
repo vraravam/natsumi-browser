@@ -206,6 +206,27 @@ their author(s) have been provided above the used code.
 
 /* Essentials */
 
+@keyframes essentials-select {
+  0% {
+    opacity: 0.2;
+    scale: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+  100% {
+    opacity: 0;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    left: -10px;
+    top: -10px;
+    border-radius: 20px;
+  }
+}
+
 #zen-essentials-container {
   overflow: visible !important;
 
@@ -249,6 +270,21 @@ their author(s) have been provided above the used code.
     &:active {
       .tab-stack {
         transform: scale(0.94, 0.94) !important;
+      }
+    }
+
+    &[selected]:not(:active) {
+      .tab-stack {
+        &::before {
+          content: "";
+          width: 100%;
+          height: 100%;
+          position: absolute;
+          background: var(--natsumi-primary-color) !important;
+          border-radius: 10px;
+          animation: essentials-select 0.3s linear;
+          animation-fill-mode: forwards;
+        }
       }
     }
   }

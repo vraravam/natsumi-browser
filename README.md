@@ -208,5 +208,6 @@ Thank you to:
 - [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
   CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
+- [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
