@@ -51,6 +51,21 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
   }
 }
 
+@keyframes bounce-right {
+  0% {
+    right: calc(-1 * var(--zen-sidebar-width) - var(--natsumi-bounce-magnitude) + 8px);
+    opacity: 1;
+  }
+
+  50% {
+    right: 0;
+  }
+
+  100% {
+    right: calc(var(--natsumi-bounce-magnitude) * -1);
+  }
+}
+
 @keyframes bounce-fadeout {
   0% {
     left: calc(var(--natsumi-bounce-magnitude) * -1);
@@ -63,6 +78,18 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
   }
 }
 
+@keyframes bounce-fadeout-right {
+  0% {
+    right: calc(var(--natsumi-bounce-magnitude) * -1);
+    opacity: 1;
+  }
+
+  100% {
+    right: calc(-1 * var(--zen-sidebar-width) - var(--natsumi-bounce-magnitude) + 8px);
+    opacity: 0;
+  }
+}
+
 @media (-moz-bool-pref: "natsumi.experiments.compact-bounce") {
   @media (-moz-bool-pref: "zen.view.compact") {
     #navigator-toolbox {
@@ -71,10 +98,21 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
       animation-fill-mode: forwards !important;
       padding-left: calc(var(--natsumi-bounce-magnitude) + 6px) !important;
 
+      @media (-moz-bool-pref: "zen.tabs.vertical.right-side") {
+        padding-left: 6px !important;
+        padding-right: calc(var(--natsumi-bounce-magnitude) + 6px) !important;
+        animation: bounce-fadeout-right var(--natsumi-bounce-duration) ease !important;
+        animation-fill-mode: forwards !important;
+      }
+
       &:is([zen-user-show], [zen-has-hover]), &:hover {
-        left: calc(-1 * var(--zen-sidebar-width) + var(--zen-element-separation));
         animation: bounce var(--natsumi-bounce-duration) ease-in-out !important;
         animation-fill-mode: forwards !important;
+
+        @media (-moz-bool-pref: "zen.tabs.vertical.right-side") {
+          animation: bounce-right var(--natsumi-bounce-duration) ease-in-out !important;
+          animation-fill-mode: forwards !important;
+        }
       }
     }
   }
