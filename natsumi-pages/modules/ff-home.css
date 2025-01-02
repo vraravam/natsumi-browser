@@ -271,22 +271,21 @@ their author(s) have been provided above the used code.
       }
     }
 
-    .modal-overlay {
+    /* Modals */
+
+    .modal-overlay, .modalOverlayOuter.active {
       animation: modal-overlay-fadein 0.3s ease !important;
       background-color: rgba(28, 27, 34, 0.45) !important;
     }
-
-    /* Modals */
 
     /*noinspection CssInvalidFunction*/
     .modal {
       animation: modal-fadein 0.3s ease !important;
       border-radius: 8px !important;
-      background: color-mix(in srgb, rgb(255, 100, 100) 75%, transparent) !important;
-      border: 1px solid rgba(235, 235, 235, 0.3) !important;
       backdrop-filter: blur(10px) !important;
-      box-shadow: 0 0 10px color-mix(in srgb, rgb(255, 100, 100) 75%, light-dark(black, white)) !important;
-      flex-wrap: wrap !important;
+      background: var(--natsumi-glass-background) !important;
+      box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
+      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
 
       .modal-message {
         display: block !important;
@@ -312,14 +311,26 @@ their author(s) have been provided above the used code.
         }
       }
 
+      .top-site-button .title span {
+        color: black !important;
+
+        @media (prefers-color-scheme: dark) {
+          color: white !important;
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
       .actions {
+        border-color: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+
+        /*noinspection CssInvalidFunction*/
         button {
-          border: 1px solid rgba(235, 235, 235, 0.3) !important;
+          border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
           box-shadow: none !important;
           padding: 10px !important;
           border-radius: 50px !important;
           appearance: none !important;
-          color: white !important;
+          color: light-dark(black, white) !important;
           transition: background-color 0.2s ease !important;
 
           &:hover {
@@ -327,7 +338,25 @@ their author(s) have been provided above the used code.
           }
 
           &.done {
-            background-color: rgba(255, 255, 255, 0.3) !important;
+            background-color: color-mix(in srgb, var(--natsumi-primary-color) 50%, transparent) !important;
+          }
+        }
+      }
+
+      /*noinspection CssInvalidFunction*/
+      &:has(p[data-l10n-id^="newtab-confirm-delete-history"]) {
+        border: 1px solid rgba(235, 235, 235, 0.3) !important;
+        background: color-mix(in srgb, rgb(255, 100, 100) 75%, transparent) !important;
+        box-shadow: 0 0 10px color-mix(in srgb, rgb(255, 100, 100) 75%, light-dark(black, white)) !important;
+
+        .actions {
+          button {
+            color: white !important;
+            border-color: rgba(235, 235, 235, 0.3) !important;
+
+            &.done {
+              background-color: rgba(255, 255, 255, 0.3) !important;
+            }
           }
         }
       }
