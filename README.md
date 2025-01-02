@@ -154,6 +154,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
   background.
 
+### Global tweaks
+- `natsumi.global.highlight-accent-color`: Uses the accent color for highlighting.
+
 ### Experiments
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
 - `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
