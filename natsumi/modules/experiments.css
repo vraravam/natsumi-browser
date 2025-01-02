@@ -38,7 +38,7 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
 
 @keyframes bounce {
   0% {
-    left: calc(-1 * var(--zen-sidebar-width) + 6px);
+    left: calc(-1 * var(--zen-sidebar-width) - var(--natsumi-bounce-magnitude) + 8px);
     opacity: 1;
   }
 
@@ -58,7 +58,7 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
   }
 
   100% {
-    left: calc(-1 * var(--zen-sidebar-width) + 6px);
+    left: calc(-1 * var(--zen-sidebar-width) - var(--natsumi-bounce-magnitude) + 8px);
     opacity: 0;
   }
 }
