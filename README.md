@@ -22,13 +22,13 @@ Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.2-t.6 2024-12-31` (Twilight
 Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
 keeping much of Zen Browser's original design.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/interface.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/interface.png?raw=true)
 
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
 cozy while also having lots of room for search suggestions.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/urlbar.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/urlbar.png?raw=true)
 
 ### Natsumi Findbar
 Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
@@ -41,7 +41,7 @@ Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mo
 Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
 Groups. Group away to keep things organized!
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/tab-groups.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/tab-groups.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
