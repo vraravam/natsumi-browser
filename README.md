@@ -60,35 +60,35 @@ hand when you don't need the extra tools.
 Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
 
 - **Default (default)**
-  
+
   No changes, just the default look.
   ![](./images/theme-default.png)
 - **Gradient (`gradient`)**
-  
+
   A light gradient of the accent color, similar to my Zen Browser gradient.
   ![](./images/theme-gradient.png)
 - **Complementary Gradient (`gradient-complementary`)**
-  
+
   A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
   ![](./images/theme-gradient-complementary.png)
 - **Colorful Solid (`colorful`)**
-  
+
   A solid color with a tint of the accent color.
   ![](./images/theme-colorful.png)
 - **Lucid (`lucid`)**
-  
+
   A recreation of the Zen Dream and Zen Galaxy themes.
   ![](./images/theme-lucid.png)
 - **OLED (`oled`)**
-  
+
   A completely black and white theme for the minimalists and OLED users.
   ![](./images/theme-oled.png)
 - **LGBTQ 🏳️‍🌈 (`lgbtq`)**
-  
+
   Browsing with pride!
   ![](./images/theme-lgbtq.png)
 - **Transgender 🏳️‍⚧️ (`transgender`)**
-  
+
   Trans rights are human rights!
   ![](./images/theme-transgender.png)
 
@@ -183,7 +183,7 @@ and delay, change the variables in the config.css file.
 
 ### 🏠 Firefox Home
 - `natsumi.home.disabled` (boolean): Disables Natsumi FF home and reverts the FF home page back.
-- `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home 
+- `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home
   screen background.
 
 ### 🔧 Compatibility
@@ -191,6 +191,9 @@ and delay, change the variables in the config.css file.
   This is needed for some features such as PiP where automatic detection isn't possible.
   - `firefox`: Mozilla Firefox
   - `floorp`: Floorp Browser
+
+### Floating toolbar
+- `extras.floating-toolbar`: Adds a floating toolbar on the RHS top.
 
 ## Browser support
 All browsers must be based on Firefox 137 or above.
