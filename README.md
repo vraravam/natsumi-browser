@@ -168,6 +168,9 @@ and delay, change the variables in the config.css file.
 - `natsumi.experiments.rounded-pip`: Makes the PiP window round, like in macOS. If you're using macOS,
   you won't need this.
 
+### Floating toolbar
+- `extras.floating-toolbar`: Adds a floating toolbar on the RHS top.
+
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
 Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
