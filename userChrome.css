@@ -9,3 +9,8 @@ If you already have one, append the import statement below at the top of your us
 
 /* You can import additional mods above, or add your own userchrome CSS below. */
 @import "extras/extras.css";
+
+/* Rounded corners for sidebar */
+#navigator-toolbox {
+  border-radius: var(--zen-border-radius) !important;
+}
