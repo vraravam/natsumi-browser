@@ -49,6 +49,9 @@ and delay, change the variables in the config.css file.
 ### soon
 Working on this one too
 
+### Floating toolbar
+- `extras.floating-toolbar`: Adds a floating toolbar on the RHS top.
+
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
 Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
