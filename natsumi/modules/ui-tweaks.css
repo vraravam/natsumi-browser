@@ -108,11 +108,13 @@ their author(s) have been provided above the used code.
   & .tabbrowser-tab {
     &[fadein='true']:not([zen-essential='true']) {
       #tabbrowser-tabs[zen-workspace-animation='previous'] & {
-        animation: custom-slide-in-reverse 0.2s ease !important;
+        animation: custom-slide-in-reverse 0.3s ease !important;
+        animation-delay: 0.25s !important;
       }
 
       #tabbrowser-tabs[zen-workspace-animation='next'] & {
-        animation: custom-slide-in 0.2s ease !important;
+        animation: custom-slide-in 0.3s ease !important;
+        animation-delay: 0.25s !important;
       }
     }
   }
