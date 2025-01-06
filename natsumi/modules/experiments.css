@@ -117,35 +117,3 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
     }
   }
 }
-
-/* Resizable tabs */
-
-@media (-moz-bool-pref: "natsumi.experiments.resizable-tabs") {
-  @media (-moz-bool-pref: "zen.tabs.vertical") {
-    #tabbrowser-arrowscrollbox {
-      tab-group .tabbrowser-tab {
-        /*noinspection CssInvalidPropertyValue*/
-        width: -moz-available !important;
-        overflow: visible !important;
-        resize: none !important;
-        margin-left: 8px !important;
-      }
-    }
-
-    @media (-moz-bool-pref: "zen.view.sidebar-expanded") {
-      #tabbrowser-arrowscrollbox {
-        .tabbrowser-tab:not(:has(tab-group)) {
-          /*noinspection CssInvalidPropertyValue*/
-          width: -moz-available;
-          overflow: hidden !important;
-          margin-left: auto !important;
-          min-width: 80px !important;
-
-          &:hover {
-            resize: horizontal !important;
-          }
-        }
-      }
-    }
-  }
-}

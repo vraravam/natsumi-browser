@@ -75,7 +75,6 @@ their author(s) have been provided above the used code.
 
 .tabbrowser-tab {
   scale: unset !important;
-  max-width: calc(var(--zen-sidebar-width) - 4px) !important; /* needed to prevent borking resizable tabs */
 
   .tab-stack {
     transition: transform 0.2s ease !important;
@@ -282,7 +281,7 @@ their author(s) have been provided above the used code.
           position: absolute;
           background: var(--natsumi-primary-color) !important;
           border-radius: 10px;
-          animation: essentials-select 0.3s linear;
+          animation: essentials-select 0.25s ease-out;
           animation-fill-mode: forwards;
         }
       }
