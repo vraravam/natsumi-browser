@@ -165,29 +165,11 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
           transition: padding var(--urlbar-anim-time) ease, background var(--urlbar-anim-time) ease;
         }
 
-        &::before {
-          content: "";
-          position: absolute;
-          width: 100%;
-          left: 0;
-          height: 0;
-          bottom: 0;
-          background-color: var(--natsumi-primary-color) !important;
-          transition: height var(--urlbar-anim-time) ease, width var(--urlbar-anim-time) ease, left var(--urlbar-anim-time) ease;
-          border-radius: 1px;
-        }
-
         #tracking-protection-icon-container, .urlbar-page-action {
           transition: width var(--urlbar-anim-time) ease, opacity var(--urlbar-anim-time) ease, margin var(--urlbar-anim-time) ease;
         }
 
         &:not(:hover):not([focused]):not(:has(.urlbar-page-action[open], #tracking-protection-icon-container[open], .identity-box-button[open])) {
-          &:before {
-            width: 300px;
-            height: 2px;
-            left: calc(50% - 150px);
-          }
-
           #identity-icon-box {
             padding-left: 6px !important;
             padding-right: 6px !important;
@@ -207,6 +189,23 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
           .urlbar-input-container {
             animation: urlbar-collapse var(--urlbar-anim-time) ease;
           }
+        }
+      }
+    }
+  }
+}
+
+@media (-moz-bool-pref: "natsumi.experiments.remove-compact-margin") {
+  @media (-moz-bool-pref: "zen.view.compact") {
+    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view])) {
+      margin: 0 !important;
+
+      #zen-tabbox-wrapper {
+        margin: 0 !important;
+
+        .browserSidebarContainer, browser {
+          border-radius: 0 !important;
+          clip-path: none !important;
         }
       }
     }

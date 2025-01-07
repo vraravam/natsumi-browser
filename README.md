@@ -156,7 +156,9 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
-- `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
+- `natsumi.experiments.compact-urlbar`: Makes the URLbar smaller when not focused.
+- `natsumi.experiments.remove-compact-margin`: Removes browser margin in compact mode. Does not work when
+  split view is active.
 
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"
