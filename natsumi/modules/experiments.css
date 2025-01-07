@@ -204,6 +204,7 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
         margin: 0 !important;
 
         .browserSidebarContainer, browser {
+          margin: 0 !important;
           border-radius: 0 !important;
           clip-path: none !important;
         }
