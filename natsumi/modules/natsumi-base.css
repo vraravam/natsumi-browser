@@ -283,6 +283,7 @@ their author(s) have been provided above the used code.
           border-radius: 10px;
           animation: essentials-select 0.25s ease-out;
           animation-fill-mode: forwards;
+          pointer-events: none;
         }
       }
     }
