@@ -15,7 +15,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.2-t.6 2024-12-31` (Twilight).
+Natsumi has been tested on `1.6-b` (Beta) and `1.2-t.6 2024-12-31` (Twilight).
 
 ## Features
 ### Polished look

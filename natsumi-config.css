@@ -45,6 +45,9 @@ as they use the correct format.
   --sidebar-bounce-distance: 8px;
   --sidebar-bounce-duration: 0.3s;
 
+  /* Custom fonts experiment */
+  --custom-font: 'Nunito';
+
   /* pdf.js */
   --pdfjs-topbar-max-width: 750px; /* use calc(100% - 10px) for max width */
 
