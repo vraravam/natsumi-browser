@@ -15,7 +15,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.0.2-b.5` (Beta) and `1.2-t.6 2024-12-31` (Twilight).
+Natsumi has been tested on `1.6-b` (Beta) and `1.2-t.6 2024-12-31` (Twilight).
 
 ## Features
 ### Polished look
@@ -159,7 +159,9 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
-- `natsumi.experiments.resizable-tabs`: Makes tabs horizontally resizable. Doesn't work that well though.
+- `natsumi.experiments.compact-urlbar`: Makes the URLbar smaller when not focused.
+- `natsumi.experiments.remove-compact-margin`: Removes browser margin in compact mode. Does not work when
+  split view is active.
 
 ## FAQs
 ### "Mod xyz has a similar look as Natsumi, did they copy you?"
@@ -211,5 +213,6 @@ Thank you to:
 - [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
   CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
+- [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser

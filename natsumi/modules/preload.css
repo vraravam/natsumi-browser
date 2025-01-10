@@ -63,6 +63,9 @@ Edit the natsumi-config.css file instead.
   --natsumi-glass-blur-radius: var(--glass-blur-radius, 10px);
   --natsumi-glass-shadow-size: var(--glass-shadow-size, 10px);
   --natsumi-glass-shadow-opacity: var(--glass-shadow-opacity, 75%);
+
+  /* Fonts */
+  --natsumi-custom-font: var(--custom-font, system-ui);
 }
 
 /* URL bar appear animation */
