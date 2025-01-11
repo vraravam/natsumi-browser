@@ -206,6 +206,8 @@ their author(s) have been provided above the used code.
           font-size: 14px !important;
           font-weight: normal !important;
           flex-basis: 100% !important;
+          display: flex;
+          align-items: center;
 
           &::before {
             content: "";
