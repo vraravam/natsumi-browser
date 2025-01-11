@@ -206,6 +206,9 @@ their author(s) have been provided above the used code.
           font-size: 14px !important;
           font-weight: normal !important;
           flex-basis: 100% !important;
+          display: flex;
+          align-items: center;
+          background-repeat: no-repeat !important;
 
           &::before {
             content: "";
@@ -213,6 +216,7 @@ their author(s) have been provided above the used code.
             min-height: 17px !important;
             background-image: url(chrome://global/skin/icons/close.svg) !important;
             margin-right: 8px !important;
+            background-repeat: no-repeat !important;
 
             @media (prefers-color-scheme: dark) {
               filter: invert();
