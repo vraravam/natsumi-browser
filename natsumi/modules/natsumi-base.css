@@ -225,6 +225,10 @@ their author(s) have been provided above the used code.
   }
 }
 
+#tabbrowser-tabs {
+  overflow: visible !important;
+}
+
 #zen-essentials-container {
   overflow: visible !important;
 
@@ -268,6 +272,32 @@ their author(s) have been provided above the used code.
     &:active {
       .tab-stack {
         transform: scale(0.94, 0.94) !important;
+      }
+    }
+
+    &[selected] {
+      .tab-background {
+        &::before {
+          width: calc(100% - 4px) !important;
+          height: calc(100% - 4px) !important;
+          mask-image: none !important;
+          opacity: 0.3;
+        }
+
+        &::after {
+          left: -50% !important;
+          top: -50% !important;
+          width: 200% !important;
+          height: 200% !important;
+        }
+      }
+
+      &[usercontextid] {
+        .tab-background::before {
+          border-radius: 10px !important;
+          margin: 0 !important;
+          border: 2px solid var(--identity-tab-color) !important;
+        }
       }
     }
 
