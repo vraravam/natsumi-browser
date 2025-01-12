@@ -281,6 +281,7 @@ their author(s) have been provided above the used code.
       }
 
       .tab-background {
+        /*noinspection CssInvalidFunction*/
         &::before {
           width: calc(100% - 4px) !important;
           height: calc(100% - 4px) !important;
