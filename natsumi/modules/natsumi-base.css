@@ -285,7 +285,7 @@ their author(s) have been provided above the used code.
           width: calc(100% - 4px) !important;
           height: calc(100% - 4px) !important;
           mask-image: none !important;
-          opacity: 0.3;
+          background: light-dark(rgba(255, 255, 255, 0.3), rgba(68, 64, 64, 0.3)) !important;
         }
 
         &::after {
