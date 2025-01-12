@@ -4,7 +4,11 @@
   Natsumi Browser
 </h1>
 
-<p align="center">A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.</p>
+<p align="center">
+  A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.
+  <br><br>
+  <a href="https://zen-browser.app"><img height="40" src="https://github.com/heyitszenithyt/zen-browser-badges/blob/fb14dcd72694b7176d141c774629df76af87514e/light/zen-badge-light.png"></a>
+</p>
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview.png?raw=true)
 
