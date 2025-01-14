@@ -294,6 +294,7 @@ their author(s) have been provided above the used code.
           top: -50% !important;
           width: 200% !important;
           height: 200% !important;
+          filter: saturate(150%) blur(15px) !important;
         }
       }
 
