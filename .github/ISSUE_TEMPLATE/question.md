@@ -1,6 +1,6 @@
 ---
 name: Question
-about: Need help using Unifier? Ask here!
+about: Need help using Natsumi? Ask here!
 title: ''
 labels: question
 assignees: 
