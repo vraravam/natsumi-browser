@@ -168,11 +168,6 @@ and delay, change the variables in the config.css file.
   split view is active.
 
 ## FAQs
-### "Mod xyz has a similar look as Natsumi, did they copy you?"
-Like I've said in the Features section, Natsumi's base UI CSS comes from asev's ZenCss repository.
-This is actually a very popular userchrome among the Zen Browser community, so it's likely that the
-Mod also uses the same userchrome I used.
-
 ### "Can I use other userchromes with Natsumi?"
 Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
 userchrome alongside Natsumi Browser.
