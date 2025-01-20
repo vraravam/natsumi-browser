@@ -34,7 +34,7 @@ their author(s) have been provided above the used code.
 
 @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
   browser {
-    clip-path: inset(0% 0% 0% 0% round var(--zen-webview-border-radius, var(--zen-native-content-radius)));
+    clip-path: inset(0% 0% 0% 0% round var(--zen-native-content-radius));
 
     @media (-moz-bool-pref: "natsumi.theme.clip-path-force-polygon") {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
