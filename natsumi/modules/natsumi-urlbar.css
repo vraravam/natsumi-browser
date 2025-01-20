@@ -347,6 +347,7 @@ their author(s) have been provided above the used code.
         backdrop-filter: blur(var(--natsumi-glass-blur-radius));
         background: var(--natsumi-glass-background) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
+        border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
         border-radius: 15px !important;
 
         /*noinspection CssInvalidFunction*/
