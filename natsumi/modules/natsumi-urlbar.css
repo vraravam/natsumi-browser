@@ -144,6 +144,7 @@ their author(s) have been provided above the used code.
   #urlbar #urlbar-background {
     backdrop-filter: none;
     background: color-mix(in srgb, var(--zen-branding-bg) 75%, transparent);
+    border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
     transition: backdrop-filter 0s ease, background 0s ease;
 
     @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
