@@ -108,9 +108,6 @@ toolbarbutton[badged="true"]:not([badge]) {
     toolbarbutton {
       margin: 1px !important;
     }
-    toolbarbutton:first-child {
-      margin-left: 5px !important;
-    }
   }
 }
 
