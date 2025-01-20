@@ -29,6 +29,32 @@ their author(s) have been provided above the used code.
 
 /* ==== Base UI v2 (Sidebars and tabs) ==== */
 
+/* Marginless compact mode */
+
+:root[zen-compact-mode="true"]:not([customizing]) {
+  @media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view])) {
+      margin: 0 !important;
+
+      #zen-tabbox-wrapper {
+        margin: 0 !important;
+
+        .browserSidebarContainer, browser {
+          margin: 0 !important;
+          border-radius: 0 !important;
+          clip-path: none !important;
+        }
+
+        @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
+          browser {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+          }
+        }
+      }
+    }
+  }
+}
+
 /* Workspaces button */
 
 #zen-workspaces-button {
