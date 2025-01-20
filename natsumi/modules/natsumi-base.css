@@ -280,21 +280,23 @@ their author(s) have been provided above the used code.
         filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
       }
 
-      .tab-background {
-        /*noinspection CssInvalidFunction*/
-        &::before {
-          width: calc(100% - 4px) !important;
-          height: calc(100% - 4px) !important;
-          mask-image: none !important;
-          background: light-dark(rgba(255, 255, 255, 0.3), rgba(68, 64, 64, 0.3)) !important;
-        }
+      @media (-moz-bool-pref: "zen.theme.essentials-favicon-bg") {
+        .tab-background {
+          /*noinspection CssInvalidFunction*/
+          &::before {
+            width: calc(100% - 4px) !important;
+            height: calc(100% - 4px) !important;
+            mask-image: none !important;
+            background: light-dark(rgba(255, 255, 255, 0.3), rgba(68, 64, 64, 0.3)) !important;
+          }
 
-        &::after {
-          left: -50% !important;
-          top: -50% !important;
-          width: 200% !important;
-          height: 200% !important;
-          filter: saturate(150%) blur(15px) !important;
+          &::after {
+            left: -50% !important;
+            top: -50% !important;
+            width: 200% !important;
+            height: 200% !important;
+            filter: saturate(150%) blur(15px) !important;
+          }
         }
       }
 
@@ -527,4 +529,8 @@ their author(s) have been provided above the used code.
   .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
     margin-left: 2px !important;
   }
+}
+
+#navigator-toolbox {
+  left: calc(calc(-1 * var(--zen-sidebar-width) + var(--zen-element-separation)) - calc(max(var(--natsumi-compact-sensitivity), 1px) - 6px)) !important;
 }
