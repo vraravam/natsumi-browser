@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7-b` (Beta) and `1.7-t 2025-01-15` (Twilight).
+Natsumi has been tested on `1.7b` (Beta) and `1.7t 2025-01-15` (Twilight).
 
 ## Features
 ### Polished look
@@ -168,11 +168,6 @@ and delay, change the variables in the config.css file.
   split view is active.
 
 ## FAQs
-### "Mod xyz has a similar look as Natsumi, did they copy you?"
-Like I've said in the Features section, Natsumi's base UI CSS comes from asev's ZenCss repository.
-This is actually a very popular userchrome among the Zen Browser community, so it's likely that the
-Mod also uses the same userchrome I used.
-
 ### "Can I use other userchromes with Natsumi?"
 Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and you can use your own
 userchrome alongside Natsumi Browser.
