@@ -530,7 +530,3 @@ their author(s) have been provided above the used code.
     margin-left: 2px !important;
   }
 }
-
-#navigator-toolbox {
-  left: calc(calc(-1 * var(--zen-sidebar-width) + var(--zen-element-separation)) - calc(max(var(--natsumi-compact-sensitivity), 1px) - 6px)) !important;
-}
