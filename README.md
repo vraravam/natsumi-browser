@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.1b` (Beta) and `1.7t 2025-01-19` (Twilight).
+Natsumi has been tested on `1.7.2b` (Beta) and `1.7.2t 2025-01-22` (Twilight).
 
 ## Features
 ### Polished look
@@ -97,6 +97,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.clip-path-force-polygon`: Uses polygon instead of inset for URLbar and Zen Sidebar
   blurring. Enable this if you need this for compatibility with other userchromes/Mods like
   [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
+- `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
 - `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
   too much.
 - `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
@@ -107,6 +108,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.fullscreen-glass-effect`: Enables glass effect for full screen popup message.
 
 ### URLbar
+- `natsumi.urlbar.compact`: Makes the URLbar smaller when not focused.
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
 - `natsumi.urlbar.disable-transparency`: Disables URLbar background transparency.
 - `natsumi.urlbar.force-nowrap`: Prevents wrapping to make things more compact regardless of window
@@ -162,10 +164,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.global.highlight-accent-color`: Uses the accent color for highlighting.
 
 ### Experiments
-- `natsumi.experiments.compact-bounce`: Adds a bounce effect to the tabs sidebar in compact mode.
-- `natsumi.experiments.compact-urlbar`: Makes the URLbar smaller when not focused.
-- `natsumi.experiments.remove-compact-margin`: Removes browser margin in compact mode. Does not work when
-  split view is active.
+- `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"

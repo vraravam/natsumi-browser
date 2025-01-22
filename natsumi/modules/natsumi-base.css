@@ -314,6 +314,7 @@ their author(s) have been provided above the used code.
             height: calc(100% - 4px) !important;
             mask-image: none !important;
             background: light-dark(rgba(255, 255, 255, 0.3), rgba(68, 64, 64, 0.3)) !important;
+            border-radius: calc(var(--border-radius-medium) - 3px) !important;
           }
 
           &::after {
@@ -328,7 +329,7 @@ their author(s) have been provided above the used code.
 
       &[usercontextid] {
         .tab-background::before {
-          border-radius: 10px !important;
+          border-radius: calc(var(--border-radius-medium) - 1px) !important;
           margin: 0 !important;
           border: 2px solid var(--identity-tab-color) !important;
         }

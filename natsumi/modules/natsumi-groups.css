@@ -27,17 +27,40 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Experiments ==== */
+/* ==== Tab groups ==== */
+/* Based on code by https://github.com/vicky5124 with my own tweaks added */
 
-/*
-WARNING: The following features are NOT meant for production use.
-By using experimental features, you acknowledge that they may break Natsumi or Zen Browser.
-*/
+/* Make groups workspace specific */
 
-/* Global font */
-@media (-moz-bool-pref: "natsumi.experiments.custom-font") {
-  #zen-main-app-wrapper, .tab-label, menuitem, panelmultiview, .PanelUI-zen-profiles-item-name {
-    font-family: var(--natsumi-custom-font), system-ui !important;
+@media (-moz-bool-pref: "natsumi.sidebar.enable-tab-groups") {
+  @media (-moz-bool-pref: "natsumi.sidebar.workspace-tab-groups") {
+    tab-group:not(:has(tab:not([hidden]))) {
+      display: none !important;
+    }
+  }
+
+  tab-group {
+    display: grid !important;
+    background: color-mix(in srgb, var(--tab-group-color-invert) 25%, transparent) !important;
+    border-radius: calc(var(--border-radius-medium) + 6px) !important;
+    padding: 6px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+
+    .tab-group-label-container {
+      margin: 0 !important;
+      width: 100% !important;
+
+      &:after{
+        display: none;
+      }
+
+      & > label {
+        min-width: 100% !important;
+        background-color: transparent !important;
+        padding: 2px 10px 0 !important;
+        text-align: left !important;
+      }
+    }
   }
 }
 

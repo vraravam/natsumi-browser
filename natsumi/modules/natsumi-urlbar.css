@@ -344,7 +344,7 @@ their author(s) have been provided above the used code.
 
       /*noinspection CssInvalidFunction*/
       #urlbar-background {
-        backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+        backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
         background: var(--natsumi-glass-background) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
         border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
@@ -551,5 +551,62 @@ their author(s) have been provided above the used code.
   /*noinspection CssInvalidFunction*/
   .urlbarView-body-inner, .search-one-offs {
     border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
+  }
+
+  /* Compact URLbar */
+
+  @media (-moz-bool-pref: "natsumi.urlbar.compact") {
+    @media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
+      @media (-moz-bool-pref: "zen.tabs.vertical") {
+        #urlbar:not([breakout-extend="true"]) {
+          --urlbar-anim-time: 0.2s;
+          #urlbar-background {
+            opacity: 1 !important;
+            transition: opacity var(--urlbar-anim-time) ease;
+          }
+
+          .urlbar-input-container {
+            max-width: 100% !important;
+            left: 0 !important;
+            transition: max-width var(--urlbar-anim-time) ease, left var(--urlbar-anim-time) ease;
+          }
+
+          .urlbar-input-box {
+            text-align: center !important;
+          }
+
+          #identity-icon-box {
+            transition: padding var(--urlbar-anim-time) ease, background var(--urlbar-anim-time) ease;
+          }
+
+          #tracking-protection-icon-container, .urlbar-page-action {
+            transition: width var(--urlbar-anim-time) ease, opacity var(--urlbar-anim-time) ease, margin var(--urlbar-anim-time) ease;
+          }
+
+          &:not(:hover):not([focused]):not(:has(.urlbar-page-action[open], #tracking-protection-icon-container[open], .identity-box-button[open])) {
+            #identity-icon-box {
+              padding-left: 6px !important;
+              padding-right: 6px !important;
+              background: none !important;
+            }
+
+            #tracking-protection-icon-container, .urlbar-page-action {
+              width: 0 !important;
+              opacity: 0 !important;
+              margin: 0 !important;
+            }
+
+            #urlbar-background {
+              opacity: 0 !important;
+            }
+
+            .urlbar-input-container {
+              max-width: 300px !important;
+              left: calc(50% - 150px) !important;
+            }
+          }
+        }
+      }
+    }
   }
 }
