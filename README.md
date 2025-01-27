@@ -116,11 +116,8 @@ and delay, change the variables in the config.css file.
 ### Sidebar
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
-- `natsumi.sidebar.containers-dashed-border`: Uses dashed border for container tabs instead of solid
-  border. Selected tabs will always use solid border.
-- `natsumi.sidebar.containers-thicker-gradient`: Makes container tabs indicator gradient "thicker".
-- `natsumi.sidebar.containers-no-inactive-border`: Hides the container tabs indicator border when the
-  tab is not selected.
+- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
+  active tab or not.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
@@ -135,8 +132,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 - `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
-- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
-  active tab or not.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
