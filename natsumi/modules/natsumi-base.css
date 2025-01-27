@@ -156,7 +156,7 @@ their author(s) have been provided above the used code.
 
       &::before {
         opacity: 1;
-        width: 25%;
+        width: var(--container-gradient-width);
         background-color: var(--identity-tab-color);
         mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
       }
@@ -165,7 +165,7 @@ their author(s) have been provided above the used code.
     &:hover {
       .tab-background {
         &::before {
-          width: 50%;
+          width: var(--container-gradient-width-expanded);
         }
       }
     }
