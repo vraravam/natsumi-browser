@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.2b` (Beta) and `1.7.2t 2025-01-22` (Twilight).
+Natsumi has been tested on `1.7.2b` (Beta) and `1.7.2t 2025-01-27` (Twilight).
 
 ## Features
 ### Polished look
@@ -40,12 +40,6 @@ the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.co
 Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
-
-### Tab Groups (experimental)
-Natsumi Browser uses a customized version of [vicky5124](https://github.com/vicky5124)'s CSS for Tab
-Groups. Group away to keep things organized!
-
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/tab-groups.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
@@ -122,17 +116,12 @@ and delay, change the variables in the config.css file.
 ### Sidebar
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
-- `natsumi.sidebar.containers-dashed-border`: Uses dashed border for container tabs instead of solid
-  border. Selected tabs will always use solid border.
-- `natsumi.sidebar.containers-thicker-gradient`: Makes container tabs indicator gradient "thicker".
-- `natsumi.sidebar.containers-no-inactive-border`: Hides the container tabs indicator border when the
-  tab is not selected.
+- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
+  active tab or not.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
   (e.g. Bookmarks).
-- `natsumi.sidebar.enable-tab-groups`: Enables Tab Groups CSS. This is opt-in as the developer does
-  not recommend using custom CSS to implement Tab Groups at the moment.
 - `natsumi.sidebar.floating-panel`: Makes the Firefox sidebar panel float.
 - `natsumi.sidebar.panel-glass-effect`: Adds glass effect to Firefox sidebar panel.
 - `natsumi.sidebar.panel-position-center`: Vertically centers Firefox sidebar panel if it is floating.
@@ -143,8 +132,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 - `natsumi.sidebar.zen-sidebar-glass-effect`: Adds glass effect to Zen Sidebar.
-- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
-  active tab or not.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
@@ -194,11 +181,7 @@ These are custom options which you need to create. Type in the exact name, then 
 the right to create the config.
 
 ### "Tab groups aren't working!"
-> [!WARNING]
-> The developer of Zen Browser recommends **against** using custom CSS to implement Tab Groups like
-> Natsumi's for the time being. Proceed at your own risk.
-
-Set `browser.tabs.groups.enabled` and `natsumi.sidebar.enable-tab-groups` to true.
+As of 2.5.0, tab groups have been removed.
 
 ### "Something's bugged!"
 There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.
@@ -210,7 +193,7 @@ If the issue still persists, open an issue or report the bug to the developer th
 Thank you to:
 - [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
   CSS for v1
-- [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS
+- [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
