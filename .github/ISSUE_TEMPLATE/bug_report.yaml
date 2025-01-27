@@ -28,6 +28,14 @@ body:
       placeholder: 1.6.2, 2.0.0, etc.
     validations:
       required: true
+  - type: input
+    id: zenversion
+    attributes:
+      label: Zen Browser Version
+      description: What Zen Browser version did you use when you encountered the bug?
+      placeholder: 1.7.1b, 1.7.2t, etc.
+    validations:
+      required: true
   - type: textarea
     id: bug-desc
     attributes:
