@@ -14,3 +14,16 @@ If you already have one, append the import statement below at the top of your us
 #navigator-toolbox {
   border-radius: var(--zen-border-radius) !important;
 }
+
+/* To make urlbar bg transparent when pop out happens */
+/* TODO: Doesn't seem to work!
+#main-window {
+  -moz-appearance: none !important;
+}
+
+#urlbar:is([open]) > #urlbar-background {
+  background: rgba(0,0,0,0.5) !important;
+  backdrop-filter: blur(30px) !important;
+  outline: 1px rgba(0,0,0,0.3) !important;
+}
+*/
