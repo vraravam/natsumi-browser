@@ -212,3 +212,7 @@ Thank you to:
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
 - [mr-cheff](https://github.com/mr-cheff) and Zen's
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
+
+## Disclaimer
+All screenshots displayed in this README are accurate as of January 2, 2025. If a feature was added,
+changed or removed after this date, they may not be accurately reflected in those screenshots.
