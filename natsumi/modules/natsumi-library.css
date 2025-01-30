@@ -27,7 +27,7 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Natsumi Library ==== */
+/* ==== Natsumi Library CSS ==== */
 
 @media not (-moz-bool-pref: "natsumi.library.disabled") {
   /*noinspection CssInvalidFunction*/
@@ -165,7 +165,7 @@ their author(s) have been provided above the used code.
         margin-right: 6px !important;
         height: calc(100% - 4px) !important;
         padding: 0 6px !important;
-        background-color: rgba(0, 0, 0, 0.2) !important;
+        background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)) !important;
         border-radius: 6px !important;
 
         &::before {
@@ -318,6 +318,66 @@ their author(s) have been provided above the used code.
 
           .downloadTypeIcon {
             filter: grayscale(1) brightness(0.75) !important;
+          }
+        }
+      }
+    }
+
+    #editBookmarkPanelContent {
+      .zenEditBMPanel_fieldContainer {
+        grid-column: 1 / -1 !important;
+
+        &:has(#editBMPanel_workspaceDropdown) {
+          display: none !important;
+        }
+
+        /*noinspection CssInvalidPropertyValue*/
+        #editBMPanel_namePicker {
+          width: -moz-available !important;
+        }
+      }
+
+      input {
+        border: none !important;
+        outline: unset !important;
+        background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)) !important;
+      }
+
+      .panel-button {
+        appearance: none !important;
+        aspect-ratio : 1 / 1 !important;
+
+        .button-box {
+          text-align: center !important;
+          border-radius: 6px !important;
+          transition: background-color 0.2s ease !important;
+
+          .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/arrow-down.svg") !important;
+            -moz-context-properties: fill;
+            fill: light-dark(black, white) !important;
+          }
+
+          .button-text {
+            display: none !important;
+          }
+        }
+
+        &:hover {
+          .button-box {
+            background-color: var(--toolbarbutton-hover-background) !important;
+          }
+        }
+
+        &:active {
+          .button-box {
+            background-color: var(--toolbarbutton-active-background) !important;
+          }
+        }
+
+        &.expander-up {
+          .button-icon {
+            list-style-image: url("chrome://browser/skin/zen-icons/arrow-up.svg") !important;
           }
         }
       }
