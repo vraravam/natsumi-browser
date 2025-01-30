@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.2b` (Beta) and `1.7.2t 2025-01-27` (Twilight).
+Natsumi has been tested on `1.7.3b` (Beta) and `1.7.3t 2025-01-30` (Twilight).
 
 ## Features
 ### Polished look
@@ -52,6 +52,13 @@ Elevate your sidebars to the next level! Not only does Natsumi add a glass effec
 also makes the Firefox sidebar more customizable by adding customization for its size and position.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/sidebars.png?raw=true)
+
+### And much more!
+- Natsumi Picture-in-Picture
+- Natsumi Library
+- Marginless compact mode
+- Compact URLbar
+- And more!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
@@ -110,7 +117,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
 
 ### Navbar
-- `natsumi.navbar.floating-navbar`: Makes the navbar float on compact mode.
 - `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
 
 ### Sidebar
@@ -141,6 +147,7 @@ and delay, change the variables in the config.css file.
 
 ### Picture-in-Picture
 - `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.native-border-radius`: Makes the PiP controls border radius look more native.
 
 ### Library
 - `natsumi.library.disabled`: Disables Natsumi Library and reverts the library style back.
