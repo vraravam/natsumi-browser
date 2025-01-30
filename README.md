@@ -215,4 +215,4 @@ Thank you to:
 
 ## Disclaimer
 All screenshots displayed in this README are accurate as of January 2, 2025. If a feature was added,
-changed or removed after this date, they may not be accurately reflected in those screenshots.
+changed or removed after this date, it may not be accurately reflected in those screenshots.
