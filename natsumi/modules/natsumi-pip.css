@@ -48,6 +48,42 @@ their author(s) have been provided above the used code.
       --toolbarbutton-active-background: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.11));
     }
 
+    @keyframes pip-fadein-html {
+      0% {
+        background-color: transparent;
+        scale: 0.8;
+      }
+
+      99% {
+        background-color: transparent;
+        scale: 1;
+      }
+
+      100% {
+        background-color: black;
+      }
+    }
+
+    @keyframes pip-fadein-player {
+      0% {
+        filter: blur(30px);
+        opacity: 0;
+      }
+
+      100% {
+        filter: blur(0);
+        opacity: 1;
+      }
+    }
+
+    html {
+      animation: pip-fadein-html 0.5s ease !important;
+    }
+
+    .player-holder {
+      animation: pip-fadein-player 0.5s ease !important;
+    }
+
     #controls {
       opacity: 1 !important;
 
