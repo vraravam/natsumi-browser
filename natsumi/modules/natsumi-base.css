@@ -162,6 +162,14 @@ their author(s) have been provided above the used code.
       }
     }
 
+    &:not([selected]) {
+      @media (-moz-bool-pref: "natsumi.sidebar.container-tabs-border-no-inactive") {
+        .tab-background {
+          border: none !important;
+        }
+      }
+    }
+
     &:hover {
       .tab-background {
         &::before {
