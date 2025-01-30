@@ -127,6 +127,21 @@ their author(s) have been provided above the used code.
         filter: blur(10px);
         transition: opacity 0.3s ease, bottom 0.3s ease, backdrop-filter 0.3s ease, filter 0.3s ease !important;
 
+        @media (-moz-bool-pref: "natsumi.pip.native-border-radius") {
+          /* For the sake of adding native radius, we'll reduce the margin of the controls here */
+          width: 100% !important;
+          margin: 0 !important;
+          bottom: -10px !important;
+
+          /*
+          For now this config is available on macOS only, this'll be added to Windows and Linux
+          once curved PiP for those platforms moves out of experiment status
+          */
+          @media (-moz-platform: macos) {
+            border-radius: 5px !important;
+          }
+        }
+
         .start-controls {
           display: flex !important;
 
@@ -378,6 +393,10 @@ their author(s) have been provided above the used code.
           bottom: 5px !important;
           backdrop-filter: blur(15px);
           filter: blur(0);
+
+          @media (-moz-bool-pref: "natsumi.pip.native-border-radius") {
+            bottom: 0 !important;
+          }
         }
       }
     }
