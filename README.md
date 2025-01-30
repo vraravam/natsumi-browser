@@ -116,8 +116,8 @@ and delay, change the variables in the config.css file.
 ### Sidebar
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
   have both Zen Sidebar and Natsumi URLbar opened at the same time.
-- `natsumi.sidebar.container-tabs-border`: Adds a border to all tabs irrespective of whether it's the
-  active tab or not.
+- `natsumi.sidebar.container-tabs-border`: Adds a border to container tabs.
+- `natsumi.sidebar.container-tabs-border-no-inactive`: Disables border for tabs that are not selected.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
 - `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
@@ -139,6 +139,12 @@ and delay, change the variables in the config.css file.
   results.
 - `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
 
+### Picture-in-Picture
+- `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
+
+### Library
+- `natsumi.library.disabled`: Disables Natsumi Library and reverts the library style back.
+
 ### PDF Viewer
 - `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
 
@@ -152,6 +158,7 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
+- `natsumi.experiments.rounded-pip`: Makes the PiP window round, like in macOS.
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
@@ -181,7 +188,7 @@ These are custom options which you need to create. Type in the exact name, then 
 the right to create the config.
 
 ### "Tab groups aren't working!"
-As of 2.5.0, tab groups have been removed.
+As of 2.4.1, tab groups have been removed.
 
 ### "Something's bugged!"
 There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.
