@@ -310,7 +310,7 @@ their author(s) have been provided above the used code.
           /*background-color: transparent !important;*/
         }
 
-        &:not([exists]):is([state="1"], [state="3"]) {
+        &:not([exists]):is([state="1"], [state="2"], [state="3"]) {
           .downloadTarget {
             color: light-dark(#555, #aaa);
             text-decoration: line-through;
