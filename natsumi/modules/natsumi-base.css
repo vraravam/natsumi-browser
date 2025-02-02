@@ -261,6 +261,10 @@ their author(s) have been provided above the used code.
 
 #tabbrowser-tabs {
   overflow: visible !important;
+
+  &:has(> #zen-browser-tabs-wrapper[style*="translateX"]:not([style*="translateX(0px)"])) {
+    overflow: hidden !important;
+  }
 }
 
 #zen-essentials-container {
@@ -376,8 +380,23 @@ their author(s) have been provided above the used code.
     }
 
     &[selected] {
-      .tab-background {
-        border: none !important;
+      @media not (-moz-bool-pref: "natsumi.sidebar.container-tabs-border") {
+        .tab-background {
+          border: none !important;
+        }
+      }
+    }
+
+    &:not([selected]) {
+      /* Enforce pinned tabs border */
+      @media (-moz-bool-pref: "natsumi.sidebar.container-tabs-border-no-inactive") {
+        .tab-background {
+          border: 1px solid rgba(0, 0, 0, 0.1) !important;
+
+          @media (prefers-color-scheme: dark) {
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          }
+        }
       }
     }
   }
