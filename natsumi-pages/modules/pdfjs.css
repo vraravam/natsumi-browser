@@ -293,10 +293,6 @@ their author(s) have been provided above the used code.
       &.toggled {
         background-color: var(--toolbarbutton-active-background) !important;
       }
-
-      &::before {
-        mask-mode: alpha !important;
-      }
     }
 
     /* Document properties */
@@ -386,7 +382,7 @@ their author(s) have been provided above the used code.
     }
 
     #lastPage::before {
-      background-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-down.svg') !important;
     }
 
     #pageRotateCw::before {
@@ -443,35 +439,35 @@ their author(s) have been provided above the used code.
     }
 
     #secondaryToolbarToggleButton::before {
-      background-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
+      mask-image: url('chrome://browser/skin/zen-icons/arrow-right.svg') !important;
     }
 
     /* Sidebar buttons */
 
     #viewThumbnail::before {
-      background-image: url('resource://pdf.js/web/images/toolbarButton-viewThumbnail.svg') !important;
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewThumbnail.svg') !important;
     }
 
     #viewOutline::before {
-      background-image: url('resource://pdf.js/web/images/toolbarButton-viewOutline.svg') !important;
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewOutline.svg') !important;
     }
 
     #viewAttachments::before {
-      background-image: url('resource://pdf.js/web/images/toolbarButton-viewAttachments.svg') !important;
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewAttachments.svg') !important;
     }
 
     #viewLayers::before {
-      background-image: url('resource://pdf.js/web/images/toolbarButton-viewLayers.svg') !important;
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-viewLayers.svg') !important;
     }
 
     #currentOutlineItem::before {
-      background-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
+      mask-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
     }
 
     /* Checked buttons */
 
     #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
-      background-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
+      mask-image: url('chrome://browser/skin/zen-icons/checkmark.svg') !important;
     }
   }
 }
