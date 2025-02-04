@@ -211,7 +211,7 @@ their author(s) have been provided above the used code.
     }
   }
 
-  &[glance-id][visuallyselected] {
+  &[glance-id][visuallyselected], &[visuallyselected]:not([selected]) {
     & > .tab-stack > .tab-background {
       &::after {
         width: calc(100% - 4px);
