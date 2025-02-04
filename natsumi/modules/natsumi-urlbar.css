@@ -582,8 +582,10 @@ their author(s) have been provided above the used code.
   @media (-moz-bool-pref: "natsumi.urlbar.compact") {
     @media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
       @media (-moz-bool-pref: "zen.tabs.vertical") {
+
         #urlbar:not([breakout-extend="true"]) {
           --urlbar-anim-time: 0.2s;
+
           #urlbar-background {
             opacity: 1 !important;
             transition: opacity var(--urlbar-anim-time) ease;
@@ -606,8 +608,14 @@ their author(s) have been provided above the used code.
           #tracking-protection-icon-container, .urlbar-page-action {
             transition: width var(--urlbar-anim-time) ease, opacity var(--urlbar-anim-time) ease, margin var(--urlbar-anim-time) ease;
           }
+        }
 
-          &:not(:hover):not([focused]):not(:has(.urlbar-page-action[open], #tracking-protection-icon-container[open], .identity-box-button[open])) {
+        #zen-appcontent-navbar-container:not(:hover) {
+          #urlbar:not([breakout-extend="true"]):not(:hover):not([focused]):not(:has(.urlbar-page-action[open], #tracking-protection-icon-container[open], .identity-box-button[open])) {
+            & > *, #tracking-protection-icon-container, .urlbar-page-action, #identity-icon-box {
+              transition-delay: 0.5s !important;
+            }
+
             #identity-icon-box {
               padding-left: 6px !important;
               padding-right: 6px !important;
