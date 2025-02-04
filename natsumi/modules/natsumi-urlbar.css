@@ -343,10 +343,12 @@ their author(s) have been provided above the used code.
         }
       }
 
-      #identity-box {
-        &:is([pageproxystate="invalid"]).verifiedDomain {
-          image {
-            list-style-image: url('chrome://global/skin/icons/search-glass.svg') !important;
+      &:not([zen-newtab]) {
+        #identity-box {
+          &:is([pageproxystate="invalid"]).verifiedDomain {
+            image {
+              list-style-image: url('chrome://global/skin/icons/search-glass.svg') !important;
+            }
           }
         }
       }
