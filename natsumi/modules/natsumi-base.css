@@ -105,6 +105,14 @@ their author(s) have been provided above the used code.
 .tabbrowser-tab {
   scale: unset !important;
 
+  &[zen-glance-tab] {
+    box-shadow: none !important;
+
+    .tab-label-container {
+      display: none !important;
+    }
+  }
+
   .tab-stack {
     transition: transform 0.2s ease !important;
   }
@@ -187,8 +195,8 @@ their author(s) have been provided above the used code.
     display: none !important;
   }
 
-  &[selected] {
-    .tab-background {
+  &[selected]:not([zen-glance-tab="true"]), &[visuallyselected]:not([zen-glance-tab="true"]) {
+    & > .tab-stack > .tab-background {
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
 
       &::before {
@@ -199,6 +207,14 @@ their author(s) have been provided above the used code.
       &::after {
         width: 100%;
         opacity: 1;
+      }
+    }
+  }
+
+  &[glance-id][visuallyselected] {
+    & > .tab-stack > .tab-background {
+      &::after {
+        width: calc(100% - 4px);
       }
     }
   }
