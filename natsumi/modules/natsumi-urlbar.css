@@ -310,6 +310,7 @@ their author(s) have been provided above the used code.
         font-size: 20px !important;
         margin-left: 1.5px !important;
         margin-right: 0 !important;
+        border-radius: 0 !important;
 
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           margin-left: 4px !important;
