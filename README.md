@@ -184,12 +184,12 @@ latest version of Zen Browser as close as possible to the release date.
 If you are unsure if Natsumi is compatible with your version, check the tested versions in the beginning
 of the README.
 
-### "Is Natsumi compatible with Firefox, Chrome, Arc, etc.?"
-No. Natsumi is made on top of Zen Browser, so a LOT of things will break if you try to apply it on
-Firefox or other Firefox-based browsers.
+### "Is Natsumi compatible with other browsers (Firefox, Chrome, Arc, etc.)?"
+No. Natsumi is made on top of Zen Browser, so it only supports Zen Browser.
 
-As for Chrome/Chromium-based browsers like Arc, you can't apply userchrome CSS files, making Natsumi
-completely incompatible with those browsers.
+If you try to apply Natsumi on other Firefox or other Firefox-based browsers, things will definitely
+break. As for Chrome/Chromium-based browsers like Arc, you can't apply userchrome CSS files, making
+Natsumi completely incompatible with those browsers.
 
 ### "Can I use Natsumi with other Zen Mods?"
 You can, but some mods (such as Better Find Bar and Super Url Bar) may conflict with Natsumi's CSS
