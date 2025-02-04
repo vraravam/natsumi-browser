@@ -44,7 +44,7 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
 /* Rounded PiP */
 @media (-moz-bool-pref: "natsumi.experiments.rounded-pip") {
   @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
-    window {
+    window, html, body {
       /* Share same radius as macOS for the sake of simplicity later */
       border-radius: 9px !important;
     }
