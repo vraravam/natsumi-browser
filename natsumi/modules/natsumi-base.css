@@ -31,8 +31,12 @@ their author(s) have been provided above the used code.
 
 /* Marginless compact mode */
 
-:root[zen-compact-mode="true"]:not([customizing]) {
-  @media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+@media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+  #zen-tabbox-wrapper {
+    transition: margin 0.2s ease, border-radius 0.2s ease !important;
+  }
+
+  :root[zen-compact-mode="true"]:not([customizing]) {
     #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view])) {
       margin: 0 !important;
 
