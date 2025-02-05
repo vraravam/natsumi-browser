@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.5b` (Beta) and `1.7.5t 2025-02-04` (Twilight).
+Natsumi has been tested on `1.7.5b` (Beta) and `1.7.6t 2025-02-04` (Twilight).
 
 ## Features
 ### Polished look
@@ -179,8 +179,8 @@ You're free to disable loading certain modules (CSS files) if you feel like it. 
 to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
 
 ### "Is Natsumi compatible with the newest version of Zen Browser?"
-New versions of Natsumi are developed and tested on Zen Twilight, so that it will be compatible with the
-latest version of Zen Browser as close as possible to the release date.
+Natsumi is always developed and tested on the newest Zen Twilight, so that it's always compatible with
+the newest Zen Browser right on release day.
 
 If you are unsure if Natsumi is compatible with your version, check the tested versions in the beginning
 of the README.
