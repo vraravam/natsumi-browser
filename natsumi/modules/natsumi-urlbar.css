@@ -189,6 +189,9 @@ their author(s) have been provided above the used code.
 
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           animation-name: urlbar-appear-sideways;
+
+          /* URLbar center position patch */
+          animation-fill-mode: forwards !important;
         }
 
         #urlbar-results {

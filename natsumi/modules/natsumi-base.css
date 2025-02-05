@@ -55,6 +55,15 @@ their author(s) have been provided above the used code.
           }
         }
       }
+
+      @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+        @media (-moz-bool-pref: "natsumi.theme.compact-marginless-hide-bookmarks") {
+          #zen-appcontent-navbar-container:not([zen-has-hover]) {
+            min-height: 0 !important;
+            height: 0 !important;
+          }
+        }
+      }
     }
   }
 }

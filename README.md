@@ -99,6 +99,7 @@ and delay, change the variables in the config.css file.
   blurring. Enable this if you need this for compatibility with other userchromes/Mods like
   [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
 - `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
+- `natsumi.theme.compact-marginless-hide-bookmarks`: Hides the bookmarks bar in marginless compact mode.
 - `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
   too much.
 - `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
