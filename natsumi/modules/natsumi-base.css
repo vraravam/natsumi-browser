@@ -151,7 +151,7 @@ their author(s) have been provided above the used code.
     }
   }
 
-  &:hover {
+  &:hover:not([glance-id]) {
     .tab-background {
       &::before {
         opacity: 1;
