@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.4b` (Beta) and `1.7.4t 2025-01-30` (Twilight).
+Natsumi has been tested on `1.7.5b` (Beta) and `1.7.6t 2025-02-04` (Twilight).
 
 ## Features
 ### Polished look
@@ -99,6 +99,7 @@ and delay, change the variables in the config.css file.
   blurring. Enable this if you need this for compatibility with other userchromes/Mods like
   [Cohesion](https://github.com/TheBigWazz/ZenThemes/tree/main/Cohesion).
 - `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
+- `natsumi.theme.compact-marginless-hide-bookmarks`: Hides the bookmarks bar in marginless compact mode.
 - `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
   too much.
 - `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
@@ -177,10 +178,28 @@ userchrome alongside Natsumi Browser.
 You're free to disable loading certain modules (CSS files) if you feel like it. But you will still need
 to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
 
+### "Is Natsumi compatible with the newest version of Zen Browser?"
+Natsumi is always developed and tested on the newest Zen Twilight, so that it's always compatible with
+the newest Zen Browser right on release day.
+
+If you are unsure if Natsumi is compatible with your version, check the tested versions in the beginning
+of the README.
+
+### "Is Natsumi compatible with other browsers (Firefox, Chrome, Arc, etc.)?"
+No. Natsumi is made on top of Zen Browser, so it only supports Zen Browser.
+
+If you try to apply Natsumi on other Firefox or other Firefox-based browsers, things will definitely
+break. As for Chrome/Chromium-based browsers like Arc, you can't apply userchrome CSS files, making
+Natsumi completely incompatible with those browsers.
+
+### "Can I use Natsumi with other Zen Mods?"
+You can, but some mods (such as Better Find Bar and Super Url Bar) may conflict with Natsumi's CSS
+rules. If this happens, please disable the conflicting mods or Natsumi features.
+
 ### "Why is userChrome.css so empty?"
 Natsumi Browser uses a system where the userChrome.css file acts as a loader that loads the skin,
-instead of being the file that contains all rules. This way, it's easier for users to quickly enable and
-disable custom CSS.
+instead of being the file that contains all rules. This way, it's easier for users to quickly enable
+and disable custom CSS.
 
 ## Troubleshooting
 ### "URLbar blur won't work!"

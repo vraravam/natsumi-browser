@@ -31,8 +31,12 @@ their author(s) have been provided above the used code.
 
 /* Marginless compact mode */
 
-:root[zen-compact-mode="true"]:not([customizing]) {
-  @media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+@media (-moz-bool-pref: "natsumi.theme.compact-marginless") {
+  #zen-tabbox-wrapper {
+    transition: margin 0.2s ease, border-radius 0.2s ease !important;
+  }
+
+  :root[zen-compact-mode="true"]:not([customizing]) {
     #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view])) {
       margin: 0 !important;
 
@@ -48,6 +52,15 @@ their author(s) have been provided above the used code.
         @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
           browser {
             clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+          }
+        }
+      }
+
+      @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+        @media (-moz-bool-pref: "natsumi.theme.compact-marginless-hide-bookmarks") {
+          #zen-appcontent-navbar-container:not([zen-has-hover]) {
+            min-height: 0 !important;
+            height: 0 !important;
           }
         }
       }
@@ -101,6 +114,14 @@ their author(s) have been provided above the used code.
 .tabbrowser-tab {
   scale: unset !important;
 
+  &[zen-glance-tab] {
+    box-shadow: none !important;
+
+    .tab-label-container {
+      display: none !important;
+    }
+  }
+
   .tab-stack {
     transition: transform 0.2s ease !important;
   }
@@ -139,7 +160,7 @@ their author(s) have been provided above the used code.
     }
   }
 
-  &:hover {
+  &:hover:not([glance-id]) {
     .tab-background {
       &::before {
         opacity: 1;
@@ -183,8 +204,8 @@ their author(s) have been provided above the used code.
     display: none !important;
   }
 
-  &[selected] {
-    .tab-background {
+  &[selected]:not([zen-glance-tab="true"]), &[visuallyselected]:not([zen-glance-tab="true"]) {
+    & > .tab-stack > .tab-background {
       box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
 
       &::before {
@@ -195,6 +216,14 @@ their author(s) have been provided above the used code.
       &::after {
         width: 100%;
         opacity: 1;
+      }
+    }
+  }
+
+  &[glance-id][visuallyselected], &[visuallyselected]:not([selected]) {
+    & > .tab-stack > .tab-background {
+      &::after {
+        width: calc(100% - 4px);
       }
     }
   }
