@@ -117,6 +117,24 @@ toolbarbutton[badged="true"]:not([badge]) {
   }
 }
 
+/* Consistent toolbar button sizing for 1.7.5b */
+
+@media (-moz-bool-pref: "natsumi.theme.consistent-toolbar-button-size") {
+  #nav-bar-customization-target {
+    toolbaritem {
+      margin: 0 !important;
+
+      toolbarbutton {
+        padding: 0 4px !important;
+      }
+    }
+
+    #PanelUI-menu-button {
+      padding-left: 4px !important;
+    }
+  }
+}
+
 
 
 /* ==== WIP features (do not touch yet) ==== */
