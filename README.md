@@ -97,6 +97,7 @@ and delay, change the variables in the config.css file.
 ### Base theme
 - `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
 - `natsumi.theme.compact-marginless-hide-bookmarks`: Hides the bookmarks bar in marginless compact mode.
+- `natsumi.theme.consistent-toolbar-button-size`: Makes toolbar buttons have a consistent size on Zen 1.7.5b.
 - `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
   too much.
 - `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
