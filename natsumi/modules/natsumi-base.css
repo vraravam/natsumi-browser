@@ -588,12 +588,12 @@ their author(s) have been provided above the used code.
   background-color: var(--natsumi-glass-background) !important;
   border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
   box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
-  transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease !important;
+  transition: opacity 0.2s ease, top 0.2s ease !important;
   backdrop-filter: blur(10px) !important;
   opacity: 0;
   margin: 0 !important;
   left: 50% !important;
-  transform: translate(-50%) !important;
+  translate: -50% 0 !important;
 
   &:not([hidden]) {
     display: flex !important;
