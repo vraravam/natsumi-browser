@@ -659,7 +659,6 @@ their author(s) have been provided above the used code.
 
     &:hover {
       background: var(--toolbarbutton-hover-background) !important;
-      transform: scale(-100%, 100%) !important;
     }
 
     &:active {
@@ -669,6 +668,9 @@ their author(s) have been provided above the used code.
     &:hover, &:active {
       &::before {
         background-image: url('chrome://browser/skin/zen-icons/fullscreen-exit.svg') !important;
+        transform: translate(-50%, -50%) scale(-100%, 100%) !important;
+        left: 50% !important;
+        top: 50% !important;
       }
     }
   }
