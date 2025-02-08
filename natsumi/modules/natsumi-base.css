@@ -311,11 +311,16 @@ their author(s) have been provided above the used code.
       box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3) !important;
     }
 
+    /*noinspection CssInvalidFunction*/
     &:not([usercontextid]) .tab-background {
-      border: 1px solid var(--natsumi-primary-color) !important;
+      border: 1px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
 
-      @media (prefers-color-scheme: dark) {
-        border: 1px solid var(--natsumi-colors-primary) !important;
+      @media (-moz-bool-pref: "natsumi.sidebar.lighter-essentials-border") {
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+      }
+
+      @media (-moz-bool-pref: "natsumi.sidebar.no-essentials-border") {
+        border: none !important;
       }
     }
 
