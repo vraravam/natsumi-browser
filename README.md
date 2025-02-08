@@ -105,7 +105,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
   quite some GPU.
-- `natsumi.theme.fullscreen-glass-effect`: Enables glass effect for full screen popup message.
 
 ### URLbar
 - `natsumi.urlbar.compact`: Makes the URLbar smaller when not focused.
