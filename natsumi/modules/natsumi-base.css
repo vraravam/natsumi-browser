@@ -579,34 +579,6 @@ their author(s) have been provided above the used code.
   }
 }
 
-/* Fullscreen alert */
-
-@media (-moz-bool-pref: "natsumi.theme.fullscreen-glass-effect") {
-  /*noinspection CssInvalidFunction*/
-  #fullscreen-warning {
-    background-color: var(--natsumi-glass-background) !important;
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
-    border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-    opacity: 1;
-    transition: transform 0.2s ease, opacity 0.4s ease !important;
-
-    &:not([onscreen]), &:is([hidden]) {
-      transform: translate(-50%, -10px) !important;
-      opacity: 0;
-    }
-
-    @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-      box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
-    }
-
-    @media (prefers-color-scheme: light) {
-      &::before, .pointerlockfswarning-domain-text {
-        color: black !important;
-      }
-    }
-  }
-}
-
 /* Compact alerts */
 
 /*noinspection CssInvalidFunction*/
@@ -616,10 +588,21 @@ their author(s) have been provided above the used code.
   background-color: var(--natsumi-glass-background) !important;
   border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
   box-shadow: 0 0 var(--natsumi-glass-shadow-size) color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), light-dark(black, white)) !important;
-  transform: translate(-50%, 20px) !important;
-  transition: transform 0.2s ease, opacity 0.2s ease !important;
+  transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease !important;
   backdrop-filter: blur(10px) !important;
   opacity: 0;
+  margin: 0 !important;
+  left: 50% !important;
+  transform: translate(-50%) !important;
+
+  &:not([hidden]) {
+    display: flex !important;
+  }
+
+  &:not([onscreen]), &:is([hidden]) {
+    top: 20px !important;
+    opacity: 0;
+  }
 
   /*noinspection CssInvalidFunction*/
   .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
@@ -627,10 +610,11 @@ their author(s) have been provided above the used code.
     font-size: 14px !important;
     margin-left: 10px !important;
     margin-right: 0 !important;
+    padding-right: 5px !important;
   }
 
   &[onscreen] {
-    transform: translate(-50%, 30px) !important;
+    top: 30px !important;
     opacity: 1;
   }
 }
@@ -655,19 +639,22 @@ their author(s) have been provided above the used code.
     padding: 0 !important;
     margin: 0 !important;
     transition: background 0.3s ease !important;
+    position: relative !important;
 
+    /*noinspection CssInvalidFunction*/
     &::before {
       content: "";
       width: 16px;
       height: 16px;
       position: absolute !important;
-      left: 14px !important;
-      top: 12px !important;
       background-image: url('chrome://browser/skin/zen-icons/fullscreen.svg') !important;
-
-      @media (prefers-color-scheme: dark) {
-        filter: invert();
-      }
+      -moz-context-properties: fill;
+      fill: light-dark(black, white) !important;
+      left: 50% !important;
+      top: 50% !important;
+      background-repeat: no-repeat;
+      background-position: center;
+      transform: translate(-50%, -50%) !important;
     }
 
     &:hover {
@@ -676,16 +663,14 @@ their author(s) have been provided above the used code.
 
     &:active {
       background: var(--toolbarbutton-active-background) !important;
-
-      &::before {
-        left: 4px !important;
-        top: 4px !important;
-      }
     }
 
     &:hover, &:active {
       &::before {
         background-image: url('chrome://browser/skin/zen-icons/fullscreen-exit.svg') !important;
+        transform: translate(-50%, -50%) scale(-100%, 100%) !important;
+        left: 50% !important;
+        top: 50% !important;
       }
     }
   }

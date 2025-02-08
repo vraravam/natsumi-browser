@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.5b` (Beta) and `1.7.6t 2025-02-04` (Twilight).
+Natsumi has been tested on `1.7.5b` (Beta) and `1.7.7t 2025-02-07` (Twilight).
 
 ## Features
 ### Polished look
@@ -105,7 +105,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
   quite some GPU.
-- `natsumi.theme.fullscreen-glass-effect`: Enables glass effect for full screen popup message.
 
 ### URLbar
 - `natsumi.urlbar.compact`: Makes the URLbar smaller when not focused.
