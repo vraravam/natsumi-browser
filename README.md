@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.7.5b` (Beta) and `1.7.7t 2025-02-07` (Twilight).
+Natsumi has been tested on `1.7.6b` (Beta) and `1.7.7t 2025-02-07` (Twilight).
 
 ## Features
 ### Polished look
@@ -230,5 +230,11 @@ Thank you to:
   [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
 
 ## Disclaimer
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
+LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
 All screenshots displayed in this README are accurate as of January 2, 2025. If a feature was added,
-changed or removed after this date, it may not be accurately reflected in those screenshots.
+changed or removed after this date, it may not be accurately reflected in the screenshots.
