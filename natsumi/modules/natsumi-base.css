@@ -290,6 +290,10 @@ their author(s) have been provided above the used code.
 
 #zen-browser-tabs-wrapper {
   overflow: visible !important;
+
+  &:has(.zen-workspace-tabs-section[style*="translateX"][style*="translateX(0%)"]) {
+    overflow: hidden !important;
+  }
 }
 
 #zen-essentials-container {
