@@ -644,6 +644,7 @@ their author(s) have been provided above the used code.
 
             #urlbar-background {
               opacity: 0 !important;
+              transition: opacity var(--urlbar-anim-time) ease, background-color 0.2s ease 0s, box-shadow 0s ease 0s !important;
             }
 
             .urlbar-input-container {

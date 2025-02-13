@@ -187,11 +187,6 @@ their author(s) have been provided above the used code.
             background-image: url('chrome://browser/skin/zen-icons/search-page.svg') !important;
             background-repeat: no-repeat !important;
             padding-left: 25px !important;
-            color: black !important;
-
-            @media (prefers-color-scheme: dark) {
-              filter: invert();
-            }
           }
         }
       }
