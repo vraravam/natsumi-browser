@@ -133,6 +133,7 @@ their author(s) have been provided above the used code.
   .tab-background {
     transition: background 0.3s ease, box-shadow 0.3s ease, border 0.3s ease !important;
     overflow: hidden !important;
+    position: relative !important;
 
     &::before {
       content: "";
@@ -147,7 +148,7 @@ their author(s) have been provided above the used code.
     &::after {
       content: "";
       position: absolute;
-      width: calc(100% - 4px);
+      width: 100%;
       height: var(--tab-min-height);
       opacity: 0;
       transition: opacity 0.3s ease;
