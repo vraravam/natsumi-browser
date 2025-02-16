@@ -33,7 +33,7 @@ their author(s) have been provided above the used code.
   from {
     top: 0;
     opacity: 0;
-    filter: blur(15px);
+    filter: blur(5px);
   }
 
   to {
@@ -94,7 +94,7 @@ their author(s) have been provided above the used code.
       top: 0 !important;
       animation: glass-disappear 0.2s linear !important;
       animation-fill-mode: forwards !important;
-      filter: blur(15px);
+      filter: blur(5px);
     }
 
     /*noinspection CssInvalidFunction*/
