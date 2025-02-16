@@ -39,12 +39,20 @@ their author(s) have been provided above the used code.
 }
 
 :root {
-  &:is([inFullscreen]) {
+  @media (-moz-platform: macos) {
     /* Patches collapsed view on macOS */
-    @media (-moz-platform: macos) {
-      @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+    @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+      #zen-sidebar-top-buttons-customization-target {
+        padding-top: 0 !important;
+      }
+
+      .titlebar-buttonbox-container {
+        padding: 0 var(--zen-toolbox-padding) !important;
+      }
+
+      &:is([inFullscreen]) {
         #navigator-toolbox {
-          margin-top: -3px !important;
+          margin-top: 0 !important;
         }
       }
     }
