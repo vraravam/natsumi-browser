@@ -306,6 +306,11 @@ their author(s) have been provided above the used code.
         &.toggled {
           background-color: var(--toolbarbutton-active-background) !important;
         }
+
+        &::before {
+          mask-size: contain !important;
+          mask-repeat: no-repeat;
+        }
       }
 
       /* Document properties */
