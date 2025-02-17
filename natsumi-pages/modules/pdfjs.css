@@ -389,7 +389,7 @@ their author(s) have been provided above the used code.
       }
 
       #sidebarToggleButton::before {
-        mask-image: url('chrome://browser/skin/sidebars.svg') !important;
+        mask-image: url('chrome://browser/skin/zen-icons/sidebar.svg') !important;
       }
 
       #editorHighlightButton::before {
