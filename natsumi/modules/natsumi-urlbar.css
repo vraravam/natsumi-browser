@@ -66,7 +66,6 @@ their author(s) have been provided above the used code.
     filter: blur(0);
   }
   100% {
-    margin-top: 0;
     opacity: 1;
     scale: 1;
     background: transparent;
