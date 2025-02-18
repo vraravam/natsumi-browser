@@ -33,7 +33,7 @@ their author(s) have been provided above the used code.
   @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
     /*noinspection CssInvalidFunction*/
     * {
-      --natsumi-primary-color: #aac7ff;
+      --natsumi-primary-color: #a0d490;
       --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
       --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
 

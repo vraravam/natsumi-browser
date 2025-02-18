@@ -8,7 +8,7 @@ as they use the correct format.
 * {
   /* Accent color */
   --natsumi-accent-color: var(--zen-primary-color);
-  --natsumi-pages-accent-color: #aac7ff;
+  --natsumi-pages-accent-color: #a0d490;
 
   /* Natsumi Glass Effect */
   --glass-blur-radius: 20px;
