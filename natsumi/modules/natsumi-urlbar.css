@@ -35,9 +35,6 @@ their author(s) have been provided above the used code.
   0% {
     margin-top: calc(var(--zen-toolbar-height) * -2);
   }
-  75% {
-    margin-top: 20px;
-  }
   100% {
     margin-top: 0;
   }
@@ -47,30 +44,8 @@ their author(s) have been provided above the used code.
   0% {
     margin-left: -28vw;
   }
-  75% {
-    margin-left: 20px;
-  }
   100% {
     margin-left: calc(-1 * var(--urlbar-margin-inline));
-  }
-}
-
-/*noinspection CssInvalidFunction*/
-@keyframes results-appear {
-  0% {
-    opacity: 0;
-    margin-top: -90vh;
-  }
-  50% {
-    opacity: 0;
-    margin-top: -90vh;
-  }
-  75% {
-    opacity: 0;
-    margin-top: 0;
-  }
-  100% {
-    opacity: 1;
   }
 }
 
@@ -78,7 +53,7 @@ their author(s) have been provided above the used code.
 @keyframes individual-result-appear {
   0%   {
     opacity: 0;
-    scale: 0.5;
+    scale: 0.7;
     background: var(--natsumi-colors-tertiary);
     filter: blur(20px);
   }
@@ -86,8 +61,6 @@ their author(s) have been provided above the used code.
     opacity: 1;
   }
   60% {
-    opacity: 1;
-    scale: var(--expand-width);
     background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
     filter: blur(0);
   }
@@ -201,10 +174,6 @@ their author(s) have been provided above the used code.
         }
 
         #urlbar-results {
-          animation-name: results-appear;
-          animation-duration: var(--animation-duration);
-          counter-reset: results 0;
-
           .urlbarView-row {
             animation-name: individual-result-appear;
             animation-duration: var(--animation-duration);
