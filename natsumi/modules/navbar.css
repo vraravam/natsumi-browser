@@ -75,6 +75,7 @@ their author(s) have been provided above the used code.
           padding-bottom: 0 !important;
           width: calc(100% - 10px) !important;
 
+          /*noinspection CssInvalidFunction*/
           &::after {
             content: "";
             background: var(--natsumi-glass-background) !important;
