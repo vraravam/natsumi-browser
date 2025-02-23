@@ -117,6 +117,7 @@ and delay, change the variables in the config.css file.
 
 ### Navbar
 - `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
+- `natsumi.navbar.float`: Makes the navbar float. Glass effect is required for this.
 
 ### Sidebar
 - `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
