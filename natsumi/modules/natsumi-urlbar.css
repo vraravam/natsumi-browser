@@ -33,19 +33,19 @@ their author(s) have been provided above the used code.
 
 @keyframes urlbar-appear {
   0% {
-    margin-top: calc(var(--zen-toolbar-height) * -2);
+    margin-top: -50vh;
   }
   100% {
-    margin-top: 0;
+    margin-top: -20%;
   }
 }
 
 @keyframes urlbar-appear-sideways {
   0% {
-    margin-left: -28vw;
+    margin-left: calc(-50% + calc(min(90%, 60rem) / 2));
   }
   100% {
-    margin-left: calc(-1 * var(--urlbar-margin-inline));
+    margin-left: 0;
   }
 }
 
@@ -170,9 +170,6 @@ their author(s) have been provided above the used code.
 
         @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
           animation-name: urlbar-appear-sideways;
-
-          /* URLbar center position patch */
-          animation-fill-mode: forwards !important;
         }
 
         #urlbar-results {
