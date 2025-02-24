@@ -61,6 +61,12 @@ their author(s) have been provided above the used code.
       margin-left: var(--zen-element-separation);
     }
   }
+
+  @media (-moz-bool-pref: "natsumi.theme.force-blur") {
+    .deck-selected browser {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
 }
 
 /* Multiple toolbars patch */
