@@ -53,15 +53,16 @@ their author(s) have been provided above the used code.
 @keyframes individual-result-appear {
   0%   {
     opacity: 0;
-    scale: 0.7;
+    scale: 0.5;
     background: var(--natsumi-colors-tertiary);
     filter: blur(20px);
-    transform: translateY(-10px);
   }
   50% {
     opacity: 1;
   }
   60% {
+    opacity: 1;
+    scale: var(--expand-width);
     background: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
     filter: blur(0);
   }
@@ -69,7 +70,6 @@ their author(s) have been provided above the used code.
     opacity: 1;
     scale: 1;
     background: transparent;
-    transform: translateY(0);
   }
 }
 
@@ -113,6 +113,16 @@ their author(s) have been provided above the used code.
 
 /*noinspection CssInvalidFunction*/
 @media not (-moz-bool-pref: "natsumi.urlbar.disabled") {
+  :root[zen-compact-mode="true"] {
+    #urlbar {
+      transition: transform 0s linear !important;
+    }
+
+    #urlbar[breakout-extend] {
+      transform: translateX(-50%) !important;
+    }
+  }
+
   * {
     --urlbarView-item-block-padding: 4px !important;
     --urlbarView-item-inline-padding: 4px !important;
