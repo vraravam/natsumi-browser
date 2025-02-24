@@ -127,7 +127,7 @@ their author(s) have been provided above the used code.
       resize: both;
     }
 
-    &:is([hidden]) {
+    &[hidden] {
       display: flex;
       left: calc(var(--natsumi-sidebar-x-offset) - 20px);
       opacity: 0;
@@ -138,6 +138,20 @@ their author(s) have been provided above the used code.
       @media not (-moz-bool-pref: "sidebar.position_start") {
         left: auto;
         right: calc(var(--natsumi-sidebar-x-offset) - 20px);
+      }
+    }
+  }
+
+  @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
+    @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+      #browser:has(#sidebar-box:not([hidden])) browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
+    }
+
+    @media (-moz-bool-pref: "natsumi.sidebar.panel-glass-effect") {
+      #browser:has(#sidebar-box:not([hidden])) browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
     }
   }
@@ -171,6 +185,12 @@ their author(s) have been provided above the used code.
           #TabsToolbar-customization-target::after {
             background: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
           }
+        }
+      }
+
+      @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
+        #browser:has(#navigator-toolbox:is([zen-has-hover], [zen-user-show])) browser {
+          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
       }
     }
