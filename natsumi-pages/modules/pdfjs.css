@@ -90,6 +90,7 @@ their author(s) have been provided above the used code.
 
         #viewer .page:first-of-type {
           margin-top: 43px !important;
+          transition: margin-top 0.3s ease;
         }
       }
 
@@ -365,8 +366,29 @@ their author(s) have been provided above the used code.
           }
         }
 
-        #viewerContainer #viewer .page:first-of-type {
-          margin-top: 0 !important;
+        @media (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
+          .toolbar:has(#sidebarToggleButton[aria-expanded="true"]) {
+            height: 52px;
+
+            #toolbarContainer {
+              top: 5px !important;
+              opacity: 1 !important;
+              pointer-events: auto;
+              filter: blur(0);
+            }
+          }
+
+          &:has(#sidebarToggleButton:not([aria-expanded="true"])) {
+            #viewerContainer #viewer .page:first-of-type {
+              margin-top: 0 !important;
+            }
+          }
+        }
+
+        @media not (-moz-bool-pref: "natsumi.pdfjs.compact-dynamic") {
+          #viewerContainer #viewer .page:first-of-type {
+            margin-top: 0 !important;
+          }
         }
       }
 

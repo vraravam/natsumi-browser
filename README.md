@@ -155,6 +155,7 @@ and delay, change the variables in the config.css file.
 ### PDF Viewer
 - `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
 - `natsumi.pdfjs.compact`: Enables compact mode for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic`: Disables compact mode when the PDF Viewer's sidebar is expanded.
 
 ### Home
 - `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
