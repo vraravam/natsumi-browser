@@ -144,13 +144,13 @@ their author(s) have been provided above the used code.
 
   @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
     @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
-      #browser:has(#sidebar-box:not([hidden])) browser {
+      #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
     }
 
     @media (-moz-bool-pref: "natsumi.sidebar.panel-glass-effect") {
-      #browser:has(#sidebar-box:not([hidden])) browser {
+      #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
     }
@@ -189,7 +189,7 @@ their author(s) have been provided above the used code.
       }
 
       @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
-        #browser:has(#navigator-toolbox:is([zen-has-hover], [zen-user-show])) browser {
+        #browser:has(#navigator-toolbox:is([zen-has-hover], [zen-user-show])) .deck-selected browser {
           clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
         }
       }
