@@ -57,4 +57,10 @@ their author(s) have been provided above the used code.
       }
     }
   }
+
+  @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
+    #browser:has(#zen-sidebar-web-panel[pinned]) .deck-selected browser {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    }
+  }
 }

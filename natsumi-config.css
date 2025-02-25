@@ -21,7 +21,7 @@ as they use the correct format.
   --urlbar-individual-result-animation-duration: 0.75s;
   --urlbar-individual-result-animation-delay: 0.05s;
   --urlbar-individual-result-animation-delay-offset: 0.05s;
-  --urlbar-individual-result-expand-size: 1.1;
+  --urlbar-individual-result-expand-size: 1.05;
 
   /* Natsumi border reload animations */
   --reload-border-animation-duration: 0.2s;
