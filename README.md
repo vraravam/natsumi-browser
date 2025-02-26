@@ -21,6 +21,11 @@ Natsumi is NOT a standalone browser. I don't even intend on making one.
 
 Natsumi has been tested on `1.8.1b` (Beta) and `1.8.1t 2025-02-24` (Twilight).
 
+> [!NOTE]
+> Please remember that Natsumi in the end is **my personal browser skin**. If you don't like a design
+> choice I've made, chances are I'll keep it if I still like it. So please be respectful and refrain
+> from attacking people when you make suggestions. Thanks!
+
 ## Features
 ### Polished look
 Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
