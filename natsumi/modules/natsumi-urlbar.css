@@ -118,7 +118,7 @@ their author(s) have been provided above the used code.
       transition: transform 0s linear !important;
     }
 
-    #urlbar[breakout-extend] {
+    #urlbar[breakout-extend][zen-floating-urlbar="true"] {
       transform: translateX(-50%) !important;
     }
   }
