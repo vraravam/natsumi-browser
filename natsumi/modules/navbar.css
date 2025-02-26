@@ -43,7 +43,7 @@ their author(s) have been provided above the used code.
   }
 }
 
-:root[zen-compact-mode="true"] {
+:root[zen-compact-mode="true"]:not([customizing]) {
   @media (-moz-bool-pref: "zen.view.compact.hide-toolbar") {
     /*noinspection CssInvalidFunction*/
     @media (-moz-bool-pref: "natsumi.navbar.glass-effect") {
