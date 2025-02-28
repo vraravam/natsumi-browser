@@ -88,7 +88,8 @@ their author(s) have been provided above the used code.
       #viewerContainer {
         inset: 0 !important;
 
-        #viewer .page:first-of-type {
+        #viewer > .page:first-of-type,
+        #viewer .spread:first-of-type .page {
           margin-top: 43px !important;
           transition: margin-top 0.3s ease;
         }
