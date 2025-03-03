@@ -10,9 +10,9 @@
   <a href="https://zen-browser.app"><img height="40" src="https://github.com/heyitszenithyt/zen-browser-badges/blob/fb14dcd72694b7176d141c774629df76af87514e/light/zen-badge-light.png"></a>
 </p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/natsumi-preview.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-main.png?raw=true)
 
-## What is Natsumi Browser?
+## Meet Natsumi!
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
 that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
 the skin I personally use, but made public because people wanted the CSS.
@@ -31,38 +31,44 @@ Natsumi has been tested on `1.8.1b` (Beta) and `1.8.1t 2025-02-24` (Twilight).
 Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
 keeping much of Zen Browser's original design.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/interface.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-polish.png?raw=true)
 
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
-cozy while also having lots of room for search suggestions.
+cozy while also having lots of room for search suggestions. You can even make the URLbar stay out of
+your way when collapsed with compact URLbar.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/urlbar.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.png?raw=true)
 
 ### Natsumi Findbar
 Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
 the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better
 Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/findbar.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-findbar.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
-viewer, giving it the modern look it really deserves.
+viewer, giving it the modern look it really deserves. And with compact view, you can focus on the file
+at hand when you don't need the extra tools.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/pdfjs.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-pdf.png?raw=true)
 
 ### Enhanced sidebars
 Elevate your sidebars to the next level! Not only does Natsumi add a glass effect to both sidebars, it
 also makes the Firefox sidebar more customizable by adding customization for its size and position.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/dev/images/sidebars.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-sidebars.png?raw=true)
+
+### Marginless compact mode
+Add even more screen real estate to compact mode by removing the website view's margins entirely. See
+more of your website with even less distractions.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-marginless.png?raw=true)
 
 ### And much more!
 - Natsumi Picture-in-Picture
 - Natsumi Library
-- Marginless compact mode
-- Compact URLbar
 - And more!
 
 ## Installation
