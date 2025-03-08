@@ -43,7 +43,7 @@ their author(s) have been provided above the used code.
   }
 }
 
-:root[zen-compact-mode="true"] {
+:root[zen-compact-mode="true"]:not([customizing]) {
   @media (-moz-bool-pref: "zen.view.compact.hide-toolbar") {
     /*noinspection CssInvalidFunction*/
     @media (-moz-bool-pref: "natsumi.navbar.glass-effect") {
@@ -54,7 +54,7 @@ their author(s) have been provided above the used code.
         border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
         backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
 
-        &:not([zen-has-hover]):not([zen-user-show]):not([has-popup-menu]):not(:has(*[open='true'])):not(:focus-within) {
+        &:not([zen-has-hover], [zen-user-show], :focus-within, :has(:is([panelopen="true"], [open="true"]):not(.zen-compact-mode-ignore)), [has-popup-menu]) {
           backdrop-filter: none !important;
         }
 
@@ -90,8 +90,12 @@ their author(s) have been provided above the used code.
             border-radius: 6px !important;
           }
 
-          &:not([zen-has-hover], [zen-user-show], :focus-within) {
+          &:not([zen-has-hover], [zen-user-show], :focus-within, :has(:is([panelopen="true"], [open="true"]):not(.zen-compact-mode-ignore)), [has-popup-menu]) {
             top: calc((-1 * var(--zen-toolbar-height)) + var(--zen-element-separation) - 4px) !important;
+
+            &::after {
+              backdrop-filter: none !important;
+            }
           }
         }
       }

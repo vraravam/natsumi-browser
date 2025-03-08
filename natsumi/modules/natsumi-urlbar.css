@@ -33,10 +33,10 @@ their author(s) have been provided above the used code.
 
 @keyframes urlbar-appear {
   0% {
-    margin-top: -50vh;
+    margin-top: -25vh;
   }
   100% {
-    margin-top: -20%;
+    margin-top: 0;
   }
 }
 
