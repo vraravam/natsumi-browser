@@ -312,6 +312,7 @@ their author(s) have been provided above the used code.
         &::before {
           mask-size: contain !important;
           mask-repeat: no-repeat;
+          -moz-context-properties: fill;
         }
       }
 
