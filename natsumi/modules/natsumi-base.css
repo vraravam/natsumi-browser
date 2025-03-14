@@ -167,7 +167,6 @@ their author(s) have been provided above the used code.
         height: var(--tab-min-height);
         opacity: 0;
         transition: opacity 0.3s ease;
-        border-radius: 10px;
         background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.1));
 
         @media (prefers-color-scheme: dark) {
