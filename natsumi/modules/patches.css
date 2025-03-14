@@ -141,7 +141,22 @@ toolbarbutton[badged="true"]:not([badge]) {
   }
 }
 
+.toolbarbutton-badge-stack {
+  padding: 5px !important;
 
+  #fxa-avatar-image {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+.tab-icon-image {
+  border-radius: 0 !important;
+
+  @media (-moz-platform: macos) {
+    image-rendering: initial !important;
+  }
+}
 
 /* ==== WIP features (do not touch yet) ==== */
 
