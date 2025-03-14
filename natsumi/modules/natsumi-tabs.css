@@ -139,7 +139,7 @@ their author(s) have been provided above the used code.
         /*noinspection CssInvalidFunction*/
         & > .tab-stack > .tab-background {
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
-          background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.5)) !important;
+          background-color: light-dark(rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0.5)) !important;
 
           &::before {
             display: initial;
