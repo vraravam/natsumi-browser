@@ -371,6 +371,7 @@ their author(s) have been provided above the used code.
             left: 0;
           }
 
+          /*noinspection CssInvalidFunction*/
           &::after {
             content: "";
             position: absolute;
