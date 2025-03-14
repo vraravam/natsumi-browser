@@ -48,10 +48,11 @@ their author(s) have been provided above the used code.
 }
 
 #zen-media-controls-toolbar {
+  /*noinspection CssInvalidFunction*/
   & > toolbaritem {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
     background-color: color-mix(in srgb,
-    light-dark(#fff, #000) 87%, var(--zen-primary-color)
+      light-dark(#fff, #000) 87%, var(--zen-primary-color)
     ) !important;
 
     @media (-moz-bool-pref: "natsumi.experiments.miniplayer-transparent") {
@@ -72,6 +73,7 @@ their author(s) have been provided above the used code.
 
     overflow: hidden;
 
+    /*noinspection CssInvalidFunction*/
     &::after {
       content: "";
       position: absolute;
