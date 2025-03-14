@@ -59,15 +59,19 @@ Edit the natsumi-config.css file instead.
   }
 
   /* Material: Mistcrylic */
-  --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-colors-secondary) 50%, rgba(0, 0, 0, 0.7));
+  --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-primary-color) 40%, rgba(255, 255, 255, 0.8));
   --natsumi-mat-mc-shadow-color: rgba(0, 0, 0, 0.3);
   --natsumi-mat-mc-border-color: rgba(255, 255, 255, 0.1);
 
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-colors-secondary) 50%, rgba(0, 0, 0, 0.8));
+  }
+
   /* Material: Glass */
   --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
-  --natsumi-glass-blur-radius: var(--glass-blur-radius, 10px);
-  --natsumi-glass-shadow-size: var(--glass-shadow-size, 10px);
-  --natsumi-glass-shadow-opacity: var(--glass-shadow-opacity, 75%);
+  --natsumi-glass-blur-radius: 10px;
+  --natsumi-glass-shadow-size: 10px;
+  --natsumi-glass-shadow-opacity: 75%;
   --natsumi-glass-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-glass-shadow-opacity), black);
 
   @media (prefers-color-scheme: dark) {
