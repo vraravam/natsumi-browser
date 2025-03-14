@@ -48,6 +48,7 @@ their author(s) have been provided above the used code.
 }
 
 #zen-media-controls-toolbar {
+  /*noinspection CssInvalidFunction*/
   & > toolbaritem {
     box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
     background-color: color-mix(in srgb,
@@ -67,10 +68,12 @@ their author(s) have been provided above the used code.
       top: 0;
       left: 0;
       backdrop-filter: blur(15px);
+      pointer-events: none;
     }
 
     overflow: hidden;
 
+    /*noinspection CssInvalidFunction*/
     &::after {
       content: "";
       position: absolute;
@@ -82,6 +85,11 @@ their author(s) have been provided above the used code.
       left: -75%;
       opacity: 0.2;
       transition: opacity 0.15s ease-in-out, background-color 0.2s ease;
+      pointer-events: none;
+    }
+
+    toolbarbutton {
+      z-index: 999 !important;
     }
   }
 
