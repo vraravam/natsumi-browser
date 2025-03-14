@@ -34,12 +34,12 @@ their author(s) have been provided above the used code.
     gap: 0;
   }
 
-  40% {
-    gap: 9px;
+  50% {
+    gap: 11px;
   }
 
   100% {
-    gap: 6px;
+    gap: 8px;
   }
 }
 
