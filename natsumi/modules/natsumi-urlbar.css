@@ -350,8 +350,15 @@ their author(s) have been provided above the used code.
         outline: unset !important;
         overflow: hidden;
 
+        /*noinspection CssInvalidFunction*/
+        @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
+          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+        }
+
         @media (-moz-bool-pref: "natsumi.experiments.mistcrylic") {
-          background: var(--natsumi-mistcrylic-background) !important;
+          background: var(--natsumi-mat-mc-background) !important;
+          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+          border: 2px solid var(--natsumi-mat-mc-border-color) !important;
 
           &::before {
             content: "";
@@ -363,11 +370,6 @@ their author(s) have been provided above the used code.
             top: 0;
             bottom: 0;
           }
-        }
-
-        /*noinspection CssInvalidFunction*/
-        @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
         }
 
         @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {

@@ -180,6 +180,8 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
+- `natsumi.experiments.mistcrylic`: Adds a new "Mistcrylic" material. It probably looks bad, but I'm
+  still working on it.
 - `natsumi.experiments.rounded-pip`: Makes the PiP window round, like in macOS. If you're using macOS,
   you won't need this.
 
