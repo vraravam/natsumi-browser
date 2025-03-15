@@ -343,47 +343,37 @@ their author(s) have been provided above the used code.
       /*noinspection CssInvalidFunction*/
       #urlbar-background {
         backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
-        background: var(--natsumi-glass-background) !important;
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
-        border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
         border-radius: 15px !important;
+        background: var(--natsumi-mat-mc-background) !important;
+        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+        border: none !important;
         outline: unset !important;
         overflow: hidden;
 
-        /*noinspection CssInvalidFunction*/
-        @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+        &::before {
+          content: "";
+          position: absolute;
+          background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+          opacity: 0.2;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
         }
 
-        @media (-moz-bool-pref: "natsumi.experiments.mistcrylic") {
-          background: var(--natsumi-mat-mc-background) !important;
-          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
-          border: none !important;
-
-          &::before {
-            content: "";
-            position: absolute;
-            background-image: url(chrome://browser/content/zen-images/grain-bg.png);
-            opacity: 0.2;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-          }
-
-          /*noinspection CssInvalidFunction*/
-          &::after {
-            content: "";
-            position: absolute;
-            opacity: 1;
-            width: calc(100% - 4px);
-            height: calc(100% - 4px);
-            border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
-            top: 0;
-            left: 0;
-            border-radius: inherit;
-            mask-image: linear-gradient(135deg, black, transparent 50%);
-          }
+        /*noinspection CssInvalidFunction*/
+        &::after {
+          content: "";
+          position: absolute;
+          opacity: 1;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+          top: 0;
+          left: 0;
+          border-radius: inherit;
+          mask-image: linear-gradient(135deg, black, transparent 50%);
         }
 
         @media (-moz-bool-pref: "natsumi.urlbar.disable-transparency") {
@@ -452,7 +442,7 @@ their author(s) have been provided above the used code.
 
       /*
       this is still in the oven
-      
+
       .urlbarView-row {
         animation-name: individual-result-appear-subtle !important;
         animation-duration: var(--animation-duration-subtle) !important;
@@ -594,11 +584,25 @@ their author(s) have been provided above the used code.
     --urlbarView-second-line-indent: calc(var(--urlbarView-icon-margin-start) + var(--urlbarView-icon-margin-end) + var(--urlbarView-favicon-width) + 2px);
   }
 
-  /* Make borders more visible */
+  /* Border tweaks */
 
   /*noinspection CssInvalidFunction*/
-  .urlbarView-body-inner, .search-one-offs {
-    border-top: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.2)) !important;
+  .urlbarView-body-inner {
+    &:has(.urlbarView-row) {
+      border-top: 2px solid transparent !important;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 2px;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+        mask-image: linear-gradient(to right, black, transparent);
+        top: 0;
+        left: 0;
+        border-radius: 1px;
+      }
+    }
   }
 
   /* Compact URLbar */
