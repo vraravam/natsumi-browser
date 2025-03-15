@@ -139,4 +139,25 @@ their author(s) have been provided above the used code.
   #zen-media-artist {
     font-size: 10px !important;
   }
+
+  #zen-media-progress-bar {
+    &::-moz-range-thumb {
+      scale: 1;
+      transition: scale 0.2s ease;
+    }
+
+    &::-moz-range-track, &::-moz-range-progress {
+      transition: height 0.2s ease;
+    }
+
+    &:hover {
+      &::-moz-range-thumb {
+        scale: 1.4;
+      }
+
+      &::-moz-range-track, &::-moz-range-progress {
+        height: calc(var(--progress-height) + 2px) !important;
+      }
+    }
+  }
 }
