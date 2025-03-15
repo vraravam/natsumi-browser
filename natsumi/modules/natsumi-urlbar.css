@@ -594,7 +594,7 @@ their author(s) have been provided above the used code.
       &::after {
         content: "";
         position: absolute;
-        width: 100%;
+        width: 90%;
         height: 2px;
         background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
         mask-image: linear-gradient(to right, black, transparent);
