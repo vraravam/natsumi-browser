@@ -52,18 +52,23 @@ their author(s) have been provided above the used code.
 
 @keyframes backdrop-fadein {
   0% {
-    opacity: 0;
+    backdrop-filter: saturate(0.5) contrast(0.5);
   }
 
   100% {
-    opacity: 1;
+    backdrop-filter: saturate(3) contrast(2);
   }
 }
 
 #zen-main-app-wrapper:not(:has(#zen-welcome)) {
   /* Essentials */
-  #zen-essentials-container {
+  #tabbrowser-tabs:not([movingtab]) {
     .tabbrowser-tab {
+      transition: scale 0.2s ease !important;
+    }
+
+    .tabbrowser-tab:active {
+      scale: 0.96 !important;
     }
   }
 
@@ -90,24 +95,10 @@ their author(s) have been provided above the used code.
       }
 
       & > .tab-stack > .tab-background {
-        transition: background-color 0.2s ease !important;
+        transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
 
         .tab-context-line {
           display: none !important;
-        }
-
-        &::before {
-          content: "";
-          position: absolute;
-          width: calc(100% - calc(var(--tab-block-margin) * 2));
-          height: calc(100% - calc(var(--tab-block-margin) * 2));
-          border-radius: inherit;
-          backdrop-filter: saturate(1.5) contrast(1) !important;
-          display: none;
-
-          @media (-prefers-color-scheme: light) {
-            backdrop-filter: saturate(3) contrast(2) !important;
-          }
         }
 
         &::after {
@@ -123,6 +114,11 @@ their author(s) have been provided above the used code.
           border-radius: inherit;
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease;
+
+          @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+            left: 0;
+            mask-image: linear-gradient(to right, black, transparent 40%);
+          }
         }
       }
 
@@ -138,18 +134,21 @@ their author(s) have been provided above the used code.
       &[selected], &[visuallyselected] {
         /*noinspection CssInvalidFunction*/
         & > .tab-stack > .tab-background {
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
-          background-color: light-dark(rgba(255, 255, 255, 0.7), rgba(0, 0, 0, 0.5)) !important;
-
-          &::before {
-            display: initial;
-            animation: backdrop-fadein 0.2s ease;
-            animation-fill-mode: forwards;
-          }
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) !important;
+          background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.8)) !important;
+          animation: backdrop-fadein 0.2s ease;
+          animation-fill-mode: forwards;
 
           &::after {
-            width: calc(100% - 4px - calc(var(--tab-block-margin) * 2));
+            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            height: calc(100% - calc(var(--tab-block-margin) * 2));
             opacity: 1;
+            top: 0;
+            left: 0;
+
+            @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+              width: calc(100% - calc(var(--tab-block-margin) * 2));
+            }
           }
         }
       }
@@ -161,6 +160,10 @@ their author(s) have been provided above the used code.
           &::after {
             width: calc(100% - calc(var(--tab-block-margin) * 2));
             opacity: 1;
+
+            @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
+              width: calc(100% - calc(var(--tab-block-margin) * 2));
+            }
           }
         }
       }
