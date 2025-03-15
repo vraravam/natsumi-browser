@@ -148,7 +148,7 @@ their author(s) have been provided above the used code.
           }
 
           &::after {
-            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            width: calc(100% - 4px - calc(var(--tab-block-margin) * 2));
             opacity: 1;
           }
         }
@@ -161,6 +161,52 @@ their author(s) have been provided above the used code.
           &::after {
             width: calc(100% - calc(var(--tab-block-margin) * 2));
             opacity: 1;
+          }
+        }
+      }
+    }
+
+    /* Split view tabs */
+    tab-group[split-view-group] {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-background {
+          &::after {
+            mask-image: linear-gradient(to right, black, transparent 60%);
+          }
+        }
+      }
+    }
+  }
+
+  /* Essentials tabs */
+  #zen-essentials-container {
+    .tabbrowser-tab {
+      & > .tab-stack > .tab-background {
+        transition: background-color 0.2s ease !important;
+      }
+
+      .tab-icon-image {
+        transition: filter 0.2s ease !important;
+      }
+
+      &:hover {
+        .tab-icon-image {
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        }
+      }
+
+      &[selected], &[visuallyselected] {
+        .tab-icon-image {
+          filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
+        }
+
+        & > .tab-stack > .tab-background {
+          &::before {
+            opacity: 0.6 !important;
+          }
+
+          &::after {
+            filter: saturate(150%) blur(15px) !important;
           }
         }
       }
