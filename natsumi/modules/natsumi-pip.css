@@ -42,6 +42,16 @@ their author(s) have been provided above the used code.
         --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #1d1d1d 70%);
       }
 
+      /* Material: Haze */
+      --natsumi-mat-hz-background: rgba(255, 255, 255, 0.8);
+      --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-primary-color) 30%, rgba(255, 255, 255, 0.8));
+
+      @media (prefers-color-scheme: dark) {
+        --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
+        --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 40%, rgba(0, 0, 0, 0.8));
+      }
+
+      /* Material: Glass */
       --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
       --natsumi-glass-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white));
       --toolbarbutton-hover-background: color-mix(in srgb, light-dark(#1d1d1d, #ebebeb) 10%, transparent 90%);
@@ -90,31 +100,29 @@ their author(s) have been provided above the used code.
 
     .player-holder {
       animation: pip-fadein-player 0.5s ease !important;
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
 
     #controls {
       opacity: 1 !important;
 
+      /*noinspection CssInvalidFunction*/
       & > button {
         opacity: 0 !important;
         top: 0 !important;
         filter: blur(5px);
         border-radius: 6px !important;
         transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease, background-color 0.2s ease !important;
-        backdrop-filter: blur(15px);
+        backdrop-filter: saturate(3) contrast(2) blur(15px) !important;
         background-image: none !important;
-        background-color: var(--natsumi-glass-background) !important;
-        box-shadow: 0 0 10px var(--natsumi-glass-shadow-color) !important;
-        border: 1px solid rgba(20, 20, 20, 0.2) !important;
-
-        @media (prefers-color-scheme: dark) {
-          border: 1px solid rgba(235, 235, 235, 0.3) !important;
-        }
+        background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
 
         &::before {
           content: "";
-          width: 20px;
-          height: 20px;
+          width: 16px;
+          height: 16px;
           padding: 2px;
           display: flex;
           position: absolute;
@@ -135,7 +143,7 @@ their author(s) have been provided above the used code.
         }
 
         &#unpip::before {
-          content: url("chrome://browser/skin/zen-icons/open.svg") !important;
+          content: url("chrome://browser/skin/zen-icons/screen.svg") !important;
         }
 
         &:hover {
@@ -155,17 +163,17 @@ their author(s) have been provided above the used code.
       #controls-bottom {
         opacity: 0 !important;
         bottom: -5px !important;
-        background-color: var(--natsumi-glass-background) !important;
-        border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        background-color: var(--natsumi-mat-hz-background-tinted) !important;
         border-radius: 10px !important;
         padding: 10px 15px !important;
         margin: 0 5px !important;
         width: calc(100% - 10px) !important;
         box-sizing: border-box !important;
-        box-shadow: 0 0 10px var(--natsumi-glass-shadow-color) !important;
-        backdrop-filter: blur(0);
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+        backdrop-filter: saturate(3) contrast(2) blur(15px) !important;
         filter: blur(10px);
-        transition: opacity 0.3s ease, bottom 0.3s ease, backdrop-filter 0.3s ease, filter 0.3s ease !important;
+        transition: opacity 0.3s ease, bottom 0.3s ease, filter 0.3s ease !important;
+        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
 
         @media (-moz-bool-pref: "natsumi.pip.native-border-radius") {
           /* For the sake of adding native radius, we'll reduce the margin of the controls here */
@@ -199,9 +207,9 @@ their author(s) have been provided above the used code.
         #scrubber, #audio-scrubber {
           margin: 0 !important;
 
+          /*noinspection CssInvalidFunction*/
           &::-moz-range-progress {
-            background: linear-gradient(to right, white, var(--natsumi-primary-color)) !important;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5) !important;
+            background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
           }
 
           /*noinspection CssInvalidFunction*/
@@ -209,13 +217,14 @@ their author(s) have been provided above the used code.
             background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
           }
 
+          /*noinspection CssInvalidFunction*/
           &::-moz-range-thumb {
-            background-color: var(--natsumi-primary-color) !important;
+            background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
             width: 12px !important;
             height: 12px !important;
             border: none !important;
-            opacity: 0;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.4) !important;
+            scale: 1;
+            transition: scale 0.2s ease;
           }
 
           &:hover {
@@ -431,7 +440,6 @@ their author(s) have been provided above the used code.
         #controls-bottom {
           opacity: 1 !important;
           bottom: 5px !important;
-          backdrop-filter: blur(15px);
           filter: blur(0);
 
           @media (-moz-bool-pref: "natsumi.pip.native-border-radius") {
