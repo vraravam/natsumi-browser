@@ -67,7 +67,17 @@ Edit the natsumi-config.css file instead.
     --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-colors-secondary) 50%, rgba(0, 0, 0, 0.8));
   }
 
-  /* Material: Glass */
+  /* Material: Haze */
+  --natsumi-mat-hz-background: rgba(255, 255, 255, 0.8);
+  --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-primary-color) 20%, rgba(255, 255, 255, 0.8));
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
+    --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumo-colors-secondary) 20%, rgba(0, 0, 0, 0.8));
+  }
+
+  /* Material: Glass (legacy) */
+  /* Haze replaces Glass, do not use this unless absolutely needed */
   --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
   --natsumi-glass-blur-radius: 10px;
   --natsumi-glass-shadow-size: 10px;

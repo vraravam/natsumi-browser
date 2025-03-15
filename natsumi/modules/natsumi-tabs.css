@@ -135,7 +135,7 @@ their author(s) have been provided above the used code.
         /*noinspection CssInvalidFunction*/
         & > .tab-stack > .tab-background {
           box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
-          background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.8)) !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
           animation: backdrop-fadein 0.2s ease;
           animation-fill-mode: forwards;
 
