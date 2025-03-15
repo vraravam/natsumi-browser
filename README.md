@@ -121,7 +121,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.force-dark-shadows`: Forces dark shadows regardless of the current theme/color scheme.
 
 ### URLbar
-- `natsumi.urlbar.compact`: Makes the URLbar smaller when not focused.
+- `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
 - `natsumi.urlbar.disable-transparency`: Disables URLbar background transparency.
 - `natsumi.urlbar.force-nowrap`: Prevents wrapping to make things more compact regardless of window
@@ -229,9 +229,6 @@ to false to disable the blur, and `natsumi.urlbar.light` to true to disable the 
 ### "I don't see any of the Natsumi options in about:config!"
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
-
-### "Tab groups aren't working!"
-As of 2.4.1, tab groups have been removed.
 
 ### "Something's bugged!"
 There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.

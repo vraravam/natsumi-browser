@@ -346,7 +346,7 @@ their author(s) have been provided above the used code.
         transition: backdrop-filter 0.5s ease, background 0.5s ease;
         border-radius: 15px !important;
         background: var(--natsumi-mat-mc-background) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+        box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
         border: none !important;
         outline: unset !important;
         overflow: hidden;
@@ -607,7 +607,7 @@ their author(s) have been provided above the used code.
 
   /* Compact URLbar */
 
-  @media (-moz-bool-pref: "natsumi.urlbar.compact") {
+  @media not (-moz-bool-pref: "natsumi.urlbar.no-compact") {
     @media not (-moz-bool-pref: "zen.view.use-single-toolbar") {
       @media (-moz-bool-pref: "zen.tabs.vertical") {
 
