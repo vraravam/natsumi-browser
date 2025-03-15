@@ -34,12 +34,22 @@ their author(s) have been provided above the used code.
     gap: 0;
   }
 
-  40% {
+  50% {
     gap: 11px;
   }
 
   100% {
     gap: 8px;
+  }
+}
+
+@keyframes fadein-animation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.2;
   }
 }
 
@@ -96,7 +106,8 @@ their author(s) have been provided above the used code.
       overflow: hidden;
 
       &::after {
-        opacity: 0.2;
+        animation: fadein-animation 0.5s ease;
+        animation-fill-mode: forwards;
       }
     }
 
@@ -133,11 +144,18 @@ their author(s) have been provided above the used code.
 
   #zen-media-title {
     font-size: 16px !important;
-    height: auto !important;
   }
 
   #zen-media-artist {
     font-size: 10px !important;
+  }
+
+  #zen-media-info-vbox {
+    mask-image: linear-gradient(to left, transparent, var(--zen-media-control-bg) 0.6em, var(--zen-media-control-bg) calc(100% - 0.6em), transparent) !important;
+
+    &::before {
+      display: none !important;
+    }
   }
 
   #zen-media-progress-bar {
