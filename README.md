@@ -150,8 +150,8 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
-- `natsumi.sidebar.zen-sidebar-mistcrylic`: Adds Mistcrylic material to Zen Sidebar.
 - `natsumi.sidebar.zen-sidebar-haze`: Adds Haze material to Zen Sidebar.
+- `natsumi.sidebar.zen-sidebar-mistcrylic`: Adds Mistcrylic material to Zen Sidebar.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
