@@ -60,8 +60,29 @@ their author(s) have been provided above the used code.
   }
 }
 
+@keyframes essentials-select {
+  0% {
+    opacity: 0.2;
+    scale: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+  }
+
+  100% {
+    opacity: 0;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+    left: -10px;
+    top: -10px;
+    border-radius: 20px;
+  }
+}
+
 #zen-main-app-wrapper:not(:has(#zen-welcome)) {
-  /* Essentials */
+  /* Tab click animations */
   #tabbrowser-tabs:not([movingtab]) {
     .tabbrowser-tab {
       transition: scale 0.2s ease !important;
@@ -69,6 +90,10 @@ their author(s) have been provided above the used code.
 
     .tabbrowser-tab:active {
       scale: 0.96 !important;
+    }
+
+    .tabbrowser-tab:has(.tab-close-button:hover) {
+      scale: 1 !important;
     }
   }
 
@@ -94,6 +119,11 @@ their author(s) have been provided above the used code.
         }
       }
 
+      &:has(.tab-close-button:hover) {
+        transition: opacity 0.2s ease !important;
+        --natsumi-tab-highlight-color: rgb(255, 100, 100);
+      }
+
       & > .tab-stack > .tab-background {
         transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
 
@@ -113,7 +143,7 @@ their author(s) have been provided above the used code.
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
           border-radius: inherit;
           mask-image: linear-gradient(to right, black, transparent 30%);
-          transition: width 0.2s ease, opacity 0.2s ease;
+          transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
 
           @media not (-moz-bool-pref: "zen.view.sidebar-expanded") {
             left: 0;
@@ -167,6 +197,10 @@ their author(s) have been provided above the used code.
           }
         }
       }
+
+      &:has(.tab-close-button:active) {
+        opacity: 0.5;
+      }
     }
 
     /* Split view tabs */
@@ -182,10 +216,32 @@ their author(s) have been provided above the used code.
   }
 
   /* Essentials tabs */
+  #tabbrowser-tabs:not([movingtab]) {
+    #zen-essentials-container {
+      .tabbrowser-tab {
+        &:active {
+          scale: 0.9 !important;
+        }
+      }
+    }
+  }
+
   #zen-essentials-container {
+    overflow: visible !important;
+
     .tabbrowser-tab {
+      overflow: visible !important;
+
+      /*noinspection CssInvalidFunction*/
       & > .tab-stack > .tab-background {
         transition: background-color 0.2s ease !important;
+        border: 2px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+      }
+
+      &:not(:hover) {
+        & > .tab-stack > .tab-background {
+          background-color: transparent !important;
+        }
       }
 
       .tab-icon-image {
@@ -196,6 +252,10 @@ their author(s) have been provided above the used code.
         .tab-icon-image {
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
         }
+
+        & > .tab-stack > .tab-background {
+          background-color: var(--tab-hover-background-color);
+        }
       }
 
       &[selected], &[visuallyselected] {
@@ -204,12 +264,31 @@ their author(s) have been provided above the used code.
         }
 
         & > .tab-stack > .tab-background {
+          border: none !important;
+
           &::before {
             opacity: 0.6 !important;
           }
 
           &::after {
             filter: saturate(150%) blur(15px) !important;
+          }
+        }
+      }
+
+      &[selected]:not(:active) {
+        .tab-stack {
+          /*noinspection CssInvalidFunction*/
+          &::before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+            border-radius: 10px;
+            animation: essentials-select 0.25s ease-out;
+            animation-fill-mode: forwards;
+            pointer-events: none;
           }
         }
       }
