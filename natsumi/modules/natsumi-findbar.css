@@ -68,17 +68,58 @@ their author(s) have been provided above the used code.
     height: auto !important;
     flex-wrap: wrap;
     border-radius: 15px;
-    background: var(--natsumi-glass-background) !important;
+    background: var(--natsumi-mat-mc-background) !important;
     backdrop-filter: blur(var(--natsumi-glass-blur-radius));
-    border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+    border: none !important;
     opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
     animation: initial-animation 0.2s ease;
     filter: blur(0);
+    box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+    .findbar-container hbox[anonid="findbar-textbox-wrapper"] {
+      border-bottom: 2px solid transparent !important;
+      position: relative;
+
+      /*noinspection CssInvalidFunction*/
+      &::after {
+        content: "";
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+        mask-image: linear-gradient(to right, black, transparent);
+        bottom: 0;
+        left: 0;
+        border-radius: 1px;
+      }
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+      opacity: 0.2;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
 
     /*noinspection CssInvalidFunction*/
-    @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-      box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+    &::after {
+      content: "";
+      position: absolute;
+      opacity: 1;
+      width: calc(100% - 4px);
+      height: calc(100% - 4px);
+      border: 2px solid light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary)) !important;
+      top: 0;
+      left: 0;
+      border-radius: inherit;
+      mask-image: linear-gradient(135deg, black, transparent 50%);
+      pointer-events: none;
     }
 
     /* Restore old width */
