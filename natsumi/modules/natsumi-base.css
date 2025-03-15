@@ -241,3 +241,11 @@ their author(s) have been provided above the used code.
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
+
+.menupopup-arrowscrollbox {
+  background-color: color-mix(in srgb, var(--natsumi-primary-color) 10%, #fff) !important;
+
+  @media (prefers-color-scheme: dark) {
+    background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 30%, #000) !important;
+  }
+}
