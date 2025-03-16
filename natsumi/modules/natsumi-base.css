@@ -249,3 +249,11 @@ their author(s) have been provided above the used code.
     background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 30%, #000) !important;
   }
 }
+
+.customization-target, #PanelUI-button {
+  toolbarbutton {
+    .toolbarbutton-icon, .toolbarbutton-badge-stack {
+      transition: background-color 0.2s ease !important;
+    }
+  }
+}
