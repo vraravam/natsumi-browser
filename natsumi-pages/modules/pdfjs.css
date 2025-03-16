@@ -105,9 +105,39 @@ their author(s) have been provided above the used code.
       }
 
       #toolbarContainer, #sidebarContainer {
-        background: var(--natsumi-glass-background) !important;
-        backdrop-filter: blur(10px);
+        background: var(--natsumi-mat-ga-background) !important;
         border-radius: 10px;
+        backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+        border: 1px solid rgba(20, 20, 20, 0.2) !important;
+        box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+
+        @media (-moz-bool-pref: "natsumi.pdfjs.material-haze") {
+          background: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+          @media (-moz-bool-pref: "natsumi.pdfjs.material-tinted-haze") {
+            background: var(--natsumi-mat-hz-background-tinted) !important;
+          }
+        }
+
+        @media (-moz-bool-pref: "natsumi.pdfjs.material-mistcrylic") {
+          background: var(--natsumi-mat-mc-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+          }
+        }
       }
 
       #toolbarContainer {
@@ -122,7 +152,6 @@ their author(s) have been provided above the used code.
         padding-bottom: 5px !important;
         height: calc(var(--toolbar-height) + 10px) !important;
         border: 1px solid rgba(20, 20, 20, 0.2) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
         animation: pdfjs-appear 0.3s ease;
         overflow: hidden !important;
 
@@ -143,12 +172,40 @@ their author(s) have been provided above the used code.
           padding: 5px !important;
           top: 40px !important;
           right: -7px !important;
-          background: var(--natsumi-glass-background) !important;
-          backdrop-filter: blur(10px);
+          background: var(--natsumi-mat-ga-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
           border-radius: 10px !important;
           border: 1px solid rgba(20, 20, 20, 0.2) !important;
-          box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+          box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
           animation: secondary-appear 0.3s ease;
+
+          @media (-moz-bool-pref: "natsumi.pdfjs.material-haze") {
+            background: var(--natsumi-mat-hz-background) !important;
+            backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+            box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+            @media (-moz-bool-pref: "natsumi.pdfjs.material-tinted-haze") {
+              background: var(--natsumi-mat-hz-background-tinted) !important;
+            }
+          }
+
+          @media (-moz-bool-pref: "natsumi.pdfjs.material-mistcrylic") {
+            background: var(--natsumi-mat-mc-background) !important;
+            backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+            box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+            &::before {
+              content: "";
+              position: absolute;
+              background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+              opacity: 0.2;
+              width: 100%;
+              height: 100%;
+              top: 0;
+              left: 0;
+              pointer-events: none;
+            }
+          }
 
           &.hidden {
             animation: none !important;
@@ -190,7 +247,6 @@ their author(s) have been provided above the used code.
         opacity: 0 !important;
         transition: left 0.2s ease, opacity 0.2s ease, filter 0.2s ease !important;
         border: 1px solid rgba(20, 20, 20, 0.2) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
         filter: blur(5px);
 
         @media (prefers-color-scheme: dark) {
@@ -319,14 +375,42 @@ their author(s) have been provided above the used code.
       /* Document properties */
 
       #documentPropertiesDialog {
-        background: var(--natsumi-glass-background) !important;
-        backdrop-filter: blur(10px);
+        background: var(--natsumi-mat-ga-background) !important;
+        backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
         border-radius: 10px !important;
         border: 1px solid rgba(20, 20, 20, 0.2) !important;
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+        box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
 
         @media (prefers-color-scheme: dark) {
           border-color: rgba(235, 235, 235, 0.3) !important;
+        }
+
+        @media (-moz-bool-pref: "natsumi.pdfjs.material-haze") {
+          background: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+          @media (-moz-bool-pref: "natsumi.pdfjs.material-tinted-haze") {
+            background: var(--natsumi-mat-hz-background-tinted) !important;
+          }
+        }
+
+        @media (-moz-bool-pref: "natsumi.pdfjs.material-mistcrylic") {
+          background: var(--natsumi-mat-mc-background) !important;
+          backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+          box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+
+          &::before {
+            content: "";
+            position: absolute;
+            background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+            opacity: 0.2;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+          }
         }
 
         &:is([open]) {
