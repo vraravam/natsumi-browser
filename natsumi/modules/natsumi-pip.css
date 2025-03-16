@@ -53,13 +53,13 @@ their author(s) have been provided above the used code.
       }
 
       /* Material: Glass */
-      --natsumi-glass-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
-      --natsumi-glass-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white));
+      --natsumi-mat-ga-background: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, transparent);
+      --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, light-dark(black, white));
       --toolbarbutton-hover-background: color-mix(in srgb, light-dark(#1d1d1d, #ebebeb) 10%, transparent 90%);
       --toolbarbutton-active-background: light-dark(rgba(0, 0, 0, 0.07), rgba(255, 255, 255, 0.11));
 
       @media (-moz-bool-pref: "natsumi.theme.force-dark-shadows") {
-        --natsumi-glass-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, black);
+        --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) 75%, black);
       }
     }
 
@@ -152,10 +152,10 @@ their author(s) have been provided above the used code.
         }
 
         &:hover {
-          background-color: color-mix(in srgb, var(--natsumi-glass-background) 80%, white) !important;
+          background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, white) !important;
 
           @media (prefers-color-scheme: light) {
-            background-color: color-mix(in srgb, var(--natsumi-glass-background) 80%, black) !important;
+            background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, black) !important;
           }
         }
       }
@@ -395,12 +395,12 @@ their author(s) have been provided above the used code.
 
         /*noinspection CssInvalidFunction*/
         & > .panel-fieldset {
-          background-color: var(--natsumi-glass-background) !important;
+          background-color: var(--natsumi-mat-ga-background) !important;
           backdrop-filter: blur(15px);
           filter: blur(0);
           transition: backdrop-filter 0.3s ease, filter 0.3s ease;
           border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-          box-shadow: 0 0 10px var(--natsumi-glass-shadow-color) !important;
+          box-shadow: 0 0 10px var(--natsumi-mat-ga-shadow-color) !important;
           padding: 0 !important;
         }
 
