@@ -36,24 +36,34 @@ their author(s) have been provided above the used code.
     transition: margin 0.2s ease, border-radius 0.2s ease !important;
   }
 
-  :root[zen-compact-mode="true"]:not([customizing]) {
-    #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
-      margin: 0 !important;
-
-      #zen-tabbox-wrapper {
-        margin: 0 !important;
-
-        .browserSidebarContainer, browser {
-          margin: 0 !important;
-          border-radius: 0 !important;
+  :root:not([customizing]) {
+    .customization-target, #PanelUI-button {
+      toolbarbutton {
+        .toolbarbutton-icon, .toolbarbutton-badge-stack {
+          transition: background-color 0.2s ease !important;
         }
       }
+    }
 
-      @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
-        @media (-moz-bool-pref: "natsumi.theme.compact-marginless-hide-bookmarks") {
-          #zen-appcontent-navbar-container:not([zen-has-hover]) {
-            min-height: 0 !important;
-            height: 0 !important;
+    &[zen-compact-mode="true"] {
+      #zen-appcontent-wrapper:not(:has(#tabbrowser-tabpanels[zen-split-view]), :has(#zen-sidebar-web-panel:not([hidden]):not([pinned]))) {
+        margin: 0 !important;
+
+        #zen-tabbox-wrapper {
+          margin: 0 !important;
+
+          .browserSidebarContainer, browser {
+            margin: 0 !important;
+            border-radius: 0 !important;
+          }
+        }
+
+        @media (-moz-bool-pref: "zen.view.use-single-toolbar") {
+          @media (-moz-bool-pref: "natsumi.theme.compact-marginless-hide-bookmarks") {
+            #zen-appcontent-navbar-container:not([zen-has-hover]) {
+              min-height: 0 !important;
+              height: 0 !important;
+            }
           }
         }
       }
@@ -247,13 +257,5 @@ their author(s) have been provided above the used code.
 
   @media (prefers-color-scheme: dark) {
     background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 30%, #000) !important;
-  }
-}
-
-.customization-target, #PanelUI-button {
-  toolbarbutton {
-    .toolbarbutton-icon, .toolbarbutton-badge-stack {
-      transition: background-color 0.2s ease !important;
-    }
   }
 }
