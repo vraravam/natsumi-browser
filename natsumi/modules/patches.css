@@ -63,7 +63,7 @@ their author(s) have been provided above the used code.
   }
 
   @media (-moz-bool-pref: "natsumi.theme.force-blur") {
-    .deck-selected browser {
+    .deck-selected browser, .browserSidebarContainer[zen-split] browser {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
   }
