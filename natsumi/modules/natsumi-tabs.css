@@ -229,13 +229,28 @@ their author(s) have been provided above the used code.
   #zen-essentials-container {
     overflow: visible !important;
 
+    /*noinspection CssInvalidFunction*/
     .tabbrowser-tab {
       overflow: visible !important;
+      --natsumi-tab-highlight-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 
-      /*noinspection CssInvalidFunction*/
+      &[usercontextid] {
+        @media not (-moz-bool-pref: "zen.workspaces.hide-default-container-indicator") {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+        }
+
+        &:not([zenDefaultUserContextId="true"]) {
+          --natsumi-tab-highlight-color: var(--identity-icon-color);
+        }
+      }
+
       & > .tab-stack > .tab-background {
         transition: background-color 0.2s ease !important;
-        border: 2px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+        border: 2px solid var(--natsumi-tab-highlight-color) !important;
+
+        .tab-context-line {
+          display: none !important;
+        }
       }
 
       &:not(:hover) {
@@ -267,6 +282,7 @@ their author(s) have been provided above the used code.
           border: none !important;
 
           &::before {
+            background-color: var(--natsumi-tab-highlight-color) !important;
             opacity: 0.6 !important;
           }
 
