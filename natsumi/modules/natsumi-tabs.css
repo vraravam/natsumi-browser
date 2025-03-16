@@ -233,14 +233,17 @@ their author(s) have been provided above the used code.
     .tabbrowser-tab {
       overflow: visible !important;
       --natsumi-tab-highlight-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+      --natsumi-tab-line-color: rgba(0, 0, 0, 0);
 
       &[usercontextid] {
         @media not (-moz-bool-pref: "zen.workspaces.hide-default-container-indicator") {
           --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-line-color: var(--identity-icon-color);
         }
 
         &:not([zenDefaultUserContextId="true"]) {
           --natsumi-tab-highlight-color: var(--identity-icon-color);
+          --natsumi-tab-line-color: var(--identity-icon-color);
         }
       }
 
@@ -274,6 +277,17 @@ their author(s) have been provided above the used code.
       }
 
       &[selected], &[visuallyselected] {
+        .tab-icon-stack::after {
+          content: "";
+          position: absolute;
+          width: 150%;
+          height: 2px;
+          border-radius: 1px;
+          background: var(--natsumi-tab-line-color);
+          left: -25%;
+          bottom: -8px;
+        }
+
         .tab-icon-image {
           filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.5));
         }
@@ -282,7 +296,6 @@ their author(s) have been provided above the used code.
           border: none !important;
 
           &::before {
-            background-color: var(--natsumi-tab-highlight-color) !important;
             opacity: 0.6 !important;
           }
 
