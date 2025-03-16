@@ -101,8 +101,10 @@ their author(s) have been provided above the used code.
       }
 
       @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
-        #browser:has(#zen-appcontent-navbar-container:is([zen-has-hover], [zen-user-show], :focus-within)) .deck-selected browser {
-          clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+        #browser:has(#zen-appcontent-navbar-container:is([zen-has-hover], [zen-user-show], :focus-within)) {
+          .deck-selected browser, .browserSidebarContainer[zen-split] browser {
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+          }
         }
       }
     }

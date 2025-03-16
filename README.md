@@ -132,26 +132,33 @@ and delay, change the variables in the config.css file.
 - `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
 - `natsumi.navbar.float`: Makes the navbar float. Glass effect is required for this.
 
-### Sidebar
-- `natsumi.sidebar.blur-zen-sidebar`: Blurs Zen Sidebar background. This may cause some lag when you
-  have both Zen Sidebar and Natsumi URLbar opened at the same time.
+### Sidebar (Tabs)
 - `natsumi.sidebar.container-tabs-border`: Adds a border to container tabs.
 - `natsumi.sidebar.container-tabs-border-no-inactive`: Disables border for tabs that are not selected.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
-- `natsumi.sidebar.disable-panel-transparency`: Disables transparent background for sidebar panels
-  (e.g. Bookmarks).
-- `natsumi.sidebar.floating-panel`: Makes the Firefox sidebar panel float.
-- `natsumi.sidebar.panel-glass-effect`: Adds glass effect to Firefox sidebar panel.
-- `natsumi.sidebar.panel-position-center`: Vertically centers Firefox sidebar panel if it is floating.
-- `natsumi.sidebar.panel-position-bottom`: Moves Firefox sidebar panel to the bottom if it is floating.
-  Overrides `natsumi.sidebar.panel-position-center` if enabled.
-- `natsumi.sidebar.panel-resizable`: Makes the Firefox sidebar panel resizable.
 - `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
-- `natsumi.sidebar.zen-sidebar-haze`: Adds Haze material to Zen Sidebar.
-- `natsumi.sidebar.zen-sidebar-mistcrylic`: Adds Mistcrylic material to Zen Sidebar.
+
+### Sidebar (Zen Web Panels)
+- `natsumi.sidebar.zen-sidebar-blur`: Enables blur on Web Panels when it is floating/unpinned.
+- `natsumi.sidebar.zen-sidebar-glass`: Adds Glass material to Web Panels.
+- `natsumi.sidebar.zen-sidebar-haze`: Adds Haze material to Web Panels.
+- `natsumi.sidebar.zen-sidebar-mistcrylic`: Adds Mistcrylic material to Web Panels.
+
+### Sidebar (Firefox)
+- `natsumi.sidebar.ff-sidebar-blur`: Enables blur on Firefox sidebar when it is floating/unpinned.
+- `natsumi.sidebar.ff-sidebar-float`: Makes the Firefox sidebar float on top of the website.
+- `natsumi.sidebar.ff-sidebar-glass`: Adds Glass material to Firefox sidebar.
+- `natsumi.sidebar.ff-sidebar-haze`: Adds Haze material to Firefox sidebar.
+- `natsumi.sidebar.ff-sidebar-mistcrylic`: Adds Mistcrylic material to Firefox sidebar.
+- `natsumi.sidebar.ff-sidebar.opaque`: Disables transparent background for Firefox sidebar.
+- `natsumi.sidebar.ff-sidebar-position-center`: Vertically centers Firefox sidebar panel if it is
+  floating.
+- `natsumi.sidebar.ff-sidebar-position-bottom`: Moves Firefox sidebar panel to the bottom if it is
+  floating. Overrides `natsumi.sidebar.ff-sidebar-position-center` if enabled.
+- `natsumi.sidebar.ff-sidebar-resizable`: Makes the Firefox sidebar resizable.
 
 ### Findbar
 - `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.

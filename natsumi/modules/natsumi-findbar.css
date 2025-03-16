@@ -45,11 +45,11 @@ their author(s) have been provided above the used code.
 
 @keyframes glass-disappear {
   0% {
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
   }
 
   99% {
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
   }
 
   100% {
@@ -69,7 +69,7 @@ their author(s) have been provided above the used code.
     flex-wrap: wrap;
     border-radius: 15px;
     background: var(--natsumi-mat-mc-background) !important;
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
     border: none !important;
     opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
@@ -142,11 +142,7 @@ their author(s) have been provided above the used code.
     &:has(.findbar-textbox:is([status="notfound"])) {
       @media not (-moz-bool-pref: "natsumi.findbar.disable-not-found-bg") {
         background: color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, transparent) !important;
-
-        /*noinspection CssInvalidFunction*/
-        @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-          box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
-        }
+        box-shadow: 0 0 10px color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, light-dark(black, white)) !important;
       }
     }
 
@@ -276,8 +272,10 @@ their author(s) have been provided above the used code.
   }
 
   @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
-    .deck-selected:has(findbar:not([hidden="true"])) browser {
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+    .deck-selected, .browserSidebarContainer[zen-split] {
+      &:has(findbar:not([hidden="true"])) browser {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+      }
     }
   }
 }

@@ -67,7 +67,7 @@ their author(s) have been provided above the used code.
 
     @media (-moz-bool-pref: "natsumi.experiments.miniplayer-transparent") {
       background-color: var(--natsumi-mat-hz-background) !important;
-      backdrop-filter: saturate(3) contrast(2) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
 
       &::before {
         content: "";
