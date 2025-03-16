@@ -93,7 +93,7 @@ Edit the natsumi-config.css file instead.
   @media (prefers-color-scheme: dark) {
     --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), white);
 
-    @media (-moz-bool-pref: "natsumi.theme.force-dark-shadows") {
+    @media (-moz-bool-pref: "natsumi.theme.force-glass-dark-shadows") {
       --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
     }
   }

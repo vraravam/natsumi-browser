@@ -117,8 +117,8 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
   quite some GPU.
 - `natsumi.theme.force-blur`: Forces background blur support to be enabled regardless of whether a blurred
-  element is shown or not. This is recommended to be disabled.
-- `natsumi.theme.force-dark-shadows`: Forces dark shadows regardless of the current theme/color scheme.
+  element is shown or not.
+- `natsumi.theme.force-glass-dark-shadows`: Forces dark shadows on Glass material.
 
 ### URLbar
 - `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
