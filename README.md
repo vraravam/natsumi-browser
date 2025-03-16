@@ -123,6 +123,7 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.force-blur`: Forces background blur support to be enabled regardless of whether a blurred
   element is shown or not.
 - `natsumi.theme.force-glass-dark-shadows`: Forces dark shadows on Glass material.
+- `natsumi.theme.opaque-icons`: Makes toolbar icon outlines opaque instead of semi-transparent.
 
 ### URLbar
 - `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
