@@ -141,7 +141,14 @@ browser, .browserSidebarContainer.deck-selected {
   --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
 }
 
+/* Sidebar position */
 #sidebar-box {
   --natsumi-sidebar-x-offset: var(--ff-sidebar-x-offset, 20px);
   --natsumi-sidebar-y-offset: var(--ff-sidebar-y-offset, 20px);
+}
+
+/* Blade offset for tabs (change this if other rices/mods break Blade) */
+.tabbrowser-tab {
+  --natsumi-tabs-blade-size-offset: 4px;
+  --natsumi-tabs-blade-position-offset: 2px;
 }

@@ -135,10 +135,10 @@ their author(s) have been provided above the used code.
           content: "";
           position: absolute;
           width: var(--natsumi-tab-idle-width);
-          height: calc(100% - 4px - calc(var(--tab-block-margin) * 2));
+          height: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2));
           opacity: var(--natsumi-tab-idle-opacity);
-          top: 2px;
-          left: 2px;
+          top: var(--natsumi-tabs-blade-position-offset);
+          left: var(--natsumi-tabs-blade-position-offset);
           border: 2px solid var(--natsumi-tab-highlight-color);
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
           border-radius: inherit;
@@ -155,7 +155,7 @@ their author(s) have been provided above the used code.
       &:hover {
         & > .tab-stack > .tab-background {
           &::after {
-            width: calc(100% - 4px - calc(var(--tab-block-margin) * 2));
+            width: calc(100% - var(--natsumi-tabs-blade-size-offset) - calc(var(--tab-block-margin) * 2));
             opacity: 1;
           }
         }
