@@ -154,6 +154,12 @@ their author(s) have been provided above the used code.
           background-image: url('chrome://browser/skin/zen-icons/close.svg') !important;
           background-repeat: no-repeat;
           background-position: center !important;
+          -moz-context-properties: fill;
+          fill: black;
+
+          @media (prefers-color-scheme: dark) {
+            fill: white;
+          }
         }
 
         &:hover {
