@@ -10,7 +10,7 @@
   <a href="https://zen-browser.app"><img height="40" src="https://github.com/heyitszenithyt/zen-browser-badges/blob/fb14dcd72694b7176d141c774629df76af87514e/light/zen-badge-light.png"></a>
 </p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-main.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
 
 ## Meet Natsumi!
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
@@ -19,7 +19,7 @@ the skin I personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
 
-Natsumi has been tested on `1.8.1b` (Beta) and `1.8.1t 2025-02-24` (Twilight).
+Natsumi has been tested on `1.10b` (Beta) and `1.10t 2025-03-16` (Twilight).
 
 > [!NOTE]
 > Please remember that Natsumi in the end is **my personal browser skin**. If you don't like a design
@@ -31,45 +31,49 @@ Natsumi has been tested on `1.8.1b` (Beta) and `1.8.1t 2025-02-24` (Twilight).
 Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
 keeping much of Zen Browser's original design.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-polish.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/home.png?raw=true)
 
 ### Natsumi URLbar
 With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
 cozy while also having lots of room for search suggestions. You can even make the URLbar stay out of
 your way when collapsed with compact URLbar.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-urlbar.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/urlbar.png?raw=true)
 
 ### Natsumi Findbar
 Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
 the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better
 Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-findbar.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/findbar.png?raw=true)
 
 ### Natsumi PDF Viewer
 Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
 viewer, giving it the modern look it really deserves. And with compact view, you can focus on the file
 at hand when you don't need the extra tools.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-pdf.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/pdfjs.png?raw=true)
 
 ### Enhanced sidebars
 Elevate your sidebars to the next level! Not only does Natsumi add a glass effect to both sidebars, it
 also makes the Firefox sidebar more customizable by adding customization for its size and position.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-sidebars.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/sidebars.png?raw=true)
 
 ### Marginless compact mode
 Add even more screen real estate to compact mode by removing the website view's margins entirely. See
 more of your website with even less distractions.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/natsumi-marginless.png?raw=true)
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/compact.png?raw=true)
+
+### Natsumi Picture-in-Picture (PiP)
+Natsumi PiP gives the Picture-in-Picture window a fresh new look. Enjoy sleek animations, native icons,
+and more.
+
+![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/pip.png?raw=true)
 
 ### And much more!
-- Natsumi Picture-in-Picture
-- Natsumi Library
-- And more!
+There's much more than just those to discover!
 
 ## Installation
 This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
@@ -188,10 +192,11 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
-- `natsumi.experiments.mistcrylic`: Adds a new "Mistcrylic" material. It probably looks bad, but I'm
-  still working on it.
 - `natsumi.experiments.rounded-pip`: Makes the PiP window round, like in macOS. If you're using macOS,
   you won't need this.
+- `natsumi.experiments.miniplayer-bounce`: Adds a bounce effect to the miniplayer.
+- `natsumi.experiments.miniplayer-transparent`: Makes the miniplayer use the background color of the
+  window instead of the accent color (i.e. applies Haze material).
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
