@@ -38,7 +38,8 @@ their author(s) have been provided above the used code.
       }
 
       .titlebar-buttonbox-container {
-        padding: 0 var(--zen-toolbox-padding) !important;
+        padding: 0 calc(var(--zen-toolbox-padding) / 2) !important;
+        padding-right: var(--zen-toolbox-padding) !important;
       }
 
       &:is([inFullscreen]) {
@@ -63,7 +64,7 @@ their author(s) have been provided above the used code.
   }
 
   @media (-moz-bool-pref: "natsumi.theme.force-blur") {
-    .deck-selected browser {
+    .deck-selected browser, .browserSidebarContainer[zen-split] browser {
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
   }
@@ -141,7 +142,22 @@ toolbarbutton[badged="true"]:not([badge]) {
   }
 }
 
+.toolbarbutton-badge-stack {
+  padding: 5px !important;
 
+  #fxa-avatar-image {
+    width: 18px !important;
+    height: 18px !important;
+  }
+}
+
+.tab-icon-image {
+  border-radius: 0 !important;
+
+  @media (-moz-platform: macos) {
+    image-rendering: initial !important;
+  }
+}
 
 /* ==== WIP features (do not touch yet) ==== */
 

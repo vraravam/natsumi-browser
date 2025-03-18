@@ -29,13 +29,13 @@ their author(s) have been provided above the used code.
 
 /* ==== Firefox sidebar panel tweaks ==== */
 
-@keyframes glass-disappear {
+@keyframes mistcrylic-disappear {
   0% {
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
   }
 
   99% {
-    backdrop-filter: blur(var(--natsumi-glass-blur-radius));
+    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
   }
 
   100% {
@@ -43,13 +43,41 @@ their author(s) have been provided above the used code.
   }
 }
 
-@media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+@keyframes haze-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-hz-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-hz-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@keyframes glass-disappear {
+  0% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  99% {
+    backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+  }
+
+  100% {
+    backdrop-filter: none;
+  }
+}
+
+@media not (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-opaque") {
   /*noinspection CssUnknownProperty*/
   #sidebar-box {
     border: none !important;
     box-shadow: none !important;
 
-    @media not (-moz-bool-pref: "natsumi.sidebar.floating-panel") {
+    @media not (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-float") {
       background-color: transparent !important;
     }
 
@@ -65,7 +93,7 @@ their author(s) have been provided above the used code.
   }
 }
 
-@media (-moz-bool-pref: "natsumi.sidebar.floating-panel") {
+@media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-float") {
   #sidebar-splitter {
     display: none;
   }
@@ -84,13 +112,13 @@ their author(s) have been provided above the used code.
     opacity: 1;
     transition: left 0.2s ease, right 0.2s ease, opacity 0.2s ease !important;
 
-    @media (-moz-bool-pref: "natsumi.sidebar.panel-position-center") {
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-position-center") {
       margin-top: 0;
       top: 50%;
       transform: translate(0, -50%);
     }
 
-    @media (-moz-bool-pref: "natsumi.sidebar.panel-position-bottom") {
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-position-bottom") {
       margin-top: 0;
       margin-bottom: 20px !important;
       top: unset;
@@ -103,16 +131,45 @@ their author(s) have been provided above the used code.
       right: var(--natsumi-sidebar-x-offset);
     }
 
-    @media (-moz-bool-pref: "natsumi.sidebar.panel-glass-effect") {
-      background-color: var(--natsumi-glass-background) !important;
-      backdrop-filter: blur(var(--natsumi-glass-blur-radius));
-      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-mistcrylic") {
+      background-color: var(--natsumi-mat-mc-background) !important;
+      backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
 
-      /*noinspection CssInvalidFunction*/
-      @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-        box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+      &::before {
+        content: "";
+        position: absolute;
+        background-image: url(chrome://browser/content/zen-images/grain-bg.png);
+        opacity: 0.2;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        pointer-events: none;
       }
+    }
 
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-haze") {
+      background-color: var(--natsumi-mat-hz-background) !important;
+      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+
+      @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-tinted-haze") {
+        background-color: var(--natsumi-mat-hz-background-tinted) !important;
+      }
+    }
+
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-glass") {
+      background-color: var(--natsumi-mat-ga-background) !important;
+      backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius));
+      box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
+    }
+
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-mistcrylic") or
+    (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-haze") or
+    (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-glass")
+    {
+      border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
       /*noinspection CssInvalidFunction*/
       #sidebar-header {
         margin-left: 8px;
@@ -123,7 +180,7 @@ their author(s) have been provided above the used code.
       }
     }
 
-    @media (-moz-bool-pref: "natsumi.sidebar.panel-resizable") {
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-resizable") {
       resize: both;
     }
 
@@ -132,24 +189,39 @@ their author(s) have been provided above the used code.
       left: calc(var(--natsumi-sidebar-x-offset) - 20px);
       opacity: 0;
       pointer-events: none !important;
-      animation: glass-disappear 0.2s linear !important;
-      animation-fill-mode: forwards !important;
 
       @media not (-moz-bool-pref: "sidebar.position_start") {
         left: auto;
         right: calc(var(--natsumi-sidebar-x-offset) - 20px);
       }
+
+      @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-mistcrylic") {
+        animation: mistcrylic-disappear 0.2s linear !important;
+      }
+
+      @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-haze") {
+        animation: haze-disappear 0.2s linear !important;
+      }
+
+      @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-glass") {
+        animation: glass-disappear 0.2s linear !important;
+      }
+
+      animation-fill-mode: forwards !important;
     }
   }
 
   @media not (-moz-bool-pref: "natsumi.theme.disable-blur") {
-    @media not (-moz-bool-pref: "natsumi.sidebar.disable-panel-transparency") {
+    @media not (-moz-bool-pref: "natsumi.sidebar.ff-panel-opaque") {
       #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
     }
 
-    @media (-moz-bool-pref: "natsumi.sidebar.panel-glass-effect") {
+    @media (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-mistcrylic") or
+    (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-haze") or
+    (-moz-bool-pref: "natsumi.sidebar.ff-sidebar-glass")
+    {
       #browser:has(#sidebar-box:not([hidden])) .deck-selected browser {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
       }
@@ -165,13 +237,13 @@ their author(s) have been provided above the used code.
     @media (-moz-bool-pref: "zen.view.compact.hide-tabbar") {
       #navigator-toolbox:not([animate]) {
         #titlebar {
-          background: var(--natsumi-glass-background) !important;
+          background: var(--natsumi-mat-ga-background) !important;
           border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-          backdrop-filter: blur(var(--natsumi-glass-blur-radius)) !important;
+          backdrop-filter: blur(var(--natsumi-mat-ga-blur-radius)) !important;
 
           /*noinspection CssInvalidFunction*/
           @media not (-moz-bool-pref: "natsumi.theme.disable-glass-shadow") {
-            box-shadow: 0 0 var(--natsumi-glass-shadow-size) var(--natsumi-glass-shadow-color) !important;
+            box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
           }
         }
 
