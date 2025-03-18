@@ -151,11 +151,15 @@ toolbarbutton[badged="true"]:not([badge]) {
   }
 }
 
-.tab-icon-image[src] {
+.tab-icon-image {
   border-radius: 0 !important;
 
   @media (-moz-platform: macos) {
     image-rendering: initial !important;
+  }
+
+  &:not([src]), &:-moz-broken {
+    border-radius: 4px !important;
   }
 }
 
