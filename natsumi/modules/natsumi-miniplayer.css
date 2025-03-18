@@ -29,20 +29,6 @@ their author(s) have been provided above the used code.
 
 /* ==== "Miniplayer" ==== */
 
-@keyframes appear-animation {
-  0% {
-    gap: 0;
-  }
-
-  50% {
-    gap: 11px;
-  }
-
-  100% {
-    gap: 8px;
-  }
-}
-
 @keyframes fadein-animation {
   0% {
     opacity: 0;
@@ -60,15 +46,10 @@ their author(s) have been provided above the used code.
 #zen-media-controls-toolbar {
   /*noinspection CssInvalidFunction*/
   & > toolbaritem {
-    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
-    background-color: color-mix(in srgb,
-    light-dark(#fff, #000) 87%, var(--zen-primary-color)
-    ) !important;
+    background-color: var(--natsumi-mat-hz-background) !important;
+    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
 
-    @media (-moz-bool-pref: "natsumi.experiments.miniplayer-transparent") {
-      background-color: var(--natsumi-mat-hz-background) !important;
-      backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
-
+    @media (-moz-bool-pref: "natsumi.miniplayer.blur-fix") {
       &::before {
         content: "";
         position: absolute;
@@ -96,6 +77,12 @@ their author(s) have been provided above the used code.
       pointer-events: none;
     }
 
+    @media (-moz-bool-pref: "natsumi.miniplayer.disable-accent") {
+      &::after {
+        display: none !important;
+      }
+    }
+
     toolbarbutton {
       z-index: 0 !important;
     }
@@ -110,22 +97,9 @@ their author(s) have been provided above the used code.
         animation-fill-mode: forwards;
       }
     }
-
-    @media (-moz-bool-pref: "natsumi.experiments.miniplayer-bounce") {
-      /* Hidden under a pref in case Cheff steals this */
-      & #zen-media-main-vbox {
-        animation: appear-animation 0.3s ease-in-out !important;
-      }
-    }
   }
 
   &:not(:hover) {
-    @media (-moz-bool-pref: "natsumi.experiments.miniplayer-bounce") {
-      & #zen-media-main-vbox {
-        transition: gap 0.15s ease-in-out !important;
-      }
-    }
-
     #zen-media-service-hbox {
       padding-top: 0 !important;
     }
@@ -151,8 +125,6 @@ their author(s) have been provided above the used code.
   }
 
   #zen-media-info-vbox {
-    mask-image: linear-gradient(to left, transparent, var(--zen-media-control-bg) 0.6em, var(--zen-media-control-bg) calc(100% - 0.6em), transparent) !important;
-
     &::before {
       display: none !important;
     }

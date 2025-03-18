@@ -171,9 +171,14 @@ and delay, change the variables in the config.css file.
   results.
 - `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
 
+### Miniplayer
+- `natsumi.miniplayer.blur-fix`: Fixes blur on the miniplayer.
+- `natsumi.miniplayer.disable-accent`: Disables the accent glow effect on the top left corner.
+
 ### Picture-in-Picture
 - `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
 - `natsumi.pip.native-border-radius`: Makes the PiP controls border radius look more native.
+- `natsumi.pip.rounded`: Makes the PiP window round, like in macOS. Only supports Windows.
 
 ### Library
 - `natsumi.library.disabled`: Disables Natsumi Library and reverts the library style back.
@@ -193,11 +198,6 @@ and delay, change the variables in the config.css file.
 
 ### Experiments
 - `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
-- `natsumi.experiments.rounded-pip`: Makes the PiP window round, like in macOS. If you're using macOS,
-  you won't need this.
-- `natsumi.experiments.miniplayer-bounce`: Adds a bounce effect to the miniplayer.
-- `natsumi.experiments.miniplayer-transparent`: Makes the miniplayer use the background color of the
-  window instead of the accent color (i.e. applies Haze material).
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
