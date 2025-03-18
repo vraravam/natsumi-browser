@@ -12,7 +12,7 @@
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
 
-## Meet Natsumi!
+## Meet Natsumi! 🦋
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
 that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
 the skin I personally use, but made public because people wanted the CSS.
