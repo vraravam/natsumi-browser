@@ -205,8 +205,17 @@ Sure! Just paste it right below the Natsumi Browser loader (userChrome.css) and 
 userchrome alongside Natsumi Browser.
 
 ### "Can I disable individual features?"
-You're free to disable loading certain modules (CSS files) if you feel like it. But you will still need
-to load config.css, natsumi/preload.css and natsumi/postload.css for things to work.
+You can disable some features using the configuration options.
+
+If that doesn't help, you can remove certain modules (CSS files) from the natsumi.css file. However,
+you will need to keep certain files (preload, postload, natsumi-config) for Natsumi to work properly.
+
+> [!CAUTION]
+> By modifying any part of Natsumi, you are responsible for any issues that may arise. If things do
+> break, I will most likely not offer support for it.
+> 
+> If you installed Natsumi as part of another skin, your installation may be considered modified.
+> Please check with the skin's developer for assistance in this case.
 
 ### "Is Natsumi compatible with the newest version of Zen Browser?"
 Natsumi is always developed and tested on the newest Zen Twilight, so that it's always compatible with
@@ -215,12 +224,24 @@ the newest Zen Browser right on release day.
 If you are unsure if Natsumi is compatible with your version, check the tested versions in the beginning
 of the README.
 
+### "When does Natsumi update?"
+There is no fixed schedule for updates.
+
+Usually, I time my releases to happen when Zen Browser updates, so that Natsumi is always compatible
+with the newest version of Natsumi right on update day.
+
 ### "Is Natsumi compatible with other browsers (Firefox, Chrome, Arc, etc.)?"
 No. Natsumi is made on top of Zen Browser, so it only supports Zen Browser.
 
 If you try to apply Natsumi on other Firefox or other Firefox-based browsers, things will definitely
 break. As for Chrome/Chromium-based browsers like Arc, you can't apply userchrome CSS files, making
 Natsumi completely incompatible with those browsers.
+
+I do have some plans to make a Firefox version called Natsumini, but I don't know if I'll go forward
+with it.
+
+### "I don't like the design, please change it!"
+If I like the design, nah. My personal skin, my rules.
 
 ### "Can I use Natsumi with other Zen Mods?"
 You can, but some mods (such as Better Find Bar and Super Url Bar) may conflict with Natsumi's CSS
