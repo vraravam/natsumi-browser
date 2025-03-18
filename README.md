@@ -55,8 +55,8 @@ at hand when you don't need the extra tools.
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/pdfjs.png?raw=true)
 
 ### Enhanced sidebars
-Elevate your sidebars to the next level! Not only does Natsumi add a glass effect to both sidebars, it
-also makes the Firefox sidebar more customizable by adding customization for its size and position.
+Elevate your sidebars to the next level! Not only does Natsumi add materials to both sidebars, it also
+makes the Firefox sidebar more customizable by adding customization for its size and position.
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/sidebars.png?raw=true)
 
@@ -113,9 +113,10 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
 - `natsumi.theme.compact-marginless-hide-bookmarks`: Hides the bookmarks bar in marginless compact mode.
 - `natsumi.theme.consistent-toolbar-button-size`: Makes toolbar buttons have a consistent size on Zen 1.7.5b.
-- `natsumi.theme.disable-blur`: Disables blurring for glass effects. Use this if Zen Browser lags
+- `natsumi.theme.disable-blur`: Disables blurring for materials. Use this if Zen Browser lags
   too much.
-- `natsumi.theme.disable-glass-shadow`: Disables shadow for glass effects.
+- `natsumi.theme.disable-glass-shadow`: Disables shadow for Glass material. Does not affect Mistcrylic and
+  Haze.
 - `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs.
 - `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
 - `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
@@ -134,15 +135,15 @@ and delay, change the variables in the config.css file.
 - `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
 
 ### Navbar
-- `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
-- `natsumi.navbar.float`: Makes the navbar float. Glass effect is required for this.
+- `natsumi.navbar.glass-effect`: Adds Glass material for the navbar on compact mode.
+- `natsumi.navbar.float`: Makes the navbar float. Glass material is required for this.
 
 ### Sidebar (Tabs)
 - `natsumi.sidebar.container-tabs-border`: Adds a border to container tabs.
 - `natsumi.sidebar.container-tabs-border-no-inactive`: Disables border for tabs that are not selected.
 - `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
   normal font size.
-- `natsumi.sidebar.tabs-glass-effect`: Adds glass effect for the sidebar on compact mode.
+- `natsumi.sidebar.tabs-glass-effect`: Adds Glass material for the sidebar on compact mode.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 
