@@ -126,12 +126,12 @@ and delay, change the variables in the config.css file.
 - `natsumi.theme.opaque-icons`: Makes toolbar icon outlines opaque instead of semi-transparent.
 
 ### URLbar
-- `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
 - `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
 - `natsumi.urlbar.disable-transparency`: Disables URLbar background transparency.
 - `natsumi.urlbar.force-nowrap`: Prevents wrapping to make things more compact regardless of window
   width.
 - `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
+- `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
 
 ### Navbar
 - `natsumi.navbar.glass-effect`: Adds glass effect for the navbar on compact mode.
