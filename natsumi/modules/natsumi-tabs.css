@@ -272,7 +272,7 @@ their author(s) have been provided above the used code.
         }
 
         & > .tab-stack > .tab-background {
-          background-color: var(--tab-hover-background-color);
+          background-color: var(--tab-hover-background-color) !important;
         }
       }
 
@@ -295,12 +295,20 @@ their author(s) have been provided above the used code.
         & > .tab-stack > .tab-background {
           border: none !important;
 
-          &::before {
-            opacity: 0.6 !important;
+          @media (-moz-bool-pref: "zen.theme.essentials-favicon-bg") {
+            &::before {
+              opacity: 0.6 !important;
+            }
+
+            &::after {
+              filter: saturate(150%) blur(15px) !important;
+            }
           }
 
-          &::after {
-            filter: saturate(150%) blur(15px) !important;
+          @media not (-moz-bool-pref: "zen.theme.essentials-favicon-bg") {
+            background-color: var(--natsumi-mat-hz-background) !important;
+            animation: backdrop-fadein 0.2s ease;
+            animation-fill-mode: forwards;
           }
         }
       }
