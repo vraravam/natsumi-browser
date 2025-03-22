@@ -1,3 +1,11 @@
+> [!WARNING]
+> Natsumi Browser has been discontinued. All development will now continue privately.
+>
+> Please be respectful and do not attempt to "continue" the project. Let it rest in peace instead of extending its
+> lifespan for the sake of it.
+>
+> [More info](https://greeeen.dev/natsumi-archived.html)
+
 <h1 align="center">
   <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
   <br>
