@@ -14,6 +14,7 @@ Please make sure all of the following applies to your question.
 - [ ] The same question was not asked yet.
 - [ ] Any relevant details have been added.
 - [ ] This is not a bug report or a feature request.
+- [ ] My installation of Natsumi Browser was not modified whatsoever (if applicable).
 
 **Question**
 <!--
