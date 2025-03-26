@@ -157,6 +157,19 @@ toolbarbutton[badged="true"]:not([badge]) {
   @media (-moz-platform: macos) {
     image-rendering: initial !important;
   }
+
+  &:not([src]), &:-moz-broken {
+    border-radius: 4px !important;
+  }
+}
+
+#zen-workspaces-button {
+  container-type: initial !important;
+  width: auto !important;
+
+  .subviewbutton {
+    min-width: 24px !important;
+  }
 }
 
 /* ==== WIP features (do not touch yet) ==== */

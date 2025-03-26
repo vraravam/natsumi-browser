@@ -1,3 +1,10 @@
+> [!IMPORTANT]
+> Natsumi Browser was discontinued on March 22, 2025. Development has now resummed.
+>
+> This notice will be removed sometime next week.
+>
+> [More info](https://greeeen.dev/natsumi-update.html)
+
 <h1 align="center">
   <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
   <br>
@@ -12,7 +19,7 @@
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
 
-## Meet Natsumi!
+## Meet Natsumi! 🦋
 Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
 that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
 the skin I personally use, but made public because people wanted the CSS.

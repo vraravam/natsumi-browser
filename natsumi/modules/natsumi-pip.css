@@ -159,6 +159,10 @@ their author(s) have been provided above the used code.
           content: url("chrome://browser/skin/zen-icons/close.svg") !important;
         }
 
+        &#minimize::before {
+          content: url("chrome://browser/skin/zen-icons/unpin.svg") !important;
+        }
+
         &#unpip::before {
           content: url("chrome://browser/skin/zen-icons/screen.svg") !important;
         }
