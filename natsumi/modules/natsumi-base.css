@@ -81,9 +81,7 @@ their author(s) have been provided above the used code.
 
 /*noinspection CssInvalidFunction*/
 #zen-workspaces-button {
-  border-radius: 9px !important;
-  border: 1px solid light-dark(rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0.2));
-  padding: 3px !important;
+  overflow: visible !important;
 
   .subviewbutton {
     border-radius: 6px !important;
