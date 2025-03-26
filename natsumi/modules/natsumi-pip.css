@@ -212,7 +212,9 @@ their author(s) have been provided above the used code.
         }
 
         .start-controls {
-          display: flex !important;
+          @media (width > 300px) {
+            display: flex !important;
+          }
 
           /*noinspection CssInvalidFunction*/
           #timestamp {
