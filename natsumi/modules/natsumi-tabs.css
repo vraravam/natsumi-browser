@@ -152,7 +152,7 @@ their author(s) have been provided above the used code.
           left: var(--natsumi-tabs-blade-position-offset);
           border: 2px solid var(--natsumi-tab-highlight-color);
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
-          border-radius: inherit;
+          border-radius: calc(var(--border-radius-medium) - 1px);
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
 
