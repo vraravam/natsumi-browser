@@ -41,6 +41,12 @@ By using experimental features, you acknowledge that they may break Natsumi or Z
   }
 }
 
+@media not (-moz-bool-pref: "natsumi.theme.no-april-fools") {
+  #zen-main-app-wrapper, .tab-label, menuitem, panelmultiview, .PanelUI-zen-profiles-item-name {
+    font-family: 'Comic Sans MS', 'Comic Sans', system-ui !important;
+  }
+}
+
 /* WIP thing for tab switching */
 
 /*.ctrlTab-preview:hover {
