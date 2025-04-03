@@ -1,10 +1,3 @@
-> [!IMPORTANT]
-> Natsumi Browser was discontinued on March 22, 2025. Development has now resummed.
->
-> This notice will be removed sometime next week.
->
-> [More info](https://greeeen.dev/natsumi-update.html)
-
 <h1 align="center">
   <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
   <br>
