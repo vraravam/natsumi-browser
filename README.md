@@ -147,12 +147,6 @@ and delay, change the variables in the config.css file.
 - `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
   in the pinned section of the vertical tabs.
 
-### Sidebar (Zen Web Panels)
-- `natsumi.sidebar.zen-sidebar-blur`: Enables blur on Web Panels when it is floating/unpinned.
-- `natsumi.sidebar.zen-sidebar-glass`: Adds Glass material to Web Panels.
-- `natsumi.sidebar.zen-sidebar-haze`: Adds Haze material to Web Panels.
-- `natsumi.sidebar.zen-sidebar-mistcrylic`: Adds Mistcrylic material to Web Panels.
-
 ### Sidebar (Firefox)
 - `natsumi.sidebar.ff-sidebar-blur`: Enables blur on Firefox sidebar when it is floating/unpinned.
 - `natsumi.sidebar.ff-sidebar-float`: Makes the Firefox sidebar float on top of the website.
