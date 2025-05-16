@@ -36,6 +36,7 @@ SOFTWARE.
 @import "modules/tabs.css";
 @import "modules/folders.css";
 @import "modules/urlbar.css";
+@import "modules/sidebars.css";
 @import "modules/findbar.css";
 @import "modules/pip.css";
 @import "modules/notifications.css";
