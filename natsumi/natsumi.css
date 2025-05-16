@@ -45,6 +45,7 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/tabs.css";
 @import "modules/folders.css";
 @import "modules/urlbar.css";
+@import "modules/sidebars.css";
 @import "modules/findbar.css";
 @import "modules/pip.css";
 @import "modules/miniplayer.css";
