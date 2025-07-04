@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -27,36 +27,34 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Apply config ==== */
-
-/*
-NOTE: DO NOT USE THIS AS YOUR CONFIG FILE.
-
-The below code applies your config (or default values if needed) and they should never be modified.
-Edit the natsumi-config.css file instead.
- */
+/* ==== Preload ==== */
+/* You are advised NOT to touch this unless you know what you're doing. */
 
 * {
   /* Colors */
-  --natsumi-primary-color: var(--natsumi-accent-color, var(--zen-primary-color));
+  --natsumi-primary-color: var(--natsumi-accent-color, #a0d490);
   --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
   --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
   --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);
   --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+  --natsumi-ff-background-color: color-mix(in srgb, var(--natsumi-primary-color) 25%, white);
 
   @media (prefers-color-scheme: dark) {
-    --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, var(--zen-dark-color-mix-base) 80%);
-    --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, var(--zen-dark-color-mix-base) 70%);
-    --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, var(--zen-dark-color-mix-base) 99%);
+    --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #1d1d1d 80%);
+    --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 30%, #1d1d1d 70%);
+    --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 1%, #1d1d1d 99%);
     --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
+    --natsumi-ff-background-color: color-mix(in srgb, var(--natsumi-primary-color) 15%, black);
 
-    @media -moz-pref('zen.theme.color-prefs.colorful') {
+    @media (-moz-bool-pref: 'natsumi.colors.colorful') {
       --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
       --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
       --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);
       --natsumi-colors-primary-foreground: color-mix(in srgb, var(--natsumi-primary-color) 80%, white 20%);
     }
   }
+
+  --natsumi-ff-background: color-mix(in srgb, var(--natsumi-ff-background-color) 40%, transparent);
 
   /* Material: Mistcrylic */
   --natsumi-mat-mc-background: color-mix(in srgb, var(--natsumi-primary-color) 40%, rgba(255, 255, 255, 0.8));
@@ -93,61 +91,14 @@ Edit the natsumi-config.css file instead.
   @media (prefers-color-scheme: dark) {
     --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), white);
 
-    @media -moz-pref("natsumi.theme.force-glass-dark-shadows") {
+    @media (-moz-bool-pref: "natsumi.theme.force-glass-dark-shadows") {
       --natsumi-mat-ga-shadow-color: color-mix(in srgb, var(--natsumi-colors-secondary) var(--natsumi-mat-ga-shadow-opacity), black);
     }
   }
-
-  /* Fonts */
-  --natsumi-custom-font: var(--custom-font, system-ui);
+  --natsumi-browser-separation: 6px;
+  --natsumi-browser-border-radius: 8px;
 }
 
-/* URL bar appear animation */
-#urlbar {
-  --animation-duration: var(--urlbar-appear-animation-duration, 0.25s);
-}
-
-/* Results appear animation */
-#urlbar-results {
-  --animation-duration: var(--urlbar-results-animation-duration, 0.5s);
-}
-
-/* Individual result appear animation */
-.urlbarView-row {
-  --animation-duration: var(--urlbar-individual-result-animation-duration, 1.0s);
-  --animation-duration-subtle: 0.5s; /* WIP, this won't change anything for now */
-  --animation-delay: var(--urlbar-individual-result-animation-delay, 0.1s);
-  --animation-delay-offset: var(--urlbar-individual-result-animation-delay-offset, 0.3s);
-  --expand-width: var(--urlbar-individual-result-expand-size, 1.1);
-}
-
-/* Reload border animation */
-browser, .browserSidebarContainer.deck-selected {
-  --animation-duration: var(--reload-border-animation-duration, 0.2s);
-  --animation-rotation-duration: var(--reload-border-animation-rotation-duration, 2.0s);
-  --animation-exit-duration: var(--reload-border-animation-exit-duration, 1.0s);
-  --browser-margin: var(--reload-border-margin, 4px);
-}
-
-/* Reload URLbar animation */
-#urlbar-background {
-  --fadein-duration: var(--reload-urlbar-animation-duration, 0.5s);
-  --animation-duration: var(--reload-urlbar-animation-fadein-duration, 1s);
-}
-
-/* Container tabs gradient */
-.tabbrowser-tab {
-  --container-gradient-width: var(--container-tabs-normal-gradient-width, 25%);
-  --container-gradient-width-expanded: var(--container-tabs-expanded-gradient-width, 50%);
-}
-
-/* Sidebar position */
-#sidebar-box {
-  --natsumi-sidebar-x-offset: var(--ff-sidebar-x-offset, 20px);
-  --natsumi-sidebar-y-offset: var(--ff-sidebar-y-offset, 20px);
-}
-
-/* Blade offset for tabs (change this if other rices/mods break Blade) */
 .tabbrowser-tab {
   --natsumi-tabs-blade-size-offset: 4px;
   --natsumi-tabs-blade-position-offset: 2px;

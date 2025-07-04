@@ -27,13 +27,12 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Load config and Natsumi Browser Pages ==== */
 
 @import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/theme.css";
-@import "modules/base.css";
-@import "modules/tabs.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/icons.css";
+@import "content/preload.css";
+@import "content/pdfjs.css";
+@import "content/ff-home.css";
+@import "content/global.css";
+
+/* Do NOT enter any additional CSS below. */
