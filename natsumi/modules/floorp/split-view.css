@@ -215,13 +215,13 @@ their author(s) have been provided above the used code.
 
       /* Split view spacing */
       &[style*="flex-direction: row;"], &[style*="flex-direction: column;"] {
-        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2);
-        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2 - 1px);
+        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2 - 1px);
       }
 
       &[style*="flex-direction: row-reverse;"], &[style*="flex-direction: column-reverse;"] {
-        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2);
-        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2 - 1px);
+        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2 - 1px);
       }
 
       .browserSidebarContainer {
