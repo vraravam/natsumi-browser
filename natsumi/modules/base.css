@@ -33,7 +33,7 @@ their author(s) have been provided above the used code.
   border: none !important;
 }
 
-#tabbrowser-tabbox {
+#browser:not([data-is-child="true"]) #tabbrowser-tabbox {
   margin-right: var(--natsumi-browser-separation) !important;
   padding-bottom: var(--natsumi-browser-separation) !important;
   box-shadow: none !important;
@@ -68,6 +68,25 @@ their author(s) have been provided above the used code.
       border-radius: 13px !important;
     }
   }
+}
+
+#panel-sidebar-splitter {
+  min-width: var(--natsumi-browser-separation) !important;
+}
+
+#panel-sidebar-box {
+  margin-bottom: var(--natsumi-browser-separation) !important;
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+  border-radius: var(--natsumi-browser-border-radius) !important;
+  overflow: hidden !important;
+}
+
+#sidebar-box {
+  padding: 0 !important;
+  margin-right: var(--natsumi-browser-separation) !important;
+  margin-bottom: var(--natsumi-browser-separation) !important;
+  border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+  border-radius: var(--natsumi-browser-border-radius) !important;
 }
 
 #vertical-spacer {

@@ -157,6 +157,10 @@ their author(s) have been provided above the used code.
   }
 
   #tabbrowser-tabpanels {
+    .browserSidebarContainer:not(.deck-selected):not([split="true"]) {
+      display: none !important;
+    }
+
     &[split-view="true"] {
       overflow: hidden;
 
@@ -211,13 +215,13 @@ their author(s) have been provided above the used code.
 
       /* Split view spacing */
       &[style*="flex-direction: row;"], &[style*="flex-direction: column;"] {
-        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2 - 2px);
-        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2 - 2px);
+        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2);
       }
 
       &[style*="flex-direction: row-reverse;"], &[style*="flex-direction: column-reverse;"] {
-        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2 - 2px);
-        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2 - 2px);
+        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2);
       }
 
       .browserSidebarContainer {
