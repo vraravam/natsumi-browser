@@ -230,25 +230,25 @@ their author(s) have been provided above the used code.
 
       &[style*="flex-direction: row"] {
         .browserSidebarContainer[style*="order: 0"] {
-          padding-right: var(--natsumi-split-separation-0-right) !important;
-          padding-left: var(--natsumi-split-separation-0-left) !important;
+          margin-right: var(--natsumi-split-separation-0-right) !important;
+          margin-left: var(--natsumi-split-separation-0-left) !important;
         }
 
         .browserSidebarContainer[style*="order: 1"] {
-          padding-right: var(--natsumi-split-separation-1-right) !important;
-          padding-left: var(--natsumi-split-separation-1-left) !important;
+          margin-right: var(--natsumi-split-separation-1-right) !important;
+          margin-left: var(--natsumi-split-separation-1-left) !important;
         }
       }
 
       &[style*="flex-direction: column"] {
         .browserSidebarContainer[style*="order: 0"] {
-          padding-bottom: var(--natsumi-split-separation-0-right) !important;
-          padding-top: var(--natsumi-split-separation-0-left) !important;
+          margin-bottom: var(--natsumi-split-separation-0-right) !important;
+          margin-top: var(--natsumi-split-separation-0-left) !important;
         }
 
         .browserSidebarContainer[style*="order: 1"] {
-          padding-bottom: var(--natsumi-split-separation-1-right) !important;
-          padding-top: var(--natsumi-split-separation-1-left) !important;
+          margin-bottom: var(--natsumi-split-separation-1-right) !important;
+          margin-top: var(--natsumi-split-separation-1-left) !important;
         }
       }
     }
