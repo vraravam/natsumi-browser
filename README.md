@@ -5,9 +5,7 @@
 </h1>
 
 <p align="center">
-  A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.
-  <br><br>
-  <a href="https://zen-browser.app"><img height="40" src="https://github.com/heyitszenithyt/zen-browser-badges/blob/fb14dcd72694b7176d141c774629df76af87514e/light/zen-badge-light.png"></a>
+  A skin for Firefox and its forks that makes things <strong><i>~flow~</i></strong>.
 </p>
 
 ![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
