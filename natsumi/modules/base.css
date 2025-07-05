@@ -96,3 +96,39 @@ their author(s) have been provided above the used code.
 #vertical-tabs {
   -moz-window-dragging: drag;
 }
+
+#nav-bar-customization-target, #PanelUI-button {
+  toolbarbutton {
+    --toolbarbutton-outer-padding: 4px;
+    max-height: 40px !important;
+
+    .toolbarbutton-icon {
+      box-sizing: content-box !important;
+      width: 16px !important;
+      height: 16px !important;
+      padding: 6px !important;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      border-radius: 4px !important;
+    }
+
+    &:hover .toolbarbutton-icon {
+      background-color: var(--natsumi-button-hover-color) !important;
+    }
+
+    &:active, &[open], &[checked] {
+      .toolbarbutton-icon {
+        background-color: var(--natsumi-button-active-color) !important;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  .toolbarbutton-badge-stack {
+    padding: 0 !important;
+    background-color: transparent !important;
+  }
+
+  .avatar-container {
+    margin-left: 6px !important;
+  }
+}
