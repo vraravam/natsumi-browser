@@ -44,10 +44,7 @@ their author(s) have been provided above the used code.
       --natsumi-border-width: 1px;
       border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
       border-radius: var(--natsumi-browser-border-radius) !important;
-
-      browser {
-        border-radius: var(--natsumi-browser-border-radius) !important;
-      }
+      overflow: hidden !important;
 
       &:has(.devtools-toolbox-side-iframe) {
         .browserContainer browser {
