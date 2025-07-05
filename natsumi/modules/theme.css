@@ -37,8 +37,23 @@ their author(s) have been provided above the used code.
   appearance: -moz-window-titlebar !important;
 }
 
+/* Theme color engine */
 body {
-  /* Use theme color if possible */
+  /* Gradient color (overrides solid colors) */
+  &::before {
+    --color-left: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+    --color-right: light-dark(var(--natsumi-colors-secondary), color-mix(in srgb, var(--natsumi-primary-color) 50%, black));
+    content: "";
+    background: linear-gradient(135deg, var(--color-left), var(--color-right));
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: -998;
+    transition: opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  /* Solid color */
   &::after {
     content: "";
     background-color: transparent;
@@ -47,6 +62,19 @@ body {
     position: absolute;
     z-index: -999;
     transition: background-color 0.3s ease;
+    opacity: 0.5;
+  }
+
+  @media -moz-pref("natsumi.theme.gray-out-when-inactive") {
+    &:-moz-window-inactive {
+      &::before {
+        opacity: 0;
+      }
+
+      &::after {
+        background-color: transparent !important;
+      }
+    }
   }
 }
 
@@ -54,7 +82,7 @@ body {
 :root {
   /* Use theme color if possible */
   &[lwt-icon-fill-attention] body::after {
-    background-color: var(--lwt-accent-color) !important;
+    background-color: var(--lwt-accent-color);
   }
 }
 
@@ -76,6 +104,54 @@ body {
 
     &:-moz-window-inactive {
       background-color: var(--lwt-accent-color, var(--toolbox-bgcolor-inactive)) !important;
+    }
+  }
+}
+
+/* Base themes */
+
+/* Gradient (similar to my Zen gradient before 1.14b ruined it) */
+@media -moz-pref("natsumi.theme.type", "gradient") {
+  body {
+    &::before {
+      opacity: 0.5;
+    }
+
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+}
+
+/* Complementary Gradient (what Zen really wants you to use because "others can't design") */
+@media -moz-pref("natsumi.theme.type", "gradient-complementary") {
+  body {
+    &::before {
+      --color-left: transparent !important;
+      --color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
+      filter: invert();
+      opacity: 0.5;
+    }
+
+    &::after {
+      background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+    }
+  }
+}
+
+/* Colorful Solid (uses accent colors) */
+@media -moz-pref("natsumi.theme.type", "colorful") {
+  body::after {
+    background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary));
+  }
+}
+
+/* OLED (default on light, pure black on dark) */
+@media -moz-pref("natsumi.theme.type", "oled") {
+  body::after {
+    opacity: 1 !important;
+    @media (prefers-color-scheme: dark) {
+      background-color: black;
     }
   }
 }
