@@ -137,6 +137,22 @@ their author(s) have been provided above the used code.
     }
   }
 
+  #sidebar-main:not([sidebar-launcher-expanded]) {
+    .tabbrowser-tab {
+      min-width: var(--floorp-tab-min-height) !important;
+
+      & > .tab-stack > .tab-background {
+        min-width: calc(var(--floorp-tab-min-height) - 4px) !important;
+        margin: 2px auto !important;
+
+        &::after {
+          width: calc(var(--floorp-tab-min-height) - 4px) !important;
+          left: auto;
+        }
+      }
+    }
+  }
+
   #tabs-newtab-button {
     min-height: calc(var(--floorp-tab-min-height) - 4px) !important;
 
