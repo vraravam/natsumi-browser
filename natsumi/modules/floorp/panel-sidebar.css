@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -27,15 +27,30 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Floorp panel sidebar ==== */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/theme.css";
-@import "modules/base.css";
-@import "modules/tabs.css";
-@import "modules/urlbar.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/icons.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/panel-sidebar.css";
+@media -moz-pref("natsumi.browser.type", "floorp") {
+  #panel-sidebar-select-box {
+    --natsumi-panel-item-separation: 4px;
+    --panel-sidebar-panel-size: 28px;
+    --panel-sidebar-width: calc(var(--panel-sidebar-panel-size) + calc(var(--natsumi-panel-item-separation) * 2)) !important;
+    margin: var(--natsumi-browser-separation) !important;
+    background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+    border-radius: 8px;
+
+    .panel-sidebar-panel {
+      margin: var(--natsumi-panel-item-separation) !important;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: none !important;
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color) !important;
+      }
+
+      &[data-checked], &:active {
+        background-color: var(--natsumi-button-active-color) !important;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+}
