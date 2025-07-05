@@ -242,6 +242,25 @@ their author(s) have been provided above the used code.
     }
   }
 
+  #urlbar-revert-button-container {
+    /* -moz-context-properties don't work for this so we'll have to use pseudoelements */
+    .urlbar-icon {
+      list-style-image: none !important;
+    }
+
+    &::before {
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      background: var(--toolbarbutton-icon-fill-attention);
+      translate: 6px 6px;
+      mask-image: url("../../icons/lucide/globe.svg");
+      mask-size: 100%;
+      pointer-events: none;
+    }
+  }
+
   /* Menu button */
   #PanelUI-menu-button {
     list-style-image: url("../../icons/lucide/menu.svg") !important;
