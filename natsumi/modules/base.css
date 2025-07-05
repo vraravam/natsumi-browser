@@ -33,7 +33,7 @@ their author(s) have been provided above the used code.
   border: none !important;
 }
 
-:root:not([inDOMFullscreen="true"]) {
+:root:not([inDOMFullscreen="true"]):not([windowtype*="ssb-window"]) {
   #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
     margin-right: var(--natsumi-browser-separation) !important;
     padding-bottom: var(--natsumi-browser-separation) !important;

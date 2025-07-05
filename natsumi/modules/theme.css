@@ -32,10 +32,12 @@ their author(s) have been provided above the used code.
 /* except it fully supports custom themes as it should. */
 
 /*noinspection CssInvalidPropertyValue*/
-body {
-  /* Make window translucent */
+:root:not([windowtype*="ssb-window"]) body {
+  /* Make window translucent (except on PWAs) */
   appearance: -moz-window-titlebar !important;
+}
 
+body {
   /* Use theme color if possible */
   &::after {
     content: "";
