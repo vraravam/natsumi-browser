@@ -39,12 +39,15 @@ their author(s) have been provided above the used code.
 
 /* Theme color engine */
 body {
+  --natsumi-theme-color-opacity: 0.5;
+  --natsumi-theme-gradient-opacity: 0.5;
+
   /* Gradient color (overrides solid colors) */
   &::before {
-    --color-left: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
-    --color-right: light-dark(var(--natsumi-colors-secondary), color-mix(in srgb, var(--natsumi-primary-color) 50%, black));
+    --natsumi-theme-gradient-color-left: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+    --natsumi-theme-gradient-color-right: light-dark(var(--natsumi-colors-secondary), color-mix(in srgb, var(--natsumi-primary-color) 50%, black));
     content: "";
-    background: linear-gradient(135deg, var(--color-left), var(--color-right));
+    background: linear-gradient(135deg, var(--natsumi-theme-gradient-color-left), var(--natsumi-theme-gradient-color-right));
     width: 100%;
     height: 100%;
     position: absolute;
@@ -62,7 +65,7 @@ body {
     position: absolute;
     z-index: -999;
     transition: background-color 0.3s ease;
-    opacity: 0.5;
+    opacity: var(--natsumi-theme-opacity);
   }
 
   @media -moz-pref("natsumi.theme.gray-out-when-inactive") {
@@ -81,8 +84,25 @@ body {
 /* Theme colors */
 :root {
   /* Use theme color if possible */
-  &[lwt-icon-fill-attention] body::after {
-    background-color: var(--lwt-accent-color);
+  @media not -moz-pref("natsumi.theme.type", "gradient-complementary") {
+    &[lwt-icon-fill-attention] body::after {
+      background-color: var(--lwt-accent-color);
+    }
+  }
+}
+
+/* Override accent color if theme color is set */
+@media -moz-pref("natsumi.theme.use-theme-color-as-accent") {
+  :root[lwt-icon-fill-attention] {
+    * {
+      --natsumi-primary-color: var(--lwt-accent-color) !important;
+
+      @media -moz-pref("natsumi.theme.use-tab-theme-color") {
+        .tabbrowser-tab {
+          --natsumi-primary-color: var(--lwt-tab-line-color) !important;
+        }
+      }
+    }
   }
 }
 
@@ -97,13 +117,15 @@ body {
 
 /* Add background on fullscreen hover (macOS) */
 #navigator-toolbox {
+  --natsumi-toolbox-color: var(--lwt-accent-color, var(--toolbox-bgcolor));
+  --natsumi-toolbox-color-inactive: var(--lwt-accent-color, var(--toolbox-bgcolor-inactive));
   transition: background-color 0.3s ease;
 
   &.fullscreen-with-menubar {
-    background-color: var(--lwt-accent-color, var(--toolbox-bgcolor)) !important;
+    background-color: var(--natsumi-toolbox-color) !important;
 
     &:-moz-window-inactive {
-      background-color: var(--lwt-accent-color, var(--toolbox-bgcolor-inactive)) !important;
+      background-color: var(--natsumi-toolbox-color-inactive) !important;
     }
   }
 }
@@ -121,14 +143,19 @@ body {
       background-color: transparent !important;
     }
   }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+    --natsumi-toolbox-color-inactive: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+  }
 }
 
 /* Complementary Gradient (what Zen really wants you to use because "others can't design") */
 @media -moz-pref("natsumi.theme.type", "gradient-complementary") {
   body {
     &::before {
-      --color-left: transparent !important;
-      --color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
+      --natsumi-theme-gradient-color-left: transparent !important;
+      --natsumi-theme-gradient-color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
       filter: invert();
       opacity: 0.5;
     }
@@ -137,6 +164,11 @@ body {
       background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
     }
   }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+    --natsumi-toolbox-color-inactive: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+  }
 }
 
 /* Colorful Solid (uses accent colors) */
@@ -144,14 +176,27 @@ body {
   body::after {
     background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary));
   }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+    --natsumi-toolbox-color-inactive: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+  }
 }
 
 /* OLED (default on light, pure black on dark) */
 @media -moz-pref("natsumi.theme.type", "oled") {
   body::after {
     opacity: 1 !important;
+
     @media (prefers-color-scheme: dark) {
       background-color: black;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    #navigator-toolbox {
+      --natsumi-toolbox-color: black !important;
+      --natsumi-toolbox-color-inactive: black !important;
     }
   }
 }
