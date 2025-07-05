@@ -232,3 +232,47 @@ their author(s) have been provided above the used code.
     --natsumi-toolbox-color-inactive: light-dark(white, #222) !important;
   }
 }
+
+@media -moz-pref("natsumi.theme.type", "lgbtq") {
+  :root[windowtype*="navigator:browser"] body {
+    &::before {
+      opacity: var(--natsumi-theme-gradient-opacity);
+      background: linear-gradient(180deg, #ff9393, #ffb78b, #ffe88c, #5ce4a2, #97a6ff, #be9dff) !important;
+
+      @media (prefers-color-scheme: dark) {
+        background: linear-gradient(180deg, #994444, #895f46, #8d804b, #3e8663, #3e456d, #625084) !important;
+      }
+    }
+
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(#ff9393, #994444) !important;
+    --natsumi-toolbox-color-inactive: light-dark(#ff9393, #994444) !important;
+  }
+}
+
+@media -moz-pref("natsumi.theme.type", "transgender") {
+  :root[windowtype*="navigator:browser"] body {
+    &::before {
+      opacity: var(--natsumi-theme-gradient-opacity);
+      background: linear-gradient(180deg, #5bcefa, #f5a9b8, white, #f5a9b8, #5bcefa) !important;
+
+      @media (prefers-color-scheme: dark) {
+        background: linear-gradient(180deg, #316a80, #745259, #aaa, #745259, #316a80) !important;
+      }
+    }
+
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(#5bcefa, #316a80) !important;
+    --natsumi-toolbox-color-inactive: light-dark(#5bcefa, #316a80) !important;
+  }
+}
