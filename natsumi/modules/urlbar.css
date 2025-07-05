@@ -39,7 +39,7 @@ their author(s) have been provided above the used code.
       border-radius: 16px !important;
       overflow: hidden !important;
       border: 1px solid var(--natsumi-colors-primary) !important;
-      transition: border-color 0.2s ease;
+      transition: border 0.2s ease !important;
 
       #urlbar-background {
         border-radius: 16px !important;
