@@ -38,7 +38,7 @@ their author(s) have been provided above the used code.
 }
 
 /* Theme color engine */
-body {
+:root[windowtype*="navigator:browser"] body {
   --natsumi-theme-color-opacity: 0.5;
   --natsumi-theme-gradient-opacity: 0.5;
 
@@ -82,14 +82,14 @@ body {
 }
 
 @media -moz-pref("natsumi.theme.disable-translucency") {
-  body {
+  :root[windowtype*="navigator:browser"] body {
     --natsumi-theme-color-opacity: 1;
     --natsumi-theme-gradient-opacity: 1;
   }
 }
 
 /* Theme colors */
-:root {
+:root[windowtype*="navigator:browser"] {
   /* Use theme color if possible */
   &[lwt-icon-fill-attention] body::after {
     background-color: var(--lwt-accent-color);
@@ -139,7 +139,7 @@ body {
 
 /* Gradient (similar to my Zen gradient before 1.14b ruined it) */
 @media -moz-pref("natsumi.theme.type", "gradient") {
-  body {
+  :root[windowtype*="navigator:browser"] body {
     &::before {
       opacity: var(--natsumi-theme-gradient-opacity);
     }
@@ -157,7 +157,7 @@ body {
 
 /* Complementary Gradient (what Zen really wants you to use because "others can't design") */
 @media -moz-pref("natsumi.theme.type", "gradient-complementary") {
-  body {
+  :root[windowtype*="navigator:browser"] body {
     &::before {
       --natsumi-theme-gradient-color-left: transparent !important;
       --natsumi-theme-gradient-color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
@@ -182,7 +182,7 @@ body {
 
 /* Colorful Solid (uses accent colors) */
 @media -moz-pref("natsumi.theme.type", "colorful") {
-  body::after {
+  :root[windowtype*="navigator:browser"] body::after {
     background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary));
   }
 
@@ -194,7 +194,7 @@ body {
 
 /* OLED (default on light, pure black on dark) */
 @media -moz-pref("natsumi.theme.type", "oled") {
-  body::after {
+  :root[windowtype*="navigator:browser"] body::after {
     --natsumi-theme-color-opacity: 1;
     background-color: light-dark(white, black);
   }
@@ -213,12 +213,12 @@ body {
 
 /* Lucid (inspired by Zen Dream and Zen Galaxy themes) */
 @media -moz-pref("natsumi.theme.type", "lucid") {
-  body::before {
+  :root[windowtype*="navigator:browser"] body::before {
     background: radial-gradient(closest-side, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-secondary)), transparent);
     opacity: 1;
   }
 
-  body::after {
+  :root[windowtype*="navigator:browser"] body::after {
     --natsumi-theme-color-opacity: 1;
     background-color: light-dark(white, #222);
   }
