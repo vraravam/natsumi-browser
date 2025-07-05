@@ -102,7 +102,7 @@ their author(s) have been provided above the used code.
   }
 
   #navigator-toolbox:not(:hover) {
-    #urlbar:not([open]):not(:has(box[open], .urlbar-page-action[open])) {
+    #urlbar:not([open], [focused]):not(:has(box[open], .urlbar-page-action[open])) {
       --natsumi-urlbar-hover-background-color: transparent;
       border-color: transparent !important;
 
