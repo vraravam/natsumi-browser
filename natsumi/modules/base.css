@@ -33,39 +33,41 @@ their author(s) have been provided above the used code.
   border: none !important;
 }
 
-#browser:not([data-is-child="true"]) #tabbrowser-tabbox {
-  margin-right: var(--natsumi-browser-separation) !important;
-  padding-bottom: var(--natsumi-browser-separation) !important;
-  box-shadow: none !important;
-  outline: none !important;
+:root:not([inDOMFullscreen="true"]) {
+  #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
+    margin-right: var(--natsumi-browser-separation) !important;
+    padding-bottom: var(--natsumi-browser-separation) !important;
+    box-shadow: none !important;
+    outline: none !important;
 
-  .browserSidebarContainer {
-    border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
-    border-radius: var(--natsumi-browser-border-radius) !important;
-
-    browser {
-      border-radius: var(--natsumi-browser-border-radius) !important;
-    }
-
-    &:has(.devtools-toolbox-side-iframe) {
-      .browserContainer browser {
-        border-radius: var(--natsumi-browser-border-radius) 0 0 var(--natsumi-browser-border-radius) !important;
-      }
-
-      .devtools-toolbox-side-iframe {
-        border-radius: 0 var(--natsumi-browser-border-radius) var(--natsumi-browser-border-radius) 0 !important;
-      }
-    }
-  }
-
-  #statuspanel {
-    max-width: calc(100% - 10px) !important;
-    margin: 10px !important;
-
-    #statuspanel-label {
-      padding: 5px 8px !important;
+    .browserSidebarContainer {
       border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
-      border-radius: 13px !important;
+      border-radius: var(--natsumi-browser-border-radius) !important;
+
+      browser {
+        border-radius: var(--natsumi-browser-border-radius) !important;
+      }
+
+      &:has(.devtools-toolbox-side-iframe) {
+        .browserContainer browser {
+          border-radius: var(--natsumi-browser-border-radius) 0 0 var(--natsumi-browser-border-radius) !important;
+        }
+
+        .devtools-toolbox-side-iframe {
+          border-radius: 0 var(--natsumi-browser-border-radius) var(--natsumi-browser-border-radius) 0 !important;
+        }
+      }
+    }
+
+    #statuspanel {
+      max-width: calc(100% - 10px) !important;
+      margin: 10px !important;
+
+      #statuspanel-label {
+        padding: 5px 8px !important;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+        border-radius: 13px !important;
+      }
     }
   }
 }
@@ -91,4 +93,8 @@ their author(s) have been provided above the used code.
 
 #vertical-spacer {
   display: none !important;
+}
+
+#vertical-tabs {
+  -moz-window-dragging: drag;
 }

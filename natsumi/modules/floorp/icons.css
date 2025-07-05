@@ -204,6 +204,14 @@ their author(s) have been provided above the used code.
     list-style-image: url("../../icons/lucide/file.svg") !important;
   }
 
+  #picture-in-picture-button-icon {
+    list-style-image: url("../../icons/lucide/pip.svg") !important;
+  }
+
+  #ssbPageAction-image {
+    list-style-image: url("../../icons/lucide/pwa-download.svg") !important;
+  }
+
   #QRCodeGeneratePageAction {
     list-style-image: url("../../icons/lucide/send.svg") !important;
   }
@@ -237,5 +245,10 @@ their author(s) have been provided above the used code.
   /* Menu button */
   #PanelUI-menu-button {
     list-style-image: url("../../icons/lucide/menu.svg") !important;
+  }
+
+  /* Private browsing */
+  .private-browsing-indicator-icon {
+    list-style-image: url("chrome://branding/content/about-logo-private.png") !important;
   }
 }

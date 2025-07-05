@@ -30,6 +30,8 @@ their author(s) have been provided above the used code.
 /* ==== Global tweaks ==== */
 
 * {
+  scrollbar-width: thin !important;
+  
   /*noinspection CssInvalidFunction*/
   @media -moz-pref("natsumi.global.highlight-accent-color") {
     &::-moz-selection, &::selection {
