@@ -156,12 +156,12 @@ their author(s) have been provided above the used code.
     }
   }
 
-  #browser:not([data-is-child="true"]) #tabbrowser-tabpanels {
+  #tabbrowser-tabpanels {
     /* Hide browser windows that aren't open */
     .browserSidebarContainer:not(.deck-selected):not([split="true"]) {
-      border-width: 0 !important;
+      --natsumi-border-width: 0 !important;
     }
-    
+
     &[split-view="true"] {
       overflow: hidden;
 
@@ -254,37 +254,37 @@ their author(s) have been provided above the used code.
       }
     }
   }
-  
+
   /* Split view dialog */
   .splitView-select-content-box {
     gap: 3px;
-    
+
     box {
       border-radius: 6px;
       background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2)) !important;
-      
+
       &:nth-child(1) {
         background-color: var(--natsumi-split-highlight-color) !important;
       }
     }
   }
-  
+
   .splitView-select-box {
     border: none !important;
     --natsumi-split-highlight-color: light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.4));
-    
+
     &.selected {
       outline: 1px solid light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
       --natsumi-split-highlight-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
     }
   }
-  
-  #splitView-position-selector-left {    
+
+  #splitView-position-selector-left {
     box:nth-child(1) {
       background-color: var(--natsumi-split-highlight-color) !important;
     }
   }
-  
+
   #splitView-flex-selector-row box, #splitView-flex-selector-column box {
     background-color: var(--natsumi-split-highlight-color) !important;
   }
