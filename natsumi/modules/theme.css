@@ -65,7 +65,7 @@ body {
     position: absolute;
     z-index: -999;
     transition: background-color 0.3s ease;
-    opacity: var(--natsumi-theme-opacity);
+    opacity: var(--natsumi-theme-color-opacity);
   }
 
   @media -moz-pref("natsumi.theme.gray-out-when-inactive") {
@@ -81,13 +81,18 @@ body {
   }
 }
 
+@media -moz-pref("natsumi.theme.disable-translucency") {
+  body {
+    --natsumi-theme-color-opacity: 1;
+    --natsumi-theme-gradient-opacity: 1;
+  }
+}
+
 /* Theme colors */
 :root {
   /* Use theme color if possible */
-  @media not -moz-pref("natsumi.theme.type", "gradient-complementary") {
-    &[lwt-icon-fill-attention] body::after {
-      background-color: var(--lwt-accent-color);
-    }
+  &[lwt-icon-fill-attention] body::after {
+    background-color: var(--lwt-accent-color);
   }
 }
 
@@ -136,7 +141,7 @@ body {
 @media -moz-pref("natsumi.theme.type", "gradient") {
   body {
     &::before {
-      opacity: 0.5;
+      opacity: var(--natsumi-theme-gradient-opacity);
     }
 
     &::after {
@@ -157,12 +162,16 @@ body {
       --natsumi-theme-gradient-color-left: transparent !important;
       --natsumi-theme-gradient-color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
       filter: invert();
-      opacity: 0.5;
+      opacity: var(--natsumi-theme-gradient-opacity);
     }
 
     &::after {
       background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
     }
+  }
+
+  :root[lwt-icon-fill-attention] body::after {
+    background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
   }
 
   #navigator-toolbox {
@@ -186,17 +195,40 @@ body {
 /* OLED (default on light, pure black on dark) */
 @media -moz-pref("natsumi.theme.type", "oled") {
   body::after {
-    opacity: 1 !important;
+    --natsumi-theme-color-opacity: 1;
+    background-color: light-dark(white, black);
+  }
 
-    @media (prefers-color-scheme: dark) {
-      background-color: black;
-    }
+  :root[lwt-icon-fill-attention] body::after {
+    background-color: light-dark(white, black);
   }
 
   @media (prefers-color-scheme: dark) {
     #navigator-toolbox {
-      --natsumi-toolbox-color: black !important;
-      --natsumi-toolbox-color-inactive: black !important;
+      --natsumi-toolbox-color: light-dark(white, black) !important;
+      --natsumi-toolbox-color-inactive: light-dark(white, black) !important;
     }
+  }
+}
+
+/* Lucid (inspired by Zen Dream and Zen Galaxy themes) */
+@media -moz-pref("natsumi.theme.type", "lucid") {
+  body::before {
+    background: radial-gradient(closest-side, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-secondary)), transparent);
+    opacity: 1;
+  }
+
+  body::after {
+    --natsumi-theme-color-opacity: 1;
+    background-color: light-dark(white, #222);
+  }
+
+  :root[lwt-icon-fill-attention] body::after {
+    background-color: light-dark(white, #222);
+  }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(white, #222) !important;
+    --natsumi-toolbox-color-inactive: light-dark(white, #222) !important;
   }
 }

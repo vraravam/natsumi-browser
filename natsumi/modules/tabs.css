@@ -29,108 +29,133 @@ their author(s) have been provided above the used code.
 
 /* ==== Tabs ==== */
 
-#vertical-pinned-tabs-container, #tabbrowser-arrowscrollbox {
-  /*noinspection CssInvalidFunction*/
-  .tabbrowser-tab {
-    --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
-    --natsumi-tab-idle-width: 0;
-    --natsumi-tab-idle-opacity: 0;
-    --natsumi-tab-border-radius: 8px;
+/* Base Natsumi design (Blade) */
+@media not -moz-pref("natsumi.tabs.use-custom-type") {
+  #tabbrowser-arrowscrollbox {
+    /*noinspection CssInvalidFunction*/
+    .tabbrowser-tab {
+      --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+      --natsumi-tab-idle-width: 0;
+      --natsumi-tab-idle-opacity: 0;
+      --natsumi-tab-border-radius: 8px;
 
-    @media (-moz-platform: macos) or (-moz-platform: linux) {
-      --natsumi-tab-border-radius: 12px;
-    }
-
-    &[usercontextid] {
-      --natsumi-tab-highlight-color: var(--identity-icon-color);
-      --natsumi-tab-idle-width: 40%;
-      --natsumi-tab-idle-opacity: 1;
-    }
-
-    padding: 0 !important;
-
-    .tab-loading-burst[bursting]::before {
-      fill: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
-    }
-
-    &:has(.tab-close-button:hover) {
-      transition: opacity 0.2s ease !important;
-      --natsumi-tab-highlight-color: rgb(255, 100, 100);
-    }
-
-    & > .tab-stack > .tab-background {
-      transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
-      overflow: visible !important;
-      border-radius: var(--natsumi-tab-border-radius) !important;
-      outline: none !important;
-
-      .tab-context-line {
-        display: none !important;
+      @media (-moz-platform: macos) or (-moz-platform: linux) {
+        --natsumi-tab-border-radius: 12px;
       }
 
-      &::after {
-        content: "";
-        position: absolute;
-        width: var(--natsumi-tab-idle-width);
-        height: calc(100% - calc(var(--tab-block-margin) * 2));
-        opacity: var(--natsumi-tab-idle-opacity);
-        top: var(--natsumi-tabs-blade-position-offset);
-        left: var(--tab-inner-inline-margin);
-        border: 2px solid var(--natsumi-tab-highlight-color) !important;
-        background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
-        border-radius: calc(var(--natsumi-tab-border-radius) - 1px);
-        mask-image: linear-gradient(to right, black, transparent 30%);
-        transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+      &[usercontextid] {
+        --natsumi-tab-highlight-color: var(--identity-icon-color);
+        --natsumi-tab-idle-width: 40%;
+        --natsumi-tab-idle-opacity: 1;
       }
-    }
 
-    &:hover {
+      padding: 0 !important;
+
+      .tab-loading-burst[bursting]::before {
+        fill: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      }
+
+      &:has(.tab-close-button:hover) {
+        transition: opacity 0.2s ease !important;
+        --natsumi-tab-highlight-color: rgb(255, 100, 100);
+      }
+
       & > .tab-stack > .tab-background {
-        &::after {
-          width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
-          opacity: 1;
-        }
-      }
-    }
+        transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
+        overflow: visible !important;
+        border-radius: var(--natsumi-tab-border-radius) !important;
+        outline: none !important;
 
-    &[selected], &[visuallyselected] {
-      /*noinspection CssInvalidFunction*/
-      & > .tab-stack > .tab-background {
-        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
-        background-color: var(--natsumi-mat-hz-background) !important;
-        animation: backdrop-fadein 0.2s ease;
-
-        @media -moz-pref("natsumi.sidebar.blur-tab-button") {
-          animation: backdrop-with-blur-fadein 0.2s ease;
+        .tab-context-line {
+          display: none !important;
         }
 
-        animation-fill-mode: forwards;
-
         &::after {
-          width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+          content: "";
+          position: absolute;
+          width: var(--natsumi-tab-idle-width);
           height: calc(100% - calc(var(--tab-block-margin) * 2));
-          opacity: 1;
+          opacity: var(--natsumi-tab-idle-opacity);
+          top: var(--natsumi-tabs-blade-position-offset);
+          left: var(--tab-inner-inline-margin);
+          border: 2px solid var(--natsumi-tab-highlight-color) !important;
+          background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+          border-radius: calc(var(--natsumi-tab-border-radius) - 1px);
+          mask-image: linear-gradient(to right, black, transparent 30%);
+          transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
         }
       }
-    }
 
-    &[multiselected] {
-      & > .tab-stack > .tab-background {
-        box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
-
-        &::after {
-          width: calc(100% - calc(var(--tab-block-margin) * 2));
-          opacity: 1;
-
-          @media not -moz-pref("zen.view.sidebar-expanded") {
-            width: calc(100% - calc(var(--tab-block-margin) * 2));
+      &:hover {
+        & > .tab-stack > .tab-background {
+          &::after {
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+            opacity: 1;
           }
         }
       }
-    }
 
-    &:has(.tab-close-button:active) {
-      opacity: 0.5;
+      &[selected], &[visuallyselected] {
+        /*noinspection CssInvalidFunction*/
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          animation: backdrop-fadein 0.2s ease;
+
+          @media -moz-pref("natsumi.sidebar.blur-tab-button") {
+            animation: backdrop-with-blur-fadein 0.2s ease;
+          }
+
+          animation-fill-mode: forwards;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+            height: calc(100% - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+          }
+        }
+      }
+
+      &[multiselected] {
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+
+            @media not -moz-pref("zen.view.sidebar-expanded") {
+              width: calc(100% - calc(var(--tab-block-margin) * 2));
+            }
+          }
+        }
+      }
+
+      &:has(.tab-close-button:active) {
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+/* Material (inspired by Zen 1.0.0-a) */
+@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "material") {
+  #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab {
+      & > .tab-stack > .tab-background {
+        box-shadow: none !important;
+      }
+
+      &[selected], &[visuallyselected] {
+        & > .tab-stack > .tab-background {
+          background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
+
+          @media -moz-pref("natsumi.theme.type", "oled") {
+            border: none !important;
+          }
+        }
+      }
     }
   }
 }
