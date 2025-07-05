@@ -136,6 +136,14 @@ their author(s) have been provided above the used code.
       }
     }
   }
+
+  #tabs-newtab-button {
+    min-height: calc(var(--floorp-tab-min-height) - 4px) !important;
+
+    @media (-moz-platform: macos) or (-moz-platform: linux) {
+      border-radius: 12px !important;
+    }
+  }
 }
 
 /* Material (inspired by Zen 1.0.0-a) */
