@@ -47,6 +47,10 @@ their author(s) have been provided above the used code.
         transition: background-color 0.2s ease;
       }
 
+      #urlbar-input {
+        text-align: center !important;
+      }
+
       .urlbar-input-container {
         max-width: 100% !important;
         left: 0 !important;
