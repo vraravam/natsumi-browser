@@ -52,8 +52,8 @@ their author(s) have been provided above the used code.
   --natsumi-theme-color-opacity: 0.5;
   --natsumi-theme-gradient-opacity: 0.5;
 
-  @media -moz-pref("natsumi.theme.linux-transparency") and (-moz-platform: linux) {
-    background-color: transparent !important;
+  @media (-moz-platform: linux) {
+    background-color: color-mix(in srgb, light-dark(#ebebeb, #171717) 60%, transparent) !important;
   }
 
   /* Gradient color (overrides solid colors) */
