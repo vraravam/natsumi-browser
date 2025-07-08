@@ -49,7 +49,9 @@ their author(s) have been provided above the used code.
         --natsumi-tab-idle-opacity: 1;
       }
 
-      padding: 0 !important;
+      @media -moz-pref("sidebar.verticalTabs") {
+        padding: 0 !important;
+      }
 
       .tab-loading-burst[bursting]::before {
         fill: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
@@ -65,6 +67,7 @@ their author(s) have been provided above the used code.
         overflow: visible !important;
         border-radius: var(--natsumi-tab-border-radius) !important;
         outline: none !important;
+        --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
         .tab-context-line {
           display: none !important;
@@ -74,15 +77,18 @@ their author(s) have been provided above the used code.
           content: "";
           position: absolute;
           width: var(--natsumi-tab-idle-width);
-          height: calc(100% - calc(var(--tab-block-margin) * 2));
+          height: calc(var(--natsumi-tab-height) - 4px);
           opacity: var(--natsumi-tab-idle-opacity);
-          top: var(--natsumi-tabs-blade-position-offset);
-          left: var(--tab-inner-inline-margin);
           border: 2px solid var(--natsumi-tab-highlight-color) !important;
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
           border-radius: calc(var(--natsumi-tab-border-radius) - 1px);
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+
+          @media -moz-pref("sidebar.verticalTabs") {
+            top: var(--natsumi-tabs-blade-position-offset);
+            left: var(--tab-inner-inline-margin);
+          }
         }
       }
 
@@ -110,7 +116,6 @@ their author(s) have been provided above the used code.
 
           &::after {
             width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
-            height: calc(100% - calc(var(--tab-block-margin) * 2));
             opacity: 1;
           }
         }
@@ -179,3 +184,4 @@ their author(s) have been provided above the used code.
     }
   }
 }
+

@@ -57,7 +57,7 @@ their author(s) have been provided above the used code.
   }
 
   #fxa-avatar-image {
-    list-style-image: url("../../icons/lucide/profile.svg") !important;
+    list-style-image: var(--avatar-image-url, url("../../icons/lucide/profile.svg")) !important;
   }
 
   #unified-extensions-button {
@@ -258,6 +258,62 @@ their author(s) have been provided above the used code.
     list-style-image: url("../../icons/lucide/globe.svg") !important;
   }
 
+  /* Permissions icons */
+
+  #permissions-granted-icon, #identity-permission-box .sharing-icon, #blocked-permissions-container > .blocked-permission-icon {
+    -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
+    stroke: currentColor;
+    stroke-opacity: var(--urlbar-icon-fill-opacity);
+  }
+
+  #geo-sharing-icon {
+    list-style-image: url("../../icons/lucide/location.svg") !important;
+  }
+
+  #webrtc-sharing-icon {
+    stroke: rgb(224, 41, 29) !important;
+
+    &[sharing="camera"] {
+      list-style-image: url("../../icons/lucide/camera.svg") !important;
+    }
+
+    &[sharing="microphone"] {
+      list-style-image: url("../../icons/lucide/mic.svg") !important;
+    }
+
+    &[sharing="screen"] {
+      list-style-image: url("../../icons/lucide/screenshare.svg") !important;
+    }
+  }
+
+  #permissions-granted-icon {
+    list-style-image: url("../../icons/lucide/permissions.svg") !important;
+  }
+
+  #blocked-permissions-container .geo-icon {
+    list-style-image: url("../../icons/lucide/location-off.svg") !important;
+  }
+
+  #blocked-permissions-container .desktop-notification-icon {
+    list-style-image: url("../../icons/lucide/notifications-off.svg") !important;
+  }
+
+  #blocked-permissions-container .camera-icon {
+    list-style-image: url("../../icons/lucide/camera-off.svg") !important;
+  }
+
+  #blocked-permissions-container .microphone-icon {
+    list-style-image: url("../../icons/lucide/mic-off.svg") !important;
+  }
+
+  #blocked-permissions-container .screen-icon {
+    list-style-image: url("../../icons/lucide/screenshare-off.svg") !important;
+  }
+
+  #blocked-permissions-container .persistent-storage-icon {
+    list-style-image: url("../../icons/lucide/storage-off.svg") !important;
+  }
+
   /* Menu button */
   #PanelUI-menu-button {
     list-style-image: url("../../icons/lucide/menu.svg") !important;
@@ -266,5 +322,44 @@ their author(s) have been provided above the used code.
   /* Private browsing */
   .private-browsing-indicator-icon {
     list-style-image: url("chrome://branding/content/about-logo-private.png") !important;
+  }
+
+  /* Side panels icons */
+  #panel-sidebar-header .toolbarbutton-icon {
+    -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
+    stroke: var(--toolbarbutton-icon-fill) !important;
+    width: 16px !important;
+  }
+
+  #panel-sidebar-back {
+    list-style-image: url("../../icons/lucide/arrow-left.svg") !important;
+  }
+
+  #panel-sidebar-forward {
+    list-style-image: url("../../icons/lucide/arrow-right.svg") !important;
+  }
+
+  #panel-sidebar-reload {
+    list-style-image: url("../../icons/lucide/rotate-right.svg") !important;
+  }
+
+  #panel-sidebar-go-index {
+    list-style-image: url("../../icons/lucide/house.svg") !important;
+  }
+
+  #panel-sidebar-float {
+    list-style-image: url("../../icons/lucide/unpin.svg") !important;
+  }
+
+  #panel-sidebar-box[data-floating="true"] #panel-sidebar-float {
+    list-style-image: url("../../icons/lucide/pin.svg") !important;
+  }
+
+  #panel-sidebar-open-in-main-window {
+    list-style-image: url("../../icons/lucide/open-in-tab.svg") !important;
+  }
+
+  #panel-sidebar-close {
+    list-style-image: url("../../icons/lucide/close.svg") !important;
   }
 }

@@ -35,11 +35,25 @@ their author(s) have been provided above the used code.
     --natsumi-urlbar-button-accent-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-secondary));
     --natsumi-urlbar-hover-background-color: light-dark(transparent, rgba(255, 255, 255, 0.3));
 
+    .urlbar-page-action {
+      border-radius: 14px !important;
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color) !important;
+      }
+
+      &:active, &[open] {
+        background-color: var(--natsumi-button-active-color) !important;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+
     &:not([open]) {
       border-radius: 16px !important;
       overflow: hidden !important;
       border: 1px solid var(--natsumi-colors-primary) !important;
       transition: border 0.2s ease !important;
+      height: 32px !important;
 
       #urlbar-background {
         border-radius: 16px !important;
@@ -81,9 +95,27 @@ their author(s) have been provided above the used code.
         transition: background-color 0.2s ease;
       }
 
+      #notification-popup-box {
+        background-color: color-mix(in srgb, var(--natsumi-urlbar-button-accent-color) 50%, white) !important;
+        border-radius: 0 !important;
+        border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        transition: background-color 0.2s ease;
+        height: 26px !important;
+      }
+
+      .notification-anchor-icon {
+        padding: 5px 6px !important;
+      }
+
       .urlbar-page-action {
         opacity: 1;
-        transition: width 0.2s ease, padding 0.2s ease, opacity 0.2s ease;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease, padding 0.2s ease, opacity 0.2s ease;
+      }
+
+      #splitView-action {
+        margin-top: -1px !important;
+        margin-left: 0 !important;
       }
 
       &:has(#tracking-protection-icon-container:not([hidden])) {
@@ -93,35 +125,49 @@ their author(s) have been provided above the used code.
         }
       }
 
-      &:has(#identity-permission-box[hasPermissions]) {
+      &:has(#identity-permission-box:is([hasPermissions], [open])) {
         #identity-icon-box {
           border-radius: 0 !important;
+        }
+      }
+
+      &:has(.notification-anchor-icon[showing]) {
+        #identity-icon-box {
+          border-start-end-radius: 0 !important;
+          border-end-end-radius: 0 !important;
+        }
+
+        #identity-permission-box {
+          border-start-end-radius: 0 !important;
+          border-end-end-radius: 0 !important;
         }
       }
     }
   }
 
-  #navigator-toolbox:not(:hover) {
-    #urlbar:not([open], [focused]):not(:has(box[open], .urlbar-page-action[open])) {
-      --natsumi-urlbar-hover-background-color: transparent;
-      border-color: transparent !important;
+  @media not -moz-pref("natsumi.urlbar.always-expanded") {
+    #navigator-toolbox:not(:hover) {
+      #urlbar:not([open], [focused]):not(:has(box[open], .urlbar-page-action[open])) {
+        --natsumi-urlbar-hover-background-color: transparent;
+        border-color: transparent !important;
 
-      .urlbar-input-container {
-        max-width: 300px !important;
-        left: calc(50% - 150px) !important;
-        transition: max-width 0.2s ease 0.5s, left 0.2s ease 0.5s;
-      }
+        .urlbar-input-container {
+          max-width: 300px !important;
+          left: calc(50% - 150px) !important;
+          transition: max-width 0.2s ease 0.5s, left 0.2s ease 0.5s;
+        }
 
-      .urlbar-page-action {
-        width: 0 !important;
-        padding: 6px 0 !important;
-        opacity: 0;
-        pointer-events: none !important;
-        transition: width 0.2s ease 0.5s, padding 0.2s ease 0.5s, opacity 0.2s ease 0.5s;
-      }
+        .urlbar-page-action {
+          transition: background-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease 0.5s, padding 0.2s ease 0.5s, opacity 0.2s ease 0.5s;
+          width: 0 !important;
+          padding: 6px 0 !important;
+          opacity: 0;
+          pointer-events: none !important;
+        }
 
-      #identity-icon-box, #tracking-protection-icon-container, #identity-permission-box {
-        background-color: transparent !important;
+        #identity-icon-box, #tracking-protection-icon-container, #identity-permission-box {
+          background-color: transparent !important;
+        }
       }
     }
   }

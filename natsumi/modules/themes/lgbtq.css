@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -27,15 +27,27 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Theme: LGBTQ+ ==== */
+/* We browse the web with pride 🏳️‍🌈 */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/themer.css";
-@import "modules/base.css";
-@import "modules/tabs.css";
-@import "modules/urlbar.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/icons.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/panel-sidebar.css";
+@media -moz-pref("natsumi.theme.type", "lgbtq") {
+  :root[windowtype*="navigator:browser"] body {
+    &::before {
+      opacity: var(--natsumi-theme-gradient-opacity);
+      background: linear-gradient(180deg, #ff9393, #ffb78b, #ffe88c, #5ce4a2, #97a6ff, #be9dff) !important;
+
+      @media (prefers-color-scheme: dark) {
+        background: linear-gradient(180deg, #994444, #895f46, #8d804b, #3e8663, #3e456d, #625084) !important;
+      }
+    }
+
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(#ff9393, #994444) !important;
+    --natsumi-toolbox-color-inactive: light-dark(#ff9393, #994444) !important;
+  }
+}

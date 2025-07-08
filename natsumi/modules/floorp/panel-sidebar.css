@@ -30,6 +30,26 @@ their author(s) have been provided above the used code.
 /* ==== Floorp panel sidebar ==== */
 
 @media -moz-pref("natsumi.browser.type", "floorp") {
+  #panel-sidebar-splitter {
+    min-width: var(--natsumi-browser-separation) !important;
+  }
+
+  #panel-sidebar-box {
+    margin-bottom: var(--natsumi-browser-separation) !important;
+    background: transparent !important;
+    border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+    border-radius: var(--natsumi-browser-border-radius) !important;
+    overflow: hidden !important;
+  }
+
+  #panel-sidebar-browser-box {
+    background-color: var(--panel-sidebar-background-color);
+  }
+
+  #panel-sidebar-box[data-floating="false"] #panel-sidebar-header {
+    cursor: default !important;
+  }
+
   #panel-sidebar-select-box {
     --natsumi-panel-item-separation: 4px;
     --panel-sidebar-panel-size: 28px;

@@ -53,6 +53,36 @@ their author(s) have been provided above the used code.
     }
   }
 
+  #workspaces-toolbar-button {
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 6px 4px !important;
+    border-radius: 4px !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+    .toolbarbutton-icon {
+      --natsumi-button-hover-color: transparent !important;
+      --natsumi-button-active-color: transparent !important;
+    }
+
+    .toolbarbutton-text {
+      padding-left: 0 !important;
+    }
+
+    &:hover {
+      background-color: var(--natsumi-button-hover-color) !important;
+    }
+
+    &:active, &[open], &[checked] {
+      background-color: var(--natsumi-button-active-color) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+      .toolbarbutton-icon {
+        box-shadow: none !important;
+      }
+    }
+  }
+
   @media -moz-pref("natsumi.sidebar.floorp-floating-panel") {
     @keyframes panel-appear {
       0% {

@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -27,15 +27,23 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Theme: Gradient ==== */
+/* A theme meant to mimic to my Zen gradient before the catastrophic 1.14b
+/* update which ruined it all. */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/themer.css";
-@import "modules/base.css";
-@import "modules/tabs.css";
-@import "modules/urlbar.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/icons.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/panel-sidebar.css";
+@media -moz-pref("natsumi.theme.type", "gradient") {
+  :root[windowtype*="navigator:browser"] body {
+    &::before {
+      opacity: var(--natsumi-theme-gradient-opacity);
+    }
+
+    &::after {
+      background-color: transparent !important;
+    }
+  }
+
+  #navigator-toolbox {
+    --natsumi-toolbox-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+    --natsumi-toolbox-color-inactive: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+  }
+}
