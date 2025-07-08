@@ -32,12 +32,12 @@ their author(s) have been provided above the used code.
 
 @media -moz-pref("natsumi.theme.type", "oled") {
   :root[windowtype*="navigator:browser"] body::after {
-    --natsumi-theme-color-opacity: 1;
-    background-color: light-dark(white, black);
+    --natsumi-theme-color-opacity: 1 !important;
+    background-color: light-dark(white, black) !important;
   }
 
   :root[lwt-icon-fill-attention] body::after {
-    background-color: light-dark(white, black);
+    background-color: light-dark(white, black) !important;
   }
 
   @media (prefers-color-scheme: dark) {

@@ -32,14 +32,14 @@ their author(s) have been provided above the used code.
 /* except it fully supports custom themes as it should. */
 
 /* Load themes */
-@import "modules/themes/colorful.css";
-@import "modules/themes/gradient.css";
-@import "modules/themes/gradient-complementary.css";
-@import "modules/themes/lucid.css";
-@import "modules/themes/oled.css";
-@import "modules/themes/frutiger-aero.css";
-@import "modules/themes/lgbtq.css";
-@import "modules/themes/transgender.css";
+@import "themes/colorful.css";
+@import "themes/gradient.css";
+@import "themes/gradient-complementary.css";
+@import "themes/lucid.css";
+@import "themes/oled.css";
+@import "themes/frutiger-aero.css";
+@import "themes/lgbtq.css";
+@import "themes/transgender.css";
 
 /*noinspection CssInvalidPropertyValue*/
 :root:not([windowtype*="ssb-window"]) body {

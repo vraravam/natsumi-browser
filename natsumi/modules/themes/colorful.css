@@ -32,7 +32,7 @@ their author(s) have been provided above the used code.
 
 @media -moz-pref("natsumi.theme.type", "colorful") {
   :root[windowtype*="navigator:browser"] body::after {
-    background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary));
+    background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
   }
 
   #navigator-toolbox {

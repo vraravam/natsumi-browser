@@ -36,16 +36,16 @@ their author(s) have been provided above the used code.
       --natsumi-theme-gradient-color-left: transparent !important;
       --natsumi-theme-gradient-color-right: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
       filter: invert();
-      opacity: var(--natsumi-theme-gradient-opacity);
+      opacity: var(--natsumi-theme-gradient-opacity) !important;
     }
 
     &::after {
-      background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+      background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
     }
   }
 
   :root[lwt-icon-fill-attention] body::after {
-    background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+    background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
   }
 
   #navigator-toolbox {
