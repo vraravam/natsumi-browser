@@ -53,7 +53,7 @@ their author(s) have been provided above the used code.
   --natsumi-theme-gradient-opacity: 0.5;
 
   @media (-moz-platform: linux) {
-    background-color: color-mix(in srgb, light-dark(#ebebeb, #171717) 60%, transparent) !important;
+    background-color: color-mix(in srgb, light-dark(#ebebeb, #171717) 60%, transparent);
   }
 
   /* Gradient color (overrides solid colors) */
