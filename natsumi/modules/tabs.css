@@ -37,11 +37,6 @@ their author(s) have been provided above the used code.
       --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
       --natsumi-tab-idle-width: 0;
       --natsumi-tab-idle-opacity: 0;
-      --natsumi-tab-border-radius: 8px;
-
-      @media (-moz-platform: macos) or (-moz-platform: linux) {
-        --natsumi-tab-border-radius: 12px;
-      }
 
       &[usercontextid] {
         --natsumi-tab-highlight-color: var(--identity-icon-color);
@@ -55,6 +50,16 @@ their author(s) have been provided above the used code.
 
       .tab-loading-burst[bursting]::before {
         fill: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      }
+
+      .tab-text {
+        font-size: 12px;
+      }
+
+      @media -moz-pref("sidebar.verticalTabs") {
+        .tab-group-line {
+          display: none !important;
+        }
       }
 
       &:has(.tab-close-button:hover) {

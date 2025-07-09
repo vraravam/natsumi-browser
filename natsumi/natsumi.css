@@ -34,6 +34,7 @@ their author(s) have been provided above the used code.
 @import "modules/themer.css";
 @import "modules/base.css";
 @import "modules/tabs.css";
+@import "modules/folders.css";
 @import "modules/urlbar.css";
 @import "modules/floorp/base.css";
 @import "modules/floorp/icons.css";

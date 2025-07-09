@@ -103,6 +103,11 @@ their author(s) have been provided above the used code.
   --natsumi-browser-separation: 6px;
   --natsumi-browser-border-radius: 8px;
   --natsumi-border-width: 1px;
+  --natsumi-tab-border-radius: 8px;
+
+  @media (-moz-platform: macos) or (-moz-platform: linux) {
+    --natsumi-tab-border-radius: 12px;
+  }
 }
 
 .tabbrowser-tab {

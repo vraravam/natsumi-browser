@@ -362,4 +362,13 @@ their author(s) have been provided above the used code.
   #panel-sidebar-close {
     list-style-image: url("../../icons/lucide/close.svg") !important;
   }
+
+  /* Tab groups */
+  tab-group .tab-group-label::before {
+    mask-image: url("../../icons/lucide/folder-open-filled.svg") !important;
+  }
+
+  tab-group[collapsed] .tab-group-label::before {
+    mask-image: url("../../icons/lucide/folder-filled.svg") !important;
+  }
 }
