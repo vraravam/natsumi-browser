@@ -23,9 +23,6 @@ Natsumi is NOT a standalone browser. I don't even intend on making one.
 > from attacking people when you make suggestions. Thanks!
 
 ## Features
-> [!WARNING]
-> This section is still being worked on, some features may be missing.
-
 ### ✨ Your browser, reimagined.
 #### The classic Firefox design but with a modern spin.
 ![](./images/main.png)
