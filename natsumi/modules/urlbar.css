@@ -240,7 +240,7 @@ their author(s) have been provided above the used code.
     }
     
     &[open] {
-      @media -moz-pref("natsumi.urlbar.floating") {
+      @media not -moz-pref("natsumi.urlbar.do-not-float") {
         top: 25vh !important;
         width: 60% !important;
         left: 50% !important;

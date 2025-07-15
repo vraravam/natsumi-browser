@@ -23,7 +23,58 @@ Natsumi is NOT a standalone browser. I don't even intend on making one.
 > from attacking people when you make suggestions. Thanks!
 
 ## Features
-Still working on this
+> [!WARNING]
+> This section is still being worked on, some features may be missing.
+
+### ✨ Your browser, reimagined.
+#### The classic Firefox design but with a modern spin.
+![](./images/main.png)
+
+Natsumi keeps your browser's design familiar while adding a modern touch to it.
+
+### ⌨️ URL bar, made intuitive.
+#### Highlights the current URL and adapts to the scene.
+![](./images/urlbar.png)
+
+Natsumi URLbar is a new take on your browser's address bar, which highlights the current URL and
+changes appearance based on the context.
+
+### 🖼️ Express yourself with themes.
+#### A theming engine that lets your browser vibe with you
+![](./images/all-the-themes.png)
+
+Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
+
+- **Default (default)**
+  No changes, just the default look.
+  ![](./images/theme-default.png)
+- **Gradient (gradient)**
+  A light gradient of the accent color, similar to my Zen Browser gradient.
+  ![](./images/theme-gradient.png)
+- **Complementary Gradient (gradient-complementary)**
+  A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
+  ![](./images/theme-gradient-complementary.png)
+- **Colorful Solid (colorful)**
+  A solid color with a tint of the accent color.
+  ![](./images/theme-colorful.png)
+- **Lucid (lucid)**
+  A recreation of the Zen Dream and Zen Galaxy themes.
+  ![](./images/theme-lucid.png)
+- **OLED (oled)**
+  A completely black and white theme for the minimalists and OLED users.
+  ![](./images/theme-oled.png)
+- **LGBTQ 🏳️‍🌈 (lgbtq)**
+  Browsing with pride!
+  ![](./images/theme-lgbtq.png)
+- **Transgender 🏳️‍⚧️ (transgender)**
+  Trans rights are human rights!
+  ![](./images/theme-transgender.png)
+
+### 🎨 And color it all your way.
+#### Firefox themes support, still there.
+![](./images/custom-colors.png)
+
+Don't like the default colors? Install a Firefox theme and Natsumi will adjust its colors for you.
 
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
@@ -46,8 +97,30 @@ You will need to install Natsumi by copying its files to your profile's chrome f
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
 and delay, change the variables in the config.css file.
 
-### soon
-Working on this one too
+### 🎨 Theming
+- `natsumi.theme.type` (string): Sets the browser theme type.
+  - Enter a theme ID from the table in the [Features](#features) section.
+- `natsumi.theme.force-natsumi-color` (boolean): Forces Natsumi's accent color set in natsumi-config.css
+  to be used instead of the current Firefox theme's colors.
+- `natsumi.theme.use-tab-theme-color` (boolean): Uses the tab border color as the accent color for Blade.
+  This may break Blade on some themes.
+- `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
+- `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
+
+### 🗂️ Tabs
+- `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
+- `natsumi.tabs.type` (string): Sets a custom tab type.
+  - `material`: A material-like design inspired by Zen Browser's alpha UI.
+
+### ⌨️ URL bar
+- `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
+- `natsumi.urlbar.do-not-float` (boolean): Disables the floating URL bar.
+- `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
+
+### 🔧 Compatibility
+- `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
+  - `firefox`: Mozilla Firefox
+  - `floorp`: Floorp Browser
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"

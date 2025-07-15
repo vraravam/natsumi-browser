@@ -111,7 +111,7 @@ their author(s) have been provided above the used code.
 }
 
 /* Override accent color if theme color is set */
-@media -moz-pref("natsumi.theme.use-theme-color-as-accent") {
+@media not -moz-pref("natsumi.theme.force-natsumi-color") {
   :root[lwt-icon-fill-attention] {
     * {
       --natsumi-primary-color: var(--lwt-accent-color) !important;
