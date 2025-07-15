@@ -6,7 +6,7 @@
   "description": "A userchrome for Floorp that makes things flow. ",
   "version": "4.0.0",
   "createdAt": "2024-12-06T10:19:47Z",
-  "readme": "https://raw.githubusercontent.com/JustADumbPrsn/Zen-Nebula/main/README.md",
+  "readme": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/README.md",
   "image": "https://github.com/greeeen-dev/natsumi-browser/raw/dev/images/main-backgroundless.png",
   "style": {
     "chrome": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/userChrome.css",
