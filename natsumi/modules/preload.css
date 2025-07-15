@@ -32,7 +32,7 @@ their author(s) have been provided above the used code.
 
 * {
   /* Colors */
-  --natsumi-primary-color: var(--natsumi-accent-color, #a0d490);
+  --natsumi-primary-color: var(--natsumi-custom-primary-color, var(--natsumi-accent-color, #a0d490));
   --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
   --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
   --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);

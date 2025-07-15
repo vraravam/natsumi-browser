@@ -83,6 +83,7 @@ their author(s) have been provided above the used code.
         border-radius: 16px !important;
         background-color: var(--natsumi-urlbar-hover-background-color) !important;
         transition: background-color 0.2s ease;
+        border-color: transparent !important;
       }
 
       #urlbar-input {

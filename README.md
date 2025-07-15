@@ -49,31 +49,31 @@ Let your browser be yours! Choose from eight theme varieties to get the look tha
   
   No changes, just the default look.
   ![](./images/theme-default.png)
-- **Gradient (gradient)**
+- **Gradient (`gradient`)**
   
   A light gradient of the accent color, similar to my Zen Browser gradient.
   ![](./images/theme-gradient.png)
-- **Complementary Gradient (gradient-complementary)**
+- **Complementary Gradient (`gradient-complementary`)**
   
   A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
   ![](./images/theme-gradient-complementary.png)
-- **Colorful Solid (colorful)**
+- **Colorful Solid (`colorful`)**
   
   A solid color with a tint of the accent color.
   ![](./images/theme-colorful.png)
-- **Lucid (lucid)**
+- **Lucid (`lucid`)**
   
   A recreation of the Zen Dream and Zen Galaxy themes.
   ![](./images/theme-lucid.png)
-- **OLED (oled)**
+- **OLED (`oled`)**
   
   A completely black and white theme for the minimalists and OLED users.
   ![](./images/theme-oled.png)
-- **LGBTQ 🏳️‍🌈 (lgbtq)**
+- **LGBTQ 🏳️‍🌈 (`lgbtq`)**
   
   Browsing with pride!
   ![](./images/theme-lgbtq.png)
-- **Transgender 🏳️‍⚧️ (transgender)**
+- **Transgender 🏳️‍⚧️ (`transgender`)**
   
   Trans rights are human rights!
   ![](./images/theme-transgender.png)
@@ -83,6 +83,20 @@ Let your browser be yours! Choose from eight theme varieties to get the look tha
 ![](./images/custom-colors.png)
 
 Don't like the default colors? Install a Firefox theme and Natsumi will adjust its colors for you.
+
+Or, choose from one of the preset colors.
+
+- $${\color{#a0d490}■}$$ **Light green** (default) - #a0d490
+- $${\color{#aac7ff}■}$$ **Sky blue** (`sky-blue`) - #aac7ff
+- $${\color{#74d7cb}■}$$ **Turquoise** (`turquoise`) - #74d7cb
+- $${\color{#dec663}■}$$ **Yellow** (`yellow`) - #dec663
+- $${\color{#ffb787}■}$$ **Peach Orange** (`peach-orange`) - #ffb787
+- $${\color{#ff9eb3}■}$$ **Warmer Pink** (`warmer-pink`) - #ff9eb3
+- $${\color{#dec1b1}■}$$ **Beige** (`beige`) - #dec1b1
+- $${\color{#ffb1c0}■}$$ **Light Red** (`light-red`) - #ffb1c0
+- $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
+- $${\color{#c4b0f3}■}$$ **Pink** (`pink`) - #f6b0ea
+- $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
 
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
@@ -107,7 +121,9 @@ and delay, change the variables in the config.css file.
 
 ### 🎨 Theming
 - `natsumi.theme.type` (string): Sets the browser theme type.
-  - Enter a theme ID from the table in the [Features](#features) section.
+  - Enter a theme ID from the themes list in the [Features](#features) section.
+- `natsumi.theme.accent-color` (string): Sets the browser theme color from a given accent color.
+  - Enter a color ID from the colors list in the [Features](#features) section.
 - `natsumi.theme.force-natsumi-color` (boolean): Forces Natsumi's accent color set in natsumi-config.css
   to be used instead of the current Firefox theme's colors.
 - `natsumi.theme.use-tab-theme-color` (boolean): Uses the tab border color as the accent color for Blade.
