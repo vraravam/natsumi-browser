@@ -455,7 +455,7 @@ their author(s) have been provided above the used code.
             transition: background 0.2s ease, box-shadow 0.2s ease;
           }
           
-          &[type="autofill_origin"], &[type="search"] {
+          &[type="search"] {
             .urlbarView-no-wrap {
               width: 100% !important;
             }
