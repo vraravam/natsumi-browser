@@ -38,6 +38,7 @@ their author(s) have been provided above the used code.
 @import "modules/folders.css";
 @import "modules/urlbar.css";
 @import "modules/findbar.css";
+@import "modules/pip.css";
 @import "modules/floorp/base.css";
 @import "modules/floorp/icons.css";
 @import "modules/floorp/split-view.css";

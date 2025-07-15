@@ -371,4 +371,79 @@ their author(s) have been provided above the used code.
   tab-group[collapsed] .tab-group-label::before {
     mask-image: url("../../icons/lucide/folder-filled.svg") !important;
   }
+
+  @media not -moz-pref("natsumi.pip.disabled") {
+    @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
+      .center-controls, .end-controls {
+        button {
+          -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
+          stroke: light-dark(black, white) !important;
+          background-size: 18px !important;
+        }
+      }
+
+      #close, #unpip {
+        -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
+        stroke: light-dark(black, white) !important;
+      }
+
+      #playpause {
+        background-image: url("../../icons/lucide/play.svg") !important;
+      }
+
+      .playing #playpause {
+        background-image: url("../../icons/lucide/pause.svg") !important;
+      }
+
+      #seekBackward, #seekForward {
+        &::before {
+          content: "5";
+          font-size: 8px;
+          position: relative !important;
+          top: -2px !important;
+          color: light-dark(black, white) !important;
+        }
+
+        &:hover::before {
+          top: 5px !important;
+        }
+      }
+
+      #seekBackward {
+        background-image: url("../../icons/lucide/rotate-left.svg") !important;
+      }
+
+      #seekForward {
+        background-image: url("../../icons/lucide/rotate-right.svg") !important;
+      }
+
+      #audio {
+        background-image: url("../../icons/lucide/volume.svg") !important;
+      }
+
+      .muted #audio {
+        background-image: url("../../icons/lucide/volume-off.svg") !important;
+      }
+
+      #fullscreen {
+        background-image: url("../../icons/lucide/fullscreen.svg") !important;
+      }
+
+      body:fullscreen #fullscreen {
+        background-image: url("../../icons/lucide/fullscreen-exit.svg") !important;
+      }
+
+      #closed-caption {
+        background-image: url("../../icons/lucide/captions.svg") !important;
+      }
+
+      #close {
+        background-image: url("../../icons/lucide/close.svg") !important;
+      }
+
+      #unpip {
+        background-image: url("../../icons/lucide/pip-exit.svg") !important;
+      }
+    }
+  }
 }
