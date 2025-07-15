@@ -435,6 +435,10 @@ their author(s) have been provided above the used code.
 
       #closed-caption {
         background-image: url("../../icons/lucide/captions.svg") !important;
+
+        &[disabled="true"] {
+          stroke: light-dark(#555, #777) !important;
+        }
       }
 
       #close {
