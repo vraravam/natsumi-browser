@@ -278,7 +278,7 @@ their author(s) have been provided above the used code.
       width: 16px;
       height: 16px;
       position: absolute;
-      background-color: white;
+      background-color: light-dark(black, white);
       left: 50%;
       top: 50%;
       background-repeat: no-repeat;
@@ -318,8 +318,8 @@ their author(s) have been provided above the used code.
 #pointerlock-warning {
   &::before {
     content: "";
-    width: 24px;
-    height: 24px;
+    width: 0 !important;
+    height: 16px;
     background-size: 16px;
     background-position: center;
     background-repeat: no-repeat;
@@ -328,12 +328,6 @@ their author(s) have been provided above the used code.
 
   .pointerlockfswarning-domain-text, .pointerlockfswarning-generic-text {
     margin-left: 2px !important;
-  }
-}
-
-@media not -moz-pref("natsumi.theme.disable-blur") {
-  #browser:has(#fullscreen-warning:not([hidden]), #pointerlock-warning:not([hidden])) .deck-selected browser {
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
 }
 

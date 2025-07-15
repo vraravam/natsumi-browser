@@ -29,11 +29,33 @@ their author(s) have been provided above the used code.
 
 /* ==== Natsumi URLbar ==== */
 
+@keyframes floating-urlbar-appear {
+  0% {
+    scale: 0.95;
+  }
+  
+  100% {
+    scale: 1;
+  }
+}
+
+@keyframes floating-urlbar-appear-opacity {
+  0% {
+    opacity: 0;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+}
+
 @media not -moz-pref("natsumi.urlbar.disabled") {
   #urlbar {
     --natsumi-urlbar-button-end-radius: 6px;
     --natsumi-urlbar-button-accent-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-secondary));
     --natsumi-urlbar-hover-background-color: light-dark(transparent, rgba(255, 255, 255, 0.3));
+    --natsumi-urlbar-search-engine-color: var(--natsumi-button-hover-color);
+    --natsumi-urlbar-search-engine-text: light-dark(black, white);
 
     .urlbar-page-action {
       border-radius: 14px !important;
@@ -50,7 +72,6 @@ their author(s) have been provided above the used code.
 
     &:not([open]) {
       border-radius: 16px !important;
-      overflow: hidden !important;
       border: 1px solid var(--natsumi-colors-primary) !important;
       transition: border 0.2s ease !important;
       height: 32px !important;
@@ -77,6 +98,10 @@ their author(s) have been provided above the used code.
         border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
         border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
         transition: background-color 0.2s ease;
+        
+        &:hover, &[open] {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
       }
 
       #tracking-protection-icon-container {
@@ -85,6 +110,10 @@ their author(s) have been provided above the used code.
         border-start-start-radius: 13px !important;
         border-end-start-radius: 13px !important;
         transition: background-color 0.2s ease;
+        
+        &:hover, &[open] {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
       }
 
       #identity-permission-box {
@@ -93,6 +122,10 @@ their author(s) have been provided above the used code.
         border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
         border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
         transition: background-color 0.2s ease;
+        
+        &:hover, &[open] {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
       }
 
       #notification-popup-box {
@@ -102,6 +135,65 @@ their author(s) have been provided above the used code.
         border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
         transition: background-color 0.2s ease;
         height: 26px !important;
+        
+        &:hover, &[open] {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
+      }
+      
+      #urlbar-searchmode-switcher {
+        background-color: color-mix(in srgb, var(--natsumi-urlbar-button-accent-color) 50%, white) !important;
+        border-start-start-radius: 13px !important;
+        border-end-start-radius: 13px !important;
+        border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        padding-right: 0 !important;
+        
+        #searchmode-switcher-dropmarker {
+          padding: 5px !important;
+          border-start-start-radius: 0 !important;
+          border-end-start-radius: 0 !important;
+          border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+          border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        }
+        
+        &[open] {
+          #searchmode-switcher-dropmarker {
+            border-start-start-radius: var(--natsumi-urlbar-button-end-radius) !important;
+            border-end-start-radius: var(--natsumi-urlbar-button-end-radius) !important;
+            border-start-end-radius: 0 !important;
+            border-end-end-radius: 0 !important;
+          }
+        }
+        
+        &:active, &[open] {
+          #searchmode-switcher-dropmarker {
+            background-color: var(--natsumi-button-hover-color) !important;
+            box-shadow: none !important;
+          }
+        }
+      }
+      
+      #searchmode-switcher-chicklet {
+        background-color: color-mix(in srgb, var(--natsumi-urlbar-button-accent-color) 50%, white) !important;
+        border-start-start-radius: 0 !important;
+        border-end-start-radius: 0 !important;
+        border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+        border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+      }
+      
+      &[searchmode] {
+        #urlbar-searchmode-switcher {
+          padding-right: 4px !important;
+          border-start-end-radius: 0 !important;
+          border-end-end-radius: 0 !important;
+        }
+      }
+      
+      &[pageproxystate="valid"] {
+        #urlbar-searchmode-switcher {
+          display: none !important;
+        }
       }
 
       .notification-anchor-icon {
@@ -140,6 +232,313 @@ their author(s) have been provided above the used code.
         #identity-permission-box {
           border-start-end-radius: 0 !important;
           border-end-end-radius: 0 !important;
+        }
+      }
+    }
+    
+    &[open] {
+      @media -moz-pref("natsumi.urlbar.floating") {
+        top: 25vh !important;
+        width: 60% !important;
+        left: 50% !important;
+        translate: -50% 0 !important;
+        opacity: 1 !important;
+        animation: floating-urlbar-appear 0.2s ease !important;
+        
+        .urlbar-input-container {
+          height: 48px !important;
+        }
+        
+        #urlbar-input {
+          font-size: 18px !important;
+        }
+        
+        #tracking-protection-icon-container, #identity-box, #page-action-buttons {
+          display: none;
+        }
+        
+        .urlbar-input-container {
+          &::before {
+            -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
+            fill: light-dark(black, white);
+            content: "";
+            width: 16px;
+            height: 16px;
+            background-image: url("chrome://browser/skin/preferences/category-search.svg");
+            background-size: 16px;
+            margin-left: 12px !important;
+            margin-top: 10px !important;
+            margin-right: 16px !important;
+          }
+        }
+        
+        #urlbar-revert-button-container {
+          height: 28px !important;
+          margin-top: auto !important;
+          margin-bottom: auto !important;
+          
+          .urlbar-icon {
+            transition: background 0.2s ease, box-shadow 0.2s ease !important;
+            
+            &:hover {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+            
+            &:active {
+              background-color: var(--natsumi-button-active-color) !important;
+              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+            }
+          }
+        }
+        
+        #urlbar-go-button {
+          width: 28px !important;
+          height: 28px !important;
+          margin-top: auto !important;
+          margin-bottom: auto !important;
+          transition: background 0.2s ease, box-shadow 0.2s ease !important;
+          
+          &:hover {
+            background-color: var(--natsumi-button-hover-color) !important;
+          }
+
+          &:active {
+            background-color: var(--natsumi-button-active-color) !important;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+          }
+        }
+        
+        #urlbar-searchmode-switcher {
+          height: 24px !important;
+          margin-top: auto !important;
+          margin-bottom: auto !important;
+          border-radius: 12px !important;
+          padding-right: 0 !important;
+          background: var(--natsumi-urlbar-search-engine-color) !important;
+          
+          #searchmode-switcher-dropmarker {
+            width: 12px !important;
+            height: 12px !important;
+            border-radius: 12px !important;
+          }
+        }
+        
+        &[searchmode] {
+          /* Search engine colors */
+          --natsumi-urlbar-search-engine-color: var(--natsumi-primary-color);
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="Google"]) {
+            --natsumi-urlbar-search-engine-color: #36aeff;
+            --natsumi-urlbar-search-engine-text: white;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="DuckDuckGo"]) {
+            --natsumi-urlbar-search-engine-color: #ed8332;
+            --natsumi-urlbar-search-engine-text: white;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="Bing"]) {
+            --natsumi-urlbar-search-engine-color: #10e0eb;
+            --natsumi-urlbar-search-engine-text: black;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="Startpage"]) {
+            --natsumi-urlbar-search-engine-color: #7a21ff;
+            --natsumi-urlbar-search-engine-text: white;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="YouTube"]) {
+            --natsumi-urlbar-search-engine-color: #ff6e6e;
+            --natsumi-urlbar-search-engine-text: black;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="Ecosia"]) {
+            --natsumi-urlbar-search-engine-color: #09870e;
+            --natsumi-urlbar-search-engine-text: white;
+          }
+          
+          &:has(#urlbar-searchmode-switcher[data-l10n-args*="GitHub"]) {
+            --natsumi-urlbar-search-engine-color: #878787;
+            --natsumi-urlbar-search-engine-text: white;
+          }
+          
+          #urlbar-background {
+            --natsumi-primary-color: var(--natsumi-urlbar-search-engine-color) !important;
+          }
+          
+          #urlbar-searchmode-switcher {
+            padding: 4px 4px !important;
+            border-radius: 12px 0 0 12px !important;
+          }
+          
+          #searchmode-switcher-chicklet {
+            height: 24px !important;
+            margin-top: auto !important;
+            margin-bottom: auto !important;
+            border-radius: 0 12px 12px 0 !important;
+            background: var(--natsumi-urlbar-search-engine-color) !important;
+            
+            #searchmode-switcher-title {
+              font-size: 12px !important;
+              color: var(--natsumi-urlbar-search-engine-text) !important;
+            }
+          }
+          
+          &:has(#searchmode-switcher-icon[style*="chrome"]) {
+            #urlbar-searchmode-switcher {
+              display: none !important;
+            }
+            
+            #searchmode-switcher-chicklet {
+              border-radius: 12px !important;
+              padding-left: 8px !important;
+            }
+          }
+          
+          #searchmode-switcher-close {
+            width: 24px !important;
+            height: 24px !important;
+            padding: 6px !important;
+            background-size: 50% !important;
+            margin-left: 2px !important;
+            margin-right: 0 !important;
+            border-radius: 12px !important;
+            fill: var(--natsumi-urlbar-search-engine-text) !important;
+            fill-opacity: 1 !important;
+            transition: background 0.2s ease !important;
+            
+            &:hover {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+            
+            .toolbarbutton-icon {
+              display: none !important;
+            }
+          }
+          
+          .urlbarView-row-inner {
+            --natsumi-primary-color: var(--natsumi-urlbar-search-engine-color) !important;
+          }
+        }
+        
+        #urlbar-background, .urlbarView-body-inner {
+          border-color: light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+        }
+        
+        .urlbarView-body-inner:not(:has(.urlbarView-row)) {
+          border-color: transparent !important;
+        }
+        
+        #urlbar-background {
+          border-radius: 12px !important;
+          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+          animation: floating-urlbar-appear-opacity 0.2s ease !important;
+        }
+        
+        .urlbar-input-container, .urlbarView {
+          animation: floating-urlbar-appear-opacity 0.2s ease !important;
+        }
+        
+        .urlbarView {
+          overflow: visible !important;
+        }
+        
+        .urlbarView-row {
+          background: none !important;
+          
+          .urlbarView-row-inner {
+            border-radius: 6px !important;
+            transition: background 0.2s ease, box-shadow 0.2s ease;
+          }
+          
+          &[type="autofill_origin"], &[type="search"] {
+            .urlbarView-no-wrap {
+              width: 100% !important;
+            }
+            
+            .urlbarView-title-separator {
+              display: none !important;
+            }
+
+            .urlbarView-action {
+              margin-left: auto !important;
+              margin-top: 0 !important;
+              padding-left: 8px !important;
+              padding-right: 22px !important;
+            }
+            
+            .urlbarView-row-inner {
+              &::after {
+                content: "";
+                position: absolute;
+                right: 4px;
+                width: 18px;
+                height: 18px;
+                margin-top: 0.625px !important;
+                border-radius: 4px !important;
+                background: light-dark(black, white);
+                mask-image: url("chrome://browser/skin/forward.svg");
+                mask-size: 14px;
+                mask-position: center;
+                mask-repeat: no-repeat;
+                transition: right 0.2s ease;
+              }
+            }
+            
+            &:hover:has(.urlbarView-button-menu) {
+              .urlbarView-row-inner {
+                &::after {
+                  right: 40px !important;
+                }
+              }
+            }
+          }
+          
+          .urlbarView-button-menu {
+            display: flex !important;
+            transition: min-width 0.2s ease, max-width 0.2s ease, margin 0.2s ease, background 0.2s ease, box-shadow 0.2s ease !important;
+            max-width: 0 !important;
+            min-width: 0 !important;
+            margin: 0 !important;
+            color: light-dark(black, white) !important;
+            
+            &:hover {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+            
+            &:active, &[open] {
+              background-color: var(--natsumi-button-active-color) !important;
+              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+            }
+          }
+          
+          &:hover, &[selected], &:has(.urlbarView-button-menu[open]) {
+            .urlbarView-row-inner {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+            
+            .urlbarView-button-menu {
+              max-width: 24px !important;
+              min-width: 24px !important;
+              margin: 0 4px !important;
+            }
+          }
+          
+          &:hover:active, &:active {
+            &:not(:has(.urlbarView-button-menu:hover)) {
+              .urlbarView-row-inner {
+                background-color: var(--natsumi-button-active-color) !important;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+              }
+
+              .urlbarView-button-menu {
+                max-width: 24px !important;
+                min-width: 24px !important;
+                margin: 0 4px !important;
+              }
+            }
+          }
         }
       }
     }

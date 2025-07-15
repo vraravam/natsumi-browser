@@ -29,6 +29,11 @@ their author(s) have been provided above the used code.
 
 /* ==== Tabs ==== */
 
+/* Global tweaks for tabs */
+.tabbrowser-tab {
+  --attention-dot-color: transparent !important;
+}
+
 /* Base Natsumi design (Blade) */
 @media not -moz-pref("natsumi.tabs.use-custom-type") {
   #tabbrowser-arrowscrollbox {
@@ -159,11 +164,20 @@ their author(s) have been provided above the used code.
     }
   }
 
-  #tabs-newtab-button {
+  #tabs-newtab-button, #vertical-tabs-newtab-button {
     min-height: calc(var(--floorp-tab-min-height) - 4px) !important;
+    transition: background-color 0.2s ease;
 
     @media (-moz-platform: macos) or (-moz-platform: linux) {
       border-radius: 12px !important;
+    }
+    
+    .toolbarbutton-text {
+      font-size: 12px;
+    }
+    
+    .toolbarbutton-icon {
+      margin-bottom: 1px !important;
     }
   }
 }

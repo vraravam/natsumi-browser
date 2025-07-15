@@ -51,9 +51,9 @@ their author(s) have been provided above the used code.
         background-color: transparent !important;
         outline: none !important;
         text-align: left !important;
-        font-weight: unset !important;
         font-size: 12px !important;
         padding: 6px calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) !important;
+        color: color-mix(in srgb, var(--toolbox-textcolor-inactive) 70%, transparent) !important;
 
         &::before {
           content: "";
@@ -61,7 +61,7 @@ their author(s) have been provided above the used code.
           position: relative;
           width: 16px;
           height: 16px;
-          background-color: var(--tab-group-color-invert);
+          background-color: light-dark(var(--tab-group-color), var(--tab-group-color-invert));
           mask-image: url("chrome://global/skin/icons/folder.svg");
           mask-position: center;
           mask-size: 100%;

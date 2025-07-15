@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -27,18 +27,14 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Backdrop blur ==== */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "modules/themer.css";
-@import "modules/base.css";
-@import "modules/backdrop-blur.css";
-@import "modules/tabs.css";
-@import "modules/folders.css";
-@import "modules/urlbar.css";
-@import "modules/findbar.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/icons.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/panel-sidebar.css";
+:has(#urlbar[open], #fullscreen-warning:not([hidden]), #pointerlock-warning:not([hidden])) {
+  .deck-selected browser, .browserSidebarContainer[split] browser {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+}
+
+.deck-selected:has(findbar:not([hidden="true"])) browser, .browserSidebarContainer[split]:has(findbar:not([hidden="true"])) browser {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

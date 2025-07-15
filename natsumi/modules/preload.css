@@ -82,7 +82,7 @@ their author(s) have been provided above the used code.
 
   @media (prefers-color-scheme: dark) {
     --natsumi-mat-hz-background: rgba(0, 0, 0, 0.8);
-    --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, rgba(0, 0, 0, 0.8));
+    --natsumi-mat-hz-background-tinted: color-mix(in srgb, var(--natsumi-colors-secondary) 30%, rgba(0, 0, 0, 0.8));
   }
 
   /* Material: Glass */
