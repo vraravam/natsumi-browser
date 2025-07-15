@@ -38,7 +38,7 @@ Edit the natsumi-config.css file instead.
 
 * {
   /* Colors */
-  --natsumi-primary-color: var(--natsumi-pages-accent-color, #aac7ff);
+  --natsumi-primary-color: var(--natsumi-custom-primary-color, var(--natsumi-accent-color, #a0d490));
   --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
   --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-colors-primary) 20%, white 80%);
   --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 2%, white 98%);

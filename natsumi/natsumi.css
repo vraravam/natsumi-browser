@@ -31,8 +31,8 @@ their author(s) have been provided above the used code.
 
 @import "../natsumi-config.css";
 @import "modules/preload.css";
+@import "global/colors.css";
 @import "modules/themer.css";
-@import "modules/colors.css";
 @import "modules/base.css";
 @import "modules/backdrop-blur.css";
 @import "modules/tabs.css";
