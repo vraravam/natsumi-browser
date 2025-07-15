@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
+  <img width="120" height="120" src="./images/icon.png">
   <br>
   Natsumi Browser
 </h1>
@@ -8,7 +8,7 @@
   A skin for Firefox and its forks that makes things <strong><i>~flow~</i></strong>.
 </p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
+![](./images/main-backgroundless.png)
 
 ## Meet Natsumi! 🦋
 Natsumi Browser (or Natsumi, for short) is a skin made for Firefox and its forks that adds lots of
@@ -46,27 +46,35 @@ changes appearance based on the context.
 Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
 
 - **Default (default)**
+  
   No changes, just the default look.
   ![](./images/theme-default.png)
 - **Gradient (gradient)**
+  
   A light gradient of the accent color, similar to my Zen Browser gradient.
   ![](./images/theme-gradient.png)
 - **Complementary Gradient (gradient-complementary)**
+  
   A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
   ![](./images/theme-gradient-complementary.png)
 - **Colorful Solid (colorful)**
+  
   A solid color with a tint of the accent color.
   ![](./images/theme-colorful.png)
 - **Lucid (lucid)**
+  
   A recreation of the Zen Dream and Zen Galaxy themes.
   ![](./images/theme-lucid.png)
 - **OLED (oled)**
+  
   A completely black and white theme for the minimalists and OLED users.
   ![](./images/theme-oled.png)
 - **LGBTQ 🏳️‍🌈 (lgbtq)**
+  
   Browsing with pride!
   ![](./images/theme-lgbtq.png)
 - **Transgender 🏳️‍⚧️ (transgender)**
+  
   Trans rights are human rights!
   ![](./images/theme-transgender.png)
 
