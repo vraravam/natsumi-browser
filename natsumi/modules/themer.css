@@ -130,6 +130,10 @@ their author(s) have been provided above the used code.
   background-color: transparent !important;
 }
 
+#browser {
+  background-image: none !important;
+}
+
 #navigator-toolbox {
   border: none !important;
 }
