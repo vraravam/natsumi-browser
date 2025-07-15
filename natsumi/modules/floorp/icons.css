@@ -235,7 +235,7 @@ their author(s) have been provided above the used code.
     mask-size: 100%;
 
     &[active] {
-      background: linear-gradient(45deg, #0000ff, #cc00ff) !important;
+      background: linear-gradient(45deg, light-dark(#0000ff, #7777ff), light-dark(#cc00ff, #dd57ff)) !important;
     }
   }
 
