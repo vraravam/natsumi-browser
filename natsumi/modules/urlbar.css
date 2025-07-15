@@ -59,6 +59,9 @@ their author(s) have been provided above the used code.
 
     .urlbar-page-action {
       border-radius: 14px !important;
+      width: 26px !important;
+      height: 26px !important;
+      padding: 5px !important;
 
       &:hover {
         background-color: var(--natsumi-button-hover-color) !important;
