@@ -50,7 +50,7 @@ their author(s) have been provided above the used code.
     --natsumi-button-hover-color: rgba(255, 255, 255, 0.1);
     --natsumi-button-active-color: color-mix(in srgb, var(--natsumi-primary-color) 70%, black);
 
-    @media (-moz-bool-pref: 'natsumi.colors.colorful') {
+    @media (-moz-bool-pref: 'natsumi.theme.colors-colorful') {
       --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 50%, black 50%);
       --natsumi-colors-secondary: color-mix(in srgb, var(--natsumi-primary-color) 40%, black 60%);
       --natsumi-colors-tertiary: color-mix(in srgb, var(--natsumi-primary-color) 15%, black 85%);

@@ -151,7 +151,8 @@ their author(s) have been provided above the used code.
           height: 16px;
           left: 50%;
           transform: translateX(-50%) !important;
-          background-image: url('chrome://browser/skin/zen-icons/close.svg') !important;
+          background-image: url('resource://content-accessible/close-12.svg') !important;
+          background-size: 16px !important;
           background-repeat: no-repeat;
           background-position: center !important;
           -moz-context-properties: fill;
@@ -250,31 +251,28 @@ their author(s) have been provided above the used code.
       background-color: var(--hover-bg) !important;
     }
 
-    .top-site-button {
-      border-radius: 10px !important;
+    .top-site-outer {
+      transition: background 0.2s ease;
 
-      .tile, .top-site-icon{
-        transition: background 0.2s ease;
+      .top-site-button {
+        border-radius: 10px !important;
+
+        .tile {
+          transition: background 0.2s ease;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+        }
+
+        .title span {
+          transition: color 0.2s ease;
+        }
       }
 
       &:hover {
-        padding: 19px 16px 3px !important;
-        background-color: var(--natsumi-mat-hz-background) !important;
-        box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
-        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-        border: 1px solid rgba(20, 20, 20, 0.2) !important;
-
-        @media (prefers-color-scheme: dark) {
-          border-color: rgba(235, 235, 235, 0.3) !important;
-        }
-
-        .tile, .top-site-icon {
+        .tile {
           background-color: var(--natsumi-primary-color) !important;
         }
-      }
-
-      .title span {
-        transition: color 0.2s ease;
       }
     }
 
@@ -313,11 +311,6 @@ their author(s) have been provided above the used code.
           width: 100% !important;
           margin-right: 0 !important;
           margin-bottom: 20px !important;
-        }
-
-        .icon-modal-delete {
-          background-image: url('chrome://browser/skin/zen-icons/edit-delete.svg') !important;
-          color: white !important;
         }
 
         span p[data-l10n-id^="newtab-confirm-delete-history"] {
@@ -423,7 +416,7 @@ their author(s) have been provided above the used code.
         }
       }
     }
-    
+
     button.toggle-button {
       /* before pseudoelement has the "toggle" */
       --color-off: #ff6b6b;
