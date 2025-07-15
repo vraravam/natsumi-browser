@@ -96,6 +96,13 @@ their author(s) have been provided above the used code.
         transition: max-width 0.2s ease, left 0.2s ease;
       }
 
+      #urlbar-revert-button-container .urlbar-revert-button {
+        padding: 5px !important;
+        width: 26px !important;
+        height: 26px !important;
+        border-radius: 13px !important;
+      }
+
       #identity-icon-box {
         background-color: color-mix(in srgb, var(--natsumi-urlbar-button-accent-color) 50%, white) !important;
         border-radius: 13px !important;
