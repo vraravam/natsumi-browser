@@ -67,6 +67,12 @@ their author(s) have been provided above the used code.
       }
     }
   }
+
+  &:has(#sidebar-main[hidden]) {
+    #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
+      padding-left: var(--natsumi-browser-separation) !important;
+    }
+  }
 }
 
 #sidebar {
