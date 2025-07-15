@@ -572,7 +572,7 @@ their author(s) have been provided above the used code.
           pointer-events: none !important;
         }
 
-        #identity-icon-box, #tracking-protection-icon-container, #identity-permission-box {
+        #identity-icon-box, #tracking-protection-icon-container, #identity-permission-box, #notification-popup-box {
           background-color: transparent !important;
         }
       }
