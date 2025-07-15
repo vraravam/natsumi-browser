@@ -39,6 +39,23 @@ Natsumi keeps your browser's design familiar while adding a modern touch to it.
 Natsumi URLbar is a new take on your browser's address bar, which highlights the current URL and
 changes appearance based on the context.
 
+### 🖥️ Reimagined Picture-in-picture.
+#### Modern and streamlined.
+
+![](./images/picture-in-picture.png)
+
+Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it more consistent with
+the rest of the browser.
+
+### 📄 PDF viewer, modernized.
+#### View your documents in the 21st century.
+
+![](./images/pdf-viewer.png)
+
+Give Firefox's PDF viewer a fresh coat of paint! Natsumi includes tweaks for the default PDF viewer,
+giving it the modern look it really deserves. And with compact view, you can focus on the file at
+hand when you don't need the extra tools.
+
 ### 🖼️ Express yourself with themes.
 #### A theming engine that lets your browser vibe with you
 ![](./images/all-the-themes.png)
@@ -140,6 +157,27 @@ and delay, change the variables in the config.css file.
 - `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
 - `natsumi.urlbar.do-not-float` (boolean): Disables the floating URL bar.
 - `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
+
+### 🔎 Findbar
+- `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
+- `natsumi.findbar.disable-not-found-bg`: Disables red background that appears when there are no
+  results.
+- `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
+
+### 🖥️ Picture-in-Picture
+- `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.native-border-radius`: Makes the PiP controls border radius look more native.
+- `natsumi.pip.rounded`: Makes the PiP window round, like in macOS. Only supports Windows.
+
+### 📄 PDF Viewer
+- `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
+- `natsumi.pdfjs.compact`: Enables compact mode for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic`: Disables compact mode when the PDF Viewer's sidebar is expanded.
+
+### 🏠 Firefox Home
+- `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
+- `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
+  background.
 
 ### 🔧 Compatibility
 - `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
