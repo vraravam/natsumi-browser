@@ -95,7 +95,7 @@ Or, choose from one of the preset colors.
 - $${\color{#dec1b1}■}$$ **Beige** (`beige`) - #dec1b1
 - $${\color{#ffb1c0}■}$$ **Light Red** (`light-red`) - #ffb1c0
 - $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
-- $${\color{#c4b0f3}■}$$ **Pink** (`pink`) - #f6b0ea
+- $${\color{#f6b0ea}■}$$ **Pink** (`pink`) - #f6b0ea
 - $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
 
 ## Installation
