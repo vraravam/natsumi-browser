@@ -3,7 +3,7 @@
   "homepage": "https://github.com/greeeen-dev/natsumi-browser",
   "author": "greeeen-dev",
   "name": "Natsumi Browser",
-  "description": "A userchrome for Floorp that makes things flow. ",
+  "description": "A skin for Firefox and its forks that makes things flow. ",
   "version": "4.0.0",
   "createdAt": "2024-12-06T10:19:47Z",
   "readme": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/README.md",
