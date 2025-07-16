@@ -163,7 +163,6 @@ and delay, change the variables in the config.css file.
 
 ### 🖥️ Picture-in-Picture
 - `natsumi.pip.disabled` (boolean): Disables Natsumi PiP and reverts the PiP style back.
-- `natsumi.pip.native-border-radius` (boolean): Makes the PiP controls border radius look more native.
 - `natsumi.pip.rounded` (boolean): Makes the PiP window round, like in macOS. Only supports Windows.
 - `natsumi.pip.tinted-haze` (boolean): Uses Tinted Haze material instead of Haze.
 
