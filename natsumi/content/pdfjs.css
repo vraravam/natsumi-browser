@@ -71,13 +71,6 @@ their author(s) have been provided above the used code.
   html[mozdisallowselectionprint] {
     &:has(head link:nth-of-type(1)[href^="resource://pdf.js"]) {
       --natsumi-colors-border: color-mix(in srgb, var(--natsumi-colors-secondary) 80%, black 20%);
-      --toolbarbutton-active-background: rgba(255, 255, 255, 0.9);
-      --toolbarbutton-hover-background: color-mix(in srgb, #202020 10%, transparent);
-
-      @media (prefers-color-scheme: dark) {
-        --toolbarbutton-active-background: color-mix(in srgb, var(--natsumi-primary-color) 50%, rgba(255, 255, 255, .1));
-        --toolbarbutton-hover-background: color-mix(in srgb, #ebebeb 10%, transparent);
-      }
 
       body {
         @media (prefers-color-scheme: dark) {
@@ -111,12 +104,12 @@ their author(s) have been provided above the used code.
         border: 1px solid rgba(20, 20, 20, 0.2) !important;
         box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
 
-        @media -moz-pref("natsumi.pdfjs.material-haze") {
+        @media -moz-pref("natsumi.pdfjs.material", "haze") or -moz-pref("natsumi.pdfjs.material", "tinted-haze") {
           background: var(--natsumi-mat-hz-background) !important;
           backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
           box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
 
-          @media -moz-pref("natsumi.pdfjs.material-tinted-haze") {
+          @media -moz-pref("natsumi.pdfjs.material", "tinted-haze") {
             background: var(--natsumi-mat-hz-background-tinted) !important;
           }
         }
@@ -161,7 +154,7 @@ their author(s) have been provided above the used code.
           box-shadow: 0 0 var(--natsumi-mat-ga-shadow-size) var(--natsumi-mat-ga-shadow-color) !important;
           animation: secondary-appear 0.3s ease;
 
-          @media -moz-pref("natsumi.pdfjs.material", "haze") {
+          @media -moz-pref("natsumi.pdfjs.material", "haze") or -moz-pref("natsumi.pdfjs.material", "tinted-haze") {
             background: var(--natsumi-mat-hz-background) !important;
             backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
             box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
@@ -324,14 +317,15 @@ their author(s) have been provided above the used code.
 
       .toolbarButton {
         border-radius: 6px !important;
-        transition: background-color 0.2s ease;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
         &:hover {
-          background-color: var(--toolbarbutton-hover-background) !important;
+          background-color: var(--natsumi-button-hover-color) !important;
         }
 
         &.toggled {
-          background-color: var(--toolbarbutton-active-background) !important;
+          background-color: var(--natsumi-button-active-color) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
         }
 
         &::before {
@@ -359,7 +353,7 @@ their author(s) have been provided above the used code.
           border-color: rgba(235, 235, 235, 0.3) !important;
         }
 
-        @media -moz-pref("natsumi.pdfjs.material", "haze") {
+        @media -moz-pref("natsumi.pdfjs.material", "haze") or -moz-pref("natsumi.pdfjs.material", "tinted-haze") {
           background: var(--natsumi-mat-hz-background) !important;
           backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
           box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
