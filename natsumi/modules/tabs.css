@@ -1,0 +1,206 @@
+/*
+
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+
+Copyright (c) 2024-present Green (@greeeen-dev)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Natsumi Browser uses code from others. The link to the original projects or
+their author(s) have been provided above the used code.
+
+*/
+
+/* ==== Tabs ==== */
+
+/* Global tweaks for tabs */
+.tabbrowser-tab {
+  --attention-dot-color: transparent !important;
+}
+
+/* Base Natsumi design (Blade) */
+@media not -moz-pref("natsumi.tabs.use-custom-type") {
+  #tabbrowser-arrowscrollbox {
+    /*noinspection CssInvalidFunction*/
+    .tabbrowser-tab {
+      --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+      --natsumi-tab-idle-width: 0;
+      --natsumi-tab-idle-opacity: 0;
+
+      &[usercontextid] {
+        --natsumi-tab-highlight-color: var(--identity-icon-color);
+        --natsumi-tab-idle-width: 40%;
+        --natsumi-tab-idle-opacity: 1;
+      }
+
+      @media -moz-pref("sidebar.verticalTabs") {
+        padding: 0 !important;
+      }
+
+      .tab-loading-burst[bursting]::before {
+        fill: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      }
+
+      .tab-text {
+        font-size: 12px;
+      }
+
+      @media -moz-pref("sidebar.verticalTabs") {
+        .tab-group-line {
+          display: none !important;
+        }
+      }
+
+      &:has(.tab-close-button:hover) {
+        transition: opacity 0.2s ease !important;
+        --natsumi-tab-highlight-color: rgb(255, 100, 100);
+      }
+
+      & > .tab-stack > .tab-background {
+        transition: background-color 0.2s ease, backdrop-filter 0.2s ease !important;
+        overflow: visible !important;
+        border-radius: var(--natsumi-tab-border-radius) !important;
+        outline: none !important;
+        --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
+
+        .tab-context-line {
+          display: none !important;
+        }
+
+        &::after {
+          content: "";
+          position: absolute;
+          width: var(--natsumi-tab-idle-width);
+          height: calc(var(--natsumi-tab-height) - 4px);
+          opacity: var(--natsumi-tab-idle-opacity);
+          border: 2px solid var(--natsumi-tab-highlight-color) !important;
+          background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+          border-radius: calc(var(--natsumi-tab-border-radius) - 1px);
+          mask-image: linear-gradient(to right, black, transparent 30%);
+          transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+
+          @media -moz-pref("sidebar.verticalTabs") {
+            top: var(--natsumi-tabs-blade-position-offset);
+            left: var(--tab-inner-inline-margin);
+          }
+        }
+      }
+
+      &:hover {
+        & > .tab-stack > .tab-background {
+          &::after {
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+            opacity: 1;
+          }
+        }
+      }
+
+      &[selected], &[visuallyselected] {
+        /*noinspection CssInvalidFunction*/
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          animation: backdrop-fadein 0.2s ease;
+
+          @media -moz-pref("natsumi.sidebar.blur-tab-button") {
+            animation: backdrop-with-blur-fadein 0.2s ease;
+          }
+
+          animation-fill-mode: forwards;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+            opacity: 1;
+          }
+        }
+      }
+
+      &[multiselected] {
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
+
+          &::after {
+            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            opacity: 1;
+          }
+        }
+      }
+
+      &:has(.tab-close-button:active) {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  #sidebar-main:not([sidebar-launcher-expanded]) {
+    .tabbrowser-tab {
+      min-width: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
+
+      & > .tab-stack > .tab-background {
+        min-width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
+        margin: 2px auto !important;
+
+        &::after {
+          width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
+          left: auto;
+        }
+      }
+    }
+  }
+
+  #tabs-newtab-button, #vertical-tabs-newtab-button {
+    min-height: calc(var(--floorp-tab-min-height, calc(var(--tab-min-height) + 4px)) - 4px) !important;
+    transition: background-color 0.2s ease;
+
+    @media (-moz-platform: macos) or (-moz-platform: linux) {
+      border-radius: 12px !important;
+    }
+    
+    .toolbarbutton-text {
+      font-size: 12px;
+    }
+    
+    .toolbarbutton-icon {
+      margin-bottom: 1px !important;
+    }
+  }
+}
+
+/* Material (inspired by Zen 1.0.0-a) */
+@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "material") {
+  #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab {
+      & > .tab-stack > .tab-background {
+        box-shadow: none !important;
+      }
+
+      &[selected], &[visuallyselected] {
+        & > .tab-stack > .tab-background {
+          background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
+
+          @media -moz-pref("natsumi.theme.type", "oled") {
+            border: none !important;
+          }
+        }
+      }
+    }
+  }
+}
+

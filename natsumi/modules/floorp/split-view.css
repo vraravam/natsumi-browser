@@ -1,0 +1,291 @@
+/*
+
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+
+Copyright (c) 2024-present Green (@greeeen-dev)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Natsumi Browser uses code from others. The link to the original projects or
+their author(s) have been provided above the used code.
+
+*/
+
+/* ==== Floorp split view ==== */
+
+@media -moz-pref("natsumi.browser.type", "floorp") {
+  /* Split view animations (incoming) */
+  @keyframes split-left-incoming {
+    0% {
+      transform: translateX(calc(-100% - calc(var(--natsumi-browser-separation) / 2)));
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateX(5px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes split-right-incoming {
+    0% {
+      transform: translateX(calc(100% + calc(var(--natsumi-browser-separation) / 2)));
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateX(-5px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes split-up-incoming {
+    0% {
+      transform: translateY(calc(-100% - calc(var(--natsumi-browser-separation) / 2)));
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateY(5px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes split-down-incoming {
+    0% {
+      transform: translateY(calc(100% + calc(var(--natsumi-browser-separation) / 2)));
+      opacity: 0;
+    }
+
+    50% {
+      transform: translateY(-5px);
+      opacity: 1;
+    }
+
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* Split view animations (existing) */
+  @keyframes split-left-existing {
+    0% {
+      transform: translateX(-50%) scaleX(2);
+    }
+
+    50% {
+      transform: translateX(0) scaleX(1);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes split-right-existing {
+    0% {
+      transform: translateX(50%) scaleX(2);
+    }
+
+    50% {
+      transform: translateX(0) scaleX(1);
+    }
+
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes split-up-existing {
+    0% {
+      transform: translateY(-50%) scaleY(2);
+    }
+
+    50% {
+      transform: translateY(0) scaleY(1);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes split-down-existing {
+    0% {
+      transform: translateY(50%) scaleY(2);
+    }
+
+    50% {
+      transform: translateY(0) scaleY(1);
+    }
+
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  #tabbrowser-tabpanels {
+    /* Hide browser windows that aren't open */
+    .browserSidebarContainer:not(.deck-selected):not([split="true"]) {
+      --natsumi-border-width: 0 !important;
+    }
+
+    &[split-view="true"] {
+      overflow: hidden;
+
+      /* Split view animations */
+      &[style*="flex-direction: row;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          animation: split-left-incoming 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          animation: split-left-existing 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+      }
+
+      &[style*="flex-direction: row-reverse;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          animation: split-right-incoming 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          animation: split-right-existing 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+      }
+
+      &[style*="flex-direction: column;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          animation: split-up-incoming 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          animation: split-up-existing 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+      }
+
+      &[style*="flex-direction: column-reverse;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          animation: split-down-incoming 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          animation: split-down-existing 0.5s ease;
+          animation-fill-mode: forwards;
+        }
+      }
+
+      /* Split view spacing */
+      &[style*="flex-direction: row;"], &[style*="flex-direction: column;"] {
+        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2);
+      }
+
+      &[style*="flex-direction: row-reverse;"], &[style*="flex-direction: column-reverse;"] {
+        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2);
+        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2);
+      }
+
+      .browserSidebarContainer {
+        margin: 0 !important;
+      }
+
+      &[style*="flex-direction: row"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          margin-right: var(--natsumi-split-separation-0-right) !important;
+          margin-left: var(--natsumi-split-separation-0-left) !important;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          margin-right: var(--natsumi-split-separation-1-right) !important;
+          margin-left: var(--natsumi-split-separation-1-left) !important;
+        }
+      }
+
+      &[style*="flex-direction: column"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          margin-bottom: var(--natsumi-split-separation-0-right) !important;
+          margin-top: var(--natsumi-split-separation-0-left) !important;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          margin-bottom: var(--natsumi-split-separation-1-right) !important;
+          margin-top: var(--natsumi-split-separation-1-left) !important;
+        }
+      }
+    }
+  }
+
+  /* Split view dialog */
+  .splitView-select-content-box {
+    gap: 3px;
+
+    box {
+      border-radius: 6px;
+      background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2)) !important;
+
+      &:nth-child(1) {
+        background-color: var(--natsumi-split-highlight-color) !important;
+      }
+    }
+  }
+
+  .splitView-select-box {
+    border: none !important;
+    --natsumi-split-highlight-color: light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.4));
+
+    &.selected {
+      outline: 1px solid light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      --natsumi-split-highlight-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+    }
+  }
+
+  #splitView-position-selector-left {
+    box:nth-child(1) {
+      background-color: var(--natsumi-split-highlight-color) !important;
+    }
+  }
+
+  #splitView-flex-selector-row box, #splitView-flex-selector-column box {
+    background-color: var(--natsumi-split-highlight-color) !important;
+  }
+}

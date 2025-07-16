@@ -1,25 +1,21 @@
 <h1 align="center">
-  <img width="120" height="120" src="https://github.com/greeeen-dev/natsumi-browser/blob/main/images/icon.png?raw=true">
+  <img width="120" height="120" src="./images/icon.png">
   <br>
   Natsumi Browser
 </h1>
 
 <p align="center">
-  A skin for Zen Browser that makes things <strong><i>~flow~</i></strong>.
-  <br><br>
-  <a href="https://zen-browser.app"><img height="40" src="https://github.com/heyitszenithyt/zen-browser-badges/blob/fb14dcd72694b7176d141c774629df76af87514e/light/zen-badge-light.png"></a>
+  A skin for Firefox and its forks that makes things <strong><i>~flow~</i></strong>.
 </p>
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/main.png?raw=true)
+![](./images/main-backgroundless.png)
 
 ## Meet Natsumi! 🦋
-Natsumi Browser (or Natsumi, for short) is a skin made for [Zen Browser](https://zen-browser.app)
-that adds lots of polish to the design by incorporating animations, blurs and more. It's pretty much
-the skin I personally use, but made public because people wanted the CSS.
+Natsumi Browser (or Natsumi, for short) is a skin made for Firefox and its forks that adds lots of
+polish to the design by incorporating animations, blurs and more. It's pretty much the skin I
+personally use, but made public because people wanted the CSS.
 
 Natsumi is NOT a standalone browser. I don't even intend on making one.
-
-Natsumi has been tested on `1.11b` (Beta) and `1.11t 2025-04-03` (Twilight).
 
 > [!NOTE]
 > Please remember that Natsumi in the end is **my personal browser skin**. If you don't like a design
@@ -27,176 +23,168 @@ Natsumi has been tested on `1.11b` (Beta) and `1.11t 2025-04-03` (Twilight).
 > from attacking people when you make suggestions. Thanks!
 
 ## Features
-### Polished look
-Natsumi Browser sports a modern look to bring you a beautiful and polished browsing experience, while
-keeping much of Zen Browser's original design.
+### ✨ Your browser, reimagined.
+#### The classic Firefox design but with a modern spin.
+![](./images/main.png)
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/home.png?raw=true)
+Natsumi keeps your browser's design familiar while adding a modern touch to it.
 
-### Natsumi URLbar
-With Natsumi URLbar, Natsumi gives the expanded URLbar a completely fresh new look, so it feels very
-cozy while also having lots of room for search suggestions. You can even make the URLbar stay out of
-your way when collapsed with compact URLbar.
+### ⌨️ URL bar, made intuitive.
+#### Highlights the current URL and adapts to the scene.
+![](./images/urlbar.png)
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/urlbar.png?raw=true)
+Natsumi URLbar is a new take on your browser's address bar, which highlights the current URL and
+changes appearance based on the context.
 
-### Natsumi Findbar
-Say hello to Natsumi Findbar! Natsumi Findbar shares a similar design as Natsumi URLbar, bringing you
-the same cozy and modern experience. Inspired by [RobotoSkunk](https://github.com/RobotoSkunk)'s [Better
-Find Bar](https://zen-browser.app/mods/a6335949-4465-4b71-926c-4a52d34bc9c0/) Mod.
+### 🖥️ Reimagined Picture-in-picture.
+#### Modern and streamlined.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/findbar.png?raw=true)
+![](./images/picture-in-picture.png)
 
-### Natsumi PDF Viewer
-Send your PDF viewer to the 21st century! Natsumi Browser Pages includes tweaks for the default PDF
-viewer, giving it the modern look it really deserves. And with compact view, you can focus on the file
-at hand when you don't need the extra tools.
+Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it more consistent with
+the rest of the browser.
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/pdfjs.png?raw=true)
+### 📄 PDF viewer, modernized.
+#### View your documents in the 21st century.
 
-### Enhanced sidebars
-Elevate your sidebars to the next level! Not only does Natsumi add materials to both sidebars, it also
-makes the Firefox sidebar more customizable by adding customization for its size and position.
+![](./images/pdf-viewer.png)
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/sidebars.png?raw=true)
+Give Firefox's PDF viewer a fresh coat of paint! Natsumi includes tweaks for the default PDF viewer,
+giving it the modern look it really deserves. And with compact view, you can focus on the file at
+hand when you don't need the extra tools.
 
-### Marginless compact mode
-Add even more screen real estate to compact mode by removing the website view's margins entirely. See
-more of your website with even less distractions.
+### 🖼️ Express yourself with themes.
+#### A theming engine that lets your browser vibe with you.
+![](./images/all-the-themes.png)
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/compact.png?raw=true)
+Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
 
-### Natsumi Picture-in-Picture (PiP)
-Natsumi PiP gives the Picture-in-Picture window a fresh new look. Enjoy sleek animations, native icons,
-and more.
+- **Default (default)**
+  
+  No changes, just the default look.
+  ![](./images/theme-default.png)
+- **Gradient (`gradient`)**
+  
+  A light gradient of the accent color, similar to my Zen Browser gradient.
+  ![](./images/theme-gradient.png)
+- **Complementary Gradient (`gradient-complementary`)**
+  
+  A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
+  ![](./images/theme-gradient-complementary.png)
+- **Colorful Solid (`colorful`)**
+  
+  A solid color with a tint of the accent color.
+  ![](./images/theme-colorful.png)
+- **Lucid (`lucid`)**
+  
+  A recreation of the Zen Dream and Zen Galaxy themes.
+  ![](./images/theme-lucid.png)
+- **OLED (`oled`)**
+  
+  A completely black and white theme for the minimalists and OLED users.
+  ![](./images/theme-oled.png)
+- **LGBTQ 🏳️‍🌈 (`lgbtq`)**
+  
+  Browsing with pride!
+  ![](./images/theme-lgbtq.png)
+- **Transgender 🏳️‍⚧️ (`transgender`)**
+  
+  Trans rights are human rights!
+  ![](./images/theme-transgender.png)
 
-![](https://github.com/greeeen-dev/natsumi-browser/blob/main/images/pip.png?raw=true)
+### 🎨 And color it all your way.
+#### Firefox themes support, still there.
+![](./images/custom-colors.png)
 
-### And much more!
-There's much more than just those to discover!
+Don't like the default colors? Install a Firefox theme and Natsumi will adjust its colors for you.
+
+Or, choose from one of the preset colors.
+
+- $${\color{#a0d490}■}$$ **Light green** (default) - #a0d490
+- $${\color{#aac7ff}■}$$ **Sky blue** (`sky-blue`) - #aac7ff
+- $${\color{#74d7cb}■}$$ **Turquoise** (`turquoise`) - #74d7cb
+- $${\color{#dec663}■}$$ **Yellow** (`yellow`) - #dec663
+- $${\color{#ffb787}■}$$ **Peach Orange** (`peach-orange`) - #ffb787
+- $${\color{#ff9eb3}■}$$ **Warmer Pink** (`warmer-pink`) - #ff9eb3
+- $${\color{#dec1b1}■}$$ **Beige** (`beige`) - #dec1b1
+- $${\color{#ffb1c0}■}$$ **Light Red** (`light-red`) - #ffb1c0
+- $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
+- $${\color{#f6b0ea}■}$$ **Pink** (`pink`) - #f6b0ea
+- $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
 
 ## Installation
-This skin is not available on the Zen Mods page, as this isn't intended to be a Mod. You will need to
-install it by copying the files to your profile's chrome folder.
+You will need to install Natsumi by copying its files to your profile's chrome folder.
 
 ### Natsumi Browser
-#### If you already have a userChrome.css file
+#### If you already have a userChrome.css/userContent.css file
 1. Copy natsumi-config.css and natsumi folder to your chrome folder.
-2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file.
-3. Restart Zen Browser and enjoy!
+2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file. 
+3. Add `@import "natsumi/natsumi-pages.css";` to the beginning of your userContent.css file.
+4. Restart your browser and enjoy!
 
-#### If you don't have a userChrome.css file
+#### If you don't have a userChrome.css/userContent.css file
 1. Create a new chrome folder in your profile folder, if you haven't already.
    ([guide](https://docs.zen-browser.app/guides/live-editing))
-2. Copy userChrome.css to the chrome folder.
+2. Copy userChrome.css and userContent.css to the chrome folder.
 3. Copy natsumi-config.css and natsumi folder to the chrome folder.
-4. Restart Zen Browser and enjoy!
-
-### Natsumi Browser Pages
-#### If you already have a userContent.css file
-1. Add `@import "natsumi-pages/natsumi-pages.css";` to the beginning of your userContent.css file.
-2. Restart Zen Browser and enjoy!
-
-#### If you don't have a userContent.css file
-1. Create a new chrome folder in your profile folder, if you haven't already.
-   ([guide](https://docs.zen-browser.app/guides/live-editing))
-2. Copy userContent.css to the chrome folder.
-3. Copy natsumi-config.css to the chrome folder, if you haven't already.
-4. Copy natsumi-pages folder to the chrome folder.
-5. Restart Zen Browser and enjoy!
+4. Restart your browser and enjoy!
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
 and delay, change the variables in the config.css file.
 
-### Base theme
-- `natsumi.theme.compact-marginless`: Removes margins from compact mode (unless in split view).
-- `natsumi.theme.compact-marginless-hide-bookmarks`: Hides the bookmarks bar in marginless compact mode.
-- `natsumi.theme.consistent-toolbar-button-size`: Makes toolbar buttons have a consistent size on Zen 1.7.5b.
-- `natsumi.theme.disable-blur`: Disables blurring for materials. Use this if Zen Browser lags
-  too much.
-- `natsumi.theme.disable-glass-shadow`: Disables shadow for Glass material. Does not affect Mistcrylic and
-  Haze.
-- `natsumi.theme.disable-loading-animations`: Disables loading animation for tabs.
-- `natsumi.theme.disable-urlbar-animation`: Disables URLbar loading animation for tabs.
-- `natsumi.theme.enable-border-animation`: Enables border loading animation for tabs. This may use up
-  quite some GPU.
-- `natsumi.theme.force-blur`: Forces background blur support to be enabled regardless of whether a blurred
-  element is shown or not.
-- `natsumi.theme.force-glass-dark-shadows`: Forces dark shadows on Glass material.
-- `natsumi.theme.opaque-icons`: Makes toolbar icon outlines opaque instead of semi-transparent.
+### 🎨 Theming
+- `natsumi.theme.type` (string): Sets the browser theme type.
+  - Enter a theme ID from the themes list in the [Features](#features) section.
+- `natsumi.theme.accent-color` (string): Sets the browser theme color from a given accent color.
+  - Enter a color ID from the colors list in the [Features](#features) section.
+- `natsumi.theme.force-natsumi-color` (boolean): Forces Natsumi's accent color set in natsumi-config.css
+  to be used instead of the current Firefox theme's colors.
+- `natsumi.theme.use-tab-theme-color` (boolean): Uses the tab border color as the accent color for Blade.
+  This may break Blade on some themes.
+- `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
+- `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
 
-### URLbar
-- `natsumi.urlbar.disabled`: Disables Natsumi URLbar and reverts the URLbar style back.
-- `natsumi.urlbar.disable-transparency`: Disables URLbar background transparency.
-- `natsumi.urlbar.force-nowrap`: Prevents wrapping to make things more compact regardless of window
-  width.
-- `natsumi.urlbar.light`: Disables some animations to make Natsumi URLbar lighter.
-- `natsumi.urlbar.no-compact`: Disables compact URLbar when not focused.
+### 🗂️ Tabs
+- `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
+- `natsumi.tabs.type` (string): Sets a custom tab type.
+  - `material`: A material-like design inspired by Zen Browser's alpha UI.
 
-### Navbar
-- `natsumi.navbar.glass-effect`: Adds Glass material for the navbar on compact mode.
-- `natsumi.navbar.float`: Makes the navbar float. Glass material is required for this.
+### ⌨️ URL bar
+- `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
+- `natsumi.urlbar.do-not-float` (boolean): Disables the floating URL bar.
+- `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
 
-### Sidebar (Tabs)
-- `natsumi.sidebar.container-tabs-border`: Adds a border to container tabs.
-- `natsumi.sidebar.container-tabs-border-no-inactive`: Disables border for tabs that are not selected.
-- `natsumi.sidebar.disable-bigger-tab-label`: Disables bigger tab labels and reverts them back to the
-  normal font size.
-- `natsumi.sidebar.tabs-glass-effect`: Adds Glass material for the sidebar on compact mode.
-- `natsumi.sidebar.unlimited-pinned-tabs`: Removes the limit on the maximum number of tabs being shown
-  in the pinned section of the vertical tabs.
-
-### Sidebar (Firefox)
-- `natsumi.sidebar.ff-sidebar-blur`: Enables blur on Firefox sidebar when it is floating/unpinned.
-- `natsumi.sidebar.ff-sidebar-float`: Makes the Firefox sidebar float on top of the website.
-- `natsumi.sidebar.ff-sidebar-glass`: Adds Glass material to Firefox sidebar.
-- `natsumi.sidebar.ff-sidebar-haze`: Adds Haze material to Firefox sidebar.
-- `natsumi.sidebar.ff-sidebar-mistcrylic`: Adds Mistcrylic material to Firefox sidebar.
-- `natsumi.sidebar.ff-sidebar.opaque`: Disables transparent background for Firefox sidebar.
-- `natsumi.sidebar.ff-sidebar-position-center`: Vertically centers Firefox sidebar panel if it is
-  floating.
-- `natsumi.sidebar.ff-sidebar-position-bottom`: Moves Firefox sidebar panel to the bottom if it is
-  floating. Overrides `natsumi.sidebar.ff-sidebar-position-center` if enabled.
-- `natsumi.sidebar.ff-sidebar-resizable`: Makes the Firefox sidebar resizable.
-
-### Findbar
-- `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
-- `natsumi.findbar.disable-not-found-bg`: Disables red background that appears when there are no
+### 🔎 Findbar
+- `natsumi.findbar.disabled` (boolean): Disables Natsumi Findbar and reverts the findbar style back.
+- `natsumi.findbar.disable-not-found-bg` (boolean): Disables red background that appears when there are no
   results.
-- `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
+- `natsumi.findbar.wider-findbar` (boolean): Increases maximum Findbar width back to 720px.
 
-### Miniplayer
-- `natsumi.miniplayer.blur-fix`: Fixes blur on the miniplayer.
-- `natsumi.miniplayer.disable-accent`: Disables the accent glow effect on the top left corner.
+### 🖥️ Picture-in-Picture
+- `natsumi.pip.disabled` (boolean): Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.rounded` (boolean): Makes the PiP window round, like in macOS. Only supports Windows.
+- `natsumi.pip.tinted-haze` (boolean): Uses Tinted Haze material instead of Haze.
 
-### Picture-in-Picture
-- `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
-- `natsumi.pip.native-border-radius`: Makes the PiP controls border radius look more native.
-- `natsumi.pip.rounded`: Makes the PiP window round, like in macOS. Only supports Windows.
+### 📄 PDF Viewer
+- `natsumi.pdfjs.disabled` (boolean): Disables Natsumi PDF Viewer and reverts the PDF viewer back.
+- `natsumi.pdfjs.compact` (boolean): Enables compact mode for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic` (boolean): Disables compact mode when the PDF Viewer's sidebar is
+  expanded.
+- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Glass is used when
+  this is unset.
+  - `haze`: Haze
+  - `tinted-haze`: Tinted Haze
 
-### Library
-- `natsumi.library.disabled`: Disables Natsumi Library and reverts the library style back.
+### 🏠 Firefox Home
+- `natsumi.home.disabled` (boolean): Disables Natsumi FF home and reverts the FF home page back.
+- `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home 
+  screen background.
 
-### Gamemode
-- `natsumi.gamemode.enabled`: Enables Natsumi Gamemode.
-- `natsumi.gamemode.gx-color`: Adds a red-pink accent color for aesthetics.
-
-### PDF Viewer
-- `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
-- `natsumi.pdfjs.compact`: Enables compact mode for Natsumi PDF Viewer.
-- `natsumi.pdfjs.compact-dynamic`: Disables compact mode when the PDF Viewer's sidebar is expanded.
-
-### Home
-- `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
-- `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
-  background.
-
-### Global tweaks
-- `natsumi.global.highlight-accent-color`: Uses the accent color for highlighting.
-
-### Experiments
-- `natsumi.experiments.custom-font`: Sets a custom font set in natsumi-config.css.
+### 🔧 Compatibility
+- `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
+  - `firefox`: Mozilla Firefox
+  - `floorp`: Floorp Browser
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
@@ -216,35 +204,26 @@ you will need to keep certain files (preload, postload, natsumi-config) for Nats
 > If you installed Natsumi as part of another skin, your installation may be considered modified.
 > Please check with the skin's developer for assistance in this case.
 
-### "Is Natsumi compatible with the newest version of Zen Browser?"
-Natsumi is always developed and tested on the newest Zen Twilight, so that it's always compatible with
-the newest Zen Browser right on release day.
+### "Is Natsumi compatible with Zen Browser?"
+As of Natsumi v4, Natsumi has dropped all support for Zen Browser. I have no plans to continue
+support whatsoever due to the browser's main developer's stance on personalization, as well as
+various other reasons.
 
-If you are unsure if Natsumi is compatible with your version, check the tested versions in the beginning
-of the README.
+Additionally, it'd be a hassle to make things compatible with Zen, mainly because it is just so
+heavily modified from the original Firefox that I may end up building a whole new skin just for
+compatibility unintentionally.
 
 ### "When does Natsumi update?"
-There is no fixed schedule for updates.
+There is no fixed schedule for updates, it all happens randomly.
 
-Usually, I time my releases to happen when Zen Browser updates, so that Natsumi is always compatible
-with the newest version of Natsumi right on update day.
+### "Is Natsumi compatible with non-Firefox-based browsers (Chrome, Arc, etc.)?"
+No. Natsumi is made on top of Firefox, so it only supports Firefox and (most of) its forks.
 
-### "Is Natsumi compatible with other browsers (Firefox, Chrome, Arc, etc.)?"
-No. Natsumi is made on top of Zen Browser, so it only supports Zen Browser.
-
-If you try to apply Natsumi on other Firefox or other Firefox-based browsers, things will definitely
-break. As for Chrome/Chromium-based browsers like Arc, you can't apply userchrome CSS files, making
-Natsumi completely incompatible with those browsers.
-
-I do have some plans to make a Firefox version called Natsumini, but I don't know if I'll go forward
-with it.
+If you try to apply Natsumi on Chrome/Chromium-based browsers like Arc, you can't apply
+userchrome CSS files, making Natsumi completely incompatible with those browsers.
 
 ### "I don't like the design, please change it!"
 If I like the design, nah. My personal skin, my rules.
-
-### "Can I use Natsumi with other Zen Mods?"
-You can, but some mods (such as Better Find Bar and Super Url Bar) may conflict with Natsumi's CSS
-rules. If this happens, please disable the conflicting mods or Natsumi features.
 
 ### "Why is userChrome.css so empty?"
 Natsumi Browser uses a system where the userChrome.css file acts as a loader that loads the skin,
@@ -256,19 +235,19 @@ and disable custom CSS.
 Make sure both `layout.css.backdrop-filter.enabled` and `layout.css.backdrop-filter.force-enabled` are
 set to true. Also make sure that you're using WebRender and hardware rendering.
 
-### "Zen Browser lags a lot!"
-This may be due to the URLbar blurring or animations (likely the blur). Set `natsumi.theme.disable-blur`
-to false to disable the blur, and `natsumi.urlbar.light` to true to disable the animations.
-
 ### "I don't see any of the Natsumi options in about:config!"
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
 
 ### "Something's bugged!"
-There may be Zen Mods or userchromes that you're using alongside Natsumi Browser that breaks things.
-Please disable these then try again.
+There may be userchromes that you're using alongside Natsumi Browser that breaks things. Please disable
+these then try again.
 
 If the issue still persists, open an issue or report the bug to the developer through Discord.
+
+### "Can I use your code for my browser?"
+If your browser is open-source and licensed under the GPLv3 or later (or AGPLv3 or later), then yes.
+Otherwise, please contact me so I can grant you permission. 
 
 ## Acknowledgements
 Thank you to:
@@ -276,8 +255,8 @@ Thank you to:
   CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
-- [mr-cheff](https://github.com/mr-cheff) and Zen's
-  [contributors](https://github.com/zen-browser/desktop/graphs/contributors) for creating Zen Browser
+- [Lucide](https://lucide.dev/) for the icons used in Natsumi for Floorp ([view
+  license](./natsumi/icons/lucide/LICENSE))
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
