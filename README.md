@@ -54,7 +54,7 @@ giving it the modern look it really deserves. And with compact view, you can foc
 hand when you don't need the extra tools.
 
 ### 🖼️ Express yourself with themes.
-#### A theming engine that lets your browser vibe with you
+#### A theming engine that lets your browser vibe with you.
 ![](./images/all-the-themes.png)
 
 Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
