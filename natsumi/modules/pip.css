@@ -93,9 +93,8 @@ their author(s) have been provided above the used code.
       & > button {
         opacity: 0 !important;
         top: 0 !important;
-        filter: blur(5px);
-        border-radius: 6px !important;
-        transition: opacity 0.3s ease, top 0.3s ease, filter 0.3s ease, background-color 0.2s ease !important;
+        border-radius: 50% !important;
+        transition: opacity 0.3s ease, top 0.3s ease, background-color 0.2s ease !important;
         backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
         background-color: var(--natsumi-mat-hz-background) !important;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
@@ -120,52 +119,64 @@ their author(s) have been provided above the used code.
         fill: light-dark(black, white) !important;
       }
 
-      #controls-bottom-gradient {
-        display: none !important;
-      }
-
       /*noinspection CssInvalidFunction*/
       #controls-bottom {
         opacity: 0 !important;
         bottom: -5px !important;
-        background-color: var(--natsumi-mat-hz-background) !important;
-        border-radius: 10px !important;
         padding: 10px 15px !important;
         margin: 0 5px !important;
         margin-bottom: 5px !important;
-        width: min(calc(100% - 10px), 700px) !important;
+        width: calc(100% - 10px) !important;
         box-sizing: border-box !important;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
-        backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-        filter: blur(10px);
-        transition: opacity 0.3s ease, bottom 0.3s ease, filter 0.3s ease !important;
-        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+        transition: opacity 0.3s ease, bottom 0.3s ease !important;
         left: calc(50% - 5px) !important;
         transform: translateX(-50%) !important;
 
-        @media -moz-pref("natsumi.pip.tinted-haze") {
-          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        .start-controls, .center-controls, .end-controls {
+          border-radius: 18px !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+          backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+          gap: 0 !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+
+          @media -moz-pref("natsumi.pip.tinted-haze") {
+            background-color: var(--natsumi-mat-hz-background-tinted) !important;
+          }
         }
 
-        @media -moz-pref("natsumi.pip.native-border-radius") and (width <= 710px) {
-        /* For the sake of adding native radius, we'll reduce the margin of the controls here */
-        width: min(100%, 700px) !important;
-        margin: 0 !important;
-        left: calc(50%) !important;
-        bottom: -10px !important;
-
-        /*
-        For now this config is available on macOS only, this'll be added to Windows and Linux
-        once curved PiP for those platforms moves out of experiment status
-        */
-        @media (-moz-platform: macos) {
-          border-radius: 5px !important;
+        #timestamp {
+          text-align: center !important;
         }
-      }
+
+        #seekBackward, #audio {
+          border-radius: 16px 4px 4px 16px !important;
+        }
+
+        #playpause, #closed-caption {
+          border-radius: 4px !important;
+        }
+
+        #seekForward, #fullscreen {
+          border-radius: 4px 16px 16px 4px !important;
+        }
+
+        #playpause::after, #seekBackward::after, #seekForward::after, #audio::after, #closed-caption::after {
+          left: 50% !important;
+          translate: -50% 0 !important;
+        }
+
+        #seekForward::after, #seekBackward::after {
+          top: -54.5px !important;
+        }
 
         .start-controls {
           @media (width > 300px) {
             display: flex !important;
+          }
+
+          @media (width <= 440px) {
+            border-width: 0 !important;
           }
 
           /*noinspection CssInvalidFunction*/
@@ -201,6 +212,42 @@ their author(s) have been provided above the used code.
           }
         }
 
+        #scrubber {
+          opacity: 1 !important;
+          width: calc(100% - 4px) !important;
+          height: 6px !important;
+          padding: 0 !important;
+          border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+          background-color: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+
+          @media -moz-pref("natsumi.pip.tinted-haze") {
+            background-color: var(--natsumi-mat-hz-background-tinted) !important;
+          }
+
+          &::-moz-range-track {
+            height: 6px !important;
+            border-radius: 5px !important;
+            background: transparent !important;
+          }
+
+          &::-moz-range-progress {
+            height: 6px !important;
+            border-radius: 3px 0 0 3px !important;
+            width: 100px !important;
+          }
+
+          &::-moz-range-thumb {
+            border: 4px solid var(--natsumi-mat-hz-background) !important;
+            backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+
+            @media -moz-pref("natsumi.pip.tinted-haze") {
+              border-color: var(--natsumi-mat-hz-background-tinted) !important;
+            }
+          }
+        }
+
         #audio-scrubber {
           &::-moz-range-thumb {
             width: 8px !important;
@@ -215,6 +262,7 @@ their author(s) have been provided above the used code.
           -moz-context-properties: fill;
           fill: light-dark(black, white) !important;
           border-radius: 6px !important;
+          opacity: 1 !important;
 
           &[disabled] {
             cursor: default !important;
@@ -306,7 +354,6 @@ their author(s) have been provided above the used code.
         & > .panel-fieldset {
           background-color: var(--natsumi-mat-hz-background) !important;
           backdrop-filter: blur(15px);
-          filter: blur(0);
           backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
           border: 1px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
@@ -333,7 +380,6 @@ their author(s) have been provided above the used code.
 
           & > .panel-fieldset {
             backdrop-filter: none !important;
-            filter: blur(5px);
           }
         }
       }
@@ -343,17 +389,11 @@ their author(s) have been provided above the used code.
       & > button {
         opacity: 1 !important;
         top: 10px !important;
-        filter: blur(0) !important;
       }
 
       #controls-bottom {
         opacity: 1 !important;
         bottom: 5px !important;
-        filter: blur(0);
-
-        @media -moz-pref("natsumi.pip.native-border-radius") {
-          bottom: 0 !important;
-        }
       }
     }
 
