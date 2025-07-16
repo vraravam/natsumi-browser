@@ -172,6 +172,10 @@ and delay, change the variables in the config.css file.
 - `natsumi.pdfjs.compact` (boolean): Enables compact mode for Natsumi PDF Viewer.
 - `natsumi.pdfjs.compact-dynamic` (boolean): Disables compact mode when the PDF Viewer's sidebar is
   expanded.
+- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Glass is used when
+  this is unset.
+  - `haze`: Haze
+  - `tinted-haze`: Tinted Haze
 
 ### 🏠 Firefox Home
 - `natsumi.home.disabled` (boolean): Disables Natsumi FF home and reverts the FF home page back.
