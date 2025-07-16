@@ -437,7 +437,7 @@ their author(s) have been provided above the used code.
         background-image: url("../../icons/lucide/captions.svg") !important;
 
         &[disabled="true"] {
-          stroke: light-dark(#555, #777) !important;
+          stroke: light-dark(#999, #777) !important;
         }
       }
 
