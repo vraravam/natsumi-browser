@@ -207,7 +207,12 @@ you will need to keep certain files (preload, postload, natsumi-config) for Nats
 
 ### "Is Natsumi compatible with Zen Browser?"
 As of Natsumi v4, Natsumi has dropped all support for Zen Browser. I have no plans to continue
-support whatsoever due to the browser's main developer's continued attacks on personalization.
+support whatsoever due to the browser's main developer's stance on personalization, as well as
+various other reasons.
+
+Additionally, it'd be a hassle to make things compatible with Zen, mainly because it is just so
+heavily modified from the original Firefox that I may end up building a whole new skin just for
+compatibility unintentionally.
 
 ### "When does Natsumi update?"
 There is no fixed schedule for updates, it all happens randomly.
