@@ -156,25 +156,27 @@ and delay, change the variables in the config.css file.
 - `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
 
 ### 🔎 Findbar
-- `natsumi.findbar.disabled`: Disables Natsumi Findbar and reverts the findbar style back.
-- `natsumi.findbar.disable-not-found-bg`: Disables red background that appears when there are no
+- `natsumi.findbar.disabled` (boolean): Disables Natsumi Findbar and reverts the findbar style back.
+- `natsumi.findbar.disable-not-found-bg` (boolean): Disables red background that appears when there are no
   results.
-- `natsumi.findbar.wider-findbar`: Increases maximum Findbar width back to 720px.
+- `natsumi.findbar.wider-findbar` (boolean): Increases maximum Findbar width back to 720px.
 
 ### 🖥️ Picture-in-Picture
-- `natsumi.pip.disabled`: Disables Natsumi PiP and reverts the PiP style back.
-- `natsumi.pip.native-border-radius`: Makes the PiP controls border radius look more native.
-- `natsumi.pip.rounded`: Makes the PiP window round, like in macOS. Only supports Windows.
+- `natsumi.pip.disabled` (boolean): Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.native-border-radius` (boolean): Makes the PiP controls border radius look more native.
+- `natsumi.pip.rounded` (boolean): Makes the PiP window round, like in macOS. Only supports Windows.
+- `natsumi.pip.tinted-haze` (boolean): Uses Tinted Haze material instead of Haze.
 
 ### 📄 PDF Viewer
-- `natsumi.pdfjs.disabled`: Disables Natsumi PDF Viewer and reverts the PDF viewer back.
-- `natsumi.pdfjs.compact`: Enables compact mode for Natsumi PDF Viewer.
-- `natsumi.pdfjs.compact-dynamic`: Disables compact mode when the PDF Viewer's sidebar is expanded.
+- `natsumi.pdfjs.disabled` (boolean): Disables Natsumi PDF Viewer and reverts the PDF viewer back.
+- `natsumi.pdfjs.compact` (boolean): Enables compact mode for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic` (boolean): Disables compact mode when the PDF Viewer's sidebar is
+  expanded.
 
 ### 🏠 Firefox Home
-- `natsumi.home.disabled`: Disables Natsumi FF home and reverts the FF home page back.
-- `natsumi.home.custom-background`: Uses the custom background set in config as the home screen
-  background.
+- `natsumi.home.disabled` (boolean): Disables Natsumi FF home and reverts the FF home page back.
+- `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home 
+  screen background.
 
 ### 🔧 Compatibility
 - `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.

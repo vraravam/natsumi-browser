@@ -109,6 +109,10 @@ their author(s) have been provided above the used code.
             background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, black) !important;
           }
         }
+
+        @media -moz-pref("natsumi.pip.tinted-haze") {
+          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        }
       }
 
       #close, #unpip {
@@ -307,6 +311,10 @@ their author(s) have been provided above the used code.
           border: 1px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
           padding: 0 !important;
+
+          @media -moz-pref("natsumi.pip.tinted-haze") {
+            background-color: var(--natsumi-mat-hz-background-tinted) !important;
+          }
         }
 
         /*noinspection CssInvalidFunction*/
