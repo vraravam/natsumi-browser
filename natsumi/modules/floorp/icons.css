@@ -204,6 +204,14 @@ their author(s) have been provided above the used code.
     list-style-image: url("../../icons/lucide/file.svg") !important;
   }
 
+  #reader-mode-button-icon {
+    list-style-image: url("../../icons/lucide/reader-view.svg") !important;
+  }
+
+  #reader-mode-button[readeractive] #reader-mode-button-icon {
+    stroke: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+  }
+
   #picture-in-picture-button-icon {
     list-style-image: url("../../icons/lucide/pip.svg") !important;
   }
