@@ -35,7 +35,7 @@ body:
     attributes:
       label: Browser Version
       description: What browser version did you use when you encountered the bug? (Please also specify the name of the browser)
-      placeholder: 1.7.1b, 1.7.2t, etc.
+      placeholder: 141.0, 142.0a1, etc.
     validations:
       required: true
   - type: textarea
