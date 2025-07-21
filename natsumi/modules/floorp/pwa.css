@@ -29,5 +29,5 @@ their author(s) have been provided above the used code.
 
 /* ==== Floorp PWA ==== */
 
-@media -moz-pref("natsumi.browser.type", "floorp") {
+:root[data-title-default="Ablaze Floorp"] {
 }

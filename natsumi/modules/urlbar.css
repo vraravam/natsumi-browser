@@ -478,6 +478,10 @@ their author(s) have been provided above the used code.
           &[type="search"] {
             .urlbarView-no-wrap {
               width: 100% !important;
+
+              .urlbarView-title {
+                width: 100% !important;
+              }
             }
 
             .urlbarView-title-separator {

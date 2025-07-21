@@ -29,7 +29,7 @@ their author(s) have been provided above the used code.
 
 /* ==== Floorp split view ==== */
 
-@media -moz-pref("natsumi.browser.type", "floorp") {
+:root[data-title-default="Ablaze Floorp"] {
   /* Split view animations (incoming) */
   @keyframes split-left-incoming {
     0% {

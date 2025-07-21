@@ -29,7 +29,7 @@ their author(s) have been provided above the used code.
 
 /* ==== Floorp panel sidebar ==== */
 
-@media -moz-pref("natsumi.browser.type", "floorp") {
+:root[data-title-default="Ablaze Floorp"] {
   #panel-sidebar-splitter {
     min-width: var(--natsumi-browser-separation) !important;
   }
