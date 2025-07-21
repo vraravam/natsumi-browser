@@ -147,6 +147,8 @@ their author(s) have been provided above the used code.
 
         #timestamp {
           text-align: center !important;
+          width: 100% !important;
+          padding-inline: 12px !important;
         }
 
         #seekBackward, #audio {

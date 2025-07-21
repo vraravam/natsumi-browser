@@ -111,6 +111,8 @@ Or, choose from one of the preset colors.
 - $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
 - $${\color{#f6b0ea}■}$$ **Pink** (`pink`) - #f6b0ea
 - $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
+- $${\color{#ffffff}■}$$ **System Accent** (`system`) - follow your system's accent color (works on
+  macOS and Linux)!
 
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
@@ -127,6 +129,10 @@ You will need to install Natsumi by copying its files to your profile's chrome f
 2. Copy userChrome.css and userContent.css to the chrome folder.
 3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart your browser and enjoy!
+
+#### Installing via Sine
+While installing via Sine is possible, this is not recommended for Floorp users due to issues with icons.
+See [#123](https://github.com/greeeen-dev/natsumi-browser/issues/123).
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
@@ -180,10 +186,18 @@ and delay, change the variables in the config.css file.
 - `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home 
   screen background.
 
-### 🔧 Compatibility
-- `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
-  - `firefox`: Mozilla Firefox
-  - `floorp`: Floorp Browser
+## Browser support
+All browsers must be based on Firefox 137 or above.
+
+| Browser     | Status                        | Versions | Notes                                                                     |
+|-------------|-------------------------------|----------|---------------------------------------------------------------------------|
+| Firefox     | :white_check_mark: Supported  | 137+     |                                                                           |
+| Floorp      | :white_check_mark: Supported  | 12+      | Not supported on Floorp 11 as it uses an incompatible version of Firefox. |
+| Librewolf   | :warning: Partially supported | 137+     | Supported, but animations may be laggy due to no hardware acceleration.   |
+| Waterfox    | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
+| Midori      | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
+| Mullvad/Tor | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
+| Zen         | :x: Unsupported               | -        | See FAQ.                                                                  |
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
