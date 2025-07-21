@@ -186,6 +186,12 @@ and delay, change the variables in the config.css file.
 - `natsumi.home.custom-background` (boolean): Uses the custom background set in config as the home 
   screen background.
 
+### 🔧 Compatibility
+- `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
+  This is needed for some features such as PiP where automatic detection isn't possible.
+  - `firefox`: Mozilla Firefox
+  - `floorp`: Floorp Browser
+
 ## Browser support
 All browsers must be based on Firefox 137 or above.
 
