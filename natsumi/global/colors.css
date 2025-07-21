@@ -88,3 +88,9 @@ their author(s) have been provided above the used code.
     --natsumi-custom-primary-color: #d4bbff;
   }
 }
+
+@media -moz-pref("natsumi.theme.accent-color", "system") {
+  * {
+    --natsumi-custom-primary-color: AccentColor;
+  }
+}
