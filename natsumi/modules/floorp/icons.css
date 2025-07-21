@@ -381,7 +381,7 @@ their author(s) have been provided above the used code.
   }
 }
 
-@media not -moz-pref("natsumi.pip.disabled") and -moz-pref("natsumi.browser.type", "floorp") {
+@media (not -moz-pref("natsumi.pip.disabled")) and -moz-pref("natsumi.browser.type", "floorp") {
   @-moz-document url("chrome://global/content/pictureinpicture/player.xhtml") {
     .center-controls, .end-controls {
       button {
