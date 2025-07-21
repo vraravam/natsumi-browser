@@ -125,8 +125,7 @@ You will need to install Natsumi by copying its files to your profile's chrome f
 4. Restart your browser and enjoy!
 
 #### If you don't have a userChrome.css/userContent.css file
-1. Create a new chrome folder in your profile folder, if you haven't already.
-   ([guide](https://docs.zen-browser.app/guides/live-editing))
+1. Create a new `chrome` folder in your profile folder, if you haven't already. (to locate the profile folder, type `about:profiles` in address bar and press Enter, open the Root Directory of the current profile)
 2. Copy userChrome.css and userContent.css to the chrome folder.
 3. Copy natsumi-config.css and natsumi folder to the chrome folder.
 4. Restart your browser and enjoy!
