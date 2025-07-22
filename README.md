@@ -195,15 +195,15 @@ and delay, change the variables in the config.css file.
 ## Browser support
 All browsers must be based on Firefox 137 or above.
 
-| Browser     | Status                        | Versions | Notes                                                                     |
-|-------------|-------------------------------|----------|---------------------------------------------------------------------------|
-| Firefox     | :white_check_mark: Supported  | 137+     |                                                                           |
-| Floorp      | :white_check_mark: Supported  | 12+      | Not supported on Floorp 11 as it uses an incompatible version of Firefox. |
-| Librewolf   | :warning: Partially supported | 137+     | Supported, but animations may be laggy due to no hardware acceleration.   |
-| Waterfox    | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
-| Midori      | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
-| Mullvad/Tor | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.              |
-| Zen         | :x: Unsupported               | -        | See FAQ.                                                                  |
+| Browser     | Status                        | Versions | Notes                                                                          |
+|-------------|-------------------------------|----------|--------------------------------------------------------------------------------|
+| Firefox     | :white_check_mark: Supported  | 137+     |                                                                                |
+| Floorp      | :white_check_mark: Supported  | 12+      | Not supported on Floorp 11 as it uses an incompatible version of Firefox.      |
+| Waterfox    | :white_check_mark: Supported  | 6.6.0+   | Not supported on Waterfox 6.5.0 as it uses an incompatible version of Firefox. |
+| Librewolf   | :warning: Partially supported | 137+     | Supported, but animations may be laggy due to no hardware acceleration.        |
+| Midori      | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.                   |
+| Mullvad/Tor | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.                   |
+| Zen         | :x: Unsupported               | -        | See FAQ.                                                                       |
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
