@@ -52,7 +52,12 @@ their author(s) have been provided above the used code.
   --natsumi-theme-color-opacity: 0.5;
   --natsumi-theme-gradient-opacity: 0.5;
 
-  /* Gradient color (overrides solid colors) */
+  @media (-moz-platform: linux) {
+    &::before, &::after {
+      border-radius: 5px !important;
+    }
+  }
+
   /* Gradient color (overrides solid colors) */
   #browser::before {
     --natsumi-theme-gradient-color-left: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
