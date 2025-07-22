@@ -202,7 +202,7 @@ All browsers must be based on Firefox 137 or above.
 | Waterfox    | :white_check_mark: Supported  | 6.6.0+   | Not supported on Waterfox 6.5.0 as it uses an incompatible version of Firefox. |
 | Librewolf   | :warning: Partially supported | 137+     | Supported, but animations may be laggy due to no hardware acceleration.        |
 | Midori      | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.                   |
-| Mullvad/Tor | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.                   |
+| Mullvad/Tor | :x: Unsupported               | 15.0+    | Marked as unsupported as Tor/Mullvad version 15 is in alpha.                   |
 | Zen         | :x: Unsupported               | -        | See FAQ.                                                                       |
 
 ## FAQs
