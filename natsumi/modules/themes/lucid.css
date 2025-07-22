@@ -32,7 +32,7 @@ their author(s) have been provided above the used code.
 /* you two please come back even though i ditched zen ;w;) */
 
 @media -moz-pref("natsumi.theme.type", "lucid") {
-  :root[windowtype*="navigator:browser"] body::before {
+  :root[windowtype*="navigator:browser"] #browser::before {
     background: radial-gradient(closest-side, light-dark(var(--natsumi-primary-color), var(--natsumi-colors-secondary)), transparent) !important;
     opacity: 1 !important;
   }

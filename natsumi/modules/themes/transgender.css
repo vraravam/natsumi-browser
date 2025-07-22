@@ -32,7 +32,7 @@ their author(s) have been provided above the used code.
 
 @media -moz-pref("natsumi.theme.type", "transgender") {
   :root[windowtype*="navigator:browser"] body {
-    &::before {
+    #browser::before {
       opacity: var(--natsumi-theme-gradient-opacity) !important;
       background: linear-gradient(180deg, #5bcefa, #f5a9b8, white, #f5a9b8, #5bcefa) !important;
 

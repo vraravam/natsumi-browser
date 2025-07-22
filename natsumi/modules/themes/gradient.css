@@ -33,7 +33,7 @@ their author(s) have been provided above the used code.
 
 @media -moz-pref("natsumi.theme.type", "gradient") {
   :root[windowtype*="navigator:browser"] body {
-    &::before {
+    #browser::before {
       opacity: var(--natsumi-theme-gradient-opacity) !important;
     }
 
