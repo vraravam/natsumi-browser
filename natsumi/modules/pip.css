@@ -109,7 +109,7 @@ their author(s) have been provided above the used code.
           }
         }
 
-        @media -moz-pref("natsumi.pip.tinted-haze") {
+        @media -moz-pref("natsumi.pip.material", "tinted-haze") {
           background-color: var(--natsumi-mat-hz-background-tinted) !important;
         }
       }
@@ -140,7 +140,7 @@ their author(s) have been provided above the used code.
           gap: 0 !important;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
 
-          @media -moz-pref("natsumi.pip.tinted-haze") {
+          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
             background-color: var(--natsumi-mat-hz-background-tinted) !important;
           }
         }
@@ -224,7 +224,7 @@ their author(s) have been provided above the used code.
           backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
 
-          @media -moz-pref("natsumi.pip.tinted-haze") {
+          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
             background-color: var(--natsumi-mat-hz-background-tinted) !important;
           }
 
@@ -244,7 +244,7 @@ their author(s) have been provided above the used code.
             border: 4px solid var(--natsumi-mat-hz-background) !important;
             backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
 
-            @media -moz-pref("natsumi.pip.tinted-haze") {
+            @media -moz-pref("natsumi.pip.material", "tinted-haze") {
               border-color: var(--natsumi-mat-hz-background-tinted) !important;
             }
           }
@@ -361,7 +361,7 @@ their author(s) have been provided above the used code.
           box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
           padding: 0 !important;
 
-          @media -moz-pref("natsumi.pip.tinted-haze") {
+          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
             background-color: var(--natsumi-mat-hz-background-tinted) !important;
           }
         }
