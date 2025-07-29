@@ -95,7 +95,7 @@ their author(s) have been provided above the used code.
   -moz-window-dragging: drag;
 }
 
-#nav-bar-customization-target, #PanelUI-button {
+#nav-bar-customization-target, #PanelUI-button, #nora-statusbar {
   toolbarbutton {
     --toolbarbutton-outer-padding: 4px;
     max-height: 40px !important;
@@ -339,4 +339,24 @@ their author(s) have been provided above the used code.
 
 #notification-popup .popup-notification-secondary-button {
   display: flex !important;
+}
+
+.tools-and-extensions {
+  justify-content: space-between !important;
+  padding-bottom: var(--natsumi-browser-separation) !important;
+
+  &[orientation="horizontal"] {
+    width: calc(100% - calc(var(--natsumi-browser-separation) * 2)) !important;
+    padding-inline: var(--natsumi-browser-separation) !important;
+  }
+}
+
+@media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
+  #vertical-tabs {
+    min-height: 100% !important;
+  }
+
+  #tabbrowser-tabs::after {
+    border-color: transparent !important;
+  }
 }

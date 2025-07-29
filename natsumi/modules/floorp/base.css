@@ -83,6 +83,10 @@ their author(s) have been provided above the used code.
     }
   }
 
+  &:has(#nora-statusbar:not(.hidden)) #browser::before {
+    bottom: -40px !important;
+  }
+
   @media -moz-pref("natsumi.sidebar.floorp-floating-panel") {
     @keyframes panel-appear {
       0% {
@@ -135,6 +139,56 @@ their author(s) have been provided above the used code.
 
       &:not(:hover) {
       }
+    }
+  }
+
+  @media -moz-pref("natsumi.sidebar.use-floorp-statusbar-in-sidebar") {
+    &:not([customizing]) #nora-statusbar.hidden {
+      display: flex !important;
+      justify-content: space-between !important;
+      flex-wrap: wrap;
+      position: absolute;
+      left: var(--natsumi-browser-separation);
+      bottom: calc(var(--natsumi-browser-separation) + var(--space-small) + 40px);
+      width: calc(var(--natsumi-sidebar-width) - calc(var(--natsumi-browser-separation) * 2)) !important;
+
+      @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
+        bottom: var(--natsumi-browser-separation) !important;
+      }
+
+      #status-text {
+        display: none !important;
+      }
+    }
+
+    &:not([customizing]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
+      flex-direction: column !important;
+      bottom: calc(var(--natsumi-sidebar-options-height) + var(--space-small) + var(--natsumi-browser-separation));
+      left: 7px !important;
+
+      toolbarbutton {
+        margin-block: 3px !important;
+      }
+
+      .toolbarbutton-text {
+        display: none !important;
+      }
+
+      @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
+        bottom: var(--natsumi-browser-separation) !important;
+      }
+    }
+
+    &:has(#nora-statusbar.hidden) #vertical-tabs {
+      padding-bottom: calc(40px + var(--natsumi-browser-separation)) !important;
+    }
+
+    &:has(#nora-statusbar.hidden) #vertical-tabs {
+      padding-bottom: calc(var(--natsumi-statusbar-height) + 3px + var(--natsumi-browser-separation)) !important;
+    }
+
+    #tabbrowser-tabs::after {
+      border-bottom: var(--tabstrip-inner-border) !important;
     }
   }
 }

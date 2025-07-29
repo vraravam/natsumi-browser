@@ -249,6 +249,9 @@ Natsumi Browser uses a system where the userChrome.css file acts as a loader tha
 instead of being the file that contains all rules. This way, it's easier for users to quickly enable
 and disable custom CSS.
 
+### "mrrp"
+meow :3
+
 ## Troubleshooting
 ### "URLbar blur won't work!"
 Make sure both `layout.css.backdrop-filter.enabled` and `layout.css.backdrop-filter.force-enabled` are
@@ -257,6 +260,10 @@ set to true. Also make sure that you're using WebRender and hardware rendering.
 ### "I don't see any of the Natsumi options in about:config!"
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
+
+### "I don't see the Customize Natsumi option in the settings page!"
+Please check that you've installed fx-autoconfig and `userChromeJS.persistent_domcontent_callback` is
+true.
 
 ### "Something's bugged!"
 There may be userchromes that you're using alongside Natsumi Browser that breaks things. Please disable

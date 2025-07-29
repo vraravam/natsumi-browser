@@ -12,7 +12,7 @@ function convertToXUL(node) {
 }
 
 function testAlert() {
-    alert("nya :3");
+    console.log("nya :3");
 }
 
 function setStringPreference(preference, value) {
@@ -173,12 +173,6 @@ const materials = {
         "Tinted Haze",
         "",
         "<div id='mat-hz-tinted' class='natsumi-mc-choice-image-browser'></div>"
-    ),
-    "glass": new MCChoice(
-        "glass",
-        "Glass (legacy)",
-        "",
-        "<div id='mat-ga' class='natsumi-mc-choice-image-browser'></div>"
     )
 }
 
@@ -547,6 +541,58 @@ function addColorsPane() {
     prefsView.insertBefore(colorNode, homePane);
 }
 
+function addSidebarButtonsPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let buttonsGroup = new OptionsGroup(
+        "natsumiSidebarButtons",
+        "Buttons",
+        "Tweak the buttons visible in the sidebar."
+    );
+
+    if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+            buttonsGroup.registerOption("natsumiSidebarEnableToolbar", new CheckboxChoice(
+                "natsumi.sidebar.use-floorp-statusbar-in-sidebar",
+                "natsumiSidebarEnableToolbar",
+                "Use Floorp's Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
+                "This will allow you to add toolbar buttons (e.g. Bookmarks menu, New tab) to the Sidebar just like Zen."
+            ));
+        }
+    }
+
+    buttonsGroup.registerOption("natsumiSidebarHideControls", new CheckboxChoice(
+        "natsumi.sidebar.hide-sidebar-controls",
+        "natsumiSidebarHideControls",
+        "Hide Sidebar controls"
+    ));
+
+    let sidebarButtonsNode = buttonsGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = sidebarButtonsNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        console.log("Adding listener to checkbox:", checkbox);
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(sidebarButtonsNode, homePane);
+}
+
 function addPipMaterialPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -770,6 +816,11 @@ function addPreferencesPanes() {
             <html:h1>Browser Appearance</html:h1>
         </hbox>
     `);
+    let sidebarNode = convertToXUL(`
+        <hbox id="natsumiSidebarCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Sidebar &amp; Tabs</html:h1>
+        </hbox>
+    `);
     let pipNode = convertToXUL(`
         <hbox id="natsumiPipCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Picture-in-Picture</html:h1>
@@ -791,6 +842,9 @@ function addPreferencesPanes() {
     prefsView.insertBefore(appearanceNode, homePane);
     addThemesPane();
     addColorsPane();
+
+    prefsView.insertBefore(sidebarNode, homePane);
+    addSidebarButtonsPane();
 
     let pipDisabled = false;
     if (ucApi.Prefs.get("natsumi.pip.disabled").exists()) {
@@ -822,5 +876,6 @@ function addPreferencesPanes() {
     }
 }
 
+console.log("Loading prefs panes...");
 addToSidebar();
 addPreferencesPanes();
