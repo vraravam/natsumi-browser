@@ -50,6 +50,10 @@ their author(s) have been provided above the used code.
     display: flex;
     flex-direction: column;
 
+    &:hover {
+      background-color: var(--natsumi-button-hover-color);
+    }
+
     &.selected {
       border-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
       background-color: color-mix(in srgb, var(--natsumi-primary-color) 30%, transparent);
