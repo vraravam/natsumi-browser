@@ -1,4 +1,3 @@
 /scripts/*
 .env
-/.zenbento
-/.temp
+/.installer
