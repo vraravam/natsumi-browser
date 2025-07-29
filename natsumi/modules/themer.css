@@ -103,12 +103,12 @@ their author(s) have been provided above the used code.
 
   @media -moz-pref("natsumi.theme.gray-out-when-inactive") {
     &:-moz-window-inactive {
-      &::before {
-        opacity: 0 !important;
+      &::after {
+        background-color: transparent !important;
       }
 
       #browser::before {
-        background-color: transparent !important;
+        opacity: 0 !important;
       }
     }
   }
