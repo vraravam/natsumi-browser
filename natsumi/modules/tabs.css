@@ -148,6 +148,15 @@ their author(s) have been provided above the used code.
     }
   }
 
+  /* Pinned tabs */
+  #pinned-tabs-container tab {
+    min-height: 40px !important;
+  }
+
+  #pinned-tabs-container {
+    --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)))
+  }
+
   #sidebar-main:not([sidebar-launcher-expanded]) {
     .tabbrowser-tab {
       min-width: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
