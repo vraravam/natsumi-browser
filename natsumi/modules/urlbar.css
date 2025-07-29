@@ -567,10 +567,10 @@ their author(s) have been provided above the used code.
           }
         }
       }
-      }
     }
+  }
 
-    @media not -moz-pref("natsumi.urlbar.always-expanded") {
+  @media not -moz-pref("natsumi.urlbar.always-expanded") {
     #navigator-toolbox:not(:hover) {
       #urlbar:not([open], [focused]):not(:has(box[open], .urlbar-page-action[open])) {
         --natsumi-urlbar-hover-background-color: transparent;
