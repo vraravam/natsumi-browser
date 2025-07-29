@@ -95,6 +95,10 @@ their author(s) have been provided above the used code.
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
 
+          @media -moz-pref("natsumi.browser.type", "floorp") {
+            height: max(calc(var(--natsumi-tab-height) - 4px), 32px);
+          }
+
           @media -moz-pref("sidebar.verticalTabs") {
             top: var(--natsumi-tabs-blade-position-offset);
             left: var(--tab-inner-inline-margin);
@@ -149,11 +153,11 @@ their author(s) have been provided above the used code.
   }
 
   /* Pinned tabs */
-  #pinned-tabs-container tab {
-    min-height: 40px !important;
+  #pinned-tabs-container {
+    --tab-height-with-margin-padding: calc(41px + (2 * var(--tab-block-margin)))
   }
 
-  #pinned-tabs-container {
+  #tabbrowser-tabs[expanded] #pinned-tabs-container {
     --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)))
   }
 
