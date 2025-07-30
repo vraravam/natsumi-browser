@@ -366,7 +366,7 @@ their author(s) have been provided above the used code.
   :root:not([customizing]) {
     #navigator-toolbox {
       width: var(--natsumi-sidebar-width) !important;
-      min-height: 80px !important;
+      min-height: 85px !important;
       z-index: 1 !important;
     }
 
