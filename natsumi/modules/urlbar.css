@@ -401,6 +401,10 @@ their author(s) have been provided above the used code.
         opacity: 1 !important;
         animation: floating-urlbar-appear 0.2s ease !important;
 
+        @media -moz-pref("natsumi.theme.single-toolbar") and -moz-pref("sidebar.verticalTabs") {
+          --urlbar-margin-inline: 5px !important;
+        }
+
         .urlbar-input-container {
           height: 48px !important;
         }
@@ -703,15 +707,6 @@ their author(s) have been provided above the used code.
                 min-width: 24px !important;
                 margin: 0 4px !important;
               }
-            }
-          }
-        }
-
-        @media -moz-pref("natsumi.theme.single-toolbar") {
-          .urlbar-input-container {
-            &::before {
-              margin-left: 9px !important;
-              margin-right: 15px !important;
             }
           }
         }
