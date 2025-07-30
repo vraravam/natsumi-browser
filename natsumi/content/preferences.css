@@ -70,10 +70,7 @@ their author(s) have been provided above the used code.
           border-radius: 2px;
           border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
           background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
-          margin-top: auto;
-          margin-bottom: 4px;
-          margin-left: 4px;
-          margin-right: 4px;
+          margin: auto 4px 4px;
 
           @media -moz-pref("sidebar.verticalTabs") {
             width: calc(100% - 34px);
@@ -96,6 +93,52 @@ their author(s) have been provided above the used code.
         &:has(.natsumi-mc-choice-image-browser-additional) {
           &::before {
             display: none;
+          }
+        }
+
+        &#multiple-toolbars {
+          flex-direction: column !important;
+
+          &::before {
+            height: calc(100% - 14px) !important;
+            width: calc(100% - 34px) !important;
+            margin-left: auto;
+          }
+
+          &::after {
+            border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+            content: "";
+            width: 50px;
+            height: 2px;
+            background-color: var(--natsumi-button-hover-color);
+            margin-top: 2px !important;
+            order: -1 !important;
+            border-radius: 2px;
+            margin-left: auto;
+            margin-right: auto;
+          }
+        }
+
+        &#single-toolbar {
+          flex-direction: row !important;
+
+          &::before {
+            height: calc(100% - 10px) !important;
+            width: calc(100% - 34px) !important;
+            margin-left: auto;
+          }
+
+          &::after {
+            border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+            content: "";
+            width: 22px;
+            height: 2px;
+            background-color: var(--natsumi-button-hover-color);
+            margin-top: 10px !important;
+            order: -1 !important;
+            border-radius: 2px;
+            margin-left: auto;
+            margin-right: auto;
           }
         }
 
@@ -124,6 +167,15 @@ their author(s) have been provided above the used code.
 
         &#colorful {
           background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+        }
+
+        &#playful {
+          background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-primary-color) 70%, black)) !important;
+          filter: saturate(2);
+
+          &::before {
+            filter: saturate(0.5);
+          }
         }
 
         &#lucid {
@@ -207,10 +259,7 @@ their author(s) have been provided above the used code.
     .natsumi-mc-choice-image-browser {
       &::before {
         display: block;
-        margin-top: 50px;
-        margin-bottom: 5px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 50px auto 5px;
         width: 100px;
         height: 2px;
         border-radius: 3px;
@@ -251,10 +300,7 @@ their author(s) have been provided above the used code.
     .natsumi-mc-choice-image-browser {
       &::before {
         display: block;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        margin-left: auto;
-        margin-right: auto;
+        margin: 5px auto;
         width: 100px;
         height: 5px;
         border-radius: 4px;

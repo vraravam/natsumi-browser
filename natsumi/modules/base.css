@@ -360,3 +360,80 @@ their author(s) have been provided above the used code.
     border-color: transparent !important;
   }
 }
+
+/* Single toolbar view */
+@media -moz-pref("natsumi.theme.single-toolbar") and -moz-pref("sidebar.verticalTabs") {
+  :root:not([customizing]) {
+    #navigator-toolbox {
+      width: var(--natsumi-sidebar-width) !important;
+      min-height: 80px !important;
+      z-index: 1 !important;
+    }
+
+    #nav-bar-customization-target {
+      min-height: 40px;
+      order: 1 !important;
+
+      & > toolbarbutton, & > toolbaritem, & > toolbarspring {
+        display: none !important;
+      }
+
+      #back-button, #forward-button, #stop-reload-button, #urlbar-container {
+        display: flex !important;
+      }
+
+      @media -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
+        max-width: fit-content !important;
+        margin-left: auto !important;
+      }
+
+      @media not -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
+      #unified-extensions-button  {
+        display: flex !important;
+        order: -1 !important;
+        margin-right: auto !important;
+      }
+    }
+    }
+
+    #urlbar-container {
+      --urlbar-margin-inline: var(--space-medium) !important;
+      position: absolute !important;
+      width: calc(var(--natsumi-sidebar-width) - calc(var(--space-medium) * 2)) !important;
+      left: 0 !important;
+      top: 40px !important;
+    }
+
+    #vertical-tabs {
+      padding-top: 82px !important;
+    }
+
+    #PersonalToolbar {
+      width: calc(100vw - var(--natsumi-sidebar-width)) !important;
+      margin-left: var(--natsumi-sidebar-width) !important;
+      padding-left: 0 !important;
+      margin-top: -35px !important;
+    }
+
+    #browser {
+      position: absolute !important;
+      width: 100vw !important;
+      height: 100vh !important;
+    }
+
+    #tabbrowser-tabbox {
+      margin-top: var(--natsumi-browser-separation) !important;
+      transition: margin-top 0.2s ease !important;
+    }
+
+    &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox {
+      margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+    }
+
+    @media not -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
+      #PanelUI-button {
+        display: none !important;
+      }
+    }
+  }
+}

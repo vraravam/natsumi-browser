@@ -25,14 +25,15 @@ function copySidebarWidth() {
     }
 
     let statusBar = document.querySelector("#nora-statusbar");
+    let navBar = document.querySelector("#navigator-toolbox");
 
-    // This is a Floorp-only feature, so this may or may not exist
-    if (!statusBar) {
-        return;
+    if (statusBar) {
+        statusBar.style.setProperty("--natsumi-sidebar-width", width);
     }
 
-    // Set a variable to the sidebar width
-    statusBar.style.setProperty("--natsumi-sidebar-width", width);
+    if (navBar) {
+        navBar.style.setProperty("--natsumi-sidebar-width", width);
+    }
 }
 
 function copySidebarOptionsHeight() {
@@ -56,7 +57,7 @@ function copySidebarOptionsHeight() {
     let statusBar = document.querySelector("#nora-statusbar");
 
     // This is a Floorp-only feature, so this may or may not exist
-    if (!statusBar) {
+    if (statusBar) {
         return;
     }
 
@@ -87,9 +88,7 @@ if (ucApi.Prefs.get("natsumi.browser.type").exists) {
     isFloorp = ucApi.Prefs.get("natsumi.browser.type").value === "floorp";
 }
 
-let statusBar = document.querySelector("#nora-statusbar");
-
-if (!sidebar && isFloorp) {
+if (!sidebar) {
     console.warn("Sidebar not found, trying to find it...");
     for (let i = 0; i < 10; i++) {
         sidebar = document.querySelector("#sidebar-main");
@@ -106,7 +105,7 @@ if (!sidebar && isFloorp) {
 
 console.log("Sidebar found!", sidebar);
 
-if (sidebar && isFloorp) {
+if (sidebar) {
     // If the sidebar exists (and the browser is Floorp), copy its width
 
     copySidebarWidth();
@@ -126,13 +125,15 @@ if (sidebar && isFloorp) {
             }
         });
     });
-
-    let statusBarObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutationRecord) {
-            copyStatusBarHeight();
-        });
-    });
-
     sidebarObserver.observe(sidebar, {attributes: true, attributeFilter: ["style"]});
-    statusBarObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
+
+    if (isFloorp) {
+        let statusBar = document.querySelector("#nora-statusbar");
+        let statusBarObserver = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutationRecord) {
+                copyStatusBarHeight();
+            });
+        });
+        statusBarObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
+    }
 }

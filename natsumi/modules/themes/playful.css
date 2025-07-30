@@ -27,12 +27,13 @@ their author(s) have been provided above the used code.
 
 */
 
-/* ==== Theme: Colorful Solid ==== */
-/* A basic theme which uses a tint of the accent colors for the background. */
+/* ==== Theme: Playful Solid ==== */
+/* A higher contrast version of Colorful Solid. */
 
-@media -moz-pref("natsumi.theme.type", "colorful") {
+@media -moz-pref("natsumi.theme.type", "playful") {
   :root[windowtype*="navigator:browser"] body::after {
-    background-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
+    background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-primary-color) 70%, black)) !important;
+    filter: saturate(2);
   }
 
   #navigator-toolbox {

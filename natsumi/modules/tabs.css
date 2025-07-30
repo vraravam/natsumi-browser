@@ -180,10 +180,7 @@ their author(s) have been provided above the used code.
   #tabs-newtab-button, #vertical-tabs-newtab-button {
     min-height: calc(var(--floorp-tab-min-height, calc(var(--tab-min-height) + 4px)) - 4px) !important;
     transition: background-color 0.2s ease;
-
-    @media (-moz-platform: macos) or (-moz-platform: linux) {
-      border-radius: 12px !important;
-    }
+    border-radius: var(--natsumi-tab-border-radius) !important;
     
     .toolbarbutton-text {
       font-size: 12px;
@@ -217,3 +214,14 @@ their author(s) have been provided above the used code.
   }
 }
 
+@media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs") {
+  #tabbrowser-arrowscrollbox-periphery {
+    order: -1 !important;
+  }
+}
+
+@media -moz-pref("natsumi.tabs.hide-new-tab-button") {
+  #tabbrowser-arrowscrollbox-periphery {
+    display: none !important;
+  }
+}

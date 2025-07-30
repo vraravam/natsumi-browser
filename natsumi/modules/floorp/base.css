@@ -165,6 +165,7 @@ their author(s) have been provided above the used code.
       flex-direction: column !important;
       bottom: calc(var(--natsumi-sidebar-options-height) + var(--space-small) + var(--natsumi-browser-separation));
       left: 7px !important;
+      width: 36px !important;
 
       toolbarbutton {
         margin-block: 3px !important;

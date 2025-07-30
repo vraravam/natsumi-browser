@@ -110,6 +110,21 @@ class MCChoice {
     }
 }
 
+const layouts = {
+    "default": new MCChoice(
+        false,
+        "Multiple Toolbars",
+        "Keeps both the navbar and sidebar separate.",
+        "<div id='multiple-toolbars' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "single": new MCChoice(
+        true,
+        "Single Toolbar (Zen-like)",
+        "Merges everything into the sidebar for simplicity.",
+        "<div id='single-toolbar' class='natsumi-mc-choice-image-browser'></div>"
+    )
+}
+
 const themes = {
     "default": new MCChoice(
         "default",
@@ -134,6 +149,12 @@ const themes = {
         "Colorful Solid",
         "A solid color with a tint of the accent color.",
         "<div id='colorful' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "playful": new MCChoice(
+        "playful",
+        "Playful Solid",
+        "A higher contrast version of Colorful Solid.",
+        "<div id='playful' class='natsumi-mc-choice-image-browser'></div>"
     ),
     "lucid": new MCChoice(
         "lucid",
@@ -408,6 +429,67 @@ function addToSidebar() {
         _initted: true,
         init: () => {}
     });
+}
+
+function addLayoutPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create theme selection
+    let layoutSelection = new MultipleChoicePreference(
+        "natsumiLayout",
+        "natsumi.theme.single-toolbar",
+        "Layout",
+        "Choose the layout you want for your browser."
+    );
+
+    let menuButtonCheckbox = new CheckboxChoice(
+        "natsumi.theme.single-toolbar-show-menu-button",
+        "natsumiShowMenuButton",
+        "Replace Extensions button with Menu button on Single Toolbar"
+    )
+
+    layoutSelection.registerExtras("natsumiTranslucencyBox", menuButtonCheckbox);
+
+    for (let layout in layouts) {
+        layoutSelection.registerOption(layout, layouts[layout]);
+    }
+
+    let layoutNode = layoutSelection.generateNode();
+
+    // Set listeners for each button
+    let layoutButtons = layoutNode.querySelectorAll(".natsumi-mc-choice");
+    layoutButtons.forEach(button => {
+        console.log("Adding listener to button:", button);
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value") === "true";
+            console.log("Changing layout:", selectedValue);
+            setStringPreference("natsumi.theme.single-toolbar", selectedValue);
+            layoutButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = layoutNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        console.log("Adding listener to checkbox:", checkbox);
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(layoutNode, homePane);
 }
 
 function addThemesPane() {
@@ -759,7 +841,6 @@ function addURLbarLayoutPane() {
             setStringPreference("natsumi.urlbar.do-not-float", selectedValue);
             layoutButtons.forEach(btn => btn.classList.remove("selected"));
             button.classList.add("selected");
-            console.log(ucApi.Prefs.get("natsumi.urlbar.do-not-float"));
         });
     });
 
@@ -783,6 +864,14 @@ function addURLbarBehaviorPane() {
         "Shrink URL bar width when not focused",
         "",
         true
+    ));
+
+    behaviorGroup.registerOption("natsumiURLbarSingleToolbarActions", new CheckboxChoice(
+        "natsumi.urlbar.single-toolbar-display-actions",
+        "natsumiURLbarSingleToolbarActions",
+        "Show actions buttons on hover when Single Toolbar is active",
+        "",
+        false
     ));
 
     let behaviorNode = behaviorGroup.generateNode();
@@ -840,6 +929,7 @@ function addPreferencesPanes() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
     prefsView.insertBefore(appearanceNode, homePane);
+    addLayoutPane();
     addThemesPane();
     addColorsPane();
 
