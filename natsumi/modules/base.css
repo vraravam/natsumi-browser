@@ -363,7 +363,7 @@ their author(s) have been provided above the used code.
 
 /* Single toolbar view */
 @media -moz-pref("natsumi.theme.single-toolbar") and -moz-pref("sidebar.verticalTabs") {
-  :root:not([customizing]) {
+  :root:not([customizing]):has(#sidebar-main[sidebar-launcher-expanded]) {
     #navigator-toolbox {
       width: var(--natsumi-sidebar-width) !important;
       min-height: 85px !important;
@@ -408,8 +408,12 @@ their author(s) have been provided above the used code.
       padding-top: 82px !important;
     }
 
-    #unified-extensions-button, #PanelUI-button {
+    #unified-extensions-button {
       padding-left: var(--space-medium) !important;
+    }
+
+    #PanelUI-button {
+      padding-left: calc(var(--space-medium) - 4px) !important;
     }
 
     #stop-reload-button {

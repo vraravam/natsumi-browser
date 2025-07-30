@@ -154,11 +154,15 @@ their author(s) have been provided above the used code.
 
   /* Pinned tabs */
   #pinned-tabs-container {
-    --tab-height-with-margin-padding: calc(41px + (2 * var(--tab-block-margin)))
+    --tab-height-with-margin-padding: calc(41px + (2 * var(--tab-block-margin)));
+
+    .tab-background {
+      border-radius: var(--natsumi-tab-border-radius) !important;
+    }
   }
 
   #tabbrowser-tabs[expanded] #pinned-tabs-container {
-    --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)))
+    --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
   }
 
   #sidebar-main:not([sidebar-launcher-expanded]) {
@@ -221,7 +225,7 @@ their author(s) have been provided above the used code.
 }
 
 @media -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  #tabbrowser-arrowscrollbox-periphery {
+  #tabbrowser-arrowscrollbox-periphery, #vertical-tabs-newtab-button {
     display: none !important;
   }
 }

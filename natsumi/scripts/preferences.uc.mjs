@@ -623,6 +623,55 @@ function addColorsPane() {
     prefsView.insertBefore(colorNode, homePane);
 }
 
+function addSidebarWorkspacesPane() {
+    if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+        if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
+            return;
+        }
+    }
+
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let workspacesGroup = new OptionsGroup(
+        "natsumiSidebarWorkspaces",
+        "Workspaces",
+        "Tweak how your Floorp Workspaces affect the Sidebar."
+    );
+
+    workspacesGroup.registerOption("natsumiSidebarHideWorkspaceIndicator", new CheckboxChoice(
+        "natsumi.sidebar.hide-workspace-indicator",
+        "natsumiSidebarHideWorkspaceIndicator",
+        "Show current Workspace indicator",
+        "",
+        true
+    ));
+
+    let sidebarWorkspacesNode = workspacesGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = sidebarWorkspacesNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        console.log("Adding listener to checkbox:", checkbox);
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(sidebarWorkspacesNode, homePane);
+}
+
 function addSidebarButtonsPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -651,7 +700,35 @@ function addSidebarButtonsPane() {
         "Hide Sidebar controls"
     ));
 
+    buttonsGroup.registerOption("natsumiSidebarHideNewTab", new CheckboxChoice(
+        "natsumi.tabs.hide-new-tab-button",
+        "natsumiSidebarHideNewTab",
+        "Show New Tab button",
+        "",
+        true
+    ));
+
+    let hideNewTabSubgroup = new OptionsGroup(
+        "natsumiSidebarNewTabOptions",
+        "",
+        ""
+    );
+
+    hideNewTabSubgroup.registerOption("natsumiSidebarNewTabPosition", new CheckboxChoice(
+        "natsumi.tabs.new-tab-on-top",
+        "natsumiSidebarNewTabPosition",
+        "Move the New Tab button to the top",
+    ));
+
+    buttonsGroup.registerOption("natsumiSidebarNewTabOptions", hideNewTabSubgroup);
+
     let sidebarButtonsNode = buttonsGroup.generateNode();
+
+    let newTabPositionCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarNewTabPosition");
+
+    if (ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").exists()) {
+        newTabPositionCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").value}`);
+    }
 
     // Set listeners for each checkbox
     let checkboxes = sidebarButtonsNode.querySelectorAll("checkbox");
@@ -663,6 +740,10 @@ function addSidebarButtonsPane() {
 
             if (checkbox.getAttribute("opposite") === "true") {
                 isChecked = !isChecked;
+            }
+
+            if (checkbox.id === "natsumiSidebarHideNewTab") {
+                newTabPositionCheckbox.setAttribute("disabled", `${isChecked}`);
             }
 
             console.log(`Checkbox ${prefName} changed to ${isChecked}`);
@@ -934,6 +1015,7 @@ function addPreferencesPanes() {
     addColorsPane();
 
     prefsView.insertBefore(sidebarNode, homePane);
+    addSidebarWorkspacesPane();
     addSidebarButtonsPane();
 
     let pipDisabled = false;
