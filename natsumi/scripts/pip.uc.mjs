@@ -6,6 +6,8 @@
 // Adjust this as needed
 const movementMultiplier = 0.7;
 
+let wheelTimeout = null;
+
 function movePictureInPicture(event) {
     // Get current screen position
     const currentX = screenX;
@@ -53,6 +55,15 @@ function movePictureInPicture(event) {
     }
 
     window.windowUtils.sendNativeMouseEvent(nativeNewX, nativeNewY, 3, 0, 0, null);
+    document.body.setAttribute("natsumi-scrolling", "true");
+
+    if (wheelTimeout) {
+        clearTimeout(wheelTimeout);
+    }
+
+    wheelTimeout = setTimeout(() => {
+        document.body.removeAttribute("natsumi-scrolling");
+    }, 100);
 }
 
 document.addEventListener("wheel", function (e) {

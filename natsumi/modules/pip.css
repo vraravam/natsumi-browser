@@ -81,6 +81,10 @@ their author(s) have been provided above the used code.
       animation: pip-fadein-html 0.5s ease !important;
     }
 
+    body[natsumi-scrolling] {
+      cursor: none !important;
+    }
+
     .player-holder {
       animation: pip-fadein-player 0.5s ease !important;
       clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
