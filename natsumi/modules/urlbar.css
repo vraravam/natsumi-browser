@@ -305,7 +305,7 @@ their author(s) have been provided above the used code.
         }
 
         #urlbar-background {
-          background-color: var(--toolbar-field-background-color) !important;
+          background-color: light-dark(var(--toolbar-field-background-color), color-mix(in srgb, currentColor 7%, transparent)) !important;
           border-radius: var(--natsumi-tab-border-radius) !important;
           transition: background-color 0.2s ease;
         }
