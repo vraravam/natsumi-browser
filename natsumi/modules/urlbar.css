@@ -305,6 +305,7 @@ their author(s) have been provided above the used code.
         }
 
         #urlbar-background {
+          background-color: var(--toolbar-field-background-color) !important;
           border-radius: var(--natsumi-tab-border-radius) !important;
           transition: background-color 0.2s ease;
         }
