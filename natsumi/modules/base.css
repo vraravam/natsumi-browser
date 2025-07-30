@@ -408,6 +408,14 @@ their author(s) have been provided above the used code.
       padding-top: 82px !important;
     }
 
+    #unified-extensions-button, #PanelUI-button {
+      padding-left: var(--space-medium) !important;
+    }
+
+    #stop-reload-button {
+      padding-right: var(--space-small) !important;
+    }
+
     #PersonalToolbar {
       width: calc(100vw - var(--natsumi-sidebar-width)) !important;
       margin-left: var(--natsumi-sidebar-width) !important;
