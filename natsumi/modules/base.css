@@ -388,12 +388,12 @@ their author(s) have been provided above the used code.
       }
 
       @media not -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
-      #unified-extensions-button  {
-        display: flex !important;
-        order: -1 !important;
-        margin-right: auto !important;
+        #unified-extensions-button  {
+          display: flex !important;
+          order: -1 !important;
+          margin-right: auto !important;
+        }
       }
-    }
     }
 
     #urlbar-container {
