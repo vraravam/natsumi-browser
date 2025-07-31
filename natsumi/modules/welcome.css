@@ -141,7 +141,7 @@ SOFTWARE.
   position: absolute;
   width: 100vw;
   height: 100vh;
-  z-index: 999 !important;
+  z-index: 998 !important;
 
   &:not(:has(#natsumi-welcome-content:hover)) {
     -moz-window-dragging: drag;
@@ -558,6 +558,14 @@ body[natsumi-welcome] {
   @media not (-moz-platform: macos) {
     .titlebar-buttonbox-container {
       margin-left: auto !important;
+    }
+  }
+}
+
+:root:not([customizing]):has(#sidebar-main[sidebar-launcher-expanded]) body[natsumi-welcome] {
+  @media not (-moz-platform: macos) {
+    #navigator-toolbox {
+      z-index: 999 !important;
     }
   }
 }
