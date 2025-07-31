@@ -24,7 +24,7 @@ SOFTWARE.
 */
 
 /* ==== Theme: Playful Solid ==== */
-/* A higher contrast version of Colorful Solid. */
+/* A higher saturation version of Colorful Solid. */
 
 @media -moz-pref("natsumi.theme.type", "playful") {
   :root[windowtype*="navigator:browser"] body::after {

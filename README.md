@@ -75,6 +75,10 @@ Let your browser be yours! Choose from eight theme varieties to get the look tha
   
   A solid color with a tint of the accent color.
   ![](./images/theme-colorful.png)
+- **Playful Solid (`playful`)**
+
+  A higher saturation version of Colorful Solid.
+  ![](./images/theme-playful.png)
 - **Lucid (`lucid`)**
   
   A recreation of the Zen Dream and Zen Galaxy themes.
@@ -333,7 +337,7 @@ EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-All screenshots displayed in this README are accurate as of March 16, 2025. If a feature was added,
+All screenshots displayed in this README are accurate as of July 31, 2025. If a feature was added,
 changed or removed after this date, it may not be accurately reflected in the screenshots.
 
 ## Attribution
