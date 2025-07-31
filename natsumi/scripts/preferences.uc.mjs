@@ -624,7 +624,7 @@ function addColorsPane() {
 }
 
 function addSidebarWorkspacesPane() {
-    if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
         if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
             return;
         }
@@ -683,7 +683,7 @@ function addSidebarButtonsPane() {
         "Tweak the buttons visible in the sidebar."
     );
 
-    if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
         if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
             buttonsGroup.registerOption("natsumiSidebarEnableToolbar", new CheckboxChoice(
                 "natsumi.sidebar.use-floorp-statusbar-in-sidebar",
@@ -792,6 +792,49 @@ function addPipMaterialPane() {
     });
 
     prefsView.insertBefore(materialNode, homePane);
+}
+
+function addPipBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let pipBehaviorGroup = new OptionsGroup(
+        "natsumiPipBehavior",
+        "Behavior",
+        "Tweak how you want Natsumi's Picture-in-Picture window to behave."
+    );
+
+    pipBehaviorGroup.registerOption("natsumiPipScrollToMove", new CheckboxChoice(
+        "natsumi.pip.disable-scroll-to-move",
+        "natsumiPipScrollToMove",
+        "Scroll-to-move",
+        "Scroll-to-move allows you to move the Picture-in-Picture window by scrolling on it.",
+        true
+    ));
+
+    let pipBehaviorNode = pipBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = pipBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        console.log("Adding listener to checkbox:", checkbox);
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(pipBehaviorNode, homePane);
 }
 
 function addPDFMaterialPane() {
@@ -1025,6 +1068,7 @@ function addPreferencesPanes() {
     if (!pipDisabled) {
         prefsView.insertBefore(pipNode, homePane);
         addPipMaterialPane();
+        addPipBehaviorPane();
     }
 
     let pdfjsDisabled = false;
