@@ -57,7 +57,7 @@ hand when you don't need the extra tools.
 #### A theming engine that lets your browser vibe with you.
 ![](./images/all-the-themes.png)
 
-Let your browser be yours! Choose from eight theme varieties to get the look that resonates with you.
+Let your browser be yours! Choose from nine theme varieties to get the look that resonates with you.
 
 - **Default (default)**
   
