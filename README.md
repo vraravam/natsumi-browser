@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  A skin for Firefox and its forks that makes things <strong><i>~flow~</i></strong>.
+  Welcome to your <strong>personal</strong> internet.
 </p>
 
 ![](./images/main-backgroundless.png)
@@ -114,6 +114,38 @@ Or, choose from one of the preset colors.
 - $${\color{#ffffff}■}$$ **System Accent** (`system`) - follow your system's accent color (works on
   macOS and Linux)!
 
+## And do more with **Natsumi Append**!
+Natsumi Append is a collection of JavaScript scripts that can be used by installing fx-autoconfig.
+Take your browser to the next level with Append!
+
+### 🔧 Customization made easier.
+#### Customize Natsumi in the preferences page without touching advanced configs.
+![](./images/customization.png)
+
+Natsumi Append adds a Customize Natsumi pane to the preferences page, so you can easily customize
+your installation of Natsumi graphically. No more figuring out which config does what.
+
+### 🧘 Introducing Single Toolbar.
+#### Move everything to the sidebar for a cleaner look.
+![](./images/single-toolbar.png)
+
+Craving the Single Toolbar look you can get in a certain other browser? Natsumi Append adds it to
+your browser of choice.
+
+### 🖱️ Scroll, not drag.
+#### Move your Picture-in-Picture windows with Scroll-to-move.
+![](./images/pip-movement.png)
+
+Natsumi Append allows you to move your Picture-in-Picture windows by scrolling over them in addition
+to dragging them.
+
+### 🍰 Additional browser-specific goodies.
+#### Get extra features custom-made for specific browsers.
+![](./images/floorp-features.png)
+
+Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi Append
+adds extra features to your browser for a more complete experience.
+
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
 
@@ -138,6 +170,8 @@ See [#123](https://github.com/greeeen-dev/natsumi-browser/issues/123).
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
 and delay, change the variables in the config.css file.
 
+If you have Natsumi Append installed, most of these can be tweaked through the preferences page.
+
 ### 🎨 Theming
 - `natsumi.theme.type` (string): Sets the browser theme type.
   - Enter a theme ID from the themes list in the [Features](#features) section.
@@ -149,11 +183,19 @@ and delay, change the variables in the config.css file.
   This may break Blade on some themes.
 - `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
 - `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
+- `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout. **Natsumi Append required.**
+- `natsumi.theme.single-toolbar-show-menu-button`: Shows the menu button instead of the extensions button
+  in the Single Toolbar layout. **Natsumi Append required.**
 
-### 🗂️ Tabs
+### 🗂️ Tabs & Sidebar
 - `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
 - `natsumi.tabs.type` (string): Sets a custom tab type.
   - `material`: A material-like design inspired by Zen Browser's alpha UI.
+- `natsumi.sidebar.hide-sidebar-controls` (boolean): Hides sidebar controls.
+- `natsumi.sidebar.use-floorp-statusbar-in-sidebar` (boolean): Uses Floorp's Status Bar as a toolbar for
+  the sidebar when the Status Bar is "hidden". **Floorp exclusive, Natsumi Append required.**
+- `natsumi.sidebar.hide-workspace-indicator` (boolean): Hides the Floorp Workspace indicator added by
+  Natsumi Append. **Floorp exclusive.**
 
 ### ⌨️ URL bar
 - `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
@@ -293,3 +335,12 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 All screenshots displayed in this README are accurate as of March 16, 2025. If a feature was added,
 changed or removed after this date, it may not be accurately reflected in the screenshots.
+
+## Attribution
+Natsumi Browser uses code or files from other open-source projects. The original sources and their
+licenses are listed below.
+
+- [MX-Linux/mx-sound-theme-borealis](https://github.com/MX-Linux/mx-sound-theme-borealis) 
+  License: GPLv3
+  File used: `Borealis/stereo/desktop-login.ogg`
+  Changes made: none

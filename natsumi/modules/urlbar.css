@@ -22,9 +22,6 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Natsumi Browser uses code from others. The link to the original projects or
-their author(s) have been provided above the used code.
-
 */
 
 /* ==== Natsumi URLbar ==== */
@@ -393,6 +390,12 @@ their author(s) have been provided above the used code.
     }
 
     &[open] {
+      @media -moz-pref("natsumi.urlbar.do-not-float") {
+        .urlbar-input-container {
+          padding-block: 5px !important;
+        }
+      }
+
       @media not -moz-pref("natsumi.urlbar.do-not-float") {
         top: 25vh !important;
         width: 60% !important;
@@ -418,6 +421,8 @@ their author(s) have been provided above the used code.
         }
 
         .urlbar-input-container {
+          padding-block: 5px !important;
+
           &::before {
             -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
             fill: light-dark(black, white);
@@ -427,7 +432,7 @@ their author(s) have been provided above the used code.
             background-image: url("chrome://browser/skin/preferences/category-search.svg");
             background-size: 16px;
             margin-left: 12px !important;
-            margin-top: 14px !important;
+            margin-top: 10px !important;
             margin-right: 16px !important;
           }
         }
