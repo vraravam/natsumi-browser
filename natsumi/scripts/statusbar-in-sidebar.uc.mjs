@@ -108,7 +108,7 @@ function copyStatusBarHeight() {
 }
 
 function copyWindowButtonsWidth() {
-    let windowButtonsNode = document.querySelector(".titlebar-buttonbox-container");
+    let windowButtonsNode = document.querySelector("#nav-bar .titlebar-buttonbox-container");
 
     if (!windowButtonsNode) {
         return;
