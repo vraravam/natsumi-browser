@@ -3,12 +3,23 @@
 // @ignorecache
 // ==/UserScript==
 
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+
 // Adjust this as needed
 const movementMultiplier = 0.7;
 
 let wheelTimeout = null;
 
 function movePictureInPicture(event) {
+    let scrollToMoveDisabled = false;
+    if (ucApi.Prefs.get("natsumi.pip.disable-scroll-to-move").exists()) {
+        scrollToMoveDisabled = ucApi.Prefs.get("natsumi.pip.disable-scroll-to-move").value;
+    }
+
+    if (scrollToMoveDisabled) {
+        return;
+    }
+
     // Get current screen position
     const currentX = screenX;
     const currentY = screenY;
@@ -48,13 +59,10 @@ function movePictureInPicture(event) {
     }
 
     // Move mouse position to allow further scrolling
-    if (currentX === screenX && currentY === screenY) {
-        // Nothing changed, so no need to move here
-        // This prevents "locking" the mouse on OSes with smooth scrolling
-        return;
+    if (!(currentX === screenX && currentY === screenY)) {
+        window.windowUtils.sendNativeMouseEvent(nativeNewX, nativeNewY, 3, 0, 0, null);
     }
 
-    window.windowUtils.sendNativeMouseEvent(nativeNewX, nativeNewY, 3, 0, 0, null);
     document.body.setAttribute("natsumi-scrolling", "true");
 
     if (wheelTimeout) {
