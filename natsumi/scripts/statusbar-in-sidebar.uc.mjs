@@ -114,7 +114,7 @@ function copyWindowButtonsWidth() {
         return;
     }
 
-    const width = windowButtonsNode.offsetWidth + "px";
+    const width = windowButtonsNode.getClientRects()[0].width + "px";
 
     let navBar = document.querySelector("#navigator-toolbox");
 
