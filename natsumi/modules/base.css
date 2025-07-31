@@ -367,6 +367,17 @@ SOFTWARE.
       z-index: 1 !important;
     }
 
+    @media not (-moz-platform: macos) {
+      .titlebar-buttonbox-container {
+        margin-left: 0 !important;
+        min-height: 40px !important;
+        position: absolute;
+        left: 100vw;
+        transform: translateX(-100%);
+        z-index: 999 !important;
+      }
+    }
+
     #nav-bar-customization-target {
       min-height: 40px;
       order: 1 !important;
@@ -422,6 +433,10 @@ SOFTWARE.
       margin-left: var(--natsumi-sidebar-width) !important;
       padding-left: 0 !important;
       margin-top: -35px !important;
+
+      @media not (-moz-platform: macos) {
+        width: calc(100vw - (var(--natsumi-sidebar-width) - var(--natsumi-window-buttons-width))) !important;
+      }
     }
 
     #browser {

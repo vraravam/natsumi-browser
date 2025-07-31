@@ -107,6 +107,22 @@ function copyStatusBarHeight() {
     sidebarNode.style.setProperty("--natsumi-statusbar-height", `${height}px`);
 }
 
+function copyWindowButtonsWidth() {
+    let windowButtonsNode = document.querySelector(".titlebar-buttonbox-container");
+
+    if (!windowButtonsNode) {
+        return;
+    }
+
+    const width = windowButtonsNode.offsetWidth + "px";
+
+    let navBar = document.querySelector("#navigator-toolbox");
+
+    if (navBar) {
+        navBar.style.setProperty("--natsumi-window-buttons-width", width);
+    }
+}
+
 let sidebar = document.querySelector("#sidebar-main");
 let isFloorp = false;
 
@@ -136,6 +152,7 @@ if (sidebar) {
 
     copySidebarWidth();
     copyStatusBarHeight();
+    copyWindowButtonsWidth();
 
     let sidebarObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutationRecord) {
@@ -143,6 +160,9 @@ if (sidebar) {
 
             // Also copy sidebar toolbar heights in case things change
             copyStatusBarHeight();
+
+            // And window buttons, too
+            copyWindowButtonsWidth();
 
             // Copy sidebar options height if the shadow root exists
             let sidebarNodeSR = mutationRecord.target.querySelector("sidebar-main").shadowRoot;
