@@ -475,13 +475,31 @@ SOFTWARE.
       transition: margin-top 0.2s ease !important;
     }
 
-    &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox {
+    &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox, body:has([natsumi-welcome]) #tabbrowser-tabbox {
       margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
     }
 
     @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
       &:has(#PersonalToolbar:hover) #tabbrowser-tabbox {
         margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+      }
+    }
+
+    @media not (-moz-platform: macos) {
+      &:has(.titlebar-buttonbox-container:hover) {
+        #PersonalToolbar[collapsed=true] {
+          min-height: 28px !important;
+          max-height: 28px !important;
+
+          #personal-bookmarks {
+            visibility: visible !important;
+            min-height: 28px !important;
+          }
+        }
+
+        #tabbrowser-tabbox {
+          margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+        }
       }
     }
 
