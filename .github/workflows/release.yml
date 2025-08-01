@@ -1,0 +1,120 @@
+name: Build & release
+on: workflow_dispatch
+
+jobs:
+  build-installer:
+    name: Build
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+      artifacts: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install zip
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zip
+      - name: Build
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          nuitka-version: main
+          script-name: installer/installer.py
+          mode: onefile
+          disable-cache: true
+      - name: Build (macOS Intel)
+        uses: Nuitka/Nuitka-Action@main
+        if: ${{ matrix.os == 'macos-latest' }}
+        with:
+          nuitka-version: main
+          script-name: installer/installer.py
+          macos-target-arch: x86_64
+          mode: onefile
+          disable-cache: true
+          output-dir: build_intel
+      - name: Rename (Linux)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: mv build/installer.bin build/natsumi-installer-linux
+      - name: Rename (macOS)
+        if: ${{ matrix.os == 'macos-latest' }}
+        run:
+          mv build/installer.bin build/natsumi-installer-macos-arm64
+          mv build_intel/installer.bin build/natsumi-installer-macos-intel
+      - name: Rename (PowerShell)
+        if: ${{ matrix.os == 'windows-latest' }}
+        run: Rename-Item -Path build/installer.exe -NewName natsumi-installer.exe
+      - name: Upload package (macOS arm64)
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.os == 'macos-latest' }}
+        with:
+          name: natsumi-installer-macos-arm64
+          path: build/natsumi-installer-macos-arm64
+          retention-days: 7
+      - name: Upload package (macOS Intel)
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.os == 'macos-latest' }}
+        with:
+          name: natsumi-installer-macos-x64
+          path: build_intel/natsumi-installer-macos-intel
+          retention-days: 7
+      - name: Upload package (Linux)
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        with:
+          name: natsumi-installer-linux
+          path: build/natsumi-installer-linux-x64
+          retention-days: 7
+      - name: Upload package (PowerShell)
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.os == 'windows-latest' }}
+        with:
+          name: natsumi-installer-windows
+          path: build/natsumi-installer.exe
+          retention-days: 7
+  publish:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: build-installer
+    permissions:
+      contents: write
+      id-token: write
+      pull-requests: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Get current version
+        run: python3 ./release-scripts/get_version.py
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+      - name: Create GitHub release
+        uses: ncipollo/release-action@v1.14.0
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ env.RAW_VERSION }}
+          tag: ${{ env.VERSION }}
+          commit: ${{ github.ref }}
+          draft: true
+          skipIfReleaseExists: true
+          artifacts: [
+            'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64',
+            'natsumi-installer-macos-intel/natsumi-installer-macos-x64',
+            'natsumi-installer-linux/natsumi-installer-linux-x64',
+            'natsumi-installer-windows/natsumi-installer.exe'
+          ]
+
+
+
