@@ -445,6 +445,7 @@ SOFTWARE.
       margin-left: var(--natsumi-sidebar-width) !important;
       padding-left: 0 !important;
       padding-top: 6px !important;
+      padding-bottom: 6px !important;
       margin-top: -41px !important;
       overflow: visible !important;
 
@@ -484,15 +485,27 @@ SOFTWARE.
     #tabbrowser-tabbox {
       margin-top: var(--natsumi-browser-separation) !important;
       transition: margin-top 0.2s ease !important;
+
+      @media (-moz-platform: windows) {
+        margin-top: calc(var(--natsumi-browser-separation) + 2px) !important;
+      }
     }
 
     &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox, body:has([natsumi-welcome]) #tabbrowser-tabbox {
       margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+      @media (-moz-platform: windows) {
+        margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
+      }
     }
 
     @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
       &:has(#PersonalToolbar:hover) #tabbrowser-tabbox {
         margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+
+        /* Probably redundant but keeping it here just in case */
+        @media (-moz-platform: windows) {
+          margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
+        }
       }
     }
 
@@ -510,6 +523,10 @@ SOFTWARE.
 
         #tabbrowser-tabbox {
           margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+
+          @media (-moz-platform: windows) {
+            margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
+          }
         }
       }
     }
