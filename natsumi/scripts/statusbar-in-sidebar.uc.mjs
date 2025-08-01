@@ -83,7 +83,7 @@ function copySidebarOptionsHeight() {
     let statusBar = document.querySelector("#nora-statusbar");
 
     // This is a Floorp-only feature, so this may or may not exist
-    if (statusBar) {
+    if (!statusBar) {
         return;
     }
 
