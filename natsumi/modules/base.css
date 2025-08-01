@@ -470,6 +470,9 @@ SOFTWARE.
 
           #personal-bookmarks, toolbarbutton, toolbaritem {
             visibility: visible !important;
+          }
+
+          #personal-bookmarks {
             min-height: 28px !important;
           }
         }
