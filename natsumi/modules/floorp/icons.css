@@ -376,6 +376,16 @@ SOFTWARE.
   tab-group[collapsed] .tab-group-label::before {
     mask-image: url("../../icons/lucide/folder-filled.svg") !important;
   }
+
+  /* Tab close button */
+  #tabbrowser-tabs[expanded] #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab .tab-close-button {
+      padding: 4px !important;
+      list-style-image: url("../../icons/lucide/close.svg") !important;
+      -moz-context-properties: stroke, stroke-opacity !important;
+      stroke: currentColor !important;
+    }
+  }
 }
 
 @media (not -moz-pref("natsumi.pip.disabled")) and -moz-pref("natsumi.browser.type", "floorp") {
