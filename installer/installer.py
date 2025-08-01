@@ -23,6 +23,7 @@ SOFTWARE.
 """
 
 import os
+import ctypes
 import sys
 import shutil
 from pathlib import Path
@@ -37,6 +38,12 @@ chrome_manifest = [
     'content natsumi ../natsumi/',
     'content natsumi-icons ../natsumi/icons/'
 ]
+
+def get_admin():
+    if sys.platform == 'win32':
+        return ctypes.windll.shell32.IsUserAnAdmin() != 0
+    else:
+        return os.geteuid() == 0
 
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
@@ -56,7 +63,12 @@ def _get_macos_path(browser: BrowserEntry):
     return path
 
 def _get_windows_path(browser: BrowserEntry):
-    path = home + f'/AppData/Roaming/{browser.name_universal}/Profiles'
+    if browser.name_universal == 'mozilla':
+        win_name = 'Mozilla\\Firefox'
+    else:
+        win_name = browser.name_universal
+    path = home + f'\\AppData\\Roaming\\{win_name}\\Profiles'
+    print(path)
 
     if not os.path.exists(path):
         raise NotADirectoryError('Browser is not installed')
@@ -136,7 +148,7 @@ def main():
             if found_profiles:
                 profiles[browser.name] = found_profiles
         except NotADirectoryError as e:
-            print(f'Error: {e}')
+            pass
 
     if not profiles:
         print('No supported browsers found.')
@@ -229,9 +241,14 @@ def main():
     fx_autoconfig_downloaded = False
     sine_support = False
 
-    if not fx_autoconfig_installed:
-        if needs_sudo and sys.platform.startswith('linux') and os.geteuid() != 0 and needs_sudo:
-            print('Sudo is required to install Natsumi to this browser.')
+    if sys.platform == 'win32':
+        print('Due to permissions issues, fx-autoconfig cannot be installed on Windows through the Natsumi Installer.')
+        print('We will install the fx-autoconfig files for your profile, but you will have to install the browser files (program folder) manually.')
+        print('More info: https://github.com/MrOtherGuy/fx-autoconfig?tab=readme-ov-file#setting-up-configjs-from-program-folder')
+
+    if not fx_autoconfig_installed and not sys.platform == 'win32':
+        if needs_sudo and not get_admin():
+            print('Sudo/administrator is required to install Natsumi to this browser.')
             sys.exit(1)
 
         print('Installing fx-autoconfig...')
