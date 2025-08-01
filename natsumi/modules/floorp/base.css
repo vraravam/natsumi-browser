@@ -80,6 +80,14 @@ SOFTWARE.
     }
   }
 
+  #nora-statusbar {
+    background: transparent !important;
+
+    &:not(.hidden) {
+      min-height: 40px !important;
+    }
+  }
+
   &:has(#nora-statusbar:not(.hidden)) #browser::before {
     bottom: -40px !important;
   }
@@ -203,6 +211,7 @@ SOFTWARE.
       left: var(--natsumi-browser-separation);
       bottom: calc(var(--natsumi-browser-separation) + var(--space-small) + 40px);
       width: calc(var(--natsumi-sidebar-width) - calc(var(--natsumi-browser-separation) * 2)) !important;
+      background: transparent !important;
 
       @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
         bottom: var(--natsumi-browser-separation) !important;

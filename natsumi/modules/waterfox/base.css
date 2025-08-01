@@ -27,7 +27,15 @@ SOFTWARE.
 /* ==== Waterfox base ==== */
 
 :root[data-title-default="Waterfox"] {
-  &:has(#status-bar:not([collapsed="true"])) #browser::before {
+  #status-bar {
+    background: transparent !important;
+
+    &[collapsed="false"] {
+      min-height: 40px !important;
+    }
+  }
+
+  &:has(#status-bar[collapsed="false"]) #browser::before {
     bottom: -40px !important;
   }
 
