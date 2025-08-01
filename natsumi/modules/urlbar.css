@@ -354,6 +354,32 @@ SOFTWARE.
           }
         }
 
+        #urlbar-revert-button-container {
+          margin-right: -36px !important;
+          transition: margin 0.2s ease !important;
+
+          .urlbar-revert-button {
+            border-radius: 8px !important;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease, width 0.2s ease, padding 0.2s ease, margin 0.2s ease, opacity 0.2s ease;
+            margin: auto !important;
+
+            &:hover {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+
+            &:active {
+              background-color: var(--natsumi-button-active-color) !important;
+              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+            }
+          }
+        }
+
+        &:hover {
+          #urlbar-revert-button-container {
+            margin-right: 0 !important;
+          }
+        }
+
         @media -moz-pref("natsumi.urlbar.single-toolbar-display-actions") {
           #identity-box {
             margin-left: 4px !important;
