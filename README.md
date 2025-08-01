@@ -362,3 +362,17 @@ licenses are listed below.
   License: GPLv3
   File used: `Borealis/stereo/desktop-login.ogg`
   Changes made: none
+  - [MrOtherGuy/fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig)
+    License: MPL-2.0
+    Files used: `program` (folder), `profile/chrome/CSS` (folder), `profile/chrome/utils` (folder), `profile/chrome/resources` (folder)
+    Changes made: Modified `profile/chrome/utils/chrome.manifest`:
+    - ```diff
+      ...
+      - content userscripts ../JS/
+      + content userscripts ../natsumi/scripts/
+      ...
+      content userchrome ../resources/
+      + content natsumi ../natsumi/
+      + content natsumi-icons ../natsumi/icons/
+
+      ```
