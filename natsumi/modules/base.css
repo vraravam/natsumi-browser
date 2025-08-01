@@ -468,7 +468,7 @@ SOFTWARE.
           min-height: 28px !important;
           max-height: 28px !important;
 
-          #personal-bookmarks {
+          #personal-bookmarks, toolbarbutton, toolbaritem {
             visibility: visible !important;
             min-height: 28px !important;
           }
