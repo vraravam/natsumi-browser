@@ -70,7 +70,7 @@ jobs:
         if: ${{ matrix.os == 'ubuntu-latest' }}
         with:
           name: natsumi-installer-linux
-          path: build/natsumi-installer-linux-x64
+          path: build/natsumi-installer-linux
           retention-days: 7
       - name: Upload package (PowerShell)
         uses: actions/upload-artifact@v4
