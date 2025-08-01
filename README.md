@@ -137,6 +137,10 @@ your installation of Natsumi graphically. No more figuring out which config does
 Craving the Single Toolbar look you can get in a certain other browser? Natsumi Append adds it to
 your browser of choice.
 
+> [!NOTE]
+> Single Toolbar does not support customizing the top toolbar yet. This will be addressed in a
+> future release.
+
 ### 🖱️ Scroll, not drag.
 #### Move your Picture-in-Picture windows with Scroll-to-move.
 ![](./images/pip-movement.png)
