@@ -47,7 +47,7 @@ jobs:
         if: ${{ matrix.os == 'macos-latest' }}
         run:
           mv build/installer.bin build/natsumi-installer-macos-arm64;
-          mv build_intel/installer.bin build/natsumi-installer-macos-intel
+          mv build_intel/installer.bin build_intel/natsumi-installer-macos-intel
       - name: Rename (PowerShell)
         if: ${{ matrix.os == 'windows-latest' }}
         run: Rename-Item -Path build/installer.exe -NewName natsumi-installer.exe
