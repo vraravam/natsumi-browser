@@ -435,6 +435,7 @@ SOFTWARE.
       padding-left: 0 !important;
       padding-top: 6px !important;
       margin-top: -41px !important;
+      overflow: visible !important;
 
       #personal-bookmarks {
         transition: visibility 0.2s ease !important;
