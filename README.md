@@ -154,25 +154,51 @@ adds extra features to your browser for a more complete experience.
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
 
-### Natsumi Browser
-#### If you already have a userChrome.css/userContent.css file
-1. Copy natsumi-config.css and natsumi folder to your chrome folder.
-2. Add `@import "natsumi/natsumi.css";` to the beginning of your userChrome.css file. 
-3. Add `@import "natsumi/natsumi-pages.css";` to the beginning of your userContent.css file.
-4. Restart your browser and enjoy!
+### Automatic install
+#### Installing via installer
+Every release of Natsumi from v5 comes with an installer binary. You can run it to install Natsumi
+Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of choice.
 
-#### If you don't have a userChrome.css/userContent.css file
-1. Create a new `chrome` folder in your profile folder, if you haven't already. (to locate the profile folder, type `about:profiles` in address bar and press Enter, open the Root Directory of the current profile)
-2. Copy userChrome.css and userContent.css to the chrome folder.
-3. Copy natsumi-config.css and natsumi folder to the chrome folder.
-4. Restart your browser and enjoy!
-
-#### Advanced setup: If you are a techie who wants to keep your files up-to-date with new changes over time
-After following either of the above steps, if you are interested in ensuring that you upgrade to the latest version of Natsumi as new changes are released, you can simply clone the repository into the `chrome` folder. This can be followed up with `git pull` from time-to-time.
+> [!NOTE]
+> For macOS users, you will need to override the unsigned binary warning (also known as the "Apple could
+> not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
+> after trying to run the installer.
 
 #### Installing via Sine
 While installing via Sine is possible, this is not recommended for Floorp users due to issues with icons.
 See [#123](https://github.com/greeeen-dev/natsumi-browser/issues/123).
+
+### Manual install
+Remember to take backups of your userChrome.css and userContent.css files before proceeding!
+
+#### Installing Natsumi Browser and Natsumi Browser Pages
+1. Copy natsumi-config.css, userChrome.css, userContent.css and natsumi folder to your chrome folder.
+2. That's it - Natsumi is installed!
+
+#### Installing Natsumi Append
+Natsumi Browser needs to be installed before you can install Natsumi Append.
+
+1. Install [fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig) to your browser. You need to
+   install the contents of both program and profile/chrome, follow the instructions in the fx-autoconfig
+   repository.
+2. Copy the following to chrome/utils/manifest:
+   ```
+   content userchromejs ./
+   content userscripts ../natsumi/scripts/
+   skin userstyles classic/1.0 ../CSS/
+   content userchrome ../resources/
+   content natsumi ../natsumi/
+   content natsumi-icons ../natsumi/icons/
+   ```
+3. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
+   can do this later. This config is needed for the preferences page to work.)
+4. Go to about:support and clear your startup cache and restart your browser.
+5. That's it - Natsumi Append is installed!
+
+#### Advanced setup: If you are a techie who wants to keep your files up-to-date with new changes over time
+After following either of the above steps, if you are interested in ensuring that you upgrade to the
+latest version of Natsumi as new changes are released, you can simply clone the repository into the `chrome`
+folder. This can be followed up with `git pull` from time-to-time.
 
 ## Browser configs (in about:config)
 These are the configs you can use to tweak Natsumi Browser. If you want to tweak the animation duration
