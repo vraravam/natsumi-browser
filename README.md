@@ -291,6 +291,10 @@ userchrome CSS files, making Natsumi completely incompatible with those browsers
 ### "I don't like the design, please change it!"
 If I like the design, nah. My personal skin, my rules.
 
+### "Can I use your code for my browser?"
+If your browser is open-source and licensed under the GPLv3 or later (or AGPLv3 or later), then yes.
+Otherwise, please contact me so I can grant you permission.
+
 ### "Why is userChrome.css so empty?"
 Natsumi Browser uses a system where the userChrome.css file acts as a loader that loads the skin,
 instead of being the file that contains all rules. This way, it's easier for users to quickly enable
@@ -308,19 +312,28 @@ set to true. Also make sure that you're using WebRender and hardware rendering.
 These are custom options which you need to create. Type in the exact name, then press the plus button on
 the right to create the config.
 
+You can also access most of the configs through the browser preferences page if Natsumi Append is
+installed.
+
 ### "I don't see the Customize Natsumi option in the settings page!"
 Please check that you've installed fx-autoconfig and `userChromeJS.persistent_domcontent_callback` is
 true.
+
+### "Natsumi looks very weird in Floorp/Waterfox!"
+This may be because you do not have the Proton design (i.e. the default Firefox design) enabled. Natsumi
+only supports Proton and does not support other designs such as Lepton or Fluerial.
+
+You can fix this by going to Floorp Hub => Tab & Appearance in Floorp or Look & Feel in Waterfox.
+
+### "I can't use custom skin X with Natsumi, please add support for it!"
+This is not something I am able to help with. Natsumi is not tested with other themes in mind, so it is
+possible that installing incompatible themes alongside Natsumi may break one or more of them.
 
 ### "Something's bugged!"
 There may be userchromes that you're using alongside Natsumi Browser that breaks things. Please disable
 these then try again.
 
 If the issue still persists, open an issue or report the bug to the developer through Discord.
-
-### "Can I use your code for my browser?"
-If your browser is open-source and licensed under the GPLv3 or later (or AGPLv3 or later), then yes.
-Otherwise, please contact me so I can grant you permission. 
 
 ## Acknowledgements
 Thank you to:
