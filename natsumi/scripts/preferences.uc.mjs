@@ -677,7 +677,8 @@ function addSidebarWorkspacesPane() {
     workspacesGroup.registerOption("natsumiSidebarWorkspacesAsIcons", new CheckboxChoice(
         "natsumi.sidebar.workspaces-as-icons",
         "natsumiSidebarWorkspacesAsIcons",
-        "Display Workspaces as an icon strip"
+        "Display Workspaces as an icon strip",
+        "This does not make each icon clickable to switch Workspaces (for now)."
     ));
 
     let sidebarWorkspacesNode = workspacesGroup.generateNode();
