@@ -674,6 +674,12 @@ function addSidebarWorkspacesPane() {
         true
     ));
 
+    workspacesGroup.registerOption("natsumiSidebarWorkspacesAsIcons", new CheckboxChoice(
+        "natsumi.sidebar.workspaces-as-icons",
+        "natsumiSidebarWorkspacesAsIcons",
+        "Display Workspaces as an icon strip"
+    ));
+
     let sidebarWorkspacesNode = workspacesGroup.generateNode();
 
     // Set listeners for each checkbox

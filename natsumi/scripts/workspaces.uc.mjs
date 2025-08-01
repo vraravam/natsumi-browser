@@ -31,13 +31,12 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
-function getWorkspaceData() {
+function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
     const workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value)
     let workspaceName = null;
     let workspaceIcon = null;
-
     let workspaceId = workspaceData["defaultID"];
 
     if (availableTabs.length > 0) {
@@ -62,14 +61,57 @@ function getWorkspaceData() {
         }
     }
 
-    return {"name": workspaceName, "icon": workspaceIcon};
+    return {"id": workspaceId, "name": workspaceName, "icon": workspaceIcon};
 }
 
 function copyWorkspaceName() {
-    let currentWorkspaceData = getWorkspaceData();
+    let currentWorkspaceData = getCurrentWorkspaceData();
     let sidebar = document.getElementById("sidebar-main");
     sidebar.style.setProperty("--natsumi-workspace-name", `"${currentWorkspaceData["name"]}"`);
     sidebar.style.setProperty("--natsumi-workspace-icon", currentWorkspaceData["icon"]);
+}
+
+function copyAllWorkspaces() {
+    let workspacesButton = document.getElementById("workspaces-toolbar-button");
+
+    if (!workspacesButton) {
+        // Mutation observer will take care of this for us
+        return;
+    }
+
+    const workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value)
+    const currentWorkspaceData = getCurrentWorkspaceData();
+
+    // Clear existing workspaces
+    const allWorkspaceIcons = workspacesButton.querySelectorAll(".natsumi-workspace-icon");
+
+    allWorkspaceIcons.forEach(icon => {
+        if (icon.parentNode === workspacesButton) {
+            workspacesButton.removeChild(icon);
+        }
+    });
+
+    for (let index in workspaceData["data"]) {
+        let workspace = workspaceData["data"][index];
+        let workspaceId = workspace[0];
+        let workspaceIcon = workspace[1]["icon"];
+
+        if (!workspaceIcon) {
+            workspaceIcon = `url('chrome://noraneko/content/assets/svg/fingerprint.svg')`;
+        } else {
+            workspaceIcon = `url('chrome://noraneko/content/assets/svg/${workspaceIcon}.svg')`;
+        }
+
+        let newButtonNode = document.createElement("div");
+        newButtonNode.classList.add("natsumi-workspace-icon");
+        newButtonNode.style.setProperty("--natsumi-workspace-icon", workspaceIcon);
+
+        if (workspaceId === currentWorkspaceData["id"]) {
+            newButtonNode.classList.add("natsumi-workspace-active");
+        }
+
+        workspacesButton.appendChild(newButtonNode);
+    }
 }
 
 let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
@@ -80,9 +122,37 @@ if (ucApi.Prefs.get("natsumi.browser.type").exists) {
 }
 
 if (isFloorp) {
+    let workspacesButton = document.getElementById("workspaces-toolbar-button");
+
+    if (workspacesButton) {
+        copyAllWorkspaces();
+    } else {
+        // Let mutation observers handle this
+        let toolbarsObserver = new MutationObserver(function (mutations) {
+            mutations.forEach(function (mutationRecord) {
+                let newWorkspacesButton = document.getElementById("workspaces-toolbar-button");
+                if (newWorkspacesButton) {
+                    copyAllWorkspaces();
+                    toolbarsObserver.disconnect(); // Stop observing once the button exists
+                }
+            });
+        });
+
+        let toolbox = document.getElementById("nav-bar-customization-target");
+        let statusBar = document.getElementById("nora-statusbar");
+
+        toolbarsObserver.observe(toolbox, {attributes: true, childList: true, subtree: true});
+
+        if (statusBar) {
+            toolbarsObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
+        }
+    }
+
     let tabsListObserver = new MutationObserver(function (mutations) {
         mutations.forEach(function (mutationRecord) {
             copyWorkspaceName();
+            copyAllWorkspaces();
+            copyAllWorkspaces();
         });
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
