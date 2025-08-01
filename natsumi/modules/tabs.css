@@ -156,6 +156,44 @@ SOFTWARE.
     .tab-background {
       border-radius: var(--natsumi-tab-border-radius) !important;
     }
+
+    @media -moz-pref("natsumi.tabs.pinned-tabs-favicon") {
+      .tabbrowser-tab[selected][style*="--natsumi-tab-icon"] {
+        .tab-background {
+          background: transparent !important;
+          overflow: clip !important;
+          position: relative !important;
+        }
+
+        .tab-background::before {
+          content: "";
+          width: 200% !important;
+          height: 200% !important;
+          left: 50% !important;
+          top: 50% !important;
+          translate: -50% -50% !important;
+          background-image: var(--natsumi-tab-icon);
+          background-repeat: no-repeat;
+          background-position: center;
+          background-size: contain !important;
+          position: absolute;
+          background-clip: padding-box !important;
+          filter: blur(20px) saturate(200%);
+          border-radius: var(--natsumi-tab-border-radius);
+        }
+
+        .tab-background::after {
+          content: "";
+          position: absolute;
+          margin-right: 2px !important;
+          margin-top: 2px !important;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          background: var(--natsumi-mat-hz-background);
+          border-radius: calc(var(--natsumi-tab-border-radius) - 2px);
+        }
+      }
+    }
   }
 
   #tabbrowser-tabs[expanded] #pinned-tabs-container {
