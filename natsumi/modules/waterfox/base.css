@@ -95,4 +95,15 @@ SOFTWARE.
       border-bottom: var(--tabstrip-inner-border) !important;
     }
   }
+
+  /* For some reason, we need this here to fight Waterfox's own CSS */
+  #navigator-toolbox {
+    &.fullscreen-with-menubar {
+      background-color: var(--natsumi-toolbox-color) !important;
+
+      &:-moz-window-inactive {
+        background-color: var(--natsumi-toolbox-color-inactive) !important;
+      }
+    }
+  }
 }
