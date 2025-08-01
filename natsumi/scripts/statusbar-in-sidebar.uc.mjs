@@ -1,6 +1,7 @@
 // ==UserScript==
 // @include   main
 // @ignorecache
+// @loadOrder 11
 // ==/UserScript==
 
 /*
@@ -50,16 +51,7 @@ function copySidebarWidth() {
         width = "242px";
     }
 
-    let statusBar = document.querySelector("#nora-statusbar");
-    let navBar = document.querySelector("#navigator-toolbox");
-
-    if (statusBar) {
-        statusBar.style.setProperty("--natsumi-sidebar-width", width);
-    }
-
-    if (navBar) {
-        navBar.style.setProperty("--natsumi-sidebar-width", width);
-    }
+    document.body.style.setProperty("--natsumi-sidebar-width", width);
 }
 
 function copySidebarOptionsHeight() {
@@ -80,30 +72,30 @@ function copySidebarOptionsHeight() {
 
     const height = sidebarOptions.offsetHeight;
 
-    let statusBar = document.querySelector("#nora-statusbar");
-
-    // This is a Floorp-only feature, so this may or may not exist
-    if (!statusBar) {
-        return;
-    }
-
-    // Set a variable to the sidebar options height
-    statusBar.style.setProperty("--natsumi-sidebar-options-height", `${height}px`);
+    document.body.style.setProperty("--natsumi-sidebar-options-height", `${height}px`);
 }
 
 function copyStatusBarHeight() {
     let sidebarNode = document.querySelector("#sidebar-main");
 
     // Set a variable to the status bar height
-    let statusBar = document.querySelector("#nora-statusbar");
+    let statusBarFloorp = document.querySelector("#nora-statusbar");
+    let statusBarWaterfox = document.querySelector("#status-bar");
 
-    if (!statusBar) {
+    if (!statusBarFloorp && !statusBarWaterfox) {
         return;
     }
 
     // For some reason, offsetHeight is null but scrollHeight is correct.
     // Probably due to nora-statusbar having absolute position
-    const height = statusBar.scrollHeight;
+    let height = null;
+
+    if (statusBarFloorp) {
+        height = statusBarFloorp.scrollHeight;
+    } else if (statusBarWaterfox) {
+        height = statusBarWaterfox.scrollHeight;
+    }
+
     sidebarNode.style.setProperty("--natsumi-statusbar-height", `${height}px`);
 }
 
@@ -174,12 +166,19 @@ if (sidebar) {
     sidebarObserver.observe(sidebar, {attributes: true, attributeFilter: ["style"]});
 
     if (isFloorp) {
-        let statusBar = document.querySelector("#nora-statusbar");
+        let statusBarFloorp = document.querySelector("#nora-statusbar");
+        let statusBarWaterfox = document.querySelector("#status-bar");
         let statusBarObserver = new MutationObserver(function (mutations) {
             mutations.forEach(function (mutationRecord) {
                 copyStatusBarHeight();
             });
         });
-        statusBarObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
+
+        if (statusBarFloorp) {
+            statusBarObserver.observe(statusBarFloorp, {attributes: true, childList: true, subtree: true});
+        }
+        if (statusBarWaterfox) {
+            statusBarObserver.observe(statusBarWaterfox, {attributes: true, childList: true, subtree: true});
+        }
     }
 }

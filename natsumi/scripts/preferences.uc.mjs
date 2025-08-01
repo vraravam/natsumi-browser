@@ -710,11 +710,14 @@ function addSidebarButtonsPane() {
     );
 
     if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
-        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+        if (
+            ucApi.Prefs.get("natsumi.browser.type").value === "floorp" ||
+            ucApi.Prefs.get("natsumi.browser.type").value === "waterfox"
+        ) {
             buttonsGroup.registerOption("natsumiSidebarEnableToolbar", new CheckboxChoice(
-                "natsumi.sidebar.use-floorp-statusbar-in-sidebar",
+                "natsumi.sidebar.use-statusbar-in-sidebar",
                 "natsumiSidebarEnableToolbar",
-                "Use Floorp's Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
+                "Use Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
                 "This will allow you to add toolbar buttons (e.g. Bookmarks menu, New tab) to the Sidebar just like Zen."
             ));
         }
