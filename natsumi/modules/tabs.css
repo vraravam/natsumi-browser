@@ -58,6 +58,14 @@ SOFTWARE.
         font-size: 12px;
       }
 
+      .tab-stack {
+        transition: scale 0.2s ease;
+      }
+
+      &:active:not([style*="transform"]) .tab-stack {
+        scale: 0.95 !important;
+      }
+
       @media -moz-pref("sidebar.verticalTabs") {
         .tab-group-line {
           display: none !important;
@@ -155,6 +163,16 @@ SOFTWARE.
 
     .tab-background {
       border-radius: var(--natsumi-tab-border-radius) !important;
+    }
+
+    .tabbrowser-tab {
+      .tab-stack {
+        transition: scale 0.2s ease;
+      }
+
+      &:active:not([style*="transform"]) .tab-stack {
+        scale: 0.95 !important;
+      }
     }
 
     @media -moz-pref("natsumi.tabs.pinned-tabs-favicon") {
