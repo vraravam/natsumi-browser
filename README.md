@@ -12,10 +12,11 @@
 
 ## Meet Natsumi! 🦋
 Natsumi Browser (or Natsumi, for short) is a skin made for Firefox and its forks that adds lots of
-polish to the design by incorporating animations, blurs and more. It's pretty much the skin I
-personally use, but made public because people wanted the CSS.
+polish to the design and adds new features to further enhance the browsing experience, while retaining
+customization options to allow you to fully make things yours.
 
-Natsumi is NOT a standalone browser. I don't even intend on making one.
+Natsumi is NOT a standalone browser. It only supports Firefox-based browsers that are not known to
+be hostile towards user personalization.
 
 > [!NOTE]
 > Please remember that Natsumi in the end is **my personal browser skin**. If you don't like a design
