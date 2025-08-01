@@ -211,6 +211,21 @@ SOFTWARE.
     --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
   }
 
+  #tabbrowser-tabs[expanded] #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab .tab-close-button {
+      border-radius: 10px !important;
+      list-style-image: url("../icons/lucide/close.svg") !important;
+      -moz-context-properties: stroke, stroke-opacity !important;
+      padding: 4px !important;
+      stroke: currentColor !important;
+      transition: background-color 0.2s ease !important;
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color) !important;
+      }
+    }
+  }
+
   #sidebar-main:not([sidebar-launcher-expanded]) {
     .tabbrowser-tab {
       min-width: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
