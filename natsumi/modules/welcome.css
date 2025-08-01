@@ -541,7 +541,7 @@ SOFTWARE.
 }
 
 body[natsumi-welcome] {
-  #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
+  #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
     display: none !important;
     opacity: 0 !important;
     pointer-events: none !important;
