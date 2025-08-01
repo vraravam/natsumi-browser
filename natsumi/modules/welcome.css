@@ -547,7 +547,7 @@ body[natsumi-welcome] {
     pointer-events: none !important;
   }
 
-  #sidebar-main {
+  #sidebar-main, #TabsToolbar-customization-target {
     opacity: 0 !important;
     pointer-events: none !important;
   }
@@ -559,6 +559,12 @@ body[natsumi-welcome] {
   @media not (-moz-platform: macos) {
     .titlebar-buttonbox-container {
       margin-left: auto !important;
+    }
+  }
+
+  @media not (-moz-pref("sidebar.verticalTabs")) {
+    #navigator-toolbox {
+      z-index: 999 !important;
     }
   }
 }
