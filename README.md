@@ -358,21 +358,27 @@ changed or removed after this date, it may not be accurately reflected in the sc
 Natsumi Browser uses code or files from other open-source projects. The original sources and their
 licenses are listed below.
 
-- [MX-Linux/mx-sound-theme-borealis](https://github.com/MX-Linux/mx-sound-theme-borealis) 
+- [MX-Linux/mx-sound-theme-borealis](https://github.com/MX-Linux/mx-sound-theme-borealis)
+  
   License: GPLv3
+  
   File used: `Borealis/stereo/desktop-login.ogg`
+  
   Changes made: none
-  - [MrOtherGuy/fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig)
-    License: MPL-2.0
-    Files used: `program` (folder), `profile/chrome/CSS` (folder), `profile/chrome/utils` (folder), `profile/chrome/resources` (folder)
-    Changes made: Modified `profile/chrome/utils/chrome.manifest`:
-    - ```diff
-      ...
-      - content userscripts ../JS/
-      + content userscripts ../natsumi/scripts/
-      ...
-      content userchrome ../resources/
-      + content natsumi ../natsumi/
-      + content natsumi-icons ../natsumi/icons/
+  
+- [MrOtherGuy/fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig)
 
-      ```
+  License: MPL-2.0
+
+  Files used: `program` (folder), `profile/chrome/CSS` (folder), `profile/chrome/utils` (folder), `profile/chrome/resources` (folder)
+
+  Changes made: Modified `profile/chrome/utils/chrome.manifest` (changes shown using diff formatting):
+  - ```diff
+    ...
+    - content userscripts ../JS/
+    + content userscripts ../natsumi/scripts/
+    ...
+    content userchrome ../resources/
+    + content natsumi ../natsumi/
+    + content natsumi-icons ../natsumi/icons/
+    ```
