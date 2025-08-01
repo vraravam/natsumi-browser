@@ -288,6 +288,24 @@ SOFTWARE.
       @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
         bottom: var(--natsumi-browser-separation) !important;
       }
+
+      @media -moz-pref("natsumi.sidebar.workspaces-as-icons") {
+        #workspaces-toolbar-button {
+          flex-direction: column !important;
+          flex: 1 !important;
+          max-height: unset !important;
+
+          .natsumi-workspace-icon {
+            min-height: 16px !important;
+
+            &::before {
+              bottom: 50% !important;
+              left: -6px !important;
+              translate: 0 50% !important;
+            }
+          }
+        }
+      }
     }
 
     &:has(#nora-statusbar.hidden) #vertical-tabs {
