@@ -28,7 +28,11 @@ function addMutatorObserver(tabObject) {
     observedTabs.push(observer);
 }
 
+// Usually pinned tabs should be here
 let pinnedTabsContainer = document.querySelector("#pinned-tabs-container");
+
+// But for some browsers (like Waterfox), it's in a different place
+let verticalPinnedTabsContainer = document.querySelector("#vertical-pinned-tabs-container");
 
 const pinnedTabsObserver = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutationRecord) {
@@ -43,12 +47,26 @@ const pinnedTabsObserver = new MutationObserver(function (mutations) {
     })
 });
 
-// Initial copy of icons for already existing pinned tabs
-let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
 
-pinnedTabs.forEach(function (tab) {
-    copyTabIcon(tab);
-    addMutatorObserver(tab);
-});
+if (pinnedTabsContainer) {
+    // Initial copy of icons for already existing pinned tabs
+    let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
 
-pinnedTabsObserver.observe(pinnedTabsContainer, { childList: true, subtree: true });
+    pinnedTabs.forEach(function (tab) {
+        copyTabIcon(tab);
+        addMutatorObserver(tab);
+    });
+
+    pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true, subtree: true});
+}
+if (verticalPinnedTabsContainer) {
+    // Initial copy of icons for already existing vertical pinned tabs
+    let verticalPinnedTabs = verticalPinnedTabsContainer.querySelectorAll("tab");
+
+    verticalPinnedTabs.forEach(function (tab) {
+        copyTabIcon(tab);
+        addMutatorObserver(tab);
+    });
+
+    pinnedTabsObserver.observe(verticalPinnedTabsContainer, {childList: true, subtree: true});
+}

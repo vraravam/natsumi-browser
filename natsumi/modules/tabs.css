@@ -158,7 +158,7 @@ SOFTWARE.
   }
 
   /* Pinned tabs */
-  #pinned-tabs-container {
+  #pinned-tabs-container, #vertical-pinned-tabs-container {
     --tab-height-with-margin-padding: calc(41px + (2 * var(--tab-block-margin)));
 
     .tab-background {
@@ -225,8 +225,10 @@ SOFTWARE.
     }
   }
 
-  #tabbrowser-tabs[expanded] #pinned-tabs-container {
-    --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
+  #tabbrowser-tabs[expanded] {
+    #pinned-tabs-container, #vertical-pinned-tabs-container {
+      --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
+    }
   }
 
   #tabbrowser-tabs[expanded] #tabbrowser-arrowscrollbox {
