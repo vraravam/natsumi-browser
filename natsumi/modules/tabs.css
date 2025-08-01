@@ -158,6 +158,22 @@ SOFTWARE.
     }
 
     @media -moz-pref("natsumi.tabs.pinned-tabs-favicon") {
+      .tab-background::before {
+        content: "";
+        width: 200% !important;
+        height: 200% !important;
+        left: 50% !important;
+        top: 50% !important;
+        translate: -50% -50% !important;
+        opacity: 0;
+        transition: opacity 0.2s ease !important;
+      }
+
+      .tab-background::after {
+        background-color: transparent;
+        transition: background-color 0.2s ease;
+      }
+
       .tabbrowser-tab[selected][style*="--natsumi-tab-icon"] {
         .tab-background {
           background: transparent !important;
@@ -166,12 +182,6 @@ SOFTWARE.
         }
 
         .tab-background::before {
-          content: "";
-          width: 200% !important;
-          height: 200% !important;
-          left: 50% !important;
-          top: 50% !important;
-          translate: -50% -50% !important;
           background-image: var(--natsumi-tab-icon);
           background-repeat: no-repeat;
           background-position: center;
@@ -180,6 +190,7 @@ SOFTWARE.
           background-clip: padding-box !important;
           filter: blur(20px) saturate(200%);
           border-radius: var(--natsumi-tab-border-radius);
+          opacity: 1;
         }
 
         .tab-background::after {
