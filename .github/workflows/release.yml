@@ -109,12 +109,11 @@ jobs:
           commit: ${{ github.ref }}
           draft: true
           skipIfReleaseExists: true
-          artifacts: [
-            'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64',
-            'natsumi-installer-macos-intel/natsumi-installer-macos-x64',
-            'natsumi-installer-linux/natsumi-installer-linux-x64',
-            'natsumi-installer-windows/natsumi-installer.exe'
-          ]
+          artifactErrorsFailBuild: true
+          artifacts: 'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64,
+            natsumi-installer-macos-x64/natsumi-installer-macos-intel,
+            natsumi-installer-linux/natsumi-installer-linux-x64,
+            natsumi-installer-windows/natsumi-installer.exe'
 
 
 
