@@ -429,13 +429,37 @@ SOFTWARE.
     }
 
     #PersonalToolbar {
+      visibility: visible !important;
       width: calc(100vw - var(--natsumi-sidebar-width)) !important;
       margin-left: var(--natsumi-sidebar-width) !important;
       padding-left: 0 !important;
-      margin-top: -35px !important;
+      padding-top: 6px !important;
+      margin-top: -41px !important;
+
+      #personal-bookmarks {
+        transition: visibility 0.2s ease !important;
+      }
 
       @media not (-moz-platform: macos) {
         width: calc(100vw - var(--natsumi-sidebar-width) - var(--natsumi-window-buttons-width)) !important;
+      }
+
+      &[collapsed=true] {
+        #personal-bookmarks {
+          visibility: collapse !important;
+        }
+      }
+
+      @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
+        &:hover[collapsed=true] {
+          min-height: 28px !important;
+          max-height: 28px !important;
+
+          #personal-bookmarks {
+            visibility: visible !important;
+            min-height: 28px !important;
+          }
+        }
       }
     }
 
@@ -452,6 +476,12 @@ SOFTWARE.
 
     &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox {
       margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+    }
+
+    @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
+      &:has(#PersonalToolbar:hover) #tabbrowser-tabbox {
+        margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+      }
     }
 
     &[inDOMFullscreen="true"] #tabbrowser-tabbox, &[inDOMFullscreen="true"]:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox {
