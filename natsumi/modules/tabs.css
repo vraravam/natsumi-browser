@@ -201,7 +201,6 @@ SOFTWARE.
 
         .tab-background::before {
           background-image: var(--natsumi-tab-icon);
-          background-repeat: no-repeat;
           background-position: center;
           background-size: contain !important;
           position: absolute;
