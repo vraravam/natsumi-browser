@@ -1,6 +1,7 @@
 // Set this to true to disable hiding notifications.
 // HIGHLY NOT RECOMMENDED for production environments.
 const debugNotifications = false;
+const overflowThreshold = 4;
 
 export class NatsumiNotificationsParent {
     constructor(attachToExisting = false) {
@@ -70,10 +71,10 @@ export class NatsumiNotificationsParent {
             if (notificationsContainer) {
                 const allNotifications = notificationsContainer.querySelectorAll(".natsumi-notification");
 
-                if (allNotifications.length <= 10) {
+                if (allNotifications.length <= overflowThreshold) {
                     notificationsContainer.style.removeProperty("--natsumi-notifications-overflow");
                 } else {
-                    notificationsContainer.style.setProperty("--natsumi-notifications-overflow", `"+${allNotifications.length - 10}"`);
+                    notificationsContainer.style.setProperty("--natsumi-notifications-overflow", `"+${allNotifications.length - overflowThreshold}"`);
                 }
             }
         }
@@ -129,8 +130,8 @@ export class NatsumiNotification {
             }
 
             const allNotifications = notificationsContainer.querySelectorAll(".natsumi-notification");
-            if (allNotifications.length > 10) {
-                notificationsContainer.style.setProperty("--natsumi-notifications-overflow", `"+${allNotifications.length - 10}"`);
+            if (allNotifications.length > overflowThreshold) {
+                notificationsContainer.style.setProperty("--natsumi-notifications-overflow", `"+${allNotifications.length - overflowThreshold}"`);
             }
 
             setTimeout(() => {

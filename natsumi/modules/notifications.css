@@ -86,7 +86,7 @@ SOFTWARE.
     max-width: 70vw;
     word-break: break-word;
 
-    &:nth-child(n+11) {
+    &:nth-child(n+5) {
       display: none !important;
     }
 
@@ -120,4 +120,8 @@ SOFTWARE.
       font-size: small;
     }
   }
+}
+
+:root[inDOMFullscreen="true"] #natsumi-notifications-container {
+  top: 20px !important;
 }

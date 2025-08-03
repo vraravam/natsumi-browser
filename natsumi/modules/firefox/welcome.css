@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -24,25 +24,11 @@ SOFTWARE.
 
 */
 
-/* ==== Load config and Natsumi Browser ==== */
+/* ==== Firefox welcome pane next button fix ==== */
 
-@import "../natsumi-config.css";
-@import "modules/preload.css";
-@import "global/colors.css";
-@import "modules/themer.css";
-@import "modules/base.css";
-@import "modules/backdrop-blur.css";
-@import "modules/tabs.css";
-@import "modules/folders.css";
-@import "modules/urlbar.css";
-@import "modules/findbar.css";
-@import "modules/pip.css";
-@import "modules/notifications.css";
-@import "modules/welcome.css";
-@import "modules/floorp/base.css";
-@import "modules/floorp/icons.css";
-@import "modules/floorp/split-view.css";
-@import "modules/floorp/panel-sidebar.css";
-@import "modules/floorp/workspaces.css";
-@import "modules/waterfox/base.css";
-@import "modules/firefox/welcome.css";
+:root[data-title-default="Mozilla Firefox"] {
+  #natsumi-welcome-button-next {
+    background-image: url("chrome://browser/skin/forward.svg") !important;
+    fill: black !important;
+  }
+}
