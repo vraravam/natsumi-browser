@@ -63,6 +63,10 @@ SOFTWARE.
         bottom: var(--natsumi-browser-separation) !important;
       }
 
+      @media not -moz-pref("sidebar.verticalTabs") {
+        bottom: 48px !important;
+      }
+
       #status-text {
         display: none !important;
       }

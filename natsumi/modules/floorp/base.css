@@ -289,6 +289,10 @@ SOFTWARE.
         bottom: var(--natsumi-browser-separation) !important;
       }
 
+      @media not -moz-pref("sidebar.verticalTabs") {
+        bottom: 48px !important;
+      }
+
       @media -moz-pref("natsumi.sidebar.workspaces-as-icons") {
         #workspaces-toolbar-button {
           flex-direction: column !important;
