@@ -37,6 +37,7 @@ SOFTWARE.
 @import "modules/urlbar.css";
 @import "modules/findbar.css";
 @import "modules/pip.css";
+@import "modules/notifications.css";
 @import "modules/welcome.css";
 @import "modules/floorp/base.css";
 @import "modules/floorp/icons.css";

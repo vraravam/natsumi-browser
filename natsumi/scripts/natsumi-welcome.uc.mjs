@@ -31,6 +31,7 @@ SOFTWARE.
 */
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import {NatsumiNotification} from "./notifications.sys.mjs";
 
 let natsumiWelcomeObject = null;
 
@@ -144,6 +145,15 @@ class NatsumiWelcome {
         if (this.step === this.panes.length) {
             document.body.removeAttribute("natsumi-welcome");
             ucApi.Prefs.set("natsumi.welcome.viewed", true);
+
+            // Add to notifications
+            let notificationObject = new NatsumiNotification(
+                "Welcome to Natsumi!",
+                "You can always customize Natsumi to your likings in the preferences page.",
+                "chrome://natsumi/content/icons/lucide/party.svg",
+                10000
+            )
+            notificationObject.addToContainer();
             return;
         }
 
@@ -151,7 +161,7 @@ class NatsumiWelcome {
         let bodyContainer = this.node.querySelector("#natsumi-welcome-content-body");
         bodyContainer.innerHTML = "";
 
-        let paneNode = null;
+        let paneNode;
         if (this.step === this.panes.length) {
             paneNode = convertToXUL(`
                 <div id="natsumi-welcome-complete" class="natsumi-welcome-pane">
