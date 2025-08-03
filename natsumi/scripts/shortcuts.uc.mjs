@@ -62,6 +62,10 @@ function handleKeyboardShortcuts(event) {
         }
     }
 
+    if (document.body.hasAttribute("natsumi-welcome")) {
+        return;
+    }
+
     // Ensure key is either a single character or a function key
     if (key.length !== 1 && !(key.length === 2 && key.startsWith("f"))) {
         return;
