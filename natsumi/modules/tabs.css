@@ -219,6 +219,10 @@ SOFTWARE.
           height: calc(100% - 4px);
           background: var(--natsumi-mat-hz-background);
           border-radius: calc(var(--natsumi-tab-border-radius) - 2px);
+
+          @media not -moz-pref("sidebar.verticalTabs") {
+            margin-left: 2px !important;
+          }
         }
       }
     }
