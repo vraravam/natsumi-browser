@@ -1058,6 +1058,49 @@ function addURLbarBehaviorPane() {
     prefsView.insertBefore(behaviorNode, homePane);
 }
 
+function addShortcutsTogglePane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let generalGroup = new OptionsGroup(
+        "natsumiURLBarBehavior",
+        "General",
+        "Natsumi Shortcuts are not customizable at the moment, but you can always turn them on or off."
+    );
+
+    generalGroup.registerOption("natsumiShortcutsDisabled", new CheckboxChoice(
+        "natsumi.shortcuts.disabled",
+        "natsumiURLbarAlwaysExpanded",
+        "Enable Natsumi Shortcuts",
+        "",
+        true
+    ));
+
+    let generalNode = generalGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = generalNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        console.log("Adding listener to checkbox:", checkbox);
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(generalNode, homePane);
+}
+
 function addPreferencesPanes() {
     // Category nodes
     let appearanceNode = convertToXUL(`
@@ -1083,6 +1126,11 @@ function addPreferencesPanes() {
     let urlbarNode = convertToXUL(`
         <hbox id="natsumiUrlbarCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>URL Bar</html:h1>
+        </hbox>
+    `);
+    let shortcutsNode = convertToXUL(`
+        <hbox id="natsumiShortcutsCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Keyboard Shortcuts</html:h1>
         </hbox>
     `);
 
@@ -1126,6 +1174,9 @@ function addPreferencesPanes() {
         addURLbarLayoutPane();
         addURLbarBehaviorPane();
     }
+
+    prefsView.insertBefore(shortcutsNode, homePane);
+    addShortcutsTogglePane();
 }
 
 console.log("Loading prefs panes...");

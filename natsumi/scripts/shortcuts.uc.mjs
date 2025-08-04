@@ -56,7 +56,7 @@ function handleKeyboardShortcuts(event) {
     const shiftPressed = event.shiftKey;
     const key = event.key.toLowerCase();
 
-    if (ucApi.Prefs.get("natsumi.shortcuts.enabled").exists()) {
+    if (ucApi.Prefs.get("natsumi.shortcuts.disabled").exists()) {
         if (ucApi.Prefs.get("natsumi.shortcuts.disabled").value) {
             return; // Shortcuts are disabled, so do nothing
         }
