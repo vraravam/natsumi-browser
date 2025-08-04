@@ -41,7 +41,7 @@ jobs:
           mode: onefile
           disable-cache: true
           output-dir: build_intel
-          include-data-files: "{MAIN_DIRECTORY}/installer.json"
+          include-data-files: installer.json=installer/installer.json
       - name: Rename (Linux)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: mv build/installer.bin build/natsumi-installer-linux
