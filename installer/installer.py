@@ -30,8 +30,9 @@ import json
 from pathlib import Path
 
 home = str(Path.home())
+data_path = str(Path(__file__).parent)
 
-with open("installer.json") as file:
+with open(f"{data_path}/installer.json") as file:
     installer_data = json.load(file)
 
 chrome_manifest = [
