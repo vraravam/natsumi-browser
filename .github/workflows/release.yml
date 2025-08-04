@@ -30,7 +30,7 @@ jobs:
           script-name: installer/installer.py
           mode: onefile
           disable-cache: true
-          include-data-files: installer/installer.json
+          include-data-files: installer.json=installer/installer.json
       - name: Build (macOS Intel)
         uses: Nuitka/Nuitka-Action@main
         if: ${{ matrix.os == 'macos-latest' }}
