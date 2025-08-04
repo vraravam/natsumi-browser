@@ -26,9 +26,13 @@ import os
 import ctypes
 import sys
 import shutil
+import json
 from pathlib import Path
 
 home = str(Path.home())
+
+with open("installer.json") as file:
+    installer_data = json.load(file)
 
 chrome_manifest = [
     'content userchromejs ./',
@@ -195,6 +199,39 @@ def main():
 
     profile = profiles[browser_name][choice]
 
+    print('Select the version to install:')
+
+    version_keys = ['version', 'version_rc', 'version_beta', 'version_alpha']
+    version_keys_text = {
+        'version': 'Stable',
+        'version_rc': 'Release Candidate',
+        'version_beta': 'Beta',
+        'version_alpha': 'Alpha'
+    }
+    installable_versions = []
+    for version_key in version_keys:
+        version = installer_data["package"].get(version_key)
+        if version:
+            installable_versions.append(version)
+        else:
+            continue
+        print(f'{len(installable_versions)}. {version} ({version_keys_text[version_key]})')
+
+    while True:
+        try:
+            choice = int(input()) - 1
+
+            if choice < 0 or choice >= len(installable_versions):
+                raise ValueError()
+
+            break
+        except ValueError:
+            print(f'Invalid input. Please choose a number between 1 and {len(installable_versions)}.')
+        except KeyboardInterrupt:
+            sys.exit(0)
+
+    version_to_install = installable_versions[choice]
+
     # For Flatpak, we may need to check if the user is running as root
     needs_sudo = False
     if browser.name_flatpak and '.var/app' in profile:
@@ -281,7 +318,12 @@ def main():
             sine_support = True
 
     print('Installing Natsumi...')
-    os.system('git clone --depth 1 https://github.com/greeeen-dev/natsumi-browser.git .natsumi-installer/natsumi')
+    os.system(f'git clone --depth 1 --branch v{version_to_install} https://github.com/greeeen-dev/natsumi-browser.git .natsumi-installer/natsumi')
+
+    if os.path.exists(f'{profile}/chrome/natsumi'):
+        print('Removing existing Natsumi installation...')
+        shutil.rmtree(f'{profile}/chrome/natsumi')
+
     shutil.copytree('.natsumi-installer/natsumi/natsumi', f'{profile}/chrome/natsumi', dirs_exist_ok=True)
 
     # Back up original userChrome files
