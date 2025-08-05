@@ -350,7 +350,7 @@ def main():
 
     if not sys.platform == 'win32' and get_admin():
         print('Fixing permissions...')
-        os.system(f'chown -R {os.environ["SUDO_USER"]} {profile}/chrome/*')
+        os.system(f'chown -R {os.environ["SUDO_USER"]} "{profile}/chrome/*"')
 
     print('Natsumi installed successfully! ^w^')
 
