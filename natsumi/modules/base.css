@@ -378,7 +378,7 @@ SOFTWARE.
       z-index: 1 !important;
     }
 
-    @media not (-moz-platform: macos) {
+    @media (not (-moz-platform: macos)) and (not -moz-pref("natsumi.theme.force-window-controls-to-left")) {
       .titlebar-buttonbox-container {
         margin-left: 0 !important;
         min-height: 40px !important;

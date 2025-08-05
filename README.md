@@ -224,7 +224,8 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 - `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout. **Natsumi Append required.**
 - `natsumi.theme.single-toolbar-show-menu-button`: Shows the menu button instead of the extensions button
   in the Single Toolbar layout. **Natsumi Append required.**
-
+- `natsumi.theme.force-window-controls-to-left`: Forces window controls to the sidebar rather than the
+  bookmarks bar.
 ### 🗂️ Tabs & Sidebar
 - `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
 - `natsumi.tabs.type` (string): Sets a custom tab type.

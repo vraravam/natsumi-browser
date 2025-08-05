@@ -460,6 +460,7 @@ function addToSidebar() {
 function addLayoutPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
+    const osName = Services.appinfo.OS.toLowerCase();
 
     // Create theme selection
     let layoutSelection = new MultipleChoicePreference(
@@ -475,7 +476,17 @@ function addLayoutPane() {
         "Replace Extensions button with Menu button on Single Toolbar"
     )
 
-    layoutSelection.registerExtras("natsumiTranslucencyBox", menuButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
+
+    if (osName !== "darwin") {
+        let windowControlsCheckbox = new CheckboxChoice(
+            "natsumi.theme.force-window-controls-to-left",
+            "natsumiForceWinControlsToLeft",
+            "Display window controls on the sidebar in Single Toolbar",
+        )
+
+        layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
+    }
 
     for (let layout in layouts) {
         layoutSelection.registerOption(layout, layouts[layout]);
