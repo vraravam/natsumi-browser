@@ -152,7 +152,7 @@ def main():
 
             if found_profiles:
                 profiles[browser.name] = found_profiles
-        except NotADirectoryError as e:
+        except NotADirectoryError:
             pass
 
     if not profiles:
@@ -347,6 +347,10 @@ def main():
     else:
         with open(f'{profile}/chrome/utils/chrome.manifest', 'w+') as file:
             file.write('\n'.join(chrome_manifest))
+
+    if not sys.platform == 'win32' and get_admin():
+        print('Fixing permissions...')
+        os.system(f'sudo chown -R {os.environ["SUDO_USER"]} {profile}/chrome/*')
 
     print('Natsumi installed successfully! ^w^')
 
