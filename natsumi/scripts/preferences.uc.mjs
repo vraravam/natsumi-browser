@@ -604,6 +604,7 @@ function addColorsPane() {
         "natsumi.theme.force-natsumi-color",
         "natsumiUseThemeAccentColor",
         "Use your Firefox theme's accent color where possible",
+        "",
         true
     )
 

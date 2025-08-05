@@ -122,7 +122,7 @@ SOFTWARE.
 /* Theme colors */
 :root[windowtype*="navigator:browser"] {
   /* Use theme color if possible */
-  &[lwt-icon-fill-attention] #browser::before {
+  &[lwt-icon-fill-attention] body::after {
     background-color: var(--lwt-accent-color);
   }
 }
