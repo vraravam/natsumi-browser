@@ -271,10 +271,13 @@ SOFTWARE.
       }
     }
 
+    &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
+      left: 7px !important;
+    }
+
     &:not([customizing]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
       flex-direction: column !important;
       bottom: calc(var(--natsumi-sidebar-options-height) + var(--space-small) + var(--natsumi-browser-separation));
-      left: 7px !important;
       width: 36px !important;
 
       toolbarbutton {
