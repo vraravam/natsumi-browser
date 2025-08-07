@@ -123,82 +123,104 @@ def get_profiles(path):
 
     return profiles
 
+def prompt_for_path(message):
+    while True:
+        user_input = input(f"{message}\nEnter the full path to the profiles directory or type 'exit' to quit: ").strip()
+        if user_input.lower() == 'exit':
+            sys.exit(0)
+        if os.path.exists(user_input):
+            return user_input
+        print("Path does not exist. Please try again.")
+
+def select_browser():
+    print('Select the browser to install Natsumi to:')
+    for idx, browser in enumerate(browsers):
+        print(f"{idx+1}. {browser.name}")
+    while True:
+        try:
+            choice = int(input()) - 1
+            if choice < 0 or choice >= len(browsers):
+                raise ValueError()
+            return browsers[choice]
+        except ValueError:
+            print(f'Invalid input. Please choose a number between 1 and {len(browsers)}.')
+        except KeyboardInterrupt:
+            sys.exit(0)
+
+def detect_install_and_profiles(browser):
+    # Detect install path
+    install_path = None
+    profile_paths = []
+    try:
+        if sys.platform == 'darwin':
+            install_path = f'/Applications/{browser.name_macos}.app/Contents/Resources'
+            profile_root = _get_macos_path(browser)
+        elif sys.platform == 'win32':
+            install_path = f'C:/Program Files/{browser.name_windows_binary}'
+            profile_root = _get_windows_path(browser)
+        elif sys.platform.startswith('linux'):
+            install_path = f'/usr/lib/{browser.name_universal}'
+            try:
+                profile_root = _get_linux_path(browser)
+            except NotADirectoryError:
+                if browser.name_flatpak:
+                    try:
+                        profile_root = _get_flatpak_path(browser)
+                    except NotADirectoryError:
+                        profile_root = None
+                else:
+                    profile_root = None
+        else:
+            raise NotImplementedError('Unsupported platform')
+    except NotADirectoryError:
+        profile_root = None
+
+    print(f"[DEBUG] Detected install_path: {install_path}")
+    print(f"[DEBUG] os.path.isdir(install_path): {os.path.isdir(install_path) if install_path else 'N/A'}")
+    print(f"[DEBUG] Detected profile_root: {profile_root}")
+    print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root) if profile_root else 'N/A'}")
+
+    if not install_path or not os.path.isdir(install_path):
+        install_path = prompt_for_path(f"Could not detect install location for {browser.name}.")
+        print(f"[DEBUG] User provided install_path: {install_path}")
+        print(f"[DEBUG] os.path.isdir(install_path): {os.path.isdir(install_path)}")
+
+    if not profile_root or not os.path.isdir(profile_root):
+        profile_root = prompt_for_path(f"Could not detect profiles directory for {browser.name}.")
+        print(f"[DEBUG] User provided profile_root: {profile_root}")
+        print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root)}")
+
+    # Get profiles
+    profile_paths = get_profiles(profile_root)
+    if not profile_paths:
+        print(f"No profiles found in {profile_root}.")
+        profile_root = prompt_for_path(f"Please enter a valid profile directory for {browser.name}.")
+        print(f"[DEBUG] User provided profile_root (no profiles): {profile_root}")
+        print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root)}")
+        profile_paths = get_profiles(profile_root)
+
+    return install_path, profile_paths
+
 def main():
     print('Welcome to the Natsumi installer! >w<')
-    print('Detecting browsers and profiles...')
 
-    profiles = {}
-
-    for browser in browsers:
-        try:
-            found_profiles = []
-
-            if sys.platform == 'darwin':
-                found_profiles.extend(get_profiles(_get_macos_path(browser)))
-            elif sys.platform == 'win32':
-                found_profiles.extend(get_profiles(_get_windows_path(browser)))
-            elif sys.platform.startswith('linux'):
-                try:
-                    found_profiles.extend(get_profiles(_get_linux_path(browser)))
-                except NotADirectoryError:
-                    pass
-
-                try:
-                    found_profiles.extend(get_profiles(_get_flatpak_path(browser)))
-                except NotADirectoryError:
-                    pass
-            else:
-                raise NotImplementedError('Unsupported platform')
-
-            if found_profiles:
-                profiles[browser.name] = found_profiles
-        except NotADirectoryError:
-            pass
-
-    if not profiles:
-        print('No supported browsers found.')
-        return
-
-    print('Select the browser to install Natsumi to:')
-
-    for index in range(len(profiles.keys())):
-        print(f'{index+1}. {list(profiles.keys())[index]}')
-
-    while True:
-        try:
-            choice = int(input()) - 1
-
-            if choice < 0 or choice >= len(profiles):
-                raise ValueError()
-
-            break
-        except ValueError:
-            print(f'Invalid input. Please choose a number between 1 and {len(profiles)}.')
-        except KeyboardInterrupt:
-            sys.exit(0)
-
-    browser_name = list(profiles.keys())[choice]
-    browser = next(b for b in browsers if b.name == browser_name)
+    browser = select_browser()
+    install_path, profile_paths = detect_install_and_profiles(browser)
 
     print('Select the profile to install Natsumi to:')
-
-    for index, profile in enumerate(profiles[browser_name]):
-        print(f'{index+1}. {profile}')
-
+    for idx, profile in enumerate(profile_paths):
+        print(f"{idx+1}. {profile}")
     while True:
         try:
             choice = int(input()) - 1
-
-            if choice < 0 or choice >= len(profiles[browser_name]):
+            if choice < 0 or choice >= len(profile_paths):
                 raise ValueError()
-
+            profile = profile_paths[choice]
             break
         except ValueError:
-            print(f'Invalid input. Please choose a number between 1 and {len(profiles[browser_name])}.')
+            print(f'Invalid input. Please choose a number between 1 and {len(profile_paths)}.')
         except KeyboardInterrupt:
             sys.exit(0)
-
-    profile = profiles[browser_name][choice]
 
     print('Select the version to install:')
 
