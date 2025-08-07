@@ -43,7 +43,7 @@ SOFTWARE.
     background-color: light-dark(white, #222) !important;
   }
 
-  #navigator-toolbox {
+  * {
     --natsumi-toolbox-color: light-dark(white, #222) !important;
     --natsumi-toolbox-color-inactive: light-dark(white, #222) !important;
   }

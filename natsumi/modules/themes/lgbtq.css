@@ -43,8 +43,13 @@ SOFTWARE.
     }
   }
 
-  #navigator-toolbox {
+  * {
     --natsumi-toolbox-color: light-dark(#ff9393, #994444) !important;
     --natsumi-toolbox-color-inactive: light-dark(#ff9393, #994444) !important;
+    --natsumi-sidebar-color: linear-gradient(180deg, #ff9393, #ffb78b, #ffe88c, #5ce4a2, #97a6ff, #be9dff) !important;
+
+    @media (prefers-color-scheme: dark) {
+      --natsumi-sidebar-color: linear-gradient(180deg, #994444, #895f46, #8d804b, #3e8663, #3e456d, #625084) !important;
+    }
   }
 }

@@ -41,7 +41,7 @@ class NatsumiShortcutActions {
 
 let natsumiKeyboardShortcuts = {
     "copyCurrentUrl": new NatsumiKeyboardShortcut(false, true, false, true, "c", true, true),
-    "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", false, true) // switch browserWins to true once compact mode is implemented
+    "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", true, true) // switch browserWins to true once compact mode is implemented
 }
 
 let natsumiShortcutActionMappings = {
