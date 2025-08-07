@@ -32,7 +32,7 @@ SOFTWARE.
     filter: saturate(2);
   }
 
-  #navigator-toolbox {
+  * {
     --natsumi-toolbox-color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
     --natsumi-toolbox-color-inactive: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 50%, white), var(--natsumi-colors-primary)) !important;
   }

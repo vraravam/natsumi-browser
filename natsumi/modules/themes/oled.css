@@ -37,10 +37,8 @@ SOFTWARE.
     background-color: light-dark(white, black) !important;
   }
 
-  @media (prefers-color-scheme: dark) {
-    #navigator-toolbox {
-      --natsumi-toolbox-color: light-dark(white, black) !important;
-      --natsumi-toolbox-color-inactive: light-dark(white, black) !important;
-    }
+  * {
+    --natsumi-toolbox-color: light-dark(white, black) !important;
+    --natsumi-toolbox-color-inactive: light-dark(white, black) !important;
   }
 }

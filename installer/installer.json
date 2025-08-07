@@ -2,8 +2,8 @@
   "package": {
     "name": "Natsumi Browser",
     "author": "Green (@greeeen-dev)",
-    "version": "4.0.2",
-    "version_rc": "5.0.0-rc.2",
+    "version": "5.0.0",
+    "version_rc": null,
     "version_beta": null,
     "version_alpha": null,
     "source": "https://github.com/greeeen-dev/natsumi-browser"

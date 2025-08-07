@@ -156,9 +156,12 @@ SOFTWARE.
 }
 
 /* Add background on fullscreen hover (macOS) */
-#navigator-toolbox {
+* {
   --natsumi-toolbox-color: var(--lwt-accent-color, var(--toolbox-bgcolor));
   --natsumi-toolbox-color-inactive: var(--lwt-accent-color, var(--toolbox-bgcolor-inactive));
+}
+
+#navigator-toolbox {
   transition: background-color 0.3s ease;
 
   &.fullscreen-with-menubar {
