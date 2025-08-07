@@ -4,7 +4,7 @@
 // ==/UserScript==
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
-import {NatsumiNotification} from "./notifications.sys.mjs";
+import {NatsumiShortcutActions} from "./shortcut-actions.sys.mjs";
 
 class NatsumiKeyboardShortcut {
     constructor(meta, ctrl, alt, shift, key, browserWins, convertForMac) {
@@ -19,34 +19,18 @@ class NatsumiKeyboardShortcut {
     }
 }
 
-class NatsumiShortcutActions {
-    static copyCurrentUrl() {
-        let currentUrl = gBrowser.currentURI.spec;
-        navigator.clipboard.writeText(currentUrl);
-
-        // Add to notifications
-        let notificationObject = new NatsumiNotification("Copied URL to clipboard!", null, "chrome://natsumi/content/icons/lucide/copy.svg")
-        notificationObject.addToContainer();
-    }
-
-    static toggleCompactMode() {
-        // Right now this is useless because it's not implemented yet, but it will be soon enough
-        if (document.body.attributes["natsumi-compact-mode"]) {
-            document.body.removeAttribute("natsumi-compact-mode");
-        } else {
-            document.body.setAttribute("natsumi-compact-mode", "");
-        }
-    }
-}
-
 let natsumiKeyboardShortcuts = {
     "copyCurrentUrl": new NatsumiKeyboardShortcut(false, true, false, true, "c", true, true),
-    "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", true, true) // switch browserWins to true once compact mode is implemented
+    "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", true, true),
+    //"toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", true, true),
+    //"toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", true, true),
 }
 
 let natsumiShortcutActionMappings = {
     "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
-    "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode
+    "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode,
+    "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
+    "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar
 }
 
 function handleKeyboardShortcuts(event) {
