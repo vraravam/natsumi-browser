@@ -25,6 +25,10 @@ body[natsumi-compact-mode] {
     left: calc(var(--natsumi-compact-offset) * -1) !important;
     overflow-x: visible !important;
 
+    &:not([sidebar-launcher-expanded]) {
+      --natsumi-compact-offset: calc(50px - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
+    }
+
     &::before {
       content: "";
       width: var(--natsumi-browser-separation);
@@ -35,9 +39,34 @@ body[natsumi-compact-mode] {
     }
   }
 
-  #sidebar-main:hover {
-    left: 0 !important;
-    opacity: 1 !important;
+  &[natsumi-compact-sidebar-hover], [natsumi-compact-sidebar-extend] {
+    #sidebar-main {
+      left: 0 !important;
+      opacity: 1 !important;
+    }
+  }
+
+  @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
+    #nora-statusbar.hidden, #status-bar[collapsed="true"] {
+      z-index: 999 !important;
+      margin: var(--natsumi-browser-separation) !important;
+      transition: opacity 0.2s ease, left 0.2s ease !important;
+      --natsumi-compact-offset: calc(var(--natsumi-sidebar-width) - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
+      left: calc(var(--natsumi-compact-offset) * -1) !important;
+      opacity: 0 !important;
+    }
+
+    &[natsumi-compact-sidebar-hover], &[natsumi-compact-sidebar-extend], &:has(#nora-statusbar.hidden toolbarbutton[open], #status-bar[collapsed="true"] toolbarbutton[open]) {
+      #sidebar-main {
+        left: 0 !important;
+        opacity: 1 !important;
+      }
+
+      #nora-statusbar.hidden, #status-bar[collapsed="true"] {
+        left: var(--natsumi-browser-separation) !important;
+        opacity: 1 !important;
+      }
+    }
   }
 }
 
@@ -45,6 +74,7 @@ body[natsumi-compact-mode] {
   body[natsumi-compact-mode] {
     #navigator-toolbox {
       position: absolute !important;
+      min-width: 100vw !important;
       max-width: 100vw !important;
       transition: background 0s linear, opacity 0.1s ease, top 0.1s ease !important;
       background-color: var(--natsumi-toolbox-color) !important;
@@ -59,16 +89,26 @@ body[natsumi-compact-mode] {
         padding-right: var(--natsumi-browser-separation) !important;
       }
 
+      #urlbar {
+        transition: opacity 0.2s ease !important;
+        opacity: 0 !important;
+      }
+
       &:has(#PersonalToolbar[collapsed="false"]) {
         --natsumi-compact-offset: calc(68px - var(--natsumi-browser-separation));
       }
     }
 
-    &[natsumi-compact-mode-show-navbar] #navigator-toolbox,
-    #navigator-toolbox:hover, #navigator-toolbox.fullscreen-with-menubar,
-    #navigator-toolbox:has(toolbarbutton[open], #urlbar[open]) {
+    &[natsumi-compact-navbar-hover] #navigator-toolbox,
+    &[natsumi-compact-navbar-extend] #navigator-toolbox,
+    #navigator-toolbox.fullscreen-with-menubar,
+    #navigator-toolbox:has(toolbarbutton[open], #urlbar[focused]) {
       top: 0 !important;
       opacity: 1 !important;
+
+      #urlbar {
+        opacity: 1 !important;
+      }
     }
   }
 }
@@ -94,25 +134,37 @@ body[natsumi-compact-mode] {
       min-width: calc(100vw - calc(var(--natsumi-browser-separation) * 2)) !important;
       max-width: calc(100vw - calc(var(--natsumi-browser-separation) * 2)) !important;
       transition: min-height 170ms ease-out, max-height 170ms ease-out, var(--ext-theme-background-transition), margin 0.2s ease !important;
-      z-index: 1 !important;
     }
 
-    &:has(#sidebar-main:hover, #navigator-toolbox:hover):not(:has(#PersonalToolbar:hover)) {
-      #sidebar-main {
-        left: 0 !important;
-        opacity: 1 !important;
-      }
+    &:has(toolbarbutton[open]), &[natsumi-compact-sidebar-hover], &[natsumi-compact-sidebar-extend] {
+      &:not(:has(#PersonalToolbar:hover)) {
+        #sidebar-main {
+          left: 0 !important;
+          opacity: 1 !important;
+        }
 
-      #navigator-toolbox {
-        left: var(--natsumi-browser-separation) !important;
-      }
+        #navigator-toolbox {
+          left: var(--natsumi-browser-separation) !important;
+        }
 
-      #nav-bar {
-        opacity: 1 !important;
-      }
+        #nav-bar {
+          opacity: 1 !important;
+        }
 
-      #PersonalToolbar {
-        margin-left: 0 !important;
+        #PersonalToolbar {
+          margin-left: 0 !important;
+        }
+
+        #urlbar {
+          opacity: 1 !important;
+        }
+
+        @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
+          #nora-statusbar.hidden, #status-bar[collapsed="true"] {
+            left: var(--natsumi-browser-separation) !important;
+            opacity: 1 !important;
+          }
+        }
       }
     }
   }
