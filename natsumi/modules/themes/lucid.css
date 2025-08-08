@@ -39,7 +39,7 @@ SOFTWARE.
     background-color: light-dark(white, #222) !important;
   }
 
-  :root[lwt-icon-fill-attention] body::after {
+  :root[style*="--lwt"] body::after {
     background-color: light-dark(white, #222) !important;
   }
 
