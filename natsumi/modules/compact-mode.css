@@ -40,7 +40,7 @@ body[natsumi-compact-mode] {
   }
 
   &[natsumi-compact-sidebar-hover], [natsumi-compact-sidebar-extend] {
-    #sidebar-main {
+    &:not(:has(#PersonalToolbar:hover)) #sidebar-main {
       left: 0 !important;
       opacity: 1 !important;
     }
@@ -63,14 +63,16 @@ body[natsumi-compact-mode] {
     }
 
     &[natsumi-compact-sidebar-hover], &[natsumi-compact-sidebar-extend], &:has(#nora-statusbar.hidden toolbarbutton[open], #status-bar[collapsed="true"] toolbarbutton[open]) {
-      #sidebar-main {
-        left: 0 !important;
-        opacity: 1 !important;
-      }
+      &:not(:has(#PersonalToolbar:hover)) {
+        #sidebar-main {
+          left: 0 !important;
+          opacity: 1 !important;
+        }
 
-      #nora-statusbar.hidden, #status-bar[collapsed="true"] {
-        left: var(--natsumi-browser-separation) !important;
-        opacity: 1 !important;
+        #nora-statusbar.hidden, #status-bar[collapsed="true"] {
+          left: var(--natsumi-browser-separation) !important;
+          opacity: 1 !important;
+        }
       }
     }
   }

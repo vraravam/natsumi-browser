@@ -90,6 +90,23 @@ function handleElementLeave(event) {
     }
 }
 
+function resetCompactMode() {
+    if (document.body.hasAttribute("natsumi-compact-mode")) {
+        // Compact mode is still on
+        return;
+    }
+
+    if (document.body.hasAttribute("natsumi-compact-sidebar-hover")) {
+        document.body.removeAttribute("natsumi-compact-sidebar-hover");
+    }
+
+    if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
+        document.body.removeAttribute("natsumi-compact-navbar-hover");
+    }
+
+    sidebarHovered = 0;
+}
+
 let sidebarNode = document.getElementById("sidebar-main");
 let navbarNode = document.getElementById("navigator-toolbox");
 let statusbarNode = document.getElementById("nora-statusbar") || document.getElementById("status-bar");
@@ -107,3 +124,16 @@ if (navbarNode) {
     navbarNode.addEventListener("mouseenter", handleElementEnter, true);
     navbarNode.addEventListener("mouseleave", handleElementLeave, true);
 }
+
+let bodyMutationOnserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+        if (!document.body.hasAttribute("natsumi-compact-mode")) {
+            // Reset compact mode
+            resetCompactMode();
+        }
+    });
+});
+bodyMutationOnserver.observe(document.body, {
+    attributes: true,
+    attributeFilter: ["natsumi-compact-mode"]
+});
