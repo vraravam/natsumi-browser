@@ -3,7 +3,7 @@ body[natsumi-compact-mode] {
 
   #tabbrowser-tabbox {
     margin-top: var(--natsumi-browser-separation) !important;
-    margin-left: var(--natsumi-browser-separation) !important;
+    padding-left: var(--natsumi-browser-separation) !important;
   }
 
   #sidebar-launcher-splitter {
@@ -89,7 +89,9 @@ body[natsumi-compact-mode] {
       z-index: 999 !important;
       border-radius: 0 0 6px 6px !important;
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-      --natsumi-compact-offset: calc(40px - var(--natsumi-compact-hoverable));
+      --natsumi-compact-bookmarks-height: 0px;
+      --natsumi-compact-tabs-height: 0px;
+      --natsumi-compact-offset: calc(40px + var(--natsumi-compact-bookmarks-height) + var(--natsumi-compact-tabs-height) - var(--natsumi-compact-hoverable));
       top: calc(var(--natsumi-compact-offset) * -1) !important;
       opacity: 0 !important;
 
@@ -103,7 +105,11 @@ body[natsumi-compact-mode] {
       }
 
       &:has(#PersonalToolbar[collapsed="false"]) {
-        --natsumi-compact-offset: calc(68px - var(--natsumi-browser-separation));
+        --natsumi-compact-bookmarks-height: 28px !important;
+      }
+
+      @media not -moz-pref("sidebar.verticalTabs") {
+        --natsumi-compact-tabs-height: 44px !important;
       }
     }
 
