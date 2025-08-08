@@ -271,12 +271,16 @@ SOFTWARE.
       }
     }
 
-    &:has(#sidebar-main[hidden]) #nora-statusbar.hidden {
-      display: none !important;
+    &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
+      left: 7px;
     }
 
-    &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
-      left: 7px !important;
+    &:has(#panel-sidebar-select-box):has(#panel-sidebar-box[data-floating-splitter-side="end"]) #nora-statusbar.hidden {
+      left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
+    }
+
+    &:has(#sidebar-main[hidden]) #nora-statusbar.hidden {
+      display: none !important;
     }
 
     &:not([customizing]):has(sidebar-main:not([expanded])) #nora-statusbar.hidden {
