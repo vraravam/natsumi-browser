@@ -76,6 +76,10 @@ SOFTWARE.
       }
     }
 
+    &:has(#sidebar-main[hidden]) #status-bar[collapsed="true"] {
+      display: none !important;
+    }
+
     &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) #status-bar[collapsed="true"] {
       left: 7px !important;
     }

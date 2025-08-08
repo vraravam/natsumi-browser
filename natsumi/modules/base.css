@@ -461,6 +461,10 @@ SOFTWARE.
         #personal-bookmarks, toolbarbutton, toolbaritem {
           visibility: collapse !important;
         }
+
+        #personal-toolbar-empty-description {
+          display: none !important;
+        }
       }
 
       @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
@@ -474,6 +478,10 @@ SOFTWARE.
 
           #personal-bookmarks {
             min-height: 28px !important;
+          }
+
+          #personal-toolbar-empty-description {
+            display: flex !important;
           }
         }
       }
