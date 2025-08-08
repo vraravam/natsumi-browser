@@ -122,14 +122,14 @@ SOFTWARE.
 /* Theme colors */
 :root[windowtype*="navigator:browser"] {
   /* Use theme color if possible */
-  &[lwt-icon-fill-attention] body::after {
+  &[style*="--lwt"] body::after {
     background-color: var(--lwt-accent-color);
   }
 }
 
 /* Override accent color if theme color is set */
 @media not -moz-pref("natsumi.theme.force-natsumi-color") {
-  :root[lwt-icon-fill-attention] {
+  :root[style*="--lwt"] {
     * {
       --natsumi-primary-color: var(--lwt-accent-color) !important;
 

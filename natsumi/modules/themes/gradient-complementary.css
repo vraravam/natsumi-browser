@@ -41,7 +41,7 @@ SOFTWARE.
     }
   }
 
-  :root[lwt-icon-fill-attention] body::after {
+  :root[style*="--lwt"] body::after {
     background-color: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)) !important;
   }
 
