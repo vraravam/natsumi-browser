@@ -69,6 +69,10 @@ SOFTWARE.
         margin: auto !important;
         padding: 0 !important;
 
+        @media (prefers-color-scheme: dark) {
+          color: white !important;
+        }
+
         &::before {
           margin: auto 0 !important;
         }
