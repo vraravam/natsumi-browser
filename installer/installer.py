@@ -403,6 +403,8 @@ def main():
         os.system(f'chown -R {os.environ["SUDO_USER"]} "{profile}/chrome"')
 
     print('Natsumi installed successfully! ^w^')
+    print('Press enter to exit:')
+    input()
 
 if __name__ == '__main__':
     try:
