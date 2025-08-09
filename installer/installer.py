@@ -65,7 +65,12 @@ def download_from_git(repository, branch, destination, is_tag=False):
         # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
         urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
         with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
-            file.extract(f'{destination.split("/")[1]}-{branch}', '.natsumi-installer')
+            file.extractall('.natsumi-installer')
+
+            if is_tag and branch.startswith('v'):
+                branch = branch[1:]
+
+            os.rename(f".natsumi-installer/{repository.split('/')[1]}-{branch}", f".natsumi-installer/{destination}")
 
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
@@ -348,7 +353,7 @@ def main():
                 download_from_git('MrOtherGuy/fx-autoconfig', 'master', 'fx-autoconfig')
             except:
                 print('Failed to clone fx-autoconfig repository.')
-                sys.exit(1)
+                raise
 
         print('Copying fx-autoconfig profile files...')
         shutil.copytree('.natsumi-installer/fx-autoconfig/profile/chrome/CSS', f'{profile}/chrome/CSS', dirs_exist_ok=True)
@@ -364,7 +369,7 @@ def main():
         download_from_git('greeeen-dev/natsumi-browser', f'v{version_to_install}', 'natsumi', is_tag=True)
     except:
         print('Failed to clone Natsumi repository.')
-        sys.exit(1)
+        raise
 
     if os.path.exists(f'{profile}/chrome/natsumi'):
         print('Removing existing Natsumi installation...')
