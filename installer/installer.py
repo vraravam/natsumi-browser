@@ -54,24 +54,19 @@ def get_admin():
         return os.geteuid() == 0
 
 def download_from_git(repository, branch, destination, is_tag=False):
-    if not sys.platform == 'win32':
-        code = os.system(f'git clone --depth 1 --branch {branch} https://github.com/{repository}.git .natsumi-installer/{destination}')
-        if code != 0:
-            raise RuntimeError()
-    else:
-        heads_string = 'heads'
-        if is_tag:
-            heads_string = 'tags'
+    heads_string = 'heads'
+    if is_tag:
+        heads_string = 'tags'
 
-        # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
-        urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
-        with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
-            file.extractall('.natsumi-installer')
+    # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
+    urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
+    with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
+        file.extractall('.natsumi-installer')
 
-            if is_tag and branch.startswith('v'):
-                branch = branch[1:]
+        if is_tag and branch.startswith('v'):
+            branch = branch[1:]
 
-            os.rename(f".natsumi-installer/{repository.split('/')[1]}-{branch}", f".natsumi-installer/{destination}")
+        os.rename(f".natsumi-installer/{repository.split('/')[1]}-{branch}", f".natsumi-installer/{destination}")
 
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
