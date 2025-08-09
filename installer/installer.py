@@ -50,6 +50,22 @@ def get_admin():
     else:
         return os.geteuid() == 0
 
+def download_from_git(repository, branch, destination, is_tag=False):
+    if not sys.platform == 'win32':
+        code = os.system(f'git clone --depth 1 --branch {branch} https://github.com/{repository}.git .natsumi-installer/{destination}')
+        if code != 0:
+            raise RuntimeError()
+    else:
+        heads_string = 'heads'
+        if is_tag:
+            heads_string = 'tags'
+
+        # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
+        code = os.system(f'Invoke-WebRequest https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip -OutFile .natsumi-installer/{destination}.zip')
+        if code != 0:
+            raise RuntimeError()
+        os.system(f'Expand-Archive -Path .natsumi-installer/{destination}.zip -DestinationPath .natsumi-installer/{destination} -Force')
+
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
         self.name = name
@@ -312,8 +328,9 @@ def main():
             sys.exit(1)
 
         print('Installing fx-autoconfig...')
-        code = os.system('git clone --depth 1 https://github.com/MrOtherGuy/fx-autoconfig.git .natsumi-installer/fx-autoconfig')
-        if code != 0:
+        try:
+            download_from_git('MrOtherGuy/fx-autoconfig', 'master', 'fx-autoconfig')
+        except:
             print('Failed to clone fx-autoconfig repository.')
             sys.exit(1)
 
@@ -326,8 +343,9 @@ def main():
         if not fx_autoconfig_downloaded:
             print('Installing fx-autoconfig...')
 
-            code = os.system('git clone --depth 1 https://github.com/MrOtherGuy/fx-autoconfig.git .natsumi-installer/fx-autoconfig')
-            if code != 0:
+            try:
+                download_from_git('MrOtherGuy/fx-autoconfig', 'master', 'fx-autoconfig')
+            except:
                 print('Failed to clone fx-autoconfig repository.')
                 sys.exit(1)
 
@@ -341,7 +359,11 @@ def main():
             sine_support = True
 
     print('Installing Natsumi...')
-    os.system(f'git clone --depth 1 --branch v{version_to_install} https://github.com/greeeen-dev/natsumi-browser.git .natsumi-installer/natsumi')
+    try:
+        download_from_git('greeeen-dev/natsumi-browser', f'v{version_to_install}', 'natsumi', is_tag=True)
+    except:
+        print('Failed to clone Natsumi repository.')
+        sys.exit(1)
 
     if os.path.exists(f'{profile}/chrome/natsumi'):
         print('Removing existing Natsumi installation...')
