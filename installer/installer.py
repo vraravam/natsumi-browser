@@ -27,6 +27,7 @@ import ctypes
 import sys
 import shutil
 import json
+import traceback
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -403,8 +404,6 @@ def main():
         os.system(f'chown -R {os.environ["SUDO_USER"]} "{profile}/chrome"')
 
     print('Natsumi installed successfully! ^w^')
-    print('Press enter to exit:')
-    input()
 
 if __name__ == '__main__':
     try:
@@ -414,4 +413,7 @@ if __name__ == '__main__':
     except:
         if os.path.exists('.natsumi-installer'):
             shutil.rmtree('.natsumi-installer')
-        raise
+        traceback.print_exc()
+
+    print('Press enter to exit:')
+    input()
