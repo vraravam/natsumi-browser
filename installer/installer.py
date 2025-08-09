@@ -27,6 +27,8 @@ import ctypes
 import sys
 import shutil
 import json
+import urllib.request
+import zipfile
 from pathlib import Path
 
 home = str(Path.home())
@@ -61,10 +63,9 @@ def download_from_git(repository, branch, destination, is_tag=False):
             heads_string = 'tags'
 
         # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
-        code = os.system(f'Invoke-WebRequest https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip -OutFile .natsumi-installer/{destination}.zip')
-        if code != 0:
-            raise RuntimeError()
-        os.system(f'Expand-Archive -Path .natsumi-installer/{destination}.zip -DestinationPath .natsumi-installer/{destination} -Force')
+        urllib.request.urlretrieve('https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', '.natsumi-installer/{destination}.zip')
+        with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
+            file.extractall('.natsumi-installer')
 
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
