@@ -185,7 +185,7 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
 1. Install [fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig) to your browser. You need to
    install the contents of both program and profile/chrome, follow the instructions in the fx-autoconfig
    repository.
-2. Copy the following to chrome/utils/manifest:
+2. Copy the following to chrome/utils/chrome.manifest:
    ```
    content userchromejs ./
    content userscripts ../natsumi/scripts/
