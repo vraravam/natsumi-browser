@@ -63,9 +63,9 @@ def download_from_git(repository, branch, destination, is_tag=False):
             heads_string = 'tags'
 
         # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
-        urllib.request.urlretrieve('https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', '.natsumi-installer/{destination}.zip')
+        urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
         with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
-            file.extractall('.natsumi-installer')
+            file.extract(f'{destination.split("/")[1]}-{branch}', '.natsumi-installer')
 
 class BrowserEntry:
     def __init__(self, name, name_universal, name_macos, name_flatpak, name_windows, name_windows_binary):
@@ -333,7 +333,7 @@ def main():
             download_from_git('MrOtherGuy/fx-autoconfig', 'master', 'fx-autoconfig')
         except:
             print('Failed to clone fx-autoconfig repository.')
-            sys.exit(1)
+            raise
 
         fx_autoconfig_downloaded = True
 
