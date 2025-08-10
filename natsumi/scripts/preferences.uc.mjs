@@ -612,7 +612,7 @@ class CustomThemePicker {
 
         let maxColors = 6;
         if (ucApi.Prefs.get("natsumi.theme.max-custom-colors").exists()) {
-            maxColors = ucApi.Prefs.get("natsumi.theme.max-custom-colors").value;
+            maxColors = Math.max(6, ucApi.Prefs.get("natsumi.theme.max-custom-colors").value);
         }
 
         if (this.colors.length >= maxColors) {
