@@ -24,7 +24,7 @@ export const colorPresetOffsets = {
 }
 
 export const colorPresetOrders = {
-    "split-complementary": [2, 0, 1],
+    "split-complementary": [1, 2, 0],
     "analogous": [1, 0, 2]
 }
 
