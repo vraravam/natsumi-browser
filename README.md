@@ -130,6 +130,12 @@ Take your browser to the next level with Append!
 Natsumi Append adds a Customize Natsumi pane to the preferences page, so you can easily customize
 your installation of Natsumi graphically. No more figuring out which config does what.
 
+### 🖌️ Create your own custom look.
+#### Create your own themes that feel personal, not generated.
+
+Not happy with Natsumi's base themes? Take full control of Natsumi's theming engine and create your
+very own gradient, all without being forced to stick to a specific color palette.
+
 ### 🧘 Introducing Single Toolbar.
 #### Move everything to the sidebar for a cleaner look.
 ![](./images/single-toolbar.png)

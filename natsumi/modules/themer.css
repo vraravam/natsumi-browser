@@ -38,6 +38,7 @@ SOFTWARE.
 @import "themes/frutiger-aero.css";
 @import "themes/lgbtq.css";
 @import "themes/transgender.css";
+@import "themes/custom.css";
 
 /*noinspection CssInvalidPropertyValue*/
 :root:not([windowtype*="ssb-window"]) body {

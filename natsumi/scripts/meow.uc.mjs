@@ -30,7 +30,9 @@ SOFTWARE.
 */
 
 // literally just a script for meowing because i felt cute :3
-// also adds an attribute to the browser letting it know it has append installed
+// also does initial setup for natsumi append
+
+import { applyCustomTheme } from "./custom-theme.sys.mjs";
 
 function makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises() {
     const catNoises = [
@@ -43,6 +45,7 @@ function makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAn
     console.log(`${catNoise} :3`);
 
     document.body.setAttribute("natsumi-append-installed", "");
+    applyCustomTheme();
 }
 
 makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises();
