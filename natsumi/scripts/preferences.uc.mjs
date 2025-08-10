@@ -556,6 +556,12 @@ class CustomThemePicker {
                 colorNode.classList.add("natsumi-custom-theme-primary-color");
             }
 
+            if (colorIndex === this.lastSelected) {
+                colorNode.setAttribute("selected", "");
+            } else {
+                colorNode.removeAttribute("selected");
+            }
+
             let colorNodePosition = this.calculatePositionGrid(colorData.angle, colorData.radius);
             colorNode.style.translate = `${colorNodePosition.x}px ${colorNodePosition.y}px`;
             colorNode.style.setProperty("--natsumi-color-index", `"${colorData.order + 1}"`);
