@@ -815,6 +815,11 @@ SOFTWARE.
       display: grid;
       grid-template-columns: 1fr;
 
+      &[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       &::before {
         display: flex;
         content: var(--natsumi-angle-string, "0°");
@@ -843,7 +848,7 @@ SOFTWARE.
         transition: scale 0.2s ease, background-color 0.2s ease;
       }
 
-      &:hover::after {
+      &:not([disabled]):hover::after {
         background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
         scale: 1.5;
       }
