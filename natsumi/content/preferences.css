@@ -575,7 +575,15 @@ SOFTWARE.
           background-image: url("../icons/lucide/luminosity-0.svg");
         }
 
-        &#natsumi-custom-mode-light, &#natsumi-custom-mode-dark {
+        &#natsumi-custom-import {
+          background-image: url("../icons/lucide/download.svg");
+        }
+
+        &#natsumi-custom-export {
+          background-image: url("../icons/lucide/upload.svg");
+        }
+
+        &#natsumi-custom-mode-light, &#natsumi-custom-mode-dark, &#natsumi-custom-import, &#natsumi-custom-export {
           -moz-context-properties: stroke, stroke-opacity !important;
           stroke: light-dark(black, white);
           background-position: center;
@@ -601,6 +609,16 @@ SOFTWARE.
         min-height: 28px;
         background-color: light-dark(#ddd, #777);
         border-radius: 5px;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:hover {
+          background-color: light-dark(#ccc, #888);
+        }
+
+        &:active {
+          background-color: var(--natsumi-button-active-color) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
 
         .natsumi-custom-theme-controls-icon {
           width: 24px;

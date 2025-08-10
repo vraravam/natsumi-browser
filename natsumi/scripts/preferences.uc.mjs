@@ -31,6 +31,7 @@ SOFTWARE.
 */
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import { NatsumiNotification } from "./notifications.sys.mjs";
 import { colorPresetNames, colorPresetOffsets, colorPresetOrders, availablePresets, gradientTypes, gradientTypeNames, applyCustomTheme } from "./custom-theme.sys.mjs";
 
 function convertToXUL(node) {
@@ -76,8 +77,7 @@ class CustomThemePicker {
         this.loadLayer(0);
 
         if (this.colors.length > 0) {
-            this.renderGrid();
-            this.renderSliders();
+            this.setLastSelected("0");
             this.renderButtons();
         }
 
@@ -113,6 +113,15 @@ class CustomThemePicker {
             this.loadLayer(this.layer);
         });
 
+        let importButton = document.querySelector("#natsumi-custom-import");
+        let exportButton = document.querySelector("#natsumi-custom-export");
+        importButton.addEventListener("click", (event) => {
+            this.import();
+        });
+        exportButton.addEventListener("click", (event) => {
+            this.export();
+        });
+
         // Add listeners for gradient controls
         let presetButton = document.querySelector("#natsumi-preset-button");
         let gradientTypeButton = document.querySelector("#natsumi-gradient-button");
@@ -130,6 +139,20 @@ class CustomThemePicker {
             this.removeAllColors();
         });
 
+        // Add listeners for sliders
+        let luminositySliderNode = document.querySelector("#natsumi-color-slider-luminosity");
+        let opacitySliderNode = document.querySelector("#natsumi-color-slider-opacity");
+        luminositySliderNode.addEventListener("mousedown", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            this.sliderEvent("luminosity", event);
+        });
+        opacitySliderNode.addEventListener("mousedown", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            this.sliderEvent("opacity", event);
+        });
+
         // Add listener for gradient angle
         let gradientAngleNode = document.querySelector("#natsumi-gradient-angle");
         gradientAngleNode.addEventListener("mousedown", (event) => {
@@ -143,6 +166,82 @@ class CustomThemePicker {
                 this.moveAngle(relativeX, relativeY);
             });
         });
+    }
+
+    async import() {
+        let uploadNode = document.createElement("input");
+        uploadNode.type = "file";
+        uploadNode.accept = ".json";
+        uploadNode.style.display = "none";
+        uploadNode.setAttribute("moz-accept", ".json");
+        uploadNode.setAttribute("accept", ".json");
+        uploadNode.click();
+
+        let uploadTimeout;
+
+        const filePromise = new Promise((resolve, reject) => {
+            uploadNode.onchange = (event) => {
+                if (uploadTimeout) {
+                    clearTimeout(uploadTimeout);
+                }
+
+                const file = uploadNode.files[0];
+                if (!file) {
+                    reject("No file selected.");
+                    return;
+                }
+
+                resolve(file);
+            };
+
+            uploadNode.onabort = () => {
+                if (uploadTimeout) {
+                    clearTimeout(uploadTimeout);
+                }
+                reject("User aborted import.");
+            }
+
+            uploadTimeout = setTimeout(() => {
+                reject("Import timed out.");
+            }, 120000);
+        });
+
+        try {
+            const content = await filePromise;
+            uploadNode.remove();
+            const text = await content.text();
+            this.data = JSON.parse(text);
+        } catch(e) {
+            console.error("Import failed:", e);
+            return;
+        }
+
+        this.loadLayer(this.layer);
+        this.saveLayer();
+
+        let notification = new NatsumiNotification("Theme imported successfully!", null, "chrome://natsumi/content/icons/lucide/download.svg");
+        notification.addToContainer();
+    }
+
+    export() {
+        const dataString = JSON.stringify(this.data, null, 4);
+        const blob = new Blob([dataString], { type: "application/json" });
+        const exportUrl = URL.createObjectURL(blob);
+        let downloadNode = document.createElement("a");
+        downloadNode.href = exportUrl;
+        downloadNode.download = "natsumi-gradient.json";
+
+        try {
+            document.body.appendChild(downloadNode);
+            downloadNode.click();
+            let notification = new NatsumiNotification("Theme exported successfully!", null, "chrome://natsumi/content/icons/lucide/upload.svg");
+            notification.addToContainer();
+        } catch(e) {
+            console.error("Failed to export theme data:", e);
+        }
+
+        downloadNode.remove();
+        URL.revokeObjectURL(exportUrl);
     }
 
     loadLayer(layer) {
@@ -189,6 +288,8 @@ class CustomThemePicker {
 
         this.renderGrid();
         this.renderSliders();
+        this.renderButtons();
+        this.renderAngle();
     }
 
     saveLayer() {
@@ -215,6 +316,9 @@ class CustomThemePicker {
                         <div class="natsumi-custom-theme-top-separator"></div>
                         <div id="natsumi-custom-mode-light" class="natsumi-custom-theme-top-button" selected=""></div>
                         <div id="natsumi-custom-mode-dark" class="natsumi-custom-theme-top-button"></div>
+                        <div class="natsumi-custom-theme-top-separator"></div>
+                        <div id="natsumi-custom-import" class="natsumi-custom-theme-top-button"></div>
+                        <div id="natsumi-custom-export" class="natsumi-custom-theme-top-button"></div>
                     </div>
                     <div class="natsumi-custom-theme-grid-container">
                         <div class="natsumi-custom-theme-grid"></div>
@@ -564,8 +668,13 @@ class CustomThemePicker {
 
     moveAngle(relativeX, relativeY) {
         let angleNode = document.querySelector("#natsumi-gradient-angle");
-        const angleData = this.calculateAngleRadius(relativeX, relativeY, angleNode.getBoundingClientRect().width, angleNode.getBoundingClientRect().height, false, true);
-        this.angle = angleData["angle"];
+
+        // Only allow angle modification since radial gradients don't have angles to adjust
+        if (this.gradientType === "linear" || this.gradientType === "conic") {
+            const angleData = this.calculateAngleRadius(relativeX, relativeY, angleNode.getBoundingClientRect().width, angleNode.getBoundingClientRect().height, false, true);
+            this.angle = angleData["angle"];
+        }
+
         this.renderAngle();
         this.saveLayer();
     }
@@ -637,6 +746,12 @@ class CustomThemePicker {
         const angleData = this.calculatePosition(this.angle, 1, 60, 60);
         angleNode.style.setProperty("--natsumi-angle-position", `${angleData.x}px ${angleData.y}px`);
         angleNode.style.setProperty("--natsumi-angle-string", `"${Math.floor(this.angle)}°"`);
+
+        if (this.gradientType !== "linear" && this.gradientType !== "conic") {
+            angleNode.setAttribute("disabled", "");
+        } else {
+            angleNode.removeAttribute("disabled");
+        }
     }
 
     sliderEvent(slider, event) {
@@ -665,19 +780,6 @@ class CustomThemePicker {
         this.lastSelected = index;
         this.renderGrid();
         this.renderSliders();
-
-        let luminositySliderNode = document.querySelector("#natsumi-color-slider-luminosity");
-        let opacitySliderNode = document.querySelector("#natsumi-color-slider-opacity");
-        luminositySliderNode.addEventListener("mousedown", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            this.sliderEvent("luminosity", event);
-        });
-        opacitySliderNode.addEventListener("mousedown", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            this.sliderEvent("opacity", event);
-        });
     }
 
     setColorProperties(index, brightness = null, opacity = null) {
@@ -768,6 +870,7 @@ class CustomThemePicker {
         this.renderGrid();
         this.renderSliders();
         this.renderButtons();
+        this.renderAngle();
         this.saveLayer();
     }
 }
