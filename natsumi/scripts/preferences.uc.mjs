@@ -616,7 +616,6 @@ class CustomThemePicker {
         }
 
         if (this.colors.length >= maxColors) {
-            console.warn("Maximum number of colors reached. Skipping color addition.");
             return;
         }
 
