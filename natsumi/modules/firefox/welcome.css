@@ -28,7 +28,15 @@ SOFTWARE.
 
 :root[data-title-default="Mozilla Firefox"] {
   #natsumi-welcome-button-next {
-    background-image: url("chrome://browser/skin/forward.svg") !important;
-    fill: black !important;
+    background-image: none !important;
+
+    &::before {
+      content: "";
+      width: 24px;
+      height: 24px;
+      margin: auto;
+      background-color: black;
+      mask-image: url("../../icons/lucide-firefox/move-right.svg");
+    }
   }
 }
