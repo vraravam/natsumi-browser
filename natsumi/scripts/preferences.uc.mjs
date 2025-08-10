@@ -640,7 +640,6 @@ class CustomThemePicker {
 
         this.colors.push(colorData);
         this.setLastSelected(`${this.colors.length - 1}`);
-        this.renderGrid();
         this.renderButtons();
         this.saveLayer();
     }
@@ -667,7 +666,6 @@ class CustomThemePicker {
         this.colors[index]["code"] = this.generateCssColorCodeFromData(this.colors[index]);
 
         this.setLastSelected(index);
-        this.renderGrid();
         this.saveLayer();
     }
 
@@ -822,8 +820,6 @@ class CustomThemePicker {
         if (this.colors.length === 0) {
             this.lastSelected = null;
         }
-        this.renderGrid();
-        this.renderSliders();
         this.renderButtons();
         this.saveLayer();
     }
@@ -852,9 +848,13 @@ class CustomThemePicker {
             nextPreset = availablePresets[this.colors.length][nextPresetIndex];
         }
 
+        if (currentPreset === nextPreset) {
+            return;
+        }
+
         this.preset = nextPreset;
-        this.renderGrid();
-        this.renderSliders();
+
+        this.setLastSelected("0");
         this.renderButtons();
         this.saveLayer();
     }
