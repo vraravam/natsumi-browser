@@ -64,7 +64,7 @@ function parseBackground(data) {
     // ]}
 
     const gradientType = gradientTypes[data["type"]][0] ?? "linear";
-    const angle = data["angle"] ?? 0;
+    const angle = ((data["angle"] ?? 0) + 180) % 360;
     const angleString = `${angle}deg`;
     let angleOverride = gradientTypes[data["type"]][1] ?? null;
     let colors = data["colors"] ?? [];

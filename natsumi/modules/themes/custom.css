@@ -53,6 +53,14 @@ SOFTWARE.
         filter: var(--natsumi-theme-layer-1-filter-dark, var(--natsumi-theme-layer-1-filter, none)) !important;
       }
     }
+
+    @media -moz-pref("natsumi.theme.gray-out-when-inactive") {
+      &:-moz-window-inactive {
+        body::after {
+          opacity: 0 !important;
+        }
+      }
+    }
   }
 
   /* For now there's not really a way to get the background color accent, so we'll just use Natsumi's accent color */

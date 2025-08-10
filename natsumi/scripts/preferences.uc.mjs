@@ -788,6 +788,10 @@ class CustomThemePicker {
             throw new Error("This is not a valid HEX code.");
         }
 
+        if (this.preset) {
+            this.preset = null;
+        }
+
         const r = parseInt(code.slice(0, 2), 16);
         const g = parseInt(code.slice(2, 4), 16);
         const b = parseInt(code.slice(4, 6), 16);
