@@ -14,7 +14,7 @@ export const colorPresetNames = {
 
 export const colorPresetOffsets = {
     "complementary": [0, 180],
-    "split-complementary": [0, 150, 210],
+    "split-complementary": [0, 210, 150],
     "analogous": [0, -30, 30],
     "triadic": [0, 120, 240],
     "double-complementary": [0, 60, 180, 240],
