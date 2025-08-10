@@ -60,7 +60,13 @@ class CustomThemePicker {
         this.layer = 0;
         this.theme = "light";
         this.data = {"light": {"0": {}, "1": {}}, "dark": {"0": {}, "1": {}}}
+
+        // Configs
         this.availableLayers = 2;
+        this.version = 1;
+        this.loaders = [
+            this.loadDataV1
+        ]
     }
 
     init() {
@@ -68,7 +74,18 @@ class CustomThemePicker {
         let customThemeData = ucApi.Prefs.get("natsumi.theme.custom-theme-data");
         if (customThemeData.exists()) {
             try {
-                this.data = JSON.parse(customThemeData.value);
+                let toLoad = JSON.parse(customThemeData.value);
+
+                if (!toLoad["version"]) {
+                    toLoad["version"] = 1;
+                }
+
+                if (!this.loaders[this.version - 1]) {
+                    console.error(`No loader found for version ${this.version}`);
+                    return;
+                }
+
+                this.data = this.loaders[this.version - 1](toLoad);
             } catch (e) {
                 console.error("Failed to parse custom theme data:", e);
             }
@@ -126,6 +143,8 @@ class CustomThemePicker {
         let presetButton = document.querySelector("#natsumi-preset-button");
         let gradientTypeButton = document.querySelector("#natsumi-gradient-button");
         let resetButton = document.querySelector("#natsumi-reset-button");
+        let hexInput = document.querySelector("#natsumi-hex-input");
+        let hexButton = document.querySelector("#natsumi-hex-button");
 
         presetButton.addEventListener("click", (event) => {
             this.cyclePreset();
@@ -137,6 +156,55 @@ class CustomThemePicker {
 
         resetButton.addEventListener("click", (event) => {
             this.removeAllColors();
+        });
+
+        hexButton.addEventListener("click", (event) => {
+            let hexInputContainer = document.querySelector(".natsumi-custom-theme-hex-input");
+            if (hexInputContainer.attributes["hidden"]) {
+                hexInputContainer.removeAttribute("hidden");
+            } else {
+                hexInputContainer.setAttribute("hidden", "");
+                document.querySelector("#natsumi-hex-input").value = "";
+            }
+        });
+
+        // Add listener for HEX input field
+        hexInput.addEventListener("keydown", (event) => {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                let hexCode = hexInput.value.trim();
+
+                if (!hexCode) {
+                    alert("Please enter a valid HEX code.");
+                    return;
+                }
+
+                try {
+                    this.addNewColorHex(hexCode);
+                    hexInput.value = "";
+                } catch (e) {
+                    alert(e.message || "Invalid HEX code.");
+                }
+            }
+        });
+
+        // Add listener for HEX submit button
+        let hexSubmitButton = document.querySelector("#natsumi-hex-submit");
+        hexSubmitButton.addEventListener("click", (event) => {
+            let hexInputNode = document.querySelector("#natsumi-hex-input");
+            let hexCode = hexInputNode.value.trim();
+
+            if (!hexCode) {
+                alert("Please enter a valid HEX code.");
+                return;
+            }
+
+            try {
+                this.addNewColorHex(hexCode);
+                hexInputNode.value = "";
+            } catch (e) {
+                alert(e.message || "Invalid HEX code.");
+            }
         });
 
         // Add listeners for sliders
@@ -166,6 +234,11 @@ class CustomThemePicker {
                 this.moveAngle(relativeX, relativeY);
             });
         });
+    }
+
+    loadDataV1(data) {
+        // The color picker is V1, so there's no need to do conversions here
+        return data;
     }
 
     async import() {
@@ -210,7 +283,18 @@ class CustomThemePicker {
             const content = await filePromise;
             uploadNode.remove();
             const text = await content.text();
-            this.data = JSON.parse(text);
+            let toLoad = JSON.parse(text);
+
+            if (!toLoad["version"]) {
+                toLoad["version"] = 1;
+            }
+
+            if (!this.loaders[this.version - 1]) {
+                console.error(`No loader found for version ${this.version}`);
+                return;
+            }
+
+            this.data = this.loaders[this.version - 1](toLoad);
         } catch(e) {
             console.error("Import failed:", e);
             return;
@@ -302,6 +386,8 @@ class CustomThemePicker {
             }
         };
 
+        this.data["version"] = this.version;
+
         ucApi.Prefs.set(`natsumi.theme.custom-theme-data`, JSON.stringify(this.data));
         applyCustomTheme();
     }
@@ -343,6 +429,13 @@ class CustomThemePicker {
                         <div id="natsumi-reset-button" class="natsumi-custom-theme-controls-button">
                             <div class="natsumi-custom-theme-controls-icon"></div>
                         </div>
+                        <div id="natsumi-hex-button" class="natsumi-custom-theme-controls-button">
+                            <div class="natsumi-custom-theme-controls-icon"></div>
+                        </div>
+                    </div>
+                    <div class="natsumi-custom-theme-hex-input" hidden="">
+                        <html:input id="natsumi-hex-input" type="text" placeholder="HEX code (e.g. #ff0000)"/>
+                        <div id="natsumi-hex-submit"></div>
                     </div>
                     <div class="natsumi-custom-theme-bottom-controls">
                         <div class="natsumi-custom-theme-sliders">
@@ -433,10 +526,48 @@ class CustomThemePicker {
         return {"x": posX, "y": posY};
     }
 
+    normalizeAngle(angle) {
+        return (angle + 360) % 360;
+    }
+
     hsbToHsl(h, s, b) {
         const l = (b / 100) * (100 - s / 2);
         s = l === 0 || l === 1 ? 0 : ((b - l) / Math.min(l, 100 - l)) * 100;
         return {"hue": h, "saturation": s, "luminosity": l};
+    }
+
+    rgbToHsb(r, g, b) {
+        r /= 255;
+        g /= 255;
+        b /= 255;
+
+        const max = Math.max(r, g, b);
+        const min = Math.min(r, g, b);
+        const delta = max - min;
+
+        // Calculate hue
+        let hue = 0;
+        if (delta > 0) {
+            switch (max) {
+                case r:
+                    hue = this.normalizeAngle(60 * ((g - b) / delta % 6));
+                    break;
+                case g:
+                    hue = this.normalizeAngle(60 * ((b - r) / delta + 2));
+                    break;
+                case b:
+                    hue = this.normalizeAngle(60 * ((r - g) / delta + 4));
+                    break;
+            }
+        }
+
+        // Calculate saturation
+        let saturation = 0;
+        if (max !== 0) {
+            saturation = delta / max;
+        }
+
+        return {"hue": hue, "saturation": saturation, "value": max};
     }
 
     generateCssColorCode(hue, saturation, brightness, alpha) {
@@ -566,9 +697,9 @@ class CustomThemePicker {
             colorNode.style.translate = `${colorNodePosition.x}px ${colorNodePosition.y}px`;
             colorNode.style.setProperty("--natsumi-color-index", `"${colorData.order + 1}"`);
 
-            if ((45 <= colorData.angle && colorData.angle <= 205 && colorData.value >= 0.8 && colorData.opacity >= 0.6) || colorData.radius <= 0.5) {
+            if ((45 <= colorData.angle && colorData.angle <= 205 && colorData.value >= 0.8 && colorData.opacity >= 0.6) || (colorData.radius <= 0.5 && colorData.value >= 0.8)) {
                 colorNode.style.setProperty("--natsumi-color-index-color", "black");
-            } else if (colorData.opacity < 0.6) {
+            } else if (colorData.opacity < 0.6 && colorData.value >= 0.8) {
                 colorNode.style.setProperty("--natsumi-color-index-color", "light-dark(black, white)");
             } else {
                 colorNode.style.setProperty("--natsumi-color-index-color", "white");
@@ -635,6 +766,45 @@ class CustomThemePicker {
             "radius": circlePosData["radius"],
             "value": value,
             "opacity": opacity,
+            "order": this.colors.length
+        }
+
+        this.colors.push(colorData);
+        this.setLastSelected(`${this.colors.length - 1}`);
+        this.renderButtons();
+        this.saveLayer();
+    }
+
+    addNewColorHex(code) {
+        if (code.startsWith("#")) {
+            code = code.slice(1);
+        }
+
+        if (code.length !== 6 && code.length !== 8) {
+            throw new Error("This is not a valid HEX code.");
+        }
+
+        if (!/^[0-9a-fA-F]{6}$/.test(code) && !/^[0-9a-fA-F]{8}$/.test(code)) {
+            throw new Error("This is not a valid HEX code.");
+        }
+
+        const r = parseInt(code.slice(0, 2), 16);
+        const g = parseInt(code.slice(2, 4), 16);
+        const b = parseInt(code.slice(4, 6), 16);
+        let a = 1;
+
+        if (code.length === 8) {
+            a = parseInt(code.slice(6, 8), 16) / 255;
+        }
+
+        const hsb = this.rgbToHsb(r, g, b);
+
+        const colorData = {
+            "code": this.generateCssColorCode(hsb.hue, hsb.saturation * 100, hsb.value, a),
+            "angle": hsb.hue,
+            "radius": hsb.saturation,
+            "value": hsb.value,
+            "opacity": a,
             "order": this.colors.length
         }
 
@@ -725,7 +895,7 @@ class CustomThemePicker {
         }
 
         if (colorData) {
-            const sliderWidth = luminositySliderNode.getBoundingClientRect().width;
+            const sliderWidth = Math.max(luminositySliderNode.getBoundingClientRect().width, 290);
             const luminosityPosition = sliderWidth * (1 - colorData["value"]);
             const opacityPosition = sliderWidth * (1 - colorData["opacity"]);
             luminositySliderNode.style.setProperty("--natsumi-slider-position", `${luminosityPosition}px`);
