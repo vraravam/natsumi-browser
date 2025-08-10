@@ -819,6 +819,8 @@ class CustomThemePicker {
         this.setLastSelected(`${this.colors.length - 1}`);
         if (this.colors.length === 0) {
             this.lastSelected = null;
+            this.renderGrid();
+            this.renderSliders();
         }
         this.renderButtons();
         this.saveLayer();
