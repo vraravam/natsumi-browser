@@ -937,9 +937,12 @@ class CustomThemePicker {
             return;
         }
 
+        const immediateRelativeX = event.clientX - sliderNode.getBoundingClientRect().left;
+        this.moveSlider(slider, immediateRelativeX);
+
         document.onmouseup = this.resetListeners;
         document.onmousemove = (event => {
-            let relativeX = event.clientX - sliderNode.getBoundingClientRect().left;
+            const relativeX = event.clientX - sliderNode.getBoundingClientRect().left;
             this.moveSlider(slider, relativeX);
         });
     }
