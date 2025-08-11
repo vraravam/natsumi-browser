@@ -56,6 +56,27 @@ export const gradientTypeNames = {
     "conic": "Conic"
 }
 
+export function customThemeLoader(data) {
+    return data;
+}
+
+export function customColorLoader(data) {
+    return data;
+}
+
+function parseColor(data) {
+    // Example color data
+    // {"code": "hsla(255, 100%, 50%, 1)", "angle": 255, "radius": 1, "value": 1, "opacity": 1, "order": 0}
+    if (!data) {
+        return null;
+    }
+
+    if (data.code) {
+        return data.code;
+    }
+    return null;
+}
+
 function parseBackground(data) {
     // Example background data
     // {"type": "linear", "angle": 135, "preset": null, "colors": [
@@ -112,6 +133,44 @@ function parseFilters(data) {
     }
 
     return filters.join(" ");
+}
+
+// This function is not enabled because it does not work on other windows yet
+export function applyCustomColor() {
+    let customColorData = {};
+
+    try {
+        customColorData = JSON.parse(ucApi.Prefs.get("natsumi.theme.custom-color-data").value);
+    } catch (e) {
+        console.error("Invalid color data:", e);
+        return;
+    }
+
+    let colorCode = parseColor(customColorData["color"]);
+
+    ucApi.Windows.forEach((browserDocument, browserWindow) => {
+        let head = browserDocument.head;
+
+        // Remove existing inline style
+        let existingStyle = head.querySelector("style[natsumi-custom-color]");
+        if (existingStyle) {
+            existingStyle.remove();
+        }
+
+        // Create new inline style
+        if (colorCode) {
+            let style = browserDocument.createElement("style");
+            style.setAttribute("natsumi-custom-color", "");
+            style.textContent = `
+                @media -moz-pref("natsumi.theme.accent-color", "custom") {
+                    * {
+                        --natsumi-primary-color: ${colorCode} !important;
+                    }
+                }
+            `;
+            head.appendChild(style);
+        }
+    }, false);
 }
 
 export function applyCustomTheme() {

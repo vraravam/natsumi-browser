@@ -32,7 +32,18 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 import { NatsumiNotification } from "./notifications.sys.mjs";
-import { colorPresetNames, colorPresetOffsets, colorPresetOrders, availablePresets, gradientTypes, gradientTypeNames, applyCustomTheme } from "./custom-theme.sys.mjs";
+import {
+    customThemeLoader,
+    customColorLoader,
+    colorPresetNames,
+    colorPresetOffsets,
+    colorPresetOrders,
+    availablePresets,
+    gradientTypes,
+    gradientTypeNames,
+    applyCustomColor,
+    applyCustomTheme
+} from "./custom-theme.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -49,9 +60,13 @@ function setStringPreference(preference, value) {
 }
 
 class CustomThemePicker {
-    constructor(id, singleColor = false) {
+    constructor(id, loaderMethod, applyMethod, targetPref, singleColor = false, allowOpacity = true) {
         this.id = id;
+        this.loaderMethod = loaderMethod;
+        this.applyMethod = applyMethod;
+        this.targetPref = targetPref;
         this.singleColor = singleColor;
+        this.allowOpacity = allowOpacity;
         this.preset = null;
         this.gradientType = "linear";
         this.angle = 0;
@@ -66,9 +81,10 @@ class CustomThemePicker {
         // Configs
         this.availableLayers = 2;
         this.version = 1;
-        this.loaders = [
-            this.loadDataV1
-        ]
+
+        if (this.singleColor) {
+            this.data = {"color": {}};
+        }
     }
 
     init() {
@@ -85,8 +101,16 @@ class CustomThemePicker {
 
         this.node = node;
 
+        if (this.singleColor) {
+            node.setAttribute("natsumi-single-color", "");
+        }
+
+        if (!this.allowOpacity) {
+            node.setAttribute("natsumi-no-opacity", "");
+        }
+
         // Load custom theme data from preferences
-        let customThemeData = ucApi.Prefs.get("natsumi.theme.custom-theme-data");
+        let customThemeData = ucApi.Prefs.get(this.targetPref);
         if (customThemeData.exists()) {
             try {
                 let toLoad = JSON.parse(customThemeData.value);
@@ -95,12 +119,7 @@ class CustomThemePicker {
                     toLoad["version"] = 1;
                 }
 
-                if (!this.loaders[this.version - 1]) {
-                    console.error(`No loader found for version ${this.version}`);
-                    return;
-                }
-
-                this.data = this.loaders[this.version - 1](toLoad);
+                this.data = this.loaderMethod(toLoad);
             } catch (e) {
                 console.error("Failed to parse custom theme data:", e);
             }
@@ -152,27 +171,33 @@ class CustomThemePicker {
 
         let lightModeButton = this.node.querySelector(".natsumi-custom-mode-light");
         let darkModeButton = this.node.querySelector(".natsumi-custom-mode-dark");
-        lightModeButton.addEventListener("click", (event) => {
-            this.theme = "light";
-            lightModeButton.setAttribute("selected", "");
-            darkModeButton.removeAttribute("selected");
-            this.loadLayer(this.layer);
-        });
-        darkModeButton.addEventListener("click", (event) => {
-            this.theme = "dark";
-            darkModeButton.setAttribute("selected", "");
-            lightModeButton.removeAttribute("selected");
-            this.loadLayer(this.layer);
-        });
+
+        if (!this.singleColor) {
+            lightModeButton.addEventListener("click", (event) => {
+                this.theme = "light";
+                lightModeButton.setAttribute("selected", "");
+                darkModeButton.removeAttribute("selected");
+                this.loadLayer(this.layer);
+            });
+            darkModeButton.addEventListener("click", (event) => {
+                this.theme = "dark";
+                darkModeButton.setAttribute("selected", "");
+                lightModeButton.removeAttribute("selected");
+                this.loadLayer(this.layer);
+            });
+        }
 
         let importButton = this.node.querySelector(".natsumi-custom-import");
         let exportButton = this.node.querySelector(".natsumi-custom-export");
-        importButton.addEventListener("click", (event) => {
-            this.import();
-        });
-        exportButton.addEventListener("click", (event) => {
-            this.export();
-        });
+
+        if (!this.singleColor) {
+            importButton.addEventListener("click", (event) => {
+                this.import();
+            });
+            exportButton.addEventListener("click", (event) => {
+                this.export();
+            });
+        }
 
         // Add listeners for gradient controls
         let presetButton = this.node.querySelector(".natsumi-preset-button");
@@ -181,13 +206,15 @@ class CustomThemePicker {
         let hexInput = this.node.querySelector(".natsumi-hex-input");
         let hexButton = this.node.querySelector(".natsumi-hex-button");
 
-        presetButton.addEventListener("click", (event) => {
-            this.cyclePreset();
-        });
+        if (!this.singleColor) {
+            presetButton.addEventListener("click", (event) => {
+                this.cyclePreset();
+            });
 
-        gradientTypeButton.addEventListener("click", (event) => {
-            this.cycleGradientType();
-        });
+            gradientTypeButton.addEventListener("click", (event) => {
+                this.cycleGradientType();
+            });
+        }
 
         resetButton.addEventListener("click", (event) => {
             this.removeAllColors();
@@ -250,11 +277,14 @@ class CustomThemePicker {
             event.preventDefault();
             this.sliderEvent("luminosity", event);
         });
-        opacitySliderNode.addEventListener("mousedown", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-            this.sliderEvent("opacity", event);
-        });
+
+        if (this.allowOpacity) {
+            opacitySliderNode.addEventListener("mousedown", (event) => {
+                event.stopPropagation();
+                event.preventDefault();
+                this.sliderEvent("opacity", event);
+            });
+        }
 
         // Add listener for gradient angle
         let gradientAngleNode = this.node.querySelector(".natsumi-gradient-angle");
@@ -269,11 +299,6 @@ class CustomThemePicker {
                 this.moveAngle(relativeX, relativeY);
             });
         });
-    }
-
-    loadDataV1(data) {
-        // The color picker is V1, so there's no need to do conversions here
-        return data;
     }
 
     async import() {
@@ -324,12 +349,7 @@ class CustomThemePicker {
                 toLoad["version"] = 1;
             }
 
-            if (!this.loaders[this.version - 1]) {
-                console.error(`No loader found for version ${this.version}`);
-                return;
-            }
-
-            this.data = this.loaders[this.version - 1](toLoad);
+            this.data = this.loaderMethod(toLoad);
         } catch(e) {
             console.error("Import failed:", e);
             return;
@@ -363,7 +383,19 @@ class CustomThemePicker {
         URL.revokeObjectURL(exportUrl);
     }
 
+    loadSingleColor() {
+        this.colors = [];
+        if (this.data["color"]) {
+            this.colors.push(this.data["color"]);
+        }
+    }
+
     loadLayer(layer) {
+        if (this.singleColor) {
+            this.loadSingleColor();
+            return;
+        }
+
         if (layer < 0 || layer >= this.availableLayers) {
             return;
         }
@@ -412,19 +444,23 @@ class CustomThemePicker {
     }
 
     saveLayer() {
-        this.data[this.theme][`${this.layer}`] = {
-            "background": {
-                "type": this.gradientType,
-                "angle": this.angle,
-                "preset": this.preset,
-                "colors": this.colors
-            }
-        };
+        if (this.singleColor) {
+            this.data["color"] = this.colors[0];
+        } else {
+            this.data[this.theme][`${this.layer}`] = {
+                "background": {
+                    "type": this.gradientType,
+                    "angle": this.angle,
+                    "preset": this.preset,
+                    "colors": this.colors
+                }
+            };
+        }
 
         this.data["version"] = this.version;
 
-        ucApi.Prefs.set(`natsumi.theme.custom-theme-data`, JSON.stringify(this.data));
-        applyCustomTheme();
+        ucApi.Prefs.set(this.targetPref, JSON.stringify(this.data));
+        this.applyMethod();
     }
 
     generateNode() {
@@ -630,6 +666,10 @@ class CustomThemePicker {
     }
 
     ensureOrder() {
+        if (this.singleColor) {
+            return;
+        }
+
         let presetOrder = null;
         if (this.preset) {
             presetOrder = colorPresetOrders[this.preset];
@@ -645,6 +685,10 @@ class CustomThemePicker {
     }
 
     ensurePreset() {
+        if (this.singleColor) {
+            return;
+        }
+
         this.ensureOrder();
 
         if (this.preset) {
@@ -819,7 +863,7 @@ class CustomThemePicker {
             code = code.slice(1);
         }
 
-        if (code.length !== 6 && code.length !== 8) {
+        if (code.length !== 6 && (code.length !== 8 && this.allowOpacity)) {
             throw new Error("This is not a valid HEX code.");
         }
 
@@ -883,6 +927,10 @@ class CustomThemePicker {
     }
 
     moveAngle(relativeX, relativeY) {
+        if (this.singleColor) {
+            return;
+        }
+
         let angleNode = this.node.querySelector(".natsumi-gradient-angle");
 
         // Only allow angle modification since radial gradients don't have angles to adjust
@@ -1056,6 +1104,10 @@ class CustomThemePicker {
     }
 
     cyclePreset() {
+        if (this.singleColor) {
+            return;
+        }
+
         const currentPreset = this.preset;
         const presetIndex = availablePresets[this.colors.length].indexOf(currentPreset);
 
@@ -1078,6 +1130,10 @@ class CustomThemePicker {
     }
 
     cycleGradientType() {
+        if (this.singleColor) {
+            return;
+        }
+
         const currentGradient = this.gradientType;
         const gradientTypeList = Object.keys(gradientTypes);
         const gradientIndex = gradientTypeList.indexOf(currentGradient);
@@ -1365,7 +1421,13 @@ const colors = {
         "Use the system accent color.",
         "",
         "AccentColor"
-    )
+    ),
+    /*"custom": new MCChoice(
+        "custom",
+        "Custom",
+        "Pick a color of your choice!",
+        ""
+    )*/
 }
 
 const urlbarLayouts = {
@@ -1611,7 +1673,7 @@ function addThemesPane() {
         "Gray out background when the browser window is inactive"
     )
 
-    let customThemePickerUi = new CustomThemePicker("natsumiCustomThemePicker");
+    let customThemePickerUi = new CustomThemePicker("natsumiCustomThemePicker", customThemeLoader, applyCustomTheme, "natsumi.theme.custom-theme-data");
 
     themeSelection.registerExtras("natsumiCustomThemePickerBox", customThemePickerUi);
     themeSelection.registerExtras("natsumiTranslucencyBox", translucencyCheckbox);
@@ -1677,6 +1739,9 @@ function addColorsPane() {
         true
     )
 
+    //let customColorPickerUi = new CustomThemePicker("natsumiCustomColorPicker", customColorLoader, applyCustomColor, "natsumi.theme.custom-color-data", true, false);
+
+    //colorSelection.registerExtras("natsumiCustomColorPickerBox", customColorPickerUi);
     colorSelection.registerExtras("natsumiThemeColorBox", checkBoxExtraColor);
 
     for (let color in colors) {
@@ -1715,6 +1780,7 @@ function addColorsPane() {
     });
 
     prefsView.insertBefore(colorNode, homePane);
+    //customColorPickerUi.init();
 }
 
 function addSidebarWorkspacesPane() {

@@ -249,7 +249,7 @@ SOFTWARE.
           margin-top: 40px;
           width: 40px;
           height: 40px;
-          background-color: var(--natsumi-colors-secondary);
+          background-color: var(--natsumi-colors-primary);
         }
 
         &::after {
@@ -257,7 +257,7 @@ SOFTWARE.
           margin-top: 40px;
           width: 40px;
           height: 40px;
-          background-color: var(--natsumi-colors-tertiary);
+          background-color: var(--natsumi-colors-secondary);
         }
       }
     }
@@ -427,6 +427,12 @@ SOFTWARE.
 
   .natsumi-custom-theme-container {
     min-width: 400px !important;
+
+    &[natsumi-single-color] {
+      .natsumi-custom-theme-top-controls, .natsumi-preset-button, .natsumi-gradient-button, .natsumi-custom-theme-angle, .natsumi-custom-theme-color-display::before {
+        display: none !important;
+      }
+    }
 
     .natsumi-custom-theme-picker {
       flex-direction: column;
