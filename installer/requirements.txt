@@ -1,1 +1,2 @@
-pip-system-certs==5.2
+requests
+certifi
