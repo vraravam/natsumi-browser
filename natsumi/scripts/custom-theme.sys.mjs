@@ -196,10 +196,6 @@ export function applyCustomTheme() {
         return;
     }
 
-    if (!isCustomTheme) {
-        return;
-    }
-
     ucApi.Windows.forEach((browserDocument, browserWindow) => {
         let body = browserDocument.body;
 
