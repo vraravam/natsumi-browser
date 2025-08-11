@@ -425,7 +425,7 @@ SOFTWARE.
     }
   }
 
-  #natsumiCustomThemePicker {
+  .natsumi-custom-theme-container {
     min-width: 400px !important;
 
     .natsumi-custom-theme-picker {
@@ -567,31 +567,31 @@ SOFTWARE.
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
         }
 
-        &#natsumi-custom-layer-1::before {
+        &.natsumi-custom-layer-1::before {
           content: "1";
         }
 
-        &#natsumi-custom-layer-2::before {
+        &.natsumi-custom-layer-2::before {
           content: "2";
         }
 
-        &#natsumi-custom-mode-light {
+        &.natsumi-custom-mode-light {
           background-image: url("../icons/lucide/luminosity-1.svg");
         }
 
-        &#natsumi-custom-mode-dark {
+        &.natsumi-custom-mode-dark {
           background-image: url("../icons/lucide/luminosity-0.svg");
         }
 
-        &#natsumi-custom-import {
+        &.natsumi-custom-import {
           background-image: url("../icons/lucide/download.svg");
         }
 
-        &#natsumi-custom-export {
+        &.natsumi-custom-export {
           background-image: url("../icons/lucide/upload.svg");
         }
 
-        &#natsumi-custom-mode-light, &#natsumi-custom-mode-dark, &#natsumi-custom-import, &#natsumi-custom-export {
+        &.natsumi-custom-mode-light, &.natsumi-custom-mode-dark, &.natsumi-custom-import, &.natsumi-custom-export {
           -moz-context-properties: stroke, stroke-opacity !important;
           stroke: light-dark(black, white);
           background-position: center;
@@ -652,15 +652,15 @@ SOFTWARE.
           }
         }
 
-        &#natsumi-preset-button {
+        &.natsumi-preset-button {
           margin-left: 0 !important;
         }
 
-        &#natsumi-hex-button {
+        &.natsumi-hex-button {
           margin-right: 0 !important;
         }
 
-        &#natsumi-preset-button, &#natsumi-gradient-button {
+        &.natsumi-preset-button, &.natsumi-gradient-button {
           padding: 2px 5px;
           text-wrap: nowrap;
 
@@ -669,29 +669,29 @@ SOFTWARE.
           }
         }
 
-        &#natsumi-preset-button .natsumi-custom-theme-controls-icon {
+        &.natsumi-preset-button .natsumi-custom-theme-controls-icon {
           background-image: url("../icons/lucide/color-presets.svg");
         }
 
-        &#natsumi-gradient-button .natsumi-custom-theme-controls-icon {
+        &.natsumi-gradient-button .natsumi-custom-theme-controls-icon {
           background-image: url("../icons/lucide/gradient-type.svg");
         }
 
-        &#natsumi-reset-button .natsumi-custom-theme-controls-icon {
+        &.natsumi-reset-button .natsumi-custom-theme-controls-icon {
           background-image: url("../icons/lucide/rotate-right.svg");
         }
 
-        &#natsumi-hex-button .natsumi-custom-theme-controls-icon {
+        &.natsumi-hex-button .natsumi-custom-theme-controls-icon {
           background-image: url("../icons/lucide/type.svg");
         }
 
-        &#natsumi-remove-color {
+        &.natsumi-remove-color {
           .natsumi-custom-theme-controls-icon {
             background-image: url("../icons/lucide/minus.svg");
           }
         }
 
-        &#natsumi-add-color {
+        &.natsumi-add-color {
           .natsumi-custom-theme-controls-icon {
             background-image: url("../icons/lucide/plus.svg");
           }
@@ -708,13 +708,13 @@ SOFTWARE.
         display: none;
       }
 
-      #natsumi-hex-input {
+      .natsumi-hex-input {
         margin: 0 !important;
         height: 36px;
         flex: 1;
       }
 
-      #natsumi-hex-submit {
+      .natsumi-hex-submit {
         width: 36px;
         height: 36px;
         border-radius: 5px;
@@ -823,7 +823,7 @@ SOFTWARE.
           scale: 1.1;
         }
 
-        &#natsumi-color-slider-luminosity {
+        &.natsumi-color-slider-luminosity {
           background-color: black;
 
           .natsumi-custom-theme-slider-icon-1 {
@@ -837,7 +837,7 @@ SOFTWARE.
           }
         }
 
-        &#natsumi-color-slider-opacity {
+        &.natsumi-color-slider-opacity {
           background-image: url("../icons/custom/transparent.png");
           background-size: 20px;
           background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
@@ -860,7 +860,7 @@ SOFTWARE.
       margin-top: 0 !important;
     }
 
-    #natsumi-gradient-angle {
+    .natsumi-gradient-angle {
       margin: auto 0 auto auto;
       width: 70px;
       height: 70px;
