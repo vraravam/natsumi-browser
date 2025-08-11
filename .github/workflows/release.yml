@@ -18,17 +18,10 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install dependencies (bash)
-        if: ${{ matrix.os != 'windows-latest' }}
-        run: python3 -m pip install -r installer/requirements.txt
-      - name: Install dependencies (PowerShell)
-        if: ${{ matrix.os == 'windows-latest' }}
-        run: py -3 -m pip install -r installer/requirements.txt
-      - name: Install zip
-        if: ${{ matrix.os == 'ubuntu-latest' }}
+      - name: Install dependencies
         run: |
-          sudo apt-get update
-          sudo apt-get install -y zip
+          python -m pip install --upgrade pip
+          pip install -r installer/requirements.txt
       - name: Build
         uses: Nuitka/Nuitka-Action@main
         with:
