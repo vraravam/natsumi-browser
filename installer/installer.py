@@ -28,7 +28,9 @@ import sys
 import shutil
 import json
 import traceback
-import urllib.request
+import requests
+import urllib.request, urllib.error
+import certifi
 import zipfile
 from pathlib import Path
 
@@ -58,8 +60,18 @@ def download_from_git(repository, branch, destination, is_tag=False):
     if is_tag:
         heads_string = 'tags'
 
-    # i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows i fucking hate windows
-    urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
+    try:
+        urllib.request.urlretrieve(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', f'.natsumi-installer/{destination}.zip')
+    except urllib.error.URLError:
+        try:
+            r = requests.get(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip')
+        except:
+            # retry with certifi.where()
+            r = requests.get(f'https://github.com/{repository}/archive/refs/{heads_string}/{branch}.zip', verify=certifi.where())
+
+        with open(f'.natsumi-installer/{destination}.zip', 'wb') as file:
+            file.write(r.content)
+
     with zipfile.ZipFile(f'.natsumi-installer/{destination}.zip', 'r') as file:
         file.extractall('.natsumi-installer')
 
