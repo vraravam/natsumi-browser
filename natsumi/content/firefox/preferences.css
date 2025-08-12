@@ -27,93 +27,95 @@ SOFTWARE.
 /* ==== Firefox Preferences fixes ==== */
 
 @-moz-document url-prefix(about:settings), url-prefix(about:preferences) {
-  #natsumi-settings .category-icon {
-    background-color: currentColor;
-    mask-image: url("../../icons/lucide-firefox/paintbrush.svg");
-  }
-
-  #custom::after {
-    background-image: none !important;
-    background-color: light-dark(black, white);
-    mask-image: url("../../icons/lucide-firefox/palette.svg");
-    mask-size: 32px;
-  }
-
-  .natsumi-custom-mode-light, .natsumi-custom-mode-dark, .natsumi-custom-import, .natsumi-custom-export {
-    &::before {
-      background-color: light-dark(black, white);
+  @media not -moz-pref("svg.context-properties.content.enabled") {
+    #natsumi-settings .category-icon {
+      background-color: currentColor;
+      mask-image: url("../../icons/lucide-firefox/paintbrush.svg");
     }
-  }
 
-  .natsumi-custom-mode-light::before {
-    mask-image: url("../../icons/lucide-firefox/luminosity-1.svg");
-  }
+    #custom::after {
+      background-image: none !important;
+      background-color: light-dark(black, white);
+      mask-image: url("../../icons/lucide-firefox/palette.svg");
+      mask-size: 32px;
+    }
 
-  .natsumi-custom-mode-dark::before {
-    mask-image: url("../../icons/lucide-firefox/luminosity-0.svg");
-  }
+    .natsumi-custom-mode-light, .natsumi-custom-mode-dark, .natsumi-custom-import, .natsumi-custom-export {
+      &::before {
+        background-color: light-dark(black, white);
+      }
+    }
 
-  .natsumi-custom-import::before {
-    mask-image: url("../../icons/lucide-firefox/download.svg");
-  }
-
-  .natsumi-custom-export::before {
-    mask-image: url("../../icons/lucide-firefox/upload.svg");
-  }
-
-  .natsumi-custom-theme-controls-icon {
-    background-color: light-dark(black, white);
-    mask-size: 20px;
-    mask-position: center;
-    mask-repeat: no-repeat;
-  }
-
-  .natsumi-preset-button .natsumi-custom-theme-controls-icon {
-    mask-image: url("../../icons/lucide-firefox/color-presets.svg");
-  }
-
-  .natsumi-gradient-button .natsumi-custom-theme-controls-icon {
-    mask-image: url("../../icons/lucide-firefox/gradient-type.svg");
-  }
-
-  .natsumi-reset-button .natsumi-custom-theme-controls-icon {
-    mask-image: url("../../icons/lucide-firefox/rotate-right.svg");
-  }
-
-  .natsumi-hex-button .natsumi-custom-theme-controls-icon {
-    mask-image: url("../../icons/lucide-firefox/type.svg");
-  }
-
-  .natsumi-hex-submit::before {
-    background-color: light-dark(black, white);
-    mask-image: url("../../icons/lucide-firefox/plus.svg");
-  }
-
-  .natsumi-custom-theme-slider-icon-1, .natsumi-custom-theme-slider-icon-0 {
-    mask-size: 20px;
-  }
-
-  .natsumi-color-slider-luminosity {
-    .natsumi-custom-theme-slider-icon-1 {
-      background-color: var(--natsumi-slider-custom-stroke, white);
+    .natsumi-custom-mode-light::before {
       mask-image: url("../../icons/lucide-firefox/luminosity-1.svg");
     }
 
-    .natsumi-custom-theme-slider-icon-0 {
-      background-color: white;
+    .natsumi-custom-mode-dark::before {
       mask-image: url("../../icons/lucide-firefox/luminosity-0.svg");
     }
-  }
 
-  .natsumi-color-slider-opacity {
-    .natsumi-custom-theme-slider-icon-1 {
-      background-color: var(--natsumi-slider-custom-stroke, white);
-      mask-image: url("../../icons/lucide-firefox/opacity-1.svg");
+    .natsumi-custom-import::before {
+      mask-image: url("../../icons/lucide-firefox/download.svg");
     }
 
-    .natsumi-custom-theme-slider-icon-0 {
+    .natsumi-custom-export::before {
+      mask-image: url("../../icons/lucide-firefox/upload.svg");
+    }
+
+    .natsumi-custom-theme-controls-icon {
       background-color: light-dark(black, white);
-      mask-image: url("../../icons/lucide-firefox/opacity-0.svg");
+      mask-size: 20px;
+      mask-position: center;
+      mask-repeat: no-repeat;
+    }
+
+    .natsumi-preset-button .natsumi-custom-theme-controls-icon {
+      mask-image: url("../../icons/lucide-firefox/color-presets.svg");
+    }
+
+    .natsumi-gradient-button .natsumi-custom-theme-controls-icon {
+      mask-image: url("../../icons/lucide-firefox/gradient-type.svg");
+    }
+
+    .natsumi-reset-button .natsumi-custom-theme-controls-icon {
+      mask-image: url("../../icons/lucide-firefox/rotate-right.svg");
+    }
+
+    .natsumi-hex-button .natsumi-custom-theme-controls-icon {
+      mask-image: url("../../icons/lucide-firefox/type.svg");
+    }
+
+    .natsumi-hex-submit::before {
+      background-color: light-dark(black, white);
+      mask-image: url("../../icons/lucide-firefox/plus.svg");
+    }
+
+    .natsumi-custom-theme-slider-icon-1, .natsumi-custom-theme-slider-icon-0 {
+      mask-size: 20px;
+    }
+
+    .natsumi-color-slider-luminosity {
+      .natsumi-custom-theme-slider-icon-1 {
+        background-color: var(--natsumi-slider-custom-stroke, white);
+        mask-image: url("../../icons/lucide-firefox/luminosity-1.svg");
+      }
+
+      .natsumi-custom-theme-slider-icon-0 {
+        background-color: white;
+        mask-image: url("../../icons/lucide-firefox/luminosity-0.svg");
+      }
+    }
+
+    .natsumi-color-slider-opacity {
+      .natsumi-custom-theme-slider-icon-1 {
+        background-color: var(--natsumi-slider-custom-stroke, white);
+        mask-image: url("../../icons/lucide-firefox/opacity-1.svg");
+      }
+
+      .natsumi-custom-theme-slider-icon-0 {
+        background-color: light-dark(black, white);
+        mask-image: url("../../icons/lucide-firefox/opacity-0.svg");
+      }
     }
   }
 }

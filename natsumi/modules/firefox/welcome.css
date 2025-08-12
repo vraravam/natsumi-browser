@@ -27,16 +27,18 @@ SOFTWARE.
 /* ==== Firefox welcome pane next button fix ==== */
 
 :root[data-title-default="Mozilla Firefox"] {
-  #natsumi-welcome-button-next {
-    background-image: none !important;
+  @media not -moz-pref("svg.context-properties.content.enabled") {
+    #natsumi-welcome-button-next {
+      background-image: none !important;
 
-    &::before {
-      content: "";
-      width: 24px;
-      height: 24px;
-      margin: auto;
-      background-color: black;
-      mask-image: url("../../icons/lucide-firefox/move-right.svg");
+      &::before {
+        content: "";
+        width: 24px;
+        height: 24px;
+        margin: auto;
+        background-color: black;
+        mask-image: url("../../icons/lucide-firefox/move-right.svg");
+      }
     }
   }
 }
