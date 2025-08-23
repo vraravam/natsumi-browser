@@ -33,7 +33,12 @@ SOFTWARE.
       z-index: 1 !important;
     }
 
-    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box):has(#panel-sidebar-box[data-floating-splitter-side="end"]) #navigator-toolbox {
+    body[natsumi-compact-mode] #navigator-toolbox.fullscreen-with-menubar {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
+    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[data-floating-splitter-side="start"])) #navigator-toolbox {
       left: calc(calc(var(--natsumi-browser-separation) * 2) + 36px);
     }
 
@@ -99,51 +104,38 @@ SOFTWARE.
     }
 
     #PersonalToolbar {
+      --natsumi-bookmarks-width: calc(100vw - var(--natsumi-sidebar-width));
       visibility: visible !important;
-      width: calc(100vw - var(--natsumi-sidebar-width)) !important;
+      width: var(--natsumi-bookmarks-width) !important;
       margin-left: var(--natsumi-sidebar-width) !important;
-      padding-left: 0 !important;
+      padding-inline: 0 !important;
       padding-top: 6px !important;
       padding-bottom: 6px !important;
       margin-top: -41px !important;
       overflow: visible !important;
+      transition: min-height 0s ease, visibility 0s ease, background-color 0.2s ease;
 
-      #personal-bookmarks {
-        transition: visibility 0.2s ease !important;
-      }
-
-      @media not (-moz-platform: macos) {
-        width: calc(100vw - var(--natsumi-sidebar-width) - var(--natsumi-window-buttons-width)) !important;
-      }
-
-      &[collapsed=true] {
-        #personal-bookmarks, toolbarbutton, toolbaritem {
-          visibility: collapse !important;
-        }
-
-        #personal-toolbar-empty-description {
-          display: none !important;
+      &[collapsed="true"] {
+        #PlacesToolbar {
+          visibility: collapse;
         }
       }
 
-      @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
-        &:hover[collapsed=true] {
-          min-height: 28px !important;
-          max-height: 28px !important;
-
-          #personal-bookmarks, toolbarbutton, toolbaritem {
-            visibility: visible !important;
-          }
-
-          #personal-bookmarks {
-            min-height: 28px !important;
-          }
-
-          #personal-toolbar-empty-description {
-            display: flex !important;
-          }
-        }
+      @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
+        width: calc(var(--natsumi-bookmarks-width) - var(--natsumi-window-buttons-width)) !important;
       }
+
+      &:hover {
+        min-height: 28px !important;
+      }
+    }
+
+    body[natsumi-compact-mode]:has(#navigator-toolbox.fullscreen-with-menubar) #PersonalToolbar {
+      background-color: var(--natsumi-toolbox-color) !important;
+    }
+
+    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box) #PersonalToolbar {
+      --natsumi-bookmarks-width: calc(100vw - var(--natsumi-sidebar-width) - 36px - calc(var(--natsumi-browser-separation) * 2));
     }
 
     #browser {
@@ -152,7 +144,7 @@ SOFTWARE.
       height: 100vh !important;
     }
 
-    #tabbrowser-tabbox {
+    #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
       margin-top: var(--natsumi-browser-separation) !important;
       transition: margin-top 0.2s ease !important;
 
@@ -161,39 +153,23 @@ SOFTWARE.
       }
     }
 
-    &:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox, body:has([natsumi-welcome]) #tabbrowser-tabbox {
-      margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
-      @media (-moz-platform: windows) {
-        margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
-      }
-    }
-
-    @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
-      &:has(#PersonalToolbar:hover) #tabbrowser-tabbox {
+    &:has(#PersonalToolbar[collapsed="false"]), body:has([natsumi-welcome]) {
+      #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
         margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
 
-        /* Probably redundant but keeping it here just in case */
         @media (-moz-platform: windows) {
           margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
         }
       }
     }
 
-    @media not (-moz-platform: macos) {
-      &:has(.titlebar-buttonbox-container:hover) {
-        #PersonalToolbar[collapsed=true] {
-          min-height: 28px !important;
-          max-height: 28px !important;
-
-          #personal-bookmarks {
-            visibility: visible !important;
-            min-height: 28px !important;
-          }
-        }
-
-        #tabbrowser-tabbox {
+    @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
+      body[natsumi-bookmarks-hover] {
+        #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
+          transition-delay: 0s !important;
           margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
 
+          /* Probably redundant but keeping it here just in case */
           @media (-moz-platform: windows) {
             margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
           }
