@@ -914,4 +914,10 @@ SOFTWARE.
       }
     }
   }
+
+  @media not -moz-pref("natsumi.theme.single-toolbar") {
+    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox {
+      display: none !important;
+    }
+  }
 }

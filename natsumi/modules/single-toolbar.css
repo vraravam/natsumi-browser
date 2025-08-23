@@ -56,6 +56,7 @@ SOFTWARE.
     #nav-bar-customization-target {
       min-height: 40px;
       order: 1 !important;
+      overflow-x: scroll;
 
       & > toolbarbutton, & > toolbaritem, & > toolbarspring {
         display: none !important;
@@ -65,16 +66,20 @@ SOFTWARE.
         display: flex !important;
       }
 
-      @media -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
-        max-width: fit-content !important;
+      #back-button {
         margin-left: auto !important;
       }
 
-      @media not -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
-        #unified-extensions-button  {
+      @media not -moz-pref("natsumi.theme.single-toolbar-hide-extensions-button") {
+        #unified-extensions-button {
           display: flex !important;
           order: -1 !important;
-          margin-right: auto !important;
+        }
+      }
+
+      @media -moz-pref("natsumi.theme.single-toolbar-show-menu-button") {
+        #unified-extensions-button {
+          padding-left: 0 !important;
         }
       }
     }
@@ -130,6 +135,10 @@ SOFTWARE.
       }
     }
 
+    body[natsumi-compact-mode] #PersonalToolbar {
+      padding-inline: 0 !important;
+    }
+
     body[natsumi-compact-mode]:has(#navigator-toolbox.fullscreen-with-menubar) #PersonalToolbar {
       background-color: var(--natsumi-toolbox-color) !important;
     }
@@ -164,9 +173,30 @@ SOFTWARE.
     }
 
     @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
+      #PlacesToolbar {
+        visibility: collapse;
+      }
+
       body[natsumi-bookmarks-hover] {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           transition-delay: 0s !important;
+          margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
+
+          /* Probably redundant but keeping it here just in case */
+          @media (-moz-platform: windows) {
+            margin-top: calc(var(--natsumi-browser-separation) + 36px) !important;
+          }
+        }
+
+        #PlacesToolbar {
+          visibility: visible;
+        }
+      }
+    }
+
+    @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
+      body:has(#PersonalToolbar[collapsed="false"]) {
+        #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
 
           /* Probably redundant but keeping it here just in case */

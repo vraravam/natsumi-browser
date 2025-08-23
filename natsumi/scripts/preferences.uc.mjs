@@ -1593,10 +1593,27 @@ function addLayoutPane() {
     let menuButtonCheckbox = new CheckboxChoice(
         "natsumi.theme.single-toolbar-show-menu-button",
         "natsumiShowMenuButton",
-        "Replace Extensions button with Menu button on Single Toolbar"
+        "Show Menu button"
+    )
+
+    let addonsButtonCheckbox = new CheckboxChoice(
+        "natsumi.theme.single-toolbar-hide-extensions-button",
+        "natsumiShowAddonsButton",
+        "Show Extensions button",
+        "",
+        true
+    )
+
+    let bookmarksOnHoverCheckbox = new CheckboxChoice(
+        "natsumi.theme.show-bookmarks-on-hover",
+        "natsumiShowBookmarksOnHover",
+        "Show Bookmarks on hover",
+        "When the Bookmarks bar is expanded, the bar will stay hidden until hovered."
     )
 
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
 
     if (osName !== "darwin") {
         let windowControlsCheckbox = new CheckboxChoice(
