@@ -307,7 +307,7 @@ SOFTWARE.
     order: -1 !important;
   }
 
-  #tabbrowser-tabs:has(#vertical-tabs-newtab-button) {
+  #tabbrowser-tabs[overflow] {
     #vertical-tabs-newtab-button {
       order: -1 !important;
       margin-bottom: -90px !important;
