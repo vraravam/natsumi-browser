@@ -29,10 +29,12 @@ SOFTWARE.
 @keyframes floating-urlbar-appear {
   0% {
     scale: 0.95;
+    backdrop-filter: saturate(1) contrast(1) blur(0);
   }
 
   100% {
     scale: 1;
+    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius));
   }
 }
 
@@ -57,6 +59,7 @@ SOFTWARE.
     --natsumi-urlbar-hover-background-color: var(--natsumi-colors-urlbar-background);
     --natsumi-urlbar-search-engine-color: var(--natsumi-button-hover-color);
     --natsumi-urlbar-search-engine-text: light-dark(black, white);
+    transition: backdrop-filter 0.2s ease;
 
     .urlbar-page-action {
       border-radius: 14px !important;
@@ -428,7 +431,9 @@ SOFTWARE.
         left: 50% !important;
         translate: -50% 0 !important;
         opacity: 1 !important;
+        border-radius: 12px !important;
         animation: floating-urlbar-appear 0.2s ease !important;
+        animation-fill-mode: forwards !important;
 
         @media -moz-pref("natsumi.theme.single-toolbar") and -moz-pref("sidebar.verticalTabs") {
           --urlbar-margin-inline: 5px !important;
@@ -627,7 +632,6 @@ SOFTWARE.
         #urlbar-background {
           border-radius: 12px !important;
           background-color: var(--natsumi-mat-hz-background-tinted) !important;
-          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
           animation: floating-urlbar-appear-opacity 0.2s ease !important;
           box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
           border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
