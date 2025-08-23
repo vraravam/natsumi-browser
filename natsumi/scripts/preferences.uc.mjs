@@ -505,7 +505,7 @@ class CustomThemePicker {
                         </div>
                     </div>
                     <div class="natsumi-custom-theme-hex-input" hidden="">
-                        <html:input class="natsumi-hex-input" type="text" placeholder="HEX code (e.g. #ff0000)"/>
+                        <html:input class="natsumi-hex-input" type="text" placeholder="HEX code (e.g. #ff0000)" maxlength="8"/>
                         <div class="natsumi-hex-submit"></div>
                     </div>
                     <div class="natsumi-custom-theme-bottom-controls">
