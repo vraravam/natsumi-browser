@@ -115,6 +115,10 @@ SOFTWARE.
         #PlacesToolbar {
           visibility: collapse;
         }
+
+        .chromeclass-toolbar-additional {
+          visibility: collapse !important;
+        }
       }
     }
 
@@ -175,11 +179,13 @@ SOFTWARE.
       display: none;
     }
 
-    @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
+    @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
       #PlacesToolbar, #PersonalToolbar .chromeclass-toolbar-additional {
         visibility: collapse;
       }
+    }
 
+    @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
       body[natsumi-bookmarks-hover] {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           transition-delay: 0s !important;
@@ -220,5 +226,11 @@ SOFTWARE.
         display: none !important;
       }
     }
+  }
+}
+
+@media (not -moz-pref("natsumi.theme.single-toolbar")) or (not -moz-pref("sidebar.verticalTabs")) {
+  #PersonalToolbar .titlebar-buttonbox {
+    display: none !important;
   }
 }
