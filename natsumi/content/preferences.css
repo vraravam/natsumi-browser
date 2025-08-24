@@ -916,7 +916,7 @@ SOFTWARE.
   }
 
   @media not -moz-pref("natsumi.theme.single-toolbar") {
-    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox {
+    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
       display: none !important;
     }
   }
