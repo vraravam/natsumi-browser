@@ -1135,7 +1135,7 @@ class CustomThemePicker {
         }
 
         const currentGradient = this.gradientType;
-        const gradientTypeList = Object.keys(gradientTypes);
+        const gradientTypeList = Object.keys(gradientTypeNames);
         const gradientIndex = gradientTypeList.indexOf(currentGradient);
 
         let nextGradient = "linear";

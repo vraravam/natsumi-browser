@@ -53,7 +53,8 @@ export const gradientTypeNames = {
     "radial-cc": "Radial (cc)",
     "radial-fs": "Radial (fs)",
     "radial-fc": "Radial (fc)",
-    "conic": "Conic"
+    "conic": "Conic",
+    "hybrid": "Hybrid"
 }
 
 export function customThemeLoader(data) {
@@ -62,6 +63,63 @@ export function customThemeLoader(data) {
 
 export function customColorLoader(data) {
     return data;
+}
+
+function parseHybridBackground(data) {
+    let colors = data["colors"] ?? [];
+    let colorCodes = [];
+    let gradients = []
+
+    // If there are 2 or less colors, default to linear
+    if (colors.length <= 2) {
+        return null;
+    }
+
+    colors.sort((a, b) => {
+        if (a.order !== undefined && b.order !== undefined) {
+            return a.order - b.order;
+        }
+        return 0;
+    });
+
+    for (const color of colors) {
+        colorCodes.push(color.code);
+    }
+
+    if (colors.length === 3) {
+        gradients.push(`radial-gradient(circle at 0% 0%, ${colorCodes[1]}, transparent)`);
+        gradients.push(`radial-gradient(circle at 100% 0%, ${colorCodes[2]}, transparent)`);
+        gradients.push(`linear-gradient(to top, ${colorCodes[0]}, transparent)`);
+    } else {
+        const isOdd = colors.length % 2 !== 0;
+        const upperHalf = Math.floor(colors.length / 2);
+        let lowerHalf = upperHalf;
+        let index = 1;
+
+        if (isOdd) {
+            lowerHalf += 1;
+        }
+
+        for (let i = 0; i < upperHalf; i++) {
+            gradients.push(`radial-gradient(circle at ${i * (100 / (upperHalf - 1))}% 0%, ${colorCodes[index]}, transparent)`);
+            index++;
+
+            if (index > colors.length - 1) {
+                index = 0;
+            }
+        }
+
+        for (let i = 0; i < lowerHalf; i++) {
+            gradients.push(`radial-gradient(circle at ${100 - (i * (100 / (lowerHalf - 1)))}% 100%, ${colorCodes[index]}, transparent)`);
+            index++;
+
+            if (index > colors.length - 1) {
+                index = 0;
+            }
+        }
+    }
+
+    return gradients.join(", ");
 }
 
 function parseColor(data) {
@@ -84,15 +142,29 @@ function parseBackground(data) {
     //   {"code": "hsla(300, 100%, 50%, 1)", "angle": 300, "radius": 1, "value": 1, "opacity": 1, "order": 1}
     // ]}
 
-    const gradientType = gradientTypes[data["type"]][0] ?? "linear";
+    let gradientType = "linear-gradient";
     const angle = ((data["angle"] ?? 0) + 180) % 360;
     const angleString = `${angle}deg`;
-    let angleOverride = gradientTypes[data["type"]][1] ?? null;
+    let angleOverride = null;
     let colors = data["colors"] ?? [];
     let colorCodes = [];
 
+    if (gradientTypes[data["type"]]) {
+        gradientType = gradientTypes[data["type"]][0];
+        angleOverride = gradientTypes[data["type"]][1];
+    }
+
     if (colors.length === 0) {
         return null;
+    }
+
+    if (data["type"] === "hybrid") {
+        angleOverride = "135deg"
+        const hybridParsed = parseHybridBackground(data);
+
+        if (hybridParsed) {
+            return hybridParsed;
+        }
     }
 
     colors.sort((a, b) => {

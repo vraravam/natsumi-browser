@@ -37,7 +37,6 @@ export class NatsumiShortcutActions {
     }
 
     static toggleCompactMode() {
-        // Right now this is useless because it's not implemented yet, but it will be soon enough
         if (document.body.attributes["natsumi-compact-mode"]) {
             document.body.removeAttribute("natsumi-compact-mode");
         } else {
