@@ -39,6 +39,10 @@ SOFTWARE.
     border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
     border-radius: var(--natsumi-browser-border-radius) !important;
     overflow: hidden !important;
+
+    @media -moz-pref("natsumi.theme.single-toolbar") {
+      z-index: 2;
+    }
   }
 
   #panel-sidebar-browser-box {
