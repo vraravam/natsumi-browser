@@ -116,9 +116,11 @@ SOFTWARE.
         }
       }
 
-      #vertical-tabs-newtab-button {
-        margin-bottom: -90px !important;
-        margin-top: 48px !important;
+      @media -moz-pref("natsumi.tabs.new-tab-on-top") {
+        #vertical-tabs-newtab-button {
+          margin-bottom: -90px !important;
+          margin-top: 48px !important;
+        }
       }
 
       #tabbrowser-tabs:not([overflow]) #tabbrowser-arrowscrollbox::before {
