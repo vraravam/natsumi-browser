@@ -358,6 +358,7 @@ SOFTWARE.
   padding-bottom: var(--natsumi-browser-separation) !important;
 
   &[orientation="horizontal"] {
+    height: 40px !important;
     width: calc(100% - calc(var(--natsumi-browser-separation) * 2)) !important;
     padding-inline: var(--natsumi-browser-separation) !important;
   }

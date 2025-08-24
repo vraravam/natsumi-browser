@@ -122,6 +122,8 @@ SOFTWARE.
   }
 }
 
-:root[inDOMFullscreen="true"] #natsumi-notifications-container {
-  top: 20px !important;
+:root[inDOMFullscreen="true"], body[natsumi-compact-mode] {
+  #natsumi-notifications-container {
+    top: 20px !important;
+  }
 }

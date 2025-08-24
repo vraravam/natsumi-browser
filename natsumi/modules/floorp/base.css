@@ -112,6 +112,10 @@ SOFTWARE.
         }
       }
 
+      #tabbrowser-tabs:not([overflow]) #tabbrowser-arrowscrollbox::before {
+        margin-bottom: 4px !important;
+      }
+
       &[style*="--natsumi-workspace-icon"] {
         #tabbrowser-arrowscrollbox {
           &::before {
@@ -275,7 +279,7 @@ SOFTWARE.
       left: 7px;
     }
 
-    &:has(#panel-sidebar-select-box):has(#panel-sidebar-box[data-floating-splitter-side="end"]) #nora-statusbar.hidden {
+    &:has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[data-floating-splitter-side="start"])) #nora-statusbar.hidden {
       left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
     }
 

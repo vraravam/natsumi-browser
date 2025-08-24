@@ -28,6 +28,8 @@ SOFTWARE.
 
 :root[data-title-default="Ablaze Floorp"] {
   #panel-sidebar-splitter {
+    background-color: transparent !important;
+    border-color: transparent !important;
     min-width: var(--natsumi-browser-separation) !important;
   }
 
@@ -37,6 +39,10 @@ SOFTWARE.
     border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
     border-radius: var(--natsumi-browser-border-radius) !important;
     overflow: hidden !important;
+
+    @media -moz-pref("natsumi.theme.single-toolbar") {
+      z-index: 2;
+    }
   }
 
   #panel-sidebar-browser-box {
@@ -67,6 +73,24 @@ SOFTWARE.
       &[data-checked], &:active {
         background-color: var(--natsumi-button-active-color) !important;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+      }
+    }
+  }
+
+  &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) #panel-sidebar-select-box {
+    margin-left: 0 !important;
+  }
+
+  @media -moz-pref("natsumi.theme.single-toolbar") {
+    &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) {
+      #panel-sidebar-select-box {
+        transition: height 0.2s ease, margin-top 0.2s ease !important;
+        height: calc(100vh - 12px) !important;
+      }
+
+      body[natsumi-bookmarks-hover] #panel-sidebar-select-box {
+        height: calc(100vh - 40px) !important;
+        margin-top: 34px !important;
       }
     }
   }
