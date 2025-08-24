@@ -162,7 +162,7 @@ SOFTWARE.
       }
     }
 
-    &:has(#PersonalToolbar[collapsed="false"]), body:has([natsumi-welcome]) {
+    body:has([natsumi-welcome]) {
       #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
         margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
 
