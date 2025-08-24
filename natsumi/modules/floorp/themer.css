@@ -1,8 +1,3 @@
-// ==UserScript==
-// @include   main
-// @ignorecache
-// ==/UserScript==
-
 /*
 
 Natsumi Browser - A userchrome for Firefox and more that makes things flow.
@@ -29,24 +24,25 @@ SOFTWARE.
 
 */
 
-// literally just a script for meowing because i felt cute :3
-// also does initial setup for natsumi append stuff
+/* ==== Floorp-specific theming engine extension ==== */
 
-import {applyCustomColor, applyCustomTheme} from "./custom-theme.sys.mjs";
+:root[data-title-default="Ablaze Floorp"] {
+  * {
+    --natsumi-primary-color: var(--floorp-tab-panel-bg-color, var(--natsumi-custom-primary-color, var(--natsumi-accent-color, #a0d490)));
+  }
 
-function makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises() {
-    document.body.setAttribute("natsumi-append-installed", "");
-    //applyCustomColor();
-    applyCustomTheme();
+  /* Override accent color if theme color is set */
+  @media not -moz-pref("natsumi.theme.force-natsumi-color") {
+    &[lwt-icon-fill-attention] {
+      * {
+        --natsumi-primary-color: var(--floorp-tab-panel-bg-color, var(--lwt-accent-color)) !important;
 
-    const catNoises = [
-        "meow",
-        "mrrp",
-        "mrrow",
-        "nya"
-    ]
-    const catNoise = catNoises[Math.floor(Math.random() * catNoises.length)];
-    console.log(`${catNoise} :3`);
+        @media -moz-pref("natsumi.theme.use-tab-theme-color") {
+          .tabbrowser-tab {
+            --natsumi-primary-color: var(--floorp-tab-panel-bg-color, var(--lwt-tab-line-color)) !important;
+          }
+        }
+      }
+    }
+  }
 }
-
-makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises();

@@ -306,6 +306,23 @@ SOFTWARE.
   #tabbrowser-arrowscrollbox-periphery {
     order: -1 !important;
   }
+
+  #tabbrowser-tabs[overflow] {
+    #vertical-tabs-newtab-button {
+      order: -1 !important;
+      margin-bottom: -90px !important;
+      margin-top: 48px !important;
+      z-index: 1;
+    }
+
+    #pinned-tabs-container {
+      order: -2 !important;
+    }
+
+    #tabbrowser-arrowscrollbox::before {
+      margin-bottom: 38px !important;
+    }
+  }
 }
 
 @media -moz-pref("natsumi.tabs.hide-new-tab-button") {

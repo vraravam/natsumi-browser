@@ -40,10 +40,10 @@ changes appearance based on the context.
 ### 🖥️ Reimagined Picture-in-picture.
 #### Modern and streamlined.
 
-![](./images/picture-in-picture.png)
+![](./images/pip-movement.png)
 
 Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it more consistent with
-the rest of the browser.
+the rest of the browser. You can even scroll to reposition the PiP window, too!
 
 ### 📄 PDF viewer, modernized.
 #### View your documents in the 21st century.
@@ -53,6 +53,13 @@ the rest of the browser.
 Give Firefox's PDF viewer a fresh coat of paint! Natsumi includes tweaks for the default PDF viewer,
 giving it the modern look it really deserves. And with compact view, you can focus on the file at
 hand when you don't need the extra tools.
+
+### 🔧 Customization made easier.
+#### Customize Natsumi in the preferences page without touching advanced configs.
+![](./images/customization.png)
+
+Natsumi adds its own Customize Natsumi pane to the preferences page, so you can easily customize
+your installation of Natsumi graphically. No more figuring out which config does what.
 
 ### 🖼️ Express yourself with themes.
 #### A theming engine that lets your browser vibe with you.
@@ -97,8 +104,16 @@ Let your browser be yours! Choose from nine theme varieties to get the look that
   Trans rights are human rights!
   ![](./images/theme-transgender.png)
 
-### 🎨 And color it all your way.
-#### Firefox themes support, still there.
+### 🖌️ Create your own custom look.
+#### Create your own themes that feel personal, not generated.
+
+![](./images/custom-themes.png)
+
+Not happy with Natsumi's base themes? Take full control of Natsumi's theming engine and create your
+very own gradient, all without being forced to stick to a specific color palette.
+
+### 🎨 Color it all your way.
+#### Also with Firefox themes support!
 ![](./images/custom-colors.png)
 
 Don't like the default colors? Install a Firefox theme and Natsumi will adjust its colors for you.
@@ -119,34 +134,12 @@ Or, choose from one of the preset colors.
 - $${\color{#ffffff}■}$$ **System Accent** (`system`) - follow your system's accent color (works on
   macOS and Linux)!
 
-## And do more with **Natsumi Append**!
-Natsumi Append is a collection of JavaScript scripts that can be used by installing fx-autoconfig.
-Take your browser to the next level with Append!
-
-### 🔧 Customization made easier.
-#### Customize Natsumi in the preferences page without touching advanced configs.
-![](./images/customization.png)
-
-Natsumi Append adds a Customize Natsumi pane to the preferences page, so you can easily customize
-your installation of Natsumi graphically. No more figuring out which config does what.
-
 ### 🧘 Introducing Single Toolbar.
 #### Move everything to the sidebar for a cleaner look.
 ![](./images/single-toolbar.png)
 
-Craving the Single Toolbar look you can get in a certain other browser? Natsumi Append adds it to
-your browser of choice.
-
-> [!NOTE]
-> Single Toolbar does not support customizing the top toolbar yet. This will be addressed in a
-> future release.
-
-### 🖱️ Scroll, not drag.
-#### Move your Picture-in-Picture windows with Scroll-to-move.
-![](./images/pip-movement.png)
-
-Natsumi Append allows you to move your Picture-in-Picture windows by scrolling over them in addition
-to dragging them.
+Craving the Single Toolbar look you can get in a certain other browser? Natsumi adds it to your
+browser of choice.
 
 ### 🍰 Additional browser-specific goodies.
 #### Get extra features custom-made for specific browsers.
@@ -154,6 +147,24 @@ to dragging them.
 
 Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi Append
 adds extra features to your browser for a more complete experience.
+
+## Full-fledged vs. CSS-only
+Some Natsumi features require JavaScript to work. You can still use Natsumi without JS support at the
+cost of losing some features.
+
+| Feature                            | Full (Natsumi + Natsumi Append) | CSS-only (Natsumi) |
+|------------------------------------|---------------------------------|--------------------|
+| Natsumi URLbar/Findbar             | :white_check_mark:              | :white_check_mark: |
+| Natsumi PDF Viewer                 | :white_check_mark:              | :white_check_mark: |
+| Natsumi PiP                        | :white_check_mark:              | :warning: Limited  |
+| Theming engine                     | :white_check_mark:              | :white_check_mark: |
+| Customize Natsumi preferences page | :white_check_mark:              | :x:                |
+| Custom themes                      | :white_check_mark:              | :x:                |
+| Single Toolbar                     | :white_check_mark:              | :x:                |
+| Compact Mode                       | :white_check_mark:              | :x:                |
+| Status bar as sidebar toolbar      | :white_check_mark:              | :x:                |
+| Natsumi Shortcuts                  | :white_check_mark:              | :x:                |
+
 
 ## Installation
 You will need to install Natsumi by copying its files to your profile's chrome folder.
@@ -219,6 +230,8 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
   to be used instead of the current Firefox theme's colors.
 - `natsumi.theme.use-tab-theme-color` (boolean): Uses the tab border color as the accent color for Blade.
   This may break Blade on some themes.
+- `natsumi.theme.max-custom-colors` (integer): The maximum number of custom colors you can choose. Minimum
+  and default is 6.
 - `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
 - `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
 - `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout. **Natsumi Append required.**
@@ -276,15 +289,15 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 ## Browser support
 All browsers must be based on Firefox 137 or above.
 
-| Browser     | Status                        | Versions | Notes                                                                          |
-|-------------|-------------------------------|----------|--------------------------------------------------------------------------------|
-| Firefox     | :white_check_mark: Supported  | 137+     |                                                                                |
-| Floorp      | :white_check_mark: Supported  | 12+      | Not supported on Floorp 11 as it uses an incompatible version of Firefox.      |
-| Waterfox    | :white_check_mark: Supported  | 6.6.0+   | Not supported on Waterfox 6.5.0 as it uses an incompatible version of Firefox. |
-| Librewolf   | :warning: Partially supported | 137+     | Supported, but animations may be laggy due to no hardware acceleration.        |
-| Midori      | :x: Unsupported               | -        | Not supported as it uses an incompatible version of Firefox.                   |
-| Mullvad/Tor | :x: Unsupported               | 15.0+    | Marked as unsupported as Tor/Mullvad version 15 is in alpha.                   |
-| Zen         | :x: Unsupported               | -        | See FAQ.                                                                       |
+| Browser     | Status                       | Versions | Notes                                                              |
+|-------------|------------------------------|----------|--------------------------------------------------------------------|
+| Floorp      | :star: Recommended           | 12+      | Natsumi works best on Floorp!                                      |
+| Firefox     | :white_check_mark: Supported | 137+     |                                                                    |
+| Waterfox    | :white_check_mark: Supported | 6.6.0+   |                                                                    |
+| Librewolf   | :white_check_mark: Supported | 137+     | May have performance issues, but other than that fully compatible. |
+| Midori      | :x: Unsupported              | -        | Incompatible (based on ESR128)                                     |
+| Mullvad/Tor | :x: Unsupported              | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
+| Zen         | :x: Unsupported              | -        | Incompatible since Natsumi v4 (see FAQ)                            |
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
@@ -312,6 +325,9 @@ various other reasons.
 Additionally, it'd be a hassle to make things compatible with Zen, mainly because it is just so
 heavily modified from the original Firefox that I may end up building a whole new skin just for
 compatibility unintentionally.
+
+**Please do not try to port Natsumi to Zen.** I have my reasons why I left it, and I would
+really appreciate it if you respected my decision.
 
 ### "When does Natsumi update?"
 There is no fixed schedule for updates, it all happens randomly.
