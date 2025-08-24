@@ -109,7 +109,16 @@ SOFTWARE.
           padding: 12px var(--tab-inline-padding) !important;
           margin-bottom: 4px !important;
           color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
+
+          @media -moz-pref("natsumi.tabs.new-tab-on-top") {
+            margin-bottom: 38px !important;
+          }
         }
+      }
+
+      #vertical-tabs-newtab-button {
+        margin-bottom: -90px !important;
+        margin-top: 48px !important;
       }
 
       #tabbrowser-tabs:not([overflow]) #tabbrowser-arrowscrollbox::before {
