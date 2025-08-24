@@ -80,7 +80,16 @@ function removeHover(isWindowButton = false) {
 
 function detectBookmarkHover() {
     let bookmarksToolbar = document.getElementById("PersonalToolbar");
-    let windowButtonsContainer = document.querySelector(".titlebar-buttonbox-container");
+    let windowButtonsContainer = document.querySelector("#PersonalToolbar .titlebar-buttonbox-container");
+    let isMac = Services.appinfo.OS.toLowerCase() === "darwin";
+    console.log(windowButtonsContainer);
+
+    if (!windowButtonsContainer && !isMac) {
+        let originalWindowButtonsContainer = document.querySelector(".titlebar-buttonbox-container");
+        console.log(originalWindowButtonsContainer);
+        windowButtonsContainer = originalWindowButtonsContainer.cloneNode(true);
+        bookmarksToolbar.appendChild(windowButtonsContainer);
+    }
 
     if (bookmarksToolbar) {
         bookmarksToolbar.addEventListener("mouseover", (event) => {
@@ -93,6 +102,7 @@ function detectBookmarkHover() {
 
     if (windowButtonsContainer) {
         windowButtonsContainer.addEventListener("mouseover", (event) => {
+            console.log(event);
             setHover(true);
         });
         windowButtonsContainer.addEventListener("mouseout", (event) => {

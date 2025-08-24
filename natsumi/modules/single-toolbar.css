@@ -42,17 +42,6 @@ SOFTWARE.
       left: calc(calc(var(--natsumi-browser-separation) * 2) + 36px);
     }
 
-    @media (not (-moz-platform: macos)) and (not -moz-pref("natsumi.theme.force-window-controls-to-left")) {
-      .titlebar-buttonbox-container {
-        margin-left: 0 !important;
-        min-height: 40px !important;
-        position: absolute;
-        left: 100vw;
-        transform: translateX(-100%);
-        z-index: 999 !important;
-      }
-    }
-
     #nav-bar-customization-target {
       min-height: 40px;
       order: 1 !important;
@@ -119,19 +108,29 @@ SOFTWARE.
       margin-top: -41px !important;
       overflow: visible !important;
       transition: min-height 0s ease, visibility 0s ease, background-color 0.2s ease;
+      min-height: 40px !important;
+      max-height: 40px !important;
 
       &[collapsed="true"] {
         #PlacesToolbar {
           visibility: collapse;
         }
       }
+    }
 
-      @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
-        width: calc(var(--natsumi-bookmarks-width) - var(--natsumi-window-buttons-width)) !important;
+    @media (not (-moz-platform: macos)) {
+      @media not (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
+        #nav-bar .titlebar-buttonbox {
+          display: none !important;
+          appearance: none !important;
+        }
       }
 
-      &:hover {
-        min-height: 28px !important;
+      @media -moz-pref("natsumi.theme.force-window-controls-to-left") {
+        #PersonalToolbar .titlebar-buttonbox {
+          display: none !important;
+          appearance: none !important;
+        }
       }
     }
 
@@ -177,7 +176,7 @@ SOFTWARE.
     }
 
     @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
-      #PlacesToolbar {
+      #PlacesToolbar, #PersonalToolbar .chromeclass-toolbar-additional {
         visibility: collapse;
       }
 
@@ -192,7 +191,7 @@ SOFTWARE.
           }
         }
 
-        #PlacesToolbar {
+        #PlacesToolbar, #PersonalToolbar .chromeclass-toolbar-additional {
           visibility: visible;
         }
       }
