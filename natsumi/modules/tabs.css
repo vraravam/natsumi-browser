@@ -310,8 +310,8 @@ SOFTWARE.
   #tabbrowser-tabs[overflow] {
     #vertical-tabs-newtab-button {
       order: -1 !important;
-      margin-bottom: -90px !important;
-      margin-top: 48px !important;
+      margin-bottom: -50px !important;
+      margin-top: 2px !important;
       z-index: 1;
     }
 
