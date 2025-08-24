@@ -203,8 +203,10 @@ SOFTWARE.
           visibility: visible;
         }
 
-        #PersonalToolbar .titlebar-buttonbox {
-          display: flex !important;
+        @media not (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
+          #PersonalToolbar .titlebar-buttonbox {
+            display: flex !important;
+          }
         }
       }
     }
