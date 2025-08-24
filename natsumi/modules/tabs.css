@@ -320,6 +320,7 @@ SOFTWARE.
     }
 
     #tabbrowser-arrowscrollbox::before {
+      content: "";
       margin-bottom: 38px !important;
     }
   }
