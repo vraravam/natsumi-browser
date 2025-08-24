@@ -172,6 +172,10 @@ SOFTWARE.
       }
     }
 
+    body:has(#PersonalToolbar[collapsed="true"]) #personal-toolbar-empty {
+      display: none;
+    }
+
     @media (not (-moz-platform: macos)) or (-moz-pref("natsumi.theme.show-bookmarks-on-hover")) {
       #PlacesToolbar {
         visibility: collapse;
