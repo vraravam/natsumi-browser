@@ -35,6 +35,10 @@ SOFTWARE.
         mask-size: 16px;
         mask-position: center;
         mask-repeat: no-repeat;
+
+        @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+          background-color: light-dark(black, white);
+        }
       }
 
       &:hover .natsumi-miniplayer-pip-button::before {
