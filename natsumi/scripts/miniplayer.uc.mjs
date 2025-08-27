@@ -29,6 +29,8 @@ SOFTWARE.
 
 */
 
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
     return window.MozXULElement.parseXULToFragment(node);
@@ -68,7 +70,7 @@ class NatsumiMiniplayer {
         this.isMuted = false;
         this.duration = 0;
         this.position = 0;
-        this._positionIncrement = null;
+        //this._positionIncrement = null;
         this.getPlaybackState();
 
         // Get tab data
@@ -102,6 +104,7 @@ class NatsumiMiniplayer {
         let nextTrackAvailable = availableButtons.includes("nexttrack");
         let prevTrackAvailable = availableButtons.includes("previoustrack");
         let seekAvailable = availableButtons.includes("seekto");
+        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.enabled").value;
 
         // Get seekbar times
         let positionMinutes = Math.floor(this.position / 60);
@@ -130,7 +133,7 @@ class NatsumiMiniplayer {
                     </div>
                 </div>
                 <div class="natsumi-miniplayer-controls-container">
-                    <div class="natsumi-miniplayer-pip-button"></div>
+                    <div class="natsumi-miniplayer-pip-button" disabled="${!pipAvailable}"></div>
                     <div class="natsumi-miniplayer-prevtrack-button" disabled="${!prevTrackAvailable}"></div>
                     <div class="natsumi-miniplayer-pauseplay-button" disabled="${!playPauseAvailable}" playing="${this.isPlaying}"></div>
                     <div class="natsumi-miniplayer-nexttrack-button" disabled="${!nextTrackAvailable}"></div>
@@ -313,11 +316,13 @@ class NatsumiMiniplayer {
         let nextTrackAvailable = availableButtons.includes("nexttrack");
         let prevTrackAvailable = availableButtons.includes("previoustrack");
         let seekAvailable = availableButtons.includes("seekto");
+        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.enabled").value;
 
         // Get button objects
         let playPauseButton = this._node.querySelector(".natsumi-miniplayer-pauseplay-button");
         let nextTrackButton = this._node.querySelector(".natsumi-miniplayer-nexttrack-button");
         let prevTrackButton = this._node.querySelector(".natsumi-miniplayer-prevtrack-button");
+        let pipButton = this._node.querySelector(".natsumi-miniplayer-pip-button");
         let seekbarContainer = this._node.querySelector(".natsumi-miniplayer-seekbar-container");
         let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
         let positionLabel = this._node.querySelector(".natsumi-miniplayer-position");
@@ -336,6 +341,9 @@ class NatsumiMiniplayer {
         }
         if (prevTrackButton) {
             prevTrackButton.setAttribute("disabled", !prevTrackAvailable);
+        }
+        if (pipButton) {
+            pipButton.setAttribute("disabled", !pipAvailable);
         }
         if (seekbarContainer) {
             seekbarContainer.hidden = !seekAvailable;
