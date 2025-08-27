@@ -1968,13 +1968,6 @@ function addSidebarMiniplayerPane() {
         "Choose the layout you want for the Miniplayers."
     );
 
-    // Create choices group
-    let miniplayerGroup = new OptionsGroup(
-        "natsumiSidebarMiniplayer",
-        "Miniplayer",
-        "Tweak Natsumi's Miniplayer which appears in the sidebar for media played on websites."
-    );
-
     for (let layout in miniplayerLayouts) {
         miniplayerLayoutSelection.registerOption(layout, miniplayerLayouts[layout]);
     }
@@ -2336,6 +2329,11 @@ function addPreferencesPanes() {
             <html:h1>Sidebar &amp; Tabs</html:h1>
         </hbox>
     `);
+    let miniPlayerNode = convertToXUL(`
+        <hbox id="natsumiMiniplayerCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Miniplayer</html:h1>
+        </hbox>
+    `);
     let pipNode = convertToXUL(`
         <hbox id="natsumiPipCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Picture-in-Picture</html:h1>
@@ -2367,6 +2365,8 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarWorkspacesPane();
     addSidebarButtonsPane();
+
+    prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();
 
     let pipDisabled = false;
