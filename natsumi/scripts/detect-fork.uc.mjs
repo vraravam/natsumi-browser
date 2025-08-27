@@ -43,8 +43,6 @@ function detectFork() {
 
     let forkName = "firefox";
 
-    console.log(browserTitle);
-
     if (browserTitle === "Ablaze Floorp") {
         forkName = "floorp";
     } else if (browserTitle === "Waterfox") {
