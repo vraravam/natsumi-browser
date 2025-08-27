@@ -104,7 +104,7 @@ class NatsumiMiniplayer {
         let nextTrackAvailable = availableButtons.includes("nexttrack");
         let prevTrackAvailable = availableButtons.includes("previoustrack");
         let seekAvailable = availableButtons.includes("seekto");
-        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.enabled").value;
+        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.video-toggle.enabled").value;
 
         // Get seekbar times
         let positionMinutes = Math.floor(this.position / 60);
@@ -316,7 +316,7 @@ class NatsumiMiniplayer {
         let nextTrackAvailable = availableButtons.includes("nexttrack");
         let prevTrackAvailable = availableButtons.includes("previoustrack");
         let seekAvailable = availableButtons.includes("seekto");
-        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.enabled").value;
+        let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.video-toggle.enabled").value;
 
         // Get button objects
         let playPauseButton = this._node.querySelector(".natsumi-miniplayer-pauseplay-button");

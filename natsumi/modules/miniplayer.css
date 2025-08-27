@@ -99,8 +99,12 @@ SOFTWARE.
       margin-bottom: -100% !important;
     }
 
-    .natsumi-miniplayer-pip-button::before {
-      background-image: var(--natsumi-miniplayer-site-icon) !important;
+    .natsumi-miniplayer-pip-button {
+      opacity: 1 !important;
+
+      &::before {
+        background-image: var(--natsumi-miniplayer-site-icon) !important;
+      }
     }
   }
 
@@ -135,11 +139,19 @@ SOFTWARE.
 
     &:hover {
       background-color: var(--natsumi-button-hover-color-dark);
+
+      @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+        background-color: var(--natsumi-button-hover-color);
+      }
     }
 
     &:active {
-      background-color: var(--natsumi-button-active-color-dark) !important;
+      background-color: var(--natsumi-button-active-color-dark);
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+      @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+        background-color: var(--natsumi-button-active-color);
+      }
     }
   }
 
@@ -202,11 +214,19 @@ SOFTWARE.
 
       &:hover {
         background-color: var(--natsumi-button-hover-color-dark);
+
+        @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+          background-color: var(--natsumi-button-hover-color);
+        }
       }
 
       &:active {
-        background-color: var(--natsumi-button-active-color-dark) !important;
+        background-color: var(--natsumi-button-active-color-dark);
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+        @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+          background-color: var(--natsumi-button-active-color);
+        }
       }
 
       &::before {
