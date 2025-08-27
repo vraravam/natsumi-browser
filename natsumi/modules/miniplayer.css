@@ -103,7 +103,6 @@
     padding-inline: 4px !important;
 
     .natsumi-miniplayer-title {
-      width: 100%;
       display: inline-block !important;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -203,5 +202,44 @@
     .natsumi-miniplayer-mute-button::before {
       background-image: url("../icons/lucide/volume-off.svg");
     }
+  }
+}
+
+#sidebar-main:not([sidebar-launcher-expanded]) {
+  #natsumi-miniplayer-container {
+    max-width: var(--tab-collapsed-background-width) !important;
+  }
+
+  .natsumi-miniplayer {
+    .natsumi-miniplayer-info-container {
+      display: none;
+    }
+
+    .natsumi-miniplayer-controls-container {
+      padding: calc(calc(var(--tab-collapsed-background-width) - 28px) / 2) !important;
+      flex-direction: column;
+    }
+
+    .natsumi-miniplayer-prevtrack-button, .natsumi-miniplayer-pauseplay-button, .natsumi-miniplayer-nexttrack-button, .natsumi-miniplayer-mute-button {
+      transition: margin 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    &:hover {
+      min-height: calc(var(--tab-collapsed-background-width) + 112px) !important;
+    }
+
+    &:not(:hover) {
+      min-height: var(--tab-collapsed-background-width) !important;
+
+      .natsumi-miniplayer-prevtrack-button, .natsumi-miniplayer-pauseplay-button, .natsumi-miniplayer-nexttrack-button, .natsumi-miniplayer-mute-button {
+        margin-bottom: -100% !important;
+      }
+    }
+  }
+}
+
+@media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
+  #natsumi-miniplayer-container {
+    margin-bottom: var(--natsumi-browser-separation) !important;
   }
 }

@@ -287,7 +287,6 @@ class NatsumiMiniplayer {
         let nextTrackAvailable = availableButtons.includes("nexttrack");
         let prevTrackAvailable = availableButtons.includes("previoustrack");
         let seekAvailable = availableButtons.includes("seekto");
-        console.log(playPauseAvailable, nextTrackAvailable, prevTrackAvailable, seekAvailable);
 
         // Get button objects
         let playPauseButton = this._node.querySelector(".natsumi-miniplayer-pauseplay-button");
@@ -413,8 +412,6 @@ async function registerMiniplayer(tab) {
         return;
     }
 
-    console.log("registering to ",tab);
-
     try {
         tab.natsumiMiniplayer = new NatsumiMiniplayer(tab);
         tab.natsumiMiniplayer.init();
@@ -426,8 +423,6 @@ async function registerMiniplayer(tab) {
     if (tab.selected) {
         tab.natsumiMiniplayer.hideMiniplayer();
     }
-
-    console.log("registered to ",tab);
 }
 
 let miniplayerContainer = document.getElementById("natsumi-miniplayer-container");
