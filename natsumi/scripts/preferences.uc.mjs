@@ -1941,6 +1941,48 @@ function addSidebarButtonsPane() {
     prefsView.insertBefore(sidebarButtonsNode, homePane);
 }
 
+function addSidebarMiniplayerPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let miniplayerGroup = new OptionsGroup(
+        "natsumiSidebarMiniplayer",
+        "Miniplayer",
+        "Tweak Natsumi's Miniplayer which appears in the sidebar for media played on websites."
+    );
+
+    miniplayerGroup.registerOption("natsumiSidebarMiniplayerArtwork", new CheckboxChoice(
+        "natsumi.miniplayer.disable-artwork",
+        "natsumiSidebarMiniplayerArtwork",
+        "Show media thumbnail/artwork as Miniplayer background",
+        "",
+        true
+    ));
+
+    let sidebarMiniplayerNode = miniplayerGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = sidebarMiniplayerNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(sidebarMiniplayerNode, homePane);
+}
+
 function addPipMaterialPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2286,6 +2328,7 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarWorkspacesPane();
     addSidebarButtonsPane();
+    addSidebarMiniplayerPane();
 
     let pipDisabled = false;
     if (ucApi.Prefs.get("natsumi.pip.disabled").exists()) {
