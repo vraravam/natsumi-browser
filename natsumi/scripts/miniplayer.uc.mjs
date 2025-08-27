@@ -1,0 +1,538 @@
+// ==UserScript==
+// @include   main
+// @ignorecache
+// ==/UserScript==
+
+function convertToXUL(node) {
+    // noinspection JSUnresolvedReference
+    return window.MozXULElement.parseXULToFragment(node);
+}
+
+class NatsumiMiniplayer {
+    // "Miniplayer" was just a nickname I gave to Zen's sidebar media controls, but for some reason
+    // everyone ended up calling it that, so I guess I coined that term...
+
+    constructor(tab) {
+        if (tab.nodeName.toLowerCase() === "browser") {
+            // Throw an error so that I can remind myself to not get these two confused
+            throw new Error("Failed to initialize miniplayer, the tab is a browser. I know, these can get confusing, but let's try to get it right.");
+        }
+
+        this._tab = tab;
+        this._node = null;
+        this._initialized = false;
+
+        // Get media controller and metadata
+        this._mediaMetadata = null;
+        try {
+            this._mediaMetadata = this._tab.linkedBrowser.browsingContext.mediaController.getMetadata();
+        } catch(e) {}
+
+        // Get media data
+        this.artist = null;
+        this.album = null;
+        this.title = null;
+        this.artwork = null;
+        if (this._mediaMetadata) {
+            this.getMediaMetadata();
+        }
+
+        // Get playback state
+        this.isPlaying = false;
+        this.isMuted = false;
+        this.duration = 0;
+        this.position = 0;
+        this._positionIncrement = null;
+        this.getPlaybackState();
+
+        // Get tab data
+        this.siteName = null;
+        this.siteIcon = null;
+
+        try {
+            this.getTabData();
+        } catch(e) {
+            // This is not critical, so we can do this next time we render the UI
+        }
+    }
+
+    init() {
+        if (this._initialized) {
+            return;
+        }
+
+        // If there's no metadata, then skip
+        try {
+            this._mediaMetadata = this._tab.linkedBrowser.browsingContext.mediaController.getMetadata();
+            this.getMediaMetadata();
+        } catch(e) {
+            console.error(e);
+            return;
+        }
+
+        // Get available buttons
+        const availableButtons = this._tab.linkedBrowser.browsingContext.mediaController.supportedKeys
+        let playPauseAvailable = availableButtons.includes("playpause");
+        let nextTrackAvailable = availableButtons.includes("nexttrack");
+        let prevTrackAvailable = availableButtons.includes("previoustrack");
+        let seekAvailable = availableButtons.includes("seekto");
+
+        // Get seekbar times
+        let positionMinutes = Math.floor(this.position / 60);
+        let positionSeconds = Math.floor(this.position % 60);
+        let durationMinutes = Math.floor(this.duration / 60);
+        let durationSeconds = Math.floor(this.duration % 60);
+
+        // Generate node
+        let nodeString = `
+            <div id="natsumi-miniplayer-${this._tab.linkedPanel}" class="natsumi-miniplayer" muted="${this.isMuted}" playing="${this.isPlaying}">
+                <div class="natsumi-miniplayer-info-container">
+                    <div class="natsumi-miniplayer-site-container">
+                        <div class="natsumi-miniplayer-site-icon"></div>
+                        <div class="natsumi-miniplayer-site-name"></div>
+                    </div>
+                    <div class="natsumi-miniplayer-title-container">
+                        <div class="natsumi-miniplayer-title"></div>
+                    </div>
+                    <div class="natsumi-miniplayer-author-container">
+                        <div class="natsumi-miniplayer-artist"></div>
+                    </div>
+                    <div class="natsumi-miniplayer-seekbar-container" hidden="${!seekAvailable}">
+                        <div class="natsumi-miniplayer-position">${positionMinutes}:${positionSeconds.toString().padStart(2, "0")}</div>
+                        <div class="natsumi-miniplayer-seekbar"></div>
+                        <div class="natsumi-miniplayer-duration">${durationMinutes}:${durationSeconds.toString().padStart(2, "0")}</div>
+                    </div>
+                </div>
+                <div class="natsumi-miniplayer-controls-container">
+                    <div class="natsumi-miniplayer-pip-button"></div>
+                    <div class="natsumi-miniplayer-prevtrack-button" disabled="${!prevTrackAvailable}"></div>
+                    <div class="natsumi-miniplayer-pauseplay-button" disabled="${!playPauseAvailable}" playing="${this.isPlaying}"></div>
+                    <div class="natsumi-miniplayer-nexttrack-button" disabled="${!nextTrackAvailable}"></div>
+                    <div class="natsumi-miniplayer-mute-button"></div>
+                </div>
+            </div>
+        `
+        this._node = convertToXUL(nodeString);
+
+        // Add event handlers to media controller
+        this.registerEventHandlers();
+
+        // Add event listeners to buttons
+        this._node.querySelector(".natsumi-miniplayer-site-container").addEventListener("click", () => {
+            window.gBrowser.selectedTab = this._tab;
+        });
+        this._node.querySelector(".natsumi-miniplayer-mute-button").addEventListener("click", () => {
+            this.toggleMute();
+        });
+        this._node.querySelector(".natsumi-miniplayer-pauseplay-button").addEventListener("click", () => {
+            this.togglePlayPause();
+        });
+        this._node.querySelector(".natsumi-miniplayer-prevtrack-button").addEventListener("click", () => {
+            this.prevTrack();
+        });
+        this._node.querySelector(".natsumi-miniplayer-nexttrack-button").addEventListener("click", () => {
+            this.nextTrack();
+        });
+        this._node.querySelector(".natsumi-miniplayer-pip-button").addEventListener("click", (event) => {
+            let result = this._tab.linkedBrowser.browsingContext.currentWindowGlobal.getActor("PictureInPictureLauncher").sendAsyncMessage("PictureInPicture:KeyToggle");
+        });
+
+        // Append to container
+        let miniplayerContainer = document.getElementById("natsumi-miniplayer-container");
+        miniplayerContainer.appendChild(this._node);
+
+        // Replace DocumentFragment node with actual node
+        this._node = document.getElementById(`natsumi-miniplayer-${this._tab.linkedPanel}`);
+
+        // Add artwork and favicon
+        this._node.style.setProperty("--natsumi-miniplayer-artwork", `url('${this.artwork}')`);
+        this._node.style.setProperty("--natsumi-miniplayer-site-icon", `url('${this.siteIcon}')`);
+
+        // Set site data and media metadata
+        this._node.querySelector(".natsumi-miniplayer-site-name").textContent = this.siteName || "Unknown site";
+        this._node.querySelector(".natsumi-miniplayer-title").textContent = this.title || "Unknown";
+        this._node.querySelector(".natsumi-miniplayer-artist").textContent = this.artist || "Unknown artist";
+        if (this.album) {
+            this._node.querySelector(".natsumi-miniplayer-artist").textContent = `${this.artist || "Unknown artist"} • ${this.album}`;
+        }
+
+        this._initialized = true;
+    }
+
+    registerEventHandlers() {
+        if (!this._tab.linkedBrowser.browsingContext.mediaController.onpositionstatechange) {
+            this._tab.linkedBrowser.browsingContext.mediaController.onpositionstatechange = (event) => {
+                this.onPositionUpdate(event);
+            };
+        }
+        if (!this._tab.linkedBrowser.browsingContext.mediaController.onplaybackstatechange) {
+            this._tab.linkedBrowser.browsingContext.mediaController.onplaybackstatechange = (event) => {
+                this.onPlaybackUpdate(event);
+            };
+        }
+        if (!this._tab.linkedBrowser.browsingContext.mediaController.onmetadatachange) {
+            this._tab.linkedBrowser.browsingContext.mediaController.onmetadatachange = (event) => {
+                this.onMetadataUpdate(event);
+            };
+        }
+        if (!this._tab.linkedBrowser.browsingContext.mediaController.onsupportedkeyschange) {
+            this._tab.linkedBrowser.browsingContext.mediaController.onsupportedkeyschange = (event) => {
+                this.onSupportedKeysUpdate(event);
+            };
+        }
+    }
+
+    getMediaMetadata() {
+        this._mediaMetadata = this._tab.linkedBrowser.browsingContext.mediaController.getMetadata();
+        this.artist = this._mediaMetadata.artist || null;
+        this.album = this._mediaMetadata.album || null;
+        this.title = this._mediaMetadata.title || null;
+        this.artwork = this._mediaMetadata.artwork || null;
+
+        if (this.artwork) {
+            this.artwork = this.artwork[0].src;
+
+            if (this._node) {
+                this._node.style.setProperty("--natsumi-miniplayer-artwork", `url('${this.artwork}')`);
+            }
+        }
+
+        // Re-add media controller event handlers in case the media controller was reset
+        this.registerEventHandlers();
+
+        // Update UI (if needed)
+        if (this._node) {
+            this.updateUI();
+        }
+    }
+
+    getPlaybackState() {
+        this.isPlaying = this._tab.linkedBrowser.browsingContext.mediaController.isPlaying;
+        this.isMuted = this._tab.muted;
+        this.updateUI();
+    }
+
+    getTabData() {
+        this.siteName = this._tab.linkedBrowser.currentURI.host;
+        this.siteIcon = this._tab.linkedBrowser.mIconURL || null;
+
+        if (this.siteIcon && this._node) {
+            this._node.style.setProperty("--natsumi-miniplayer-site-icon", `url('${this.siteIcon}')`);
+        }
+    }
+
+    toggleMute() {
+        this._tab.toggleMuteAudio();
+        this.getPlaybackState();
+        this.updateUI();
+    }
+
+    togglePlayPause() {
+        if (this.isPlaying) {
+            this._tab.linkedBrowser.browsingContext.mediaController.pause();
+        } else {
+            this._tab.linkedBrowser.browsingContext.mediaController.play();
+        }
+        this.getPlaybackState();
+        this.updateUI();
+    }
+
+    prevTrack() {
+        this._tab.linkedBrowser.browsingContext.mediaController.prevTrack();
+        this.getPlaybackState();
+    }
+
+    nextTrack() {
+        this._tab.linkedBrowser.browsingContext.mediaController.nextTrack();
+        this.getPlaybackState();
+    }
+
+    handleSeekbarClick(event) {
+        let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
+
+        if (!seekbarNode) {
+            return;
+        }
+
+        let seekbarWidth = seekbarNode.getBoundingClientRect().width;
+        const relativeX = event.clientX - seekbarNode.getBoundingClientRect().left;
+        const seekPosition = (relativeX / seekbarWidth) * this.duration;
+        this._tab.linkedBrowser.browsingContext.mediaController.seekTo(seekPosition);
+        this.position = seekPosition;
+        this.updateSeekbar();
+    }
+
+    // UI updates
+    async updateUI() {
+        if (!this._node) {
+            return;
+        }
+
+        if (!this.siteName && !this.siteIcon) {
+            try {
+                this.getTabData();
+            } catch(e) {
+                // This is not critical, so we can skip it
+            }
+        }
+
+        // Update titles
+        this._node.querySelector(".natsumi-miniplayer-site-name").textContent = this.siteName || "Unknown site";
+        this._node.querySelector(".natsumi-miniplayer-title").textContent = this.title || "Unknown";
+        this._node.querySelector(".natsumi-miniplayer-artist").textContent = this.artist || "Unknown artist";
+
+        // Get available buttons
+        let availableButtons = this._tab.linkedBrowser.browsingContext.mediaController.supportedKeys;
+        let playPauseAvailable = availableButtons.includes("playpause");
+        let nextTrackAvailable = availableButtons.includes("nexttrack");
+        let prevTrackAvailable = availableButtons.includes("previoustrack");
+        let seekAvailable = availableButtons.includes("seekto");
+        console.log(playPauseAvailable, nextTrackAvailable, prevTrackAvailable, seekAvailable);
+
+        // Get button objects
+        let playPauseButton = this._node.querySelector(".natsumi-miniplayer-pauseplay-button");
+        let nextTrackButton = this._node.querySelector(".natsumi-miniplayer-nexttrack-button");
+        let prevTrackButton = this._node.querySelector(".natsumi-miniplayer-prevtrack-button");
+        let seekbarContainer = this._node.querySelector(".natsumi-miniplayer-seekbar-container");
+        let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
+        let positionLabel = this._node.querySelector(".natsumi-miniplayer-position");
+        let durationLabel = this._node.querySelector(".natsumi-miniplayer-duration");
+
+        // Set play states
+        this._node.setAttribute("muted", this.isMuted);
+        this._node.setAttribute("playing", this.isPlaying);
+
+        // Disable buttons if needed
+        if (playPauseButton) {
+            playPauseButton.setAttribute("disabled", !playPauseAvailable);
+        }
+        if (nextTrackButton) {
+            nextTrackButton.setAttribute("disabled", !nextTrackAvailable);
+        }
+        if (prevTrackButton) {
+            prevTrackButton.setAttribute("disabled", !prevTrackAvailable);
+        }
+        if (seekbarContainer) {
+            seekbarContainer.hidden = !seekAvailable;
+        }
+
+        // Update seekbar
+        if (seekbarNode && seekAvailable) {
+            let positionMinutes = Math.floor(this.position / 60);
+            let positionSeconds = Math.floor(this.position % 60);
+            let durationMinutes = Math.floor(this.duration / 60);
+            let durationSeconds = Math.floor(this.duration % 60);
+            positionLabel.textContent = `${positionMinutes}:${positionSeconds.toString().padStart(2, "0")}`;
+            durationLabel.textContent = `${durationMinutes}:${durationSeconds.toString().padStart(2, "0")}`;
+            this.updateSeekbar();
+        }
+    }
+
+    async updateSeekbar() {
+        let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
+        let progress = (this.position / this.duration);
+        let seekbarWidth = seekbarNode.getBoundingClientRect().width;
+
+        seekbarNode.style.setProperty("--natsumi-seekbar-position", `${progress * seekbarWidth}px`);
+    }
+
+    updatePosition(duration, position, playbackRate) {
+        this.duration = duration;
+        this.position = position;
+        this.updateSeekbar();
+
+        /*if (this.isPlaying) {
+            if (this._positionIncrement) {
+                clearInterval(this._positionIncrement);
+                this._positionIncrement = null;
+            }
+
+            this._positionIncrement = setInterval(() => {
+                this.position += playbackRate;
+                if (this.position > this.duration) {
+                    this.position = this.duration;
+                    clearInterval(this._positionIncrement);
+                    this._positionIncrement = null;
+                }
+                //this.updateUI();
+            }, 1000);
+        } else {
+            clearInterval(this._positionIncrement);
+            this._positionIncrement = null;
+        }*/
+    }
+
+    // Events
+    onPositionUpdate(event) {
+        this.updatePosition(event.duration, event.position, event.playbackRate);
+        this.getTabData();
+        this.updateUI();
+    }
+
+    onPlaybackUpdate(event) {
+        this.getPlaybackState();
+        this.getTabData();
+        this.updateUI();
+    }
+
+    onMetadataUpdate(event) {
+        this._mediaMetadata = this._tab.linkedBrowser.browsingContext.mediaController.getMetadata();
+        this.getMediaMetadata();
+        this.getPlaybackState();
+        this.getTabData();
+        this.updateUI();
+    }
+
+    onSupportedKeysUpdate(event) {
+        this.updateUI();
+    }
+
+    hideMiniplayer() {
+        if (this._node) {
+            this._node.setAttribute("hidden", "true");
+        }
+    }
+
+    showMiniplayer() {
+        if (this._node) {
+            this._node.removeAttribute("hidden");
+        }
+    }
+
+    async destroy() {
+        if (this._node && this._node.parentNode) {
+            this._node.parentNode.removeChild(this._node);
+        }
+        this._node = null;
+        this._initialized = false;
+    }
+}
+
+async function registerMiniplayer(tab) {
+    if (tab.natsumiMiniplayer) {
+        return;
+    }
+
+    console.log("registering to ",tab);
+
+    try {
+        tab.natsumiMiniplayer = new NatsumiMiniplayer(tab);
+        tab.natsumiMiniplayer.init();
+    } catch(e) {
+        console.error(e);
+        return;
+    }
+
+    if (tab.selected) {
+        tab.natsumiMiniplayer.hideMiniplayer();
+    }
+
+    console.log("registered to ",tab);
+}
+
+let miniplayerContainer = document.getElementById("natsumi-miniplayer-container");
+if (!miniplayerContainer) {
+    let tabsContainer = document.getElementById("vertical-tabs");
+
+    miniplayerContainer = document.createElement("div");
+    miniplayerContainer.id = "natsumi-miniplayer-container";
+    tabsContainer.appendChild(miniplayerContainer);
+}
+
+// Register miniplayer when audio starts playing
+window.gBrowser.addEventListener("DOMAudioPlaybackStarted", (event) => {
+    let tab = window.gBrowser.getTabForBrowser(event.target);
+
+    if (!tab.natsumiMiniplayer) {
+        registerMiniplayer(tab);
+    } else {
+        try {
+            // If this is successful, the metadata still exists
+            tab.natsumiMiniplayer.getMediaMetadata();
+        } catch(e) {
+            // Metadata doesn't exist
+            tab.natsumiMiniplayer.destroy();
+            tab.natsumiMiniplayer = null;
+        }
+    }
+});
+
+// Destroy miniplayer when audio stops playing (UNLESS metadata still exists)
+window.gBrowser.addEventListener("DOMAudioPlaybackStopped", (event) => {
+    let tab = window.gBrowser.getTabForBrowser(event.target);
+    if (tab.natsumiMiniplayer) {
+        try {
+            // If this is successful, the metadata still exists
+            tab.natsumiMiniplayer.getMediaMetadata();
+
+            // Since metadata exists, we can update some stuff
+            tab.natsumiMiniplayer.getPlaybackState();
+        } catch(e) {
+            // Metadata doesn't exist, so destroy
+            tab.natsumiMiniplayer.destroy();
+            tab.natsumiMiniplayer = null;
+        }
+    }
+});
+
+// Add event listener for reloads
+let progressListener = {"onStateChange": (browser, webProgress) => {
+    let tab = window.gBrowser.getTabForBrowser(browser);
+    if (!tab) {
+        return;
+    }
+
+    // Both browser must be loading and tab must be busy to consider a tab as loading
+    const tabIsLoading = webProgress.isLoadingDocument && tab.hasAttribute("busy");
+
+    if (tabIsLoading) {
+        // Tab is loading, so destroy player if it exists
+        if (tab.natsumiMiniplayer) {
+            tab.natsumiMiniplayer.destroy();
+            tab.natsumiMiniplayer = null;
+        }
+    } else {
+        // Tab isn't loading, but we give it a "check in" to make sure media metadata still exists
+        if (tab.natsumiMiniplayer) {
+            try {
+                // If this is successful, the metadata still exists
+                tab.natsumiMiniplayer.getMediaMetadata();
+            } catch(e) {
+                // Metadata doesn't exist, so destroy
+                tab.natsumiMiniplayer.destroy();
+                tab.natsumiMiniplayer = null;
+            }
+        }
+    }
+}};
+
+window.gBrowser.addProgressListener(progressListener);
+
+// Add event listeners to handle tab closing and unload
+window.gBrowser.tabContainer.addEventListener("TabClose", (event) => {
+    let tab = event.target;
+    if (tab.natsumiMiniplayer) {
+        tab.natsumiMiniplayer.destroy();
+        tab.natsumiMiniplayer = null;
+    }
+});
+window.gBrowser.tabContainer.addEventListener("TabBrowserDiscarded", (event) => {
+    let tab = event.target;
+    if (tab.natsumiMiniplayer) {
+        tab.natsumiMiniplayer.destroy();
+        tab.natsumiMiniplayer = null;
+    }
+});
+
+// Add event listener to handle tab switching
+window.gBrowser.tabContainer.addEventListener("TabSelect", (event) => {
+    let newTab = event.target;
+    let oldTab = event.detail.previousTab;
+
+    if (oldTab && oldTab.natsumiMiniplayer) {
+        oldTab.natsumiMiniplayer.showMiniplayer();
+    }
+    if (newTab && newTab.natsumiMiniplayer) {
+        newTab.natsumiMiniplayer.hideMiniplayer();
+    }
+});

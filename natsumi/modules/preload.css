@@ -41,6 +41,8 @@ SOFTWARE.
   --natsumi-ff-background-color: color-mix(in srgb, var(--natsumi-primary-color) 25%, white);
   --natsumi-button-hover-color: rgba(0, 0, 0, 0.1);
   --natsumi-button-active-color: var(--natsumi-colors-secondary);
+  --natsumi-button-hover-color-dark: rgba(255, 255, 255, 0.1);
+  --natsumi-button-active-color-dark: color-mix(in srgb, var(--natsumi-primary-color) 70%, black);
 
   @media (prefers-color-scheme: dark) {
     --natsumi-colors-primary: color-mix(in srgb, var(--natsumi-primary-color) 20%, #1d1d1d 80%);

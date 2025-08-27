@@ -1,0 +1,207 @@
+@keyframes miniplayer-appear {
+  from {
+    translate: 0 10px;
+    opacity: 0;
+  }
+
+  to {
+    translate: 0 0;
+    opacity: 1;
+  }
+}
+
+#vertical-tabs {
+  flex-direction: column;
+}
+
+#natsumi-miniplayer-container {
+  margin: var(--tab-block-margin) var(--tab-inner-inline-margin) !important;
+  flex-direction: column;
+  order: 1;
+}
+
+.natsumi-miniplayer {
+  border-radius: var(--natsumi-tab-border-radius);
+  background: var(--natsumi-mat-hz-background);
+  backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  min-height: 36px;
+  transition: min-height 0.2s ease;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 5px !important;
+
+  &:not([hidden=true]) {
+    animation: miniplayer-appear 0.2s ease;
+  }
+
+  &::before {
+    content: "";
+    width: calc(100% + 10px);
+    height: calc(100% + 10px);
+    position: absolute;
+    left: -5px;
+    top: -5px;
+    background-image: var(--natsumi-miniplayer-artwork);
+    background-size: cover;
+    background-position: center;
+    z-index: -1;
+    filter: blur(2px) brightness(0.6);
+  }
+
+  &:hover {
+    min-height: 110px;
+  }
+
+  &:not(:hover) {
+    .natsumi-miniplayer-info-container {
+      opacity: 0;
+      margin-bottom: -100% !important;
+    }
+
+    .natsumi-miniplayer-pip-button::before {
+      background-image: var(--natsumi-miniplayer-site-icon) !important;
+    }
+  }
+
+  .natsumi-miniplayer-info-container {
+    flex-direction: column;
+    transition: margin 0.2s ease, opacity 0.2s ease;
+    padding: 4px !important;
+  }
+
+  .natsumi-miniplayer-site-container {
+    padding: 4px !important;
+    border-radius: 8px !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+    .natsumi-miniplayer-site-icon {
+      width: 16px;
+      height: 16px;
+      background-image: var(--natsumi-miniplayer-site-icon);
+      background-size: 16px;
+    }
+
+    .natsumi-miniplayer-site-name {
+      margin: auto 0 !important;
+      margin-left: 4px !important;
+      font-size: 10px;
+      color: white;
+    }
+
+    &:hover {
+      background-color: var(--natsumi-button-hover-color-dark);
+    }
+
+    &:active {
+      background-color: var(--natsumi-button-active-color-dark) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    }
+  }
+
+  .natsumi-miniplayer-title-container {
+    padding-inline: 4px !important;
+
+    .natsumi-miniplayer-title {
+      width: 100%;
+      display: inline-block !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: large;
+      color: white;
+    }
+  }
+
+  .natsumi-miniplayer-author-container {
+    padding-inline: 4px !important;
+    opacity: 0.7;
+
+    .natsumi-miniplayer-artist {
+      display: inline-block !important;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 12px;
+      color: white;
+      white-space: nowrap;
+    }
+  }
+
+  .natsumi-miniplayer-seekbar-container {
+    /* Unfortunately not possible w/o C++ injection, so skipping this */
+    display: none !important;
+  }
+
+  .natsumi-miniplayer-controls-container {
+    margin-top: auto !important;
+    width: 100%;
+    padding: 4px !important;
+    justify-content: space-between;
+
+    & > * {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+      &[disabled="true"] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color-dark);
+      }
+
+      &:active {
+        background-color: var(--natsumi-button-active-color-dark) !important;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      }
+
+      &::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        background-size: 16px !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        pointer-events: none;
+        margin: auto !important;
+        -moz-context-properties: stroke, stroke-opacity;
+        stroke: white;
+      }
+    }
+
+    .natsumi-miniplayer-pip-button::before {
+      background-image: url("../icons/lucide/pip.svg");
+    }
+
+    .natsumi-miniplayer-prevtrack-button::before {
+      background-image: url("../icons/lucide/previous-track.svg");
+    }
+
+    .natsumi-miniplayer-pauseplay-button::before {
+      background-image: url("../icons/lucide/pause.svg");
+    }
+
+    .natsumi-miniplayer-nexttrack-button::before {
+      background-image: url("../icons/lucide/next-track.svg");
+    }
+
+    .natsumi-miniplayer-mute-button::before {
+      background-image: url("../icons/lucide/volume.svg");
+    }
+  }
+
+  &[playing="false"] {
+    .natsumi-miniplayer-pauseplay-button::before {
+      background-image: url("../icons/lucide/play.svg");
+    }
+  }
+
+  &[muted="true"] {
+    .natsumi-miniplayer-mute-button::before {
+      background-image: url("../icons/lucide/volume-off.svg");
+    }
+  }
+}
