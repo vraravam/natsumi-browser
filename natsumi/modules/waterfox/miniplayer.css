@@ -26,7 +26,7 @@ SOFTWARE.
 
 /* ==== Waterfox miniplayer fixes ==== */
 
-:root[data-title-default="Ablaze Floorp"] {
+:root[data-title-default="Waterfox"] {
   @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
     @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
       &:has(#status-bar[collapsed="true"]) #natsumi-sidebar-container {
