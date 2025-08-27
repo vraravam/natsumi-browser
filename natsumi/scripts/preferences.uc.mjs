@@ -1431,17 +1431,32 @@ const colors = {
 }
 
 const urlbarLayouts = {
-    "floating": new MCChoice (
+    "floating": new MCChoice(
         false,
         "Floating",
         "Lets the URL bar float above the browser window.",
         "<div id='urlbar-floating' class='natsumi-mc-choice-image-browser'></div>"
     ),
-    "classic": new MCChoice (
+    "classic": new MCChoice(
         true,
         "Classic",
         "Keeps the URL bar on the navbar.",
         "<div id='urlbar-classic' class='natsumi-mc-choice-image-browser'></div>"
+    )
+}
+
+const miniplayerLayouts = {
+    "stacked": new MCChoice(
+        false,
+        "Stacked",
+        "Places miniplayers on top of each other.",
+        "<div id='miniplayer-stacked' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "side-by-side": new MCChoice(
+        true,
+        "Side-by-side",
+        "Places miniplayers next to each other.",
+        "<div id='miniplayer-side-by-side' class='natsumi-mc-choice-image-browser'></div>"
     )
 }
 
@@ -1945,6 +1960,14 @@ function addSidebarMiniplayerPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
 
+    // Create layout selection
+    let miniplayerLayoutSelection = new MultipleChoicePreference(
+        "natsumiMiniplayerLayout",
+        "natsumi.miniplayer.scroll-view",
+        "Layout",
+        "Choose the layout you want for the Miniplayers."
+    );
+
     // Create choices group
     let miniplayerGroup = new OptionsGroup(
         "natsumiSidebarMiniplayer",
@@ -1952,7 +1975,11 @@ function addSidebarMiniplayerPane() {
         "Tweak Natsumi's Miniplayer which appears in the sidebar for media played on websites."
     );
 
-    miniplayerGroup.registerOption("natsumiSidebarMiniplayerArtwork", new CheckboxChoice(
+    for (let layout in miniplayerLayouts) {
+        miniplayerLayoutSelection.registerOption(layout, miniplayerLayouts[layout]);
+    }
+
+    miniplayerLayoutSelection.registerExtras("natsumiSidebarMiniplayerArtwork", new CheckboxChoice(
         "natsumi.miniplayer.disable-artwork",
         "natsumiSidebarMiniplayerArtwork",
         "Show media thumbnail/artwork as Miniplayer background",
@@ -1960,10 +1987,22 @@ function addSidebarMiniplayerPane() {
         true
     ));
 
-    let sidebarMiniplayerNode = miniplayerGroup.generateNode();
+    let miniplayerLayoutNode = miniplayerLayoutSelection.generateNode();
+
+    // Set listeners for each button
+    let miniplayerLayoutButtons = miniplayerLayoutNode.querySelectorAll(".natsumi-mc-choice");
+    miniplayerLayoutButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value") === "true";
+            console.log("Changing layout:", selectedValue);
+            setStringPreference("natsumi.miniplayer.scroll-view", selectedValue);
+            miniplayerLayoutButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
 
     // Set listeners for each checkbox
-    let checkboxes = sidebarMiniplayerNode.querySelectorAll("checkbox");
+    let checkboxes = miniplayerLayoutNode.querySelectorAll("checkbox");
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("command", () => {
             let prefName = checkbox.getAttribute("preference");
@@ -1980,7 +2019,7 @@ function addSidebarMiniplayerPane() {
         });
     });
 
-    prefsView.insertBefore(sidebarMiniplayerNode, homePane);
+    prefsView.insertBefore(miniplayerLayoutNode, homePane);
 }
 
 function addPipMaterialPane() {

@@ -46,6 +46,16 @@ SOFTWARE.
   margin: var(--tab-block-margin) var(--tab-inner-inline-margin) !important;
   flex-direction: column;
   order: 1;
+
+  @media -moz-pref("natsumi.miniplayer.scroll-view") {
+    display: inline-flex !important;
+    margin-top: calc(var(--tab-block-margin) + 5px) !important;
+    overflow-x: scroll;
+    flex-direction: row;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    gap: 10px;
+  }
 }
 
 .natsumi-miniplayer {
@@ -53,11 +63,18 @@ SOFTWARE.
   background: var(--natsumi-mat-hz-background);
   backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  min-width: 100%;
   min-height: 36px;
   transition: min-height 0.2s ease;
   flex-direction: column;
   overflow: hidden;
   margin-top: 5px !important;
+
+  @media -moz-pref("natsumi.miniplayer.scroll-view") {
+    margin-top: auto !important;
+    scroll-snap-align: center;
+
+  }
 
   &:not([hidden=true]) {
     animation: miniplayer-appear 0.2s ease;
@@ -311,6 +328,33 @@ SOFTWARE.
       .natsumi-miniplayer-prevtrack-button, .natsumi-miniplayer-pauseplay-button, .natsumi-miniplayer-nexttrack-button, .natsumi-miniplayer-mute-button {
         margin-bottom: -100% !important;
       }
+    }
+  }
+
+  #natsumi-miniplayer-counter-container {
+    display: none !important;
+  }
+}
+
+#natsumi-miniplayer-counter-container {
+  display: none;
+  order: 2;
+
+  @media -moz-pref("natsumi.miniplayer.scroll-view") {
+    display: flex;
+    margin: 0 auto !important;
+    gap: 4px;
+  }
+
+  .natsumi-miniplayer-counter-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 2px;
+    background: light-dark(black, white);
+    opacity: 0.5;
+
+    &[active] {
+      opacity: 1;
     }
   }
 }

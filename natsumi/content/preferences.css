@@ -318,6 +318,44 @@ SOFTWARE.
     }
   }
 
+  #natsumiMiniplayerLayoutGroup {
+    .natsumi-mc-choice-image-browser {
+      &::before, &::after {
+        content: "";
+        min-width: 60% !important;
+        max-width: 60% !important;
+        height: 14px !important;
+        border-radius: 6px;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+        background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
+        margin: 2px auto !important;
+      }
+
+      &#miniplayer-stacked {
+        flex-direction: column;
+
+        &::before {
+          margin-top: auto !important;
+        }
+
+        &::after {
+          margin-bottom: auto !important;
+        }
+      }
+
+      &#miniplayer-side-by-side {
+        &::before, &::after {
+          margin: auto 3px !important;
+          translate: -50% 0;
+        }
+
+        &::before {
+          margin-left: 50% !important;
+        }
+      }
+    }
+  }
+
   #natsumiPDFMaterialGroup {
     .natsumi-mc-choice-image-browser {
       &::before {

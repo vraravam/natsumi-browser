@@ -36,6 +36,81 @@ function convertToXUL(node) {
     return window.MozXULElement.parseXULToFragment(node);
 }
 
+class NatsumiMiniplayerCounter {
+    constructor(miniplayerContainer) {
+        this._node = null;
+        this._initialized = false;
+        this._miniplayerContainer = miniplayerContainer;
+        this._visibleMiniplayers = 0;
+    }
+
+    init() {
+        if (this._initialized) {
+            return;
+        }
+
+        // Generate node
+        this._node = document.createElement("div");
+        this._node.id = "natsumi-miniplayer-counter-container";
+
+        // Append to container
+        let tabsContainer = document.getElementById("vertical-tabs");
+        tabsContainer.appendChild(this._node);
+
+        // Get initial count
+        this.updateCount();
+
+        // Add event listener
+        // Add scroll event listener
+        this._miniplayerContainer.addEventListener("wheel", (event) => {
+            this.updateSelected();
+        });
+
+        this._initialized = true;
+    }
+
+    updateCount() {
+        const miniplayers = this._miniplayerContainer.querySelectorAll(".natsumi-miniplayer:not([hidden])");
+        this._visibleMiniplayers = miniplayers.length;
+
+        while (this._visibleMiniplayers !== this._node.childElementCount) {
+            if (this._visibleMiniplayers > this._node.childElementCount) {
+                let countNode = document.createElement("div");
+                countNode.className = "natsumi-miniplayer-counter-dot";
+                this._node.appendChild(countNode);
+            } else {
+                if (this._node.lastChild) {
+                    this._node.removeChild(this._node.lastChild);
+                }
+            }
+        }
+
+        this.updateSelected();
+    }
+
+    updateSelected() {
+        // Get scrolled amount on container element (not the event)
+        let currentScroll = this._miniplayerContainer.scrollLeft;
+        let containerWidth = this._miniplayerContainer.getBoundingClientRect().width;
+        let shouldScroll = containerWidth + 5;
+        let currentPlayerIndex = Math.floor((currentScroll + (containerWidth / 2)) / shouldScroll);
+
+        if (currentPlayerIndex < 0) {
+            currentPlayerIndex = 0;
+        } else if (currentPlayerIndex >= this._visibleMiniplayers) {
+            currentPlayerIndex = this._visibleMiniplayers - 1;
+        }
+
+        this._node.querySelectorAll(".natsumi-miniplayer-counter-dot").forEach((node, index) => {
+            if (index === currentPlayerIndex) {
+                node.setAttribute("active", "true");
+            } else {
+                node.removeAttribute("active");
+            }
+        });
+    }
+}
+
 class NatsumiMiniplayer {
     // "Miniplayer" was just a nickname I gave to Zen's sidebar media controls, but for some reason
     // everyone ended up calling it that, so I guess I coined that term...
@@ -186,6 +261,7 @@ class NatsumiMiniplayer {
         }
 
         this._initialized = true;
+        miniplayerCounter.updateCount();
     }
 
     registerEventHandlers() {
@@ -276,7 +352,7 @@ class NatsumiMiniplayer {
         this.getPlaybackState();
     }
 
-    handleSeekbarClick(event) {
+    /*handleSeekbarClick(event) {
         let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
 
         if (!seekbarNode) {
@@ -289,7 +365,7 @@ class NatsumiMiniplayer {
         this._tab.linkedBrowser.browsingContext.mediaController.seekTo(seekPosition);
         this.position = seekPosition;
         this.updateSeekbar();
-    }
+    }*/
 
     // UI updates
     async updateUI() {
@@ -424,12 +500,14 @@ class NatsumiMiniplayer {
         if (this._node) {
             this._node.setAttribute("hidden", "true");
         }
+        miniplayerCounter.updateCount();
     }
 
     showMiniplayer() {
         if (this._node) {
             this._node.removeAttribute("hidden");
         }
+        miniplayerCounter.updateCount();
     }
 
     async destroy() {
@@ -438,6 +516,7 @@ class NatsumiMiniplayer {
         }
         this._node = null;
         this._initialized = false;
+        miniplayerCounter.updateCount();
     }
 }
 
@@ -460,12 +539,16 @@ async function registerMiniplayer(tab) {
 }
 
 let miniplayerContainer = document.getElementById("natsumi-miniplayer-container");
+let miniplayerCounter = null;
 if (!miniplayerContainer) {
     let tabsContainer = document.getElementById("vertical-tabs");
 
     miniplayerContainer = document.createElement("div");
     miniplayerContainer.id = "natsumi-miniplayer-container";
     tabsContainer.appendChild(miniplayerContainer);
+
+    miniplayerCounter = new NatsumiMiniplayerCounter(miniplayerContainer);
+    miniplayerCounter.init();
 }
 
 // Register miniplayer when audio starts playing
@@ -506,31 +589,28 @@ window.gBrowser.addEventListener("DOMAudioPlaybackStopped", (event) => {
 
 // Add event listener for reloads
 let progressListener = {"onStateChange": (browser, webProgress) => {
-    let tab = window.gBrowser.getTabForBrowser(browser);
+    let tab = window.gBrowser.getTabForBrowser(browser.browsingContext.topFrameElement);
+    console.log(browser, webProgress, tab);
     if (!tab) {
         return;
     }
 
-    // Both browser must be loading and tab must be busy to consider a tab as loading
-    const tabIsLoading = webProgress.isLoadingDocument && tab.hasAttribute("busy");
-
-    if (tabIsLoading) {
-        // Tab is loading, so destroy player if it exists
-        if (tab.natsumiMiniplayer) {
+    // Try to check if metadata still exists
+    if (tab.natsumiMiniplayer) {
+        try {
+            tab.natsumiMiniplayer.getMediaMetadata();
+        } catch(e) {
             tab.natsumiMiniplayer.destroy();
             tab.natsumiMiniplayer = null;
         }
     } else {
-        // Tab isn't loading, but we give it a "check in" to make sure media metadata still exists
-        if (tab.natsumiMiniplayer) {
-            try {
-                // If this is successful, the metadata still exists
-                tab.natsumiMiniplayer.getMediaMetadata();
-            } catch(e) {
-                // Metadata doesn't exist, so destroy
-                tab.natsumiMiniplayer.destroy();
-                tab.natsumiMiniplayer = null;
+        try {
+            let mediaMetadata = tab.linkedBrowser.browsingContext.mediaController.getMetadata();
+            if (mediaMetadata) {
+                registerMiniplayer(tab);
             }
+        } catch(e) {
+            // No metadata, so skip
         }
     }
 }};
