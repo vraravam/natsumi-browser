@@ -164,6 +164,7 @@ SOFTWARE.
       text-overflow: ellipsis;
       white-space: nowrap;
       font-size: large;
+      font-weight: bold;
       color: white;
 
       @media -moz-pref("natsumi.miniplayer.disable-artwork") {
