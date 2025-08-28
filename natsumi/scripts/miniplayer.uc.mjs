@@ -385,6 +385,9 @@ class NatsumiMiniplayer {
         this._node.querySelector(".natsumi-miniplayer-site-name").textContent = this.siteName || "Unknown site";
         this._node.querySelector(".natsumi-miniplayer-title").textContent = this.title || "Unknown";
         this._node.querySelector(".natsumi-miniplayer-artist").textContent = this.artist || "Unknown artist";
+        if (this.album) {
+            this._node.querySelector(".natsumi-miniplayer-artist").textContent = `${this.artist || "Unknown artist"} • ${this.album}`;
+        }
 
         // Get available buttons
         let availableButtons = this._tab.linkedBrowser.browsingContext.mediaController.supportedKeys;
@@ -561,6 +564,9 @@ window.gBrowser.addEventListener("DOMAudioPlaybackStarted", (event) => {
         try {
             // If this is successful, the metadata still exists
             tab.natsumiMiniplayer.getMediaMetadata();
+
+            // Since metadata exists, we can update some stuff
+            tab.natsumiMiniplayer.getPlaybackState();
         } catch(e) {
             // Metadata doesn't exist
             tab.natsumiMiniplayer.destroy();
@@ -590,7 +596,6 @@ window.gBrowser.addEventListener("DOMAudioPlaybackStopped", (event) => {
 // Add event listener for reloads
 let progressListener = {"onStateChange": (browser, webProgress) => {
     let tab = window.gBrowser.getTabForBrowser(browser.browsingContext.topFrameElement);
-    console.log(browser, webProgress, tab);
     if (!tab) {
         return;
     }
