@@ -618,6 +618,7 @@ class NatsumiShortcutsPrefPane {
                 "alt": keyCombi.alt,
                 "shift": keyCombi.shift,
                 "key": keyCombi.key,
+                "unregistered": false,
                 "shortcutMode": shortcutObject.shortcutMode
             }
 

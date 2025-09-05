@@ -556,8 +556,10 @@ class NatsumiKBSManager {
     }
 
     initialApplyCustomShortcuts() {
-        this.getCustomizationData();
-        this.applyCustomShortcuts();
+        this.getCustomizationData().then(() => {
+            this.updateAllShortcuts();
+            this.applyCustomShortcuts();
+        });
     }
 
     updateShortcut(shortcut, data, applyShortcuts = true) {
@@ -568,6 +570,7 @@ class NatsumiKBSManager {
         let shortcutObject = this.shortcuts[shortcut];
 
         // Update customization entry
+        console.log(data);
         this.shortcutCustomizationData[shortcut] = data;
 
         // Update shortcuts object
@@ -579,8 +582,6 @@ class NatsumiKBSManager {
                 data.shift ?? shortcutObject.shift,
                 data.key ?? shortcutObject.key
             );
-
-            delete data["customKeybinds"];
         }
 
         if (typeof data.unregistered === "boolean") {
@@ -591,12 +592,31 @@ class NatsumiKBSManager {
             shortcutObject.setShortcutMode(data.shortcutMode);
         }
 
-        // Save customization data
-        this.saveCustomizationData();
-
-        // Reapply custom shortcuts if needed
         if (applyShortcuts) {
+            // Save customization data
+            this.saveCustomizationData();
+
+            // Reapply custom shortcuts if needed
             this.applyCustomShortcuts();
+        }
+    }
+
+    updateAllShortcuts() {
+        // This function will only apply shortcut customizations and will not apply them
+        for (const shortcutName in this.shortcuts) {
+            const data = this.shortcutCustomizationData[shortcutName] ?? this.baseCustomizations[shortcutName];
+            console.log(shortcutName, data);
+
+            if (!data) {
+                continue;
+            }
+
+            try {
+                this.updateShortcut(shortcutName, data, false);
+                console.log("updated");
+            } catch (e) {
+                console.log(`Failed to update shortcut ${shortcutName}:`, e);
+            }
         }
     }
 
