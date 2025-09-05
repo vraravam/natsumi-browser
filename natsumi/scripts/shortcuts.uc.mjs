@@ -713,7 +713,7 @@ class NatsumiKBSManager {
         }
 
         // Prevent accidental duplicate execution (though this shouldn't happen)
-        if (this.ignoreShortcuts || !selectedShortcutObject.nativeHandle) {
+        if (this.ignoreShortcuts || (!selectedShortcutObject.nativeHandle && selectedShortcutObject.shortcutMode !== 1)) {
             return;
         }
 
@@ -841,12 +841,6 @@ class NatsumiKBSManager {
 
         // Execute native keyboard shortcut action
         if (selectedShortcutObject instanceof NatsumiNativeKeyboardShortcut) {
-            // If the shortcut is part of the developer toolbox commands, WHY AND HOW IS IT HERE. GET OUT.
-            if (selectedShortcutObject.isDevSet) {
-                console.error("Developer toolbox commands cannot be handled by Natsumi's command handler.")
-                return;
-            }
-
             // Get the key object
             let keyElement = document.getElementById(selectedShortcutName);
             keyElement.doCommand();
