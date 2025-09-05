@@ -6,6 +6,7 @@
 // ==/UserScript==
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import {NatsumiNotification} from "./notifications.sys.mjs";
 
 const shortcutsMap = {
     "compactMode": {
@@ -610,6 +611,33 @@ class NatsumiShortcutsPrefPane {
         }
 
         if (this.selected && this.editing && canAssign) {
+            // Check if conflicts exist
+            let conflictShortcut = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.checkConflicts(this.selected.id, keyCombi);
+
+            if (conflictShortcut) {
+                let conflictName = this.selected.id;
+
+                for (let categoryKey in shortcutsMap) {
+                    const categoryShortcuts = shortcutsMap[categoryKey].shortcuts;
+
+                    if (categoryShortcuts[conflictShortcut]) {
+                        conflictName = categoryShortcuts[conflictShortcut].name;
+                        break;
+                    }
+                }
+
+                let notificationObject = new NatsumiNotification(
+                    "This keybind cannot be used!",
+                    `Conflicts with: ${conflictName}`,
+                    "chrome://natsumi/content/icons/lucide/warning.svg",
+                    10000,
+                    "warning"
+                )
+                notificationObject.addToContainer();
+                this.toggleShortcutEdit(this.selected);
+                return;
+            }
+
             let shortcutObject = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.shortcuts[this.selected.id];
             let customizationData = {
                 "customKeybinds": true,
@@ -631,7 +659,13 @@ class NatsumiShortcutsPrefPane {
             }
 
             // Update shortcut
-            browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.updateShortcut(this.selected.id, customizationData);
+            let neverSaved = true;
+            ucApi.Windows.forEach((browserDocument, browserWindow) => {
+                if (browserDocument.body.natsumiKBSManager) {
+                    browserDocument.body.natsumiKBSManager.updateShortcut(this.selected.id, customizationData, true, neverSaved);
+                }
+                neverSaved = false;
+            });
 
             // Disable editing mode
             this.toggleShortcutEdit(this.selected);

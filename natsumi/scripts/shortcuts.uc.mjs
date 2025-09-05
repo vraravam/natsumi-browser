@@ -168,7 +168,7 @@ class NatsumiKBSManager {
     constructor() {
         this.initialized = false;
         this.waitingForDev = false;
-        this.initWhenDevIsReady = false;
+        this.initWhenDevIsReady = true;
         this.ignoreShortcuts = false;
         this.ignoreTimeout = null;
         this.ignoreHandler = null;
@@ -193,27 +193,33 @@ class NatsumiKBSManager {
         this.shortcutCustomizationData = {};
         this.baseCustomizations = {
             "key_inspector": {
-                "meta": false,
-                "ctrl": true,
-                "alt": true,
-                "shift": true,
-                "key": "c",
-                "shortcutMode": 3
-            },
-            "key_inspectorMac": {
-                "meta": true,
-                "ctrl": false,
-                "alt": true,
-                "shift": true,
-                "key": "c",
-                "shortcutMode": 3
-            },
-            "key_screenshot": {
+                "customKeybinds": true,
                 "meta": Services.appinfo.OS.toLowerCase() === "darwin",
                 "ctrl": Services.appinfo.OS.toLowerCase() !== "darwin",
                 "alt": true,
                 "shift": true,
                 "key": "c",
+                "unregistered": false,
+                "shortcutMode": 3
+            },
+            "key_inspectorMac": {
+                "customKeybinds": true,
+                "meta": true,
+                "ctrl": true,
+                "alt": false,
+                "shift": true,
+                "key": "i",
+                "unregistered": false,
+                "shortcutMode": 3
+            },
+            "key_screenshot": {
+                "customKeybinds": true,
+                "meta": Services.appinfo.OS.toLowerCase() === "darwin",
+                "ctrl": Services.appinfo.OS.toLowerCase() !== "darwin",
+                "alt": true,
+                "shift": true,
+                "key": "c",
+                "unregistered": false,
                 "shortcutMode": 3
             }
         }
@@ -562,7 +568,7 @@ class NatsumiKBSManager {
         });
     }
 
-    updateShortcut(shortcut, data, applyShortcuts = true) {
+    updateShortcut(shortcut, data, applyShortcuts = true, canSave = true) {
         if (!this.shortcuts[shortcut]) {
             return; // No such shortcut exists
         }
@@ -570,7 +576,6 @@ class NatsumiKBSManager {
         let shortcutObject = this.shortcuts[shortcut];
 
         // Update customization entry
-        console.log(data);
         this.shortcutCustomizationData[shortcut] = data;
 
         // Update shortcuts object
@@ -593,8 +598,10 @@ class NatsumiKBSManager {
         }
 
         if (applyShortcuts) {
-            // Save customization data
-            this.saveCustomizationData();
+            if (canSave) {
+                // Save customization data
+                this.saveCustomizationData();
+            }
 
             // Reapply custom shortcuts if needed
             this.applyCustomShortcuts();
@@ -604,8 +611,7 @@ class NatsumiKBSManager {
     updateAllShortcuts() {
         // This function will only apply shortcut customizations and will not apply them
         for (const shortcutName in this.shortcuts) {
-            const data = this.shortcutCustomizationData[shortcutName] ?? this.baseCustomizations[shortcutName];
-            console.log(shortcutName, data);
+            const data = this.shortcutCustomizationData[shortcutName] || this.baseCustomizations[shortcutName];
 
             if (!data) {
                 continue;
@@ -613,9 +619,8 @@ class NatsumiKBSManager {
 
             try {
                 this.updateShortcut(shortcutName, data, false);
-                console.log("updated");
             } catch (e) {
-                console.log(`Failed to update shortcut ${shortcutName}:`, e);
+                console.error(`Failed to update shortcut ${shortcutName}:`, e);
             }
         }
     }
@@ -655,6 +660,28 @@ class NatsumiKBSManager {
         }
 
         return {"meta": metaPressed, "ctrl": ctrlPressed, "alt": altPressed, "shift": shiftPressed, "key": key};
+    }
+
+    checkConflicts(targetShortcut, keyCombination) {
+        for (const shortcutName in this.shortcuts) {
+            if (targetShortcut === shortcutName) {
+                continue;
+            }
+
+            const shortcut = this.shortcuts[shortcutName];
+
+            if (shortcut.unregistered) {
+                continue;
+            }
+
+            if (shortcut.meta === keyCombination.meta &&
+                shortcut.ctrl === keyCombination.ctrl &&
+                shortcut.alt === keyCombination.alt &&
+                shortcut.shift === keyCombination.shift &&
+                shortcut.key === keyCombination.key) {
+                return shortcutName; // Return the name of the conflicting shortcut
+            }
+        }
     }
 
     ignoreShortcutHandling(duration) {
