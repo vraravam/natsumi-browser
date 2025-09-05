@@ -73,6 +73,16 @@ SOFTWARE.
       &[muted="true"] .natsumi-miniplayer-mute-button::before {
         mask-image: url("../../icons/lucide-firefox/volume-off.svg");
       }
+
+      &[alternate-buttons="true"] {
+        .natsumi-miniplayer-prevtrack-button::before {
+          mask-image: url("../../icons/lucide-firefox/rotate-left.svg");
+        }
+
+        .natsumi-miniplayer-nexttrack-button::before {
+          mask-image: url("../../icons/lucide-firefox/rotate-right.svg");
+        }
+      }
     }
   }
 }

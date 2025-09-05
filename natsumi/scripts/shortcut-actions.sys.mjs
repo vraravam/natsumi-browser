@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and forks that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -25,6 +25,7 @@ SOFTWARE.
 */
 
 import {NatsumiNotification} from "./notifications.sys.mjs";
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 export class NatsumiShortcutActions {
     static copyCurrentUrl() {
@@ -34,6 +35,15 @@ export class NatsumiShortcutActions {
         // Add to notifications
         let notificationObject = new NatsumiNotification("Copied URL to clipboard!", null, "chrome://natsumi/content/icons/lucide/copy.svg")
         notificationObject.addToContainer();
+    }
+
+    static toggleBrowserLayout() {
+        let isSingleToolbar = false;
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+            isSingleToolbar = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+        }
+
+        ucApi.Prefs.get("natsumi.theme.single-toolbar").value = !isSingleToolbar;
     }
 
     static toggleCompactMode() {

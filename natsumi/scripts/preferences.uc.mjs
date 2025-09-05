@@ -2,6 +2,7 @@
 // @include   about:preferences*
 // @include   about:settings*
 // @ignorecache
+// @loadOrder 10
 // ==/UserScript==
 
 /*
@@ -2275,48 +2276,6 @@ function addURLbarBehaviorPane() {
     prefsView.insertBefore(behaviorNode, homePane);
 }
 
-function addShortcutsTogglePane() {
-    let prefsView = document.getElementById("mainPrefPane");
-    let homePane = prefsView.querySelector("#firefoxHomeCategory");
-
-    // Create choices group
-    let generalGroup = new OptionsGroup(
-        "natsumiURLBarBehavior",
-        "General",
-        "Natsumi Shortcuts are not customizable at the moment, but you can always turn them on or off."
-    );
-
-    generalGroup.registerOption("natsumiShortcutsDisabled", new CheckboxChoice(
-        "natsumi.shortcuts.disabled",
-        "natsumiURLbarAlwaysExpanded",
-        "Enable Natsumi Shortcuts",
-        "",
-        true
-    ));
-
-    let generalNode = generalGroup.generateNode();
-
-    // Set listeners for each checkbox
-    let checkboxes = generalNode.querySelectorAll("checkbox");
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("command", () => {
-            let prefName = checkbox.getAttribute("preference");
-            let isChecked = checkbox.checked;
-
-            if (checkbox.getAttribute("opposite") === "true") {
-                isChecked = !isChecked;
-            }
-
-            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
-
-            // noinspection JSUnresolvedReference
-            ucApi.Prefs.set(prefName, isChecked);
-        });
-    });
-
-    prefsView.insertBefore(generalNode, homePane);
-}
-
 function addPreferencesPanes() {
     // Category nodes
     let appearanceNode = convertToXUL(`
@@ -2353,6 +2312,14 @@ function addPreferencesPanes() {
         <hbox id="natsumiShortcutsCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Keyboard Shortcuts</html:h1>
         </hbox>
+        <groupbox id="natsumiShortcutsMovedInfo" data-category="paneNatsumiSettings" hidden="true">
+            <div class="natsumi-settings-info">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    Natsumi Shortcuts have moved to <html:a href="#natsumiShortcuts">Keyboard Shortcuts</html:a>!
+                </div>
+            </div>
+        </groupbox>
     `);
 
     let prefsView = document.getElementById("mainPrefPane");
@@ -2400,7 +2367,6 @@ function addPreferencesPanes() {
     }
 
     prefsView.insertBefore(shortcutsNode, homePane);
-    addShortcutsTogglePane();
 }
 
 console.log("Loading prefs panes...");

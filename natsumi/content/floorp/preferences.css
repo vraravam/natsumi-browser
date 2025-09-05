@@ -24,16 +24,25 @@ SOFTWARE.
 
 */
 
-/* ==== Load config and Natsumi Browser Pages ==== */
+/* ==== Floorp Preferences tweaks ==== */
 
-@import "../natsumi-config.css";
-@import "content/preload.css";
-@import "global/colors.css";
-@import "content/pdfjs.css";
-@import "content/ff-home.css";
-@import "content/preferences.css";
-@import "content/global.css";
-@import "content/floorp/preferences.css";
-@import "content/firefox/preferences.css";
+@-moz-document url-prefix(about:settings), url-prefix(about:preferences) {
+  @media -moz-pref("natsumi.browser.type", "floorp") {
+    @media -moz-pref("floorp.keyboardshortcut.enabled") {
+      #natsumiKBSFloorpWarning:not([hidden="true"]) {
+        display: flex !important;
+      }
 
-/* Do NOT enter any additional CSS below. */
+      .natsumi-shortcut-row.native-shortcut {
+        display: none;
+      }
+
+      /* Hide categories that only have native shortcuts */
+      #natsumiKBSNavigationGroup, #natsumiKBSEditingGroup, #natsumiKBSSearchGroup,
+      #natsumiKBSWindowsTabsGroup, #natsumiKBSHistoryGroup, #natsumiKBSBookmarksGroup,
+      #natsumiKBSToolsGroup, #natsumiKBSDevtoolsGroup {
+        display: none;
+      }
+    }
+  }
+}

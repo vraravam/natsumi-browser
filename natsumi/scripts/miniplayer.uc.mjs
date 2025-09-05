@@ -151,12 +151,14 @@ class NatsumiMiniplayer {
         // Get tab data
         this.siteName = null;
         this.siteIcon = null;
-
         try {
             this.getTabData();
         } catch(e) {
             // This is not critical, so we can do this next time we render the UI
         }
+
+        // Set additional variables
+        this.alternateButtonSet = false;
     }
 
     init() {
@@ -232,10 +234,18 @@ class NatsumiMiniplayer {
             this.togglePlayPause();
         });
         this._node.querySelector(".natsumi-miniplayer-prevtrack-button").addEventListener("click", () => {
-            this.prevTrack();
+            if (this.usesAlternateButtonSet()) {
+                this.seekBackward();
+            } else {
+                this.prevTrack();
+            }
         });
         this._node.querySelector(".natsumi-miniplayer-nexttrack-button").addEventListener("click", () => {
-            this.nextTrack();
+            if (this.usesAlternateButtonSet()) {
+                this.seekForward();
+            } else {
+                this.nextTrack();
+            }
         });
         this._node.querySelector(".natsumi-miniplayer-pip-button").addEventListener("click", (event) => {
             let result = this._tab.linkedBrowser.browsingContext.currentWindowGlobal.getActor("PictureInPictureLauncher").sendAsyncMessage("PictureInPicture:KeyToggle");
@@ -259,6 +269,14 @@ class NatsumiMiniplayer {
         if (this.album) {
             this._node.querySelector(".natsumi-miniplayer-artist").textContent = `${this.artist || "Unknown artist"} • ${this.album}`;
         }
+
+        // Set key event listeners
+        window.addEventListener("keydown", (event) => {
+            this.onKeyDown(event);
+        });
+        window.addEventListener("keyup", (event) => {
+            this.onKeyUp(event);
+        });
 
         this._initialized = true;
         miniplayerCounter.updateCount();
@@ -285,6 +303,12 @@ class NatsumiMiniplayer {
                 this.onSupportedKeysUpdate(event);
             };
         }
+    }
+
+    usesAlternateButtonSet() {
+        const availableButtons = this._tab.linkedBrowser.browsingContext.mediaController.supportedKeys
+        const trackSkipAvailable = availableButtons.includes("nexttrack") || availableButtons.includes("previoustrack");
+        return this.alternateButtonSet || !trackSkipAvailable;
     }
 
     getMediaMetadata() {
@@ -352,6 +376,14 @@ class NatsumiMiniplayer {
         this.getPlaybackState();
     }
 
+    seekForward() {
+        this._tab.linkedBrowser.browsingContext.mediaController.seekForward(5);
+    }
+
+    seekBackward() {
+        this._tab.linkedBrowser.browsingContext.mediaController.seekBackward(5);
+    }
+
     /*handleSeekbarClick(event) {
         let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
 
@@ -397,6 +429,11 @@ class NatsumiMiniplayer {
         let seekAvailable = availableButtons.includes("seekto");
         let pipAvailable = ucApi.Prefs.get("media.videocontrols.picture-in-picture.video-toggle.enabled").value;
 
+        if (this.usesAlternateButtonSet()) {
+            nextTrackAvailable = availableButtons.includes("seekforward");
+            prevTrackAvailable = availableButtons.includes("seekbackward");
+        }
+
         // Get button objects
         let playPauseButton = this._node.querySelector(".natsumi-miniplayer-pauseplay-button");
         let nextTrackButton = this._node.querySelector(".natsumi-miniplayer-nexttrack-button");
@@ -410,6 +447,9 @@ class NatsumiMiniplayer {
         // Set play states
         this._node.setAttribute("muted", this.isMuted);
         this._node.setAttribute("playing", this.isPlaying);
+
+        // Set alternate button set state
+        this._node.setAttribute("alternate-buttons", this.usesAlternateButtonSet());
 
         // Disable buttons if needed
         if (playPauseButton) {
@@ -436,7 +476,7 @@ class NatsumiMiniplayer {
             let durationSeconds = Math.floor(this.duration % 60);
             positionLabel.textContent = `${positionMinutes}:${positionSeconds.toString().padStart(2, "0")}`;
             durationLabel.textContent = `${durationMinutes}:${durationSeconds.toString().padStart(2, "0")}`;
-            this.updateSeekbar();
+            // this.updateSeekbar();
         }
     }
 
@@ -451,9 +491,9 @@ class NatsumiMiniplayer {
     updatePosition(duration, position, playbackRate) {
         this.duration = duration;
         this.position = position;
-        this.updateSeekbar();
+        /*this.updateSeekbar();
 
-        /*if (this.isPlaying) {
+        if (this.isPlaying) {
             if (this._positionIncrement) {
                 clearInterval(this._positionIncrement);
                 this._positionIncrement = null;
@@ -499,6 +539,20 @@ class NatsumiMiniplayer {
         this.updateUI();
     }
 
+    onKeyDown(event) {
+        if (event.shiftKey) {
+            this.alternateButtonSet = true;
+            this.updateUI();
+        }
+    }
+
+    onKeyUp(event) {
+        if (!event.shiftKey) {
+            this.alternateButtonSet = false;
+            this.updateUI();
+        }
+    }
+
     hideMiniplayer() {
         if (this._node) {
             this._node.setAttribute("hidden", "true");
@@ -514,6 +568,14 @@ class NatsumiMiniplayer {
     }
 
     async destroy() {
+        // Remove window event handlers
+        window.removeEventListener("keydown", (event) => {
+            this.onKeyDown(event);
+        });
+        window.removeEventListener("keyup", (event) => {
+            this.onKeyUp(event);
+        });
+
         if (this._node && this._node.parentNode) {
             this._node.parentNode.removeChild(this._node);
         }
