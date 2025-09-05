@@ -116,15 +116,6 @@ class NatsumiNativeKeyboardShortcut extends NatsumiKeyboardShortcut {
         this.isNativeShortcut = true;
     }
 
-    setShortcutMode(shortcutMode) {
-        // We cannot change this for developer toolbox shortcuts
-        if (this.isDevSet) {
-            return;
-        }
-
-        return super.setShortcutMode(shortcutMode);
-    }
-
     static fromShortcutElement(shortcutElement) {
         // Extract shortcut key
         let key;

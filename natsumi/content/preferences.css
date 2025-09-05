@@ -1187,13 +1187,6 @@ SOFTWARE.
     }
   }
 
-  #natsumiKBSDevtoolsGroup {
-    .natsumi-shortcut-conflict-item:not([value="3"]) {
-      pointer-events: none;
-      opacity: 0.5 !important;
-    }
-  }
-
   #natsumiKBSFloorpWarning {
     display: none;
   }
