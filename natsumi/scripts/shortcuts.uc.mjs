@@ -208,7 +208,7 @@ class NatsumiKBSManager {
                 "ctrl": true,
                 "alt": false,
                 "shift": true,
-                "key": "i",
+                "key": "x",
                 "unregistered": false,
                 "shortcutMode": 3
             },
