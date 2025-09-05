@@ -136,6 +136,16 @@ function resetCompactMode() {
         document.body.removeAttribute("natsumi-compact-navbar-hover");
     }
 
+    if (sidebarTimeout) {
+        clearTimeout(sidebarTimeout);
+        sidebarTimeout = null;
+    }
+
+    if (navbarTimeout) {
+        clearTimeout(navbarTimeout);
+        navbarTimeout = null;
+    }
+
     sidebarHovered = 0;
 }
 
