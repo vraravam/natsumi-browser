@@ -347,13 +347,24 @@ const shortcutXULString = `
 
 // Get window object
 let browserWindow;
+let preliminaryBrowserWindow;
 for (let win of ucApi.Windows.getAll(true)) {
     // Assuming keyboard shortcuts are synced among all browser windows, we only need to look for one
     // window with the shortcuts manager
     if (win.document.body.natsumiKBSManager) {
-        browserWindow = win;
-        break;
+        if (!preliminaryBrowserWindow) {
+            preliminaryBrowserWindow = win;
+        }
+
+        if (win.document.hasFocus()) {
+            browserWindow = win;
+            break;
+        }
     }
+}
+
+if (!browserWindow) {
+    browserWindow = preliminaryBrowserWindow;
 }
 
 let availableShortcuts = Object.keys(browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.shortcuts);
@@ -594,9 +605,7 @@ class NatsumiShortcutsPrefPane {
             canAssign = keyCombi.key === "backspace";
         }
 
-        console.log(keyCombi, keyCombi.key === "backspace");
-
-        if (keyCombi.key === "escape" && canAssign) {
+        if (keyCombi.key === "escape" && !canAssign) {
             this.toggleShortcutEdit(this.selected);
         }
 
