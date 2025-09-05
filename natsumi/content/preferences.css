@@ -33,6 +33,12 @@ SOFTWARE.
     stroke: currentColor;
   }
 
+  #natsumi-shortcuts .category-icon {
+    list-style-image: url("../icons/lucide/meta.svg");
+    -moz-context-properties: stroke, stroke-opacity !important;
+    stroke: currentColor;
+  }
+
   .natsumi-mc-chooser {
     flex-wrap: wrap;
     gap: 10px;
@@ -313,6 +319,44 @@ SOFTWARE.
 
         &::after {
           background-color: var(--natsumi-mat-hz-background-tinted);
+        }
+      }
+    }
+  }
+
+  #natsumiMiniplayerLayoutGroup {
+    .natsumi-mc-choice-image-browser {
+      &::before, &::after {
+        content: "";
+        min-width: 60% !important;
+        max-width: 60% !important;
+        height: 14px !important;
+        border-radius: 6px;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+        background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
+        margin: 2px auto !important;
+      }
+
+      &#miniplayer-stacked {
+        flex-direction: column;
+
+        &::before {
+          margin-top: auto !important;
+        }
+
+        &::after {
+          margin-bottom: auto !important;
+        }
+      }
+
+      &#miniplayer-side-by-side {
+        &::before, &::after {
+          margin: auto 3px !important;
+          translate: -50% 0;
+        }
+
+        &::before {
+          margin-left: 50% !important;
         }
       }
     }
@@ -918,6 +962,285 @@ SOFTWARE.
   @media not -moz-pref("natsumi.theme.single-toolbar") {
     #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
       display: none !important;
+    }
+  }
+
+  /* Shortcuts */
+  .natsumi-categorized-shortcuts-container {
+    flex-direction: column !important;
+    gap: 4px;
+  }
+
+  .natsumi-shortcut-row {
+    background-color: light-dark(white, black);
+    padding: 8px !important;
+    border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.2));
+    border-radius: 6px;
+    flex-direction: column !important;
+    overflow: hidden;
+    min-height: 44px;
+
+    .natsumi-shortcut-name {
+      margin: auto 0;
+      pointer-events: none;
+    }
+
+    .natsumi-shortcut-keybind {
+      --natsumi-keybind-color: light-dark(black, white);
+      min-height: 26px;
+      min-width: 100px;
+      margin-left: auto;
+      border-radius: 4px;
+      justify-content: center;
+      border: 1px solid color-mix(in srgb, var(--natsumi-keybind-color) 10%, transparent);
+      background-color: color-mix(in srgb, var(--natsumi-keybind-color) 5%, transparent);
+
+      .natsumi-shortcut-key {
+        min-width: 20px;
+        height: 20px;
+        background-color: white;
+        margin: auto 1px;
+        justify-content: center;
+        padding: 0 4px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        border-bottom: 2px solid #ccc;
+        font-size: 12px;
+        color: black;
+        pointer-events: none;
+
+        &:not([value="key"]) {
+          padding: 0;
+
+          &::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            margin: auto 0;
+            -moz-context-properties: stroke, stroke-opacity !important;
+            stroke: black;
+            background-size: 12px;
+          }
+        }
+
+        &[value="meta"]::before {
+          background-image: url("../icons/lucide/meta.svg");
+        }
+
+        &[value="shift"]::before {
+          background-image: url("../icons/lucide/shift.svg");
+        }
+
+        &[value="ctrl"]::before {
+          background-image: url("../icons/lucide/arrow-up.svg");
+        }
+
+        &[value="alt"]::before {
+          background-image: url("../icons/lucide/alt.svg");
+        }
+
+        &[value="left"]::before {
+          background-image: url("../icons/lucide/arrowkey-left.svg");
+        }
+
+        &[value="right"]::before {
+          background-image: url("../icons/lucide/arrowkey-right.svg");
+        }
+
+        &[value="up"]::before {
+          background-image: url("../icons/lucide/arrowkey-up.svg");
+        }
+
+        &[value="down"]::before {
+          background-image: url("../icons/lucide/arrowkey-down.svg");
+        }
+
+        &[value="escape"]::before {
+          background-image: url("../icons/lucide/esc.svg");
+        }
+
+        &[value="enter"]::before {
+          background-image: url("../icons/lucide/enter.svg");
+        }
+
+        &[value="back"]::before {
+          background-image: url("../icons/lucide/backspace.svg");
+        }
+
+        &[value="delete"]::before {
+          background-image: url("../icons/lucide/backspace.svg");
+          scale: -1 1;
+        }
+      }
+    }
+
+    .natsumi-shortcut-unassigned {
+      font-size: small;
+      margin: auto 0;
+    }
+
+    .natsumi-shortcut-conflict {
+      display: none;
+      pointer-events: none;
+      margin-top: 10px;
+      flex-direction: column;
+      padding-top: 10px;
+      border-top: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+    }
+
+    .natsumi-shortcut-conflict-label {
+      opacity: 0.5;
+      font-size: small;
+    }
+
+    .natsumi-shortcut-conflict-selection {
+      flex-direction: row;
+      margin-top: 4px;
+      gap: 5px;
+
+      .natsumi-shortcut-conflict-item {
+        --natsumi-conflict-item-color: white;
+        flex-direction: column;
+        flex: 1;
+        border: 2px solid transparent;
+        padding: 5px;
+        border-radius: 8px;
+
+        & > * {
+          pointer-events: none;
+        }
+
+        .natsumi-shortcut-conflict-item-icon {
+          min-width: 36px;
+          max-width: 36px;
+          min-height: 36px;
+          max-height: 36px;
+          margin-top: 5px;
+          border: 2px solid var(--natsumi-conflict-item-color);
+          border-radius: 6px;
+          background-color: light-dark(color-mix(in srgb, var(--natsumi-conflict-item-color) 20%, white), color-mix(in srgb, var(--natsumi-conflict-item-color) 20%, black));
+          padding: 6px;
+          -moz-context-properties: stroke, stroke-opacity !important;
+          stroke: var(--natsumi-conflict-item-color);
+          background-image: var(--natsumi-conflict-item-icon);
+          background-size: 24px;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        .natsumi-shortcut-conflict-item-title, .natsumi-shortcut-conflict-item-description {
+          color: light-dark(color-mix(in srgb, var(--natsumi-conflict-item-color) 50%, black), color-mix(in srgb, var(--natsumi-conflict-item-color) 50%, white))
+        }
+
+        .natsumi-shortcut-conflict-item-title {
+          font-weight: bold;
+          margin: 4px 0;
+        }
+
+        .natsumi-shortcut-conflict-item-description {
+          font-size: small;
+        }
+
+        &[selected] {
+          border-color: var(--natsumi-conflict-item-color);
+          background-color: light-dark(color-mix(in srgb, var(--natsumi-conflict-item-color) 20%, white), color-mix(in srgb, var(--natsumi-conflict-item-color) 20%, black))
+        }
+
+        &[value="0"] {
+          --natsumi-conflict-item-color: red;
+          --natsumi-conflict-item-icon: url("../icons/lucide/kbs-browser.svg");
+        }
+
+        &[value="3"] {
+          --natsumi-conflict-item-color: orange;
+          --natsumi-conflict-item-icon: url("../icons/lucide/kbs-website.svg");
+        }
+
+        &[value="2"] {
+          --natsumi-conflict-item-color: green;
+          --natsumi-conflict-item-icon: url("../icons/lucide/kbs-dualrun.svg");
+        }
+
+        &[value="1"] {
+          --natsumi-conflict-item-color: blue;
+          --natsumi-conflict-item-icon: url("../icons/lucide/kbs-double-tap.svg");
+        }
+      }
+    }
+
+    &[selected] {
+      .natsumi-shortcut-conflict {
+        display: flex;
+        pointer-events: all;
+      }
+
+      &:has(.natsumi-shortcut-conflict-selection[open]) {
+        overflow-y: visible;
+      }
+    }
+
+    &[editing] {
+      .natsumi-shortcut-keybind {
+        border-color: #03b1fc;
+        background-color: #03b1fc55;
+      }
+    }
+  }
+
+  #natsumiKBSDevtoolsGroup {
+    .natsumi-shortcut-conflict-item:not([value="3"]) {
+      pointer-events: none;
+      opacity: 0.5 !important;
+    }
+  }
+
+  #natsumiKBSFloorpWarning {
+    display: none;
+  }
+
+  .natsumi-settings-info {
+    --natsumi-info-color: #00aaff;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid var(--natsumi-info-color);
+    background-color: color-mix(in srgb, var(--natsumi-info-color) 10%, transparent);
+
+    .natsumi-settings-info-icon {
+      min-width: 24px;
+      height: 24px;
+      margin-right: 10px;
+      -moz-context-properties: stroke, stroke-opacity;
+      stroke: var(--natsumi-info-color);
+      background-size: 24px;
+      background-image: url("../icons/lucide/note.svg");
+    }
+
+    .natsumi-settings-info-text {
+      display: block;
+      margin: auto 0;
+      color: var(--natsumi-info-color);
+
+      a {
+        display: inline;
+        color: var(--natsumi-info-color) !important;
+        font-weight: bold;
+      }
+    }
+
+    &.warning {
+      --natsumi-info-color: #dd8800;
+
+      .natsumi-settings-info-icon {
+        background-image: url("../icons/lucide/warning.svg");
+      }
+    }
+
+    &.caution {
+      --natsumi-info-color: #ff0000;
+
+      .natsumi-settings-info-icon {
+        background-image: url("../icons/lucide/caution.svg");
+      }
     }
   }
 }

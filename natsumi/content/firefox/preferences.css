@@ -33,6 +33,11 @@ SOFTWARE.
       mask-image: url("../../icons/lucide-firefox/paintbrush.svg");
     }
 
+    #natsumi-shortcuts .category-icon {
+      background-color: currentColor;
+      mask-image: url("../../icons/lucide-firefox/meta.svg");
+    }
+
     #custom::after {
       background-image: none !important;
       background-color: light-dark(black, white);
@@ -115,6 +120,98 @@ SOFTWARE.
       .natsumi-custom-theme-slider-icon-0 {
         background-color: light-dark(black, white);
         mask-image: url("../../icons/lucide-firefox/opacity-0.svg");
+      }
+    }
+
+    .natsumi-shortcut-key {
+      &[value="meta"]::before {
+        background-image: url("../../icons/lucide-firefox/meta.svg") !important;
+      }
+
+      &[value="shift"]::before {
+        background-image: url("../../icons/lucide-firefox/shift.svg") !important;
+      }
+
+      &[value="ctrl"]::before {
+        background-image: url("../../icons/lucide-firefox/arrow-up.svg") !important;
+      }
+
+      &[value="alt"]::before {
+        background-image: url("../../icons/lucide-firefox/alt.svg") !important;
+      }
+
+      &[value="left"]::before {
+        background-image: url("../../icons/lucide-firefox/arrowkey-left.svg") !important;
+      }
+
+      &[value="right"]::before {
+        background-image: url("../../icons/lucide-firefox/arrowkey-right.svg") !important;
+      }
+
+      &[value="up"]::before {
+        background-image: url("../../icons/lucide-firefox/arrowkey-up.svg") !important;
+      }
+
+      &[value="down"]::before {
+        background-image: url("../../icons/lucide-firefox/arrowkey-down.svg") !important;
+      }
+
+      &[value="escape"]::before {
+        background-image: url("../../icons/lucide-firefox/esc.svg") !important;
+      }
+
+      &[value="enter"]::before {
+        background-image: url("../../icons/lucide-firefox/enter.svg") !important;
+      }
+
+      &[value="back"]::before {
+        background-image: url("../../icons/lucide-firefox/backspace.svg") !important;
+      }
+
+      &[value="delete"]::before {
+        background-image: url("../../icons/lucide-firefox/backspace.svg") !important;
+      }
+    }
+
+    .natsumi-shortcut-conflict-item {
+      .natsumi-shortcut-conflict-item-icon::before {
+        content: "";
+        width: 20px;
+        height: 20px;
+        background: var(--natsumi-conflict-item-color);
+        mask-size: 20px;
+      }
+
+      &[value="0"] .natsumi-shortcut-conflict-item-icon::before {
+        mask-image: url("../../icons/lucide-firefox/kbs-browser.svg");
+      }
+
+      &[value="3"] .natsumi-shortcut-conflict-item-icon::before {
+        mask-image: url("../../icons/lucide-firefox/kbs-website.svg");
+      }
+
+      &[value="2"] .natsumi-shortcut-conflict-item-icon::before {
+        mask-image: url("../../icons/lucide-firefox/kbs-dualrun.svg");
+      }
+
+      &[value="1"] .natsumi-shortcut-conflict-item-icon::before {
+        mask-image: url("../../icons/lucide-firefox/kbs-double-tap.svg");
+      }
+    }
+
+    .natsumi-settings-info {
+      .natsumi-settings-info-icon {
+        background-color: var(--natsumi-info-color);
+        mask-size: 24px;
+        mask-image: url("../../icons/lucide-firefox/note.svg");
+      }
+
+      &.warning .natsumi-settings-info-icon {
+        mask-image: url("../../icons/lucide-firefox/warning.svg");
+      }
+
+      &.caution .natsumi-settings-info-icon {
+        mask-image: url("../../icons/lucide-firefox/caution.svg");
       }
     }
   }

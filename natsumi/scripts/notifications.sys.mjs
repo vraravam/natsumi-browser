@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and forks that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
