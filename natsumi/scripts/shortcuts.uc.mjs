@@ -198,7 +198,7 @@ class NatsumiKBSManager {
                 "ctrl": Services.appinfo.OS.toLowerCase() !== "darwin",
                 "alt": true,
                 "shift": true,
-                "key": "c",
+                "key": "x",
                 "unregistered": false,
                 "shortcutMode": 3
             },
