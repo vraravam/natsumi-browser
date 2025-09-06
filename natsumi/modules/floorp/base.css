@@ -31,6 +31,14 @@ SOFTWARE.
     border: none !important;
   }
 
+  #sidebar-box {
+    order: 2 !important;
+  }
+
+  #sidebar-splitter {
+    order: 2 !important;
+  }
+
   .browserContainer {
     border: none !important;
     border-radius: 0 !important;
