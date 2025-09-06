@@ -146,6 +146,15 @@ class NatsumiWelcome {
             document.body.removeAttribute("natsumi-welcome");
             ucApi.Prefs.set("natsumi.welcome.viewed", true);
 
+            // Also set userChromeJS.persistent_domcontent_callback to true
+            let shouldNotify = false;
+            if (ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").exists()) {
+                if (!ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").value) {
+                    ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                    shouldNotify = true;
+                }
+            }
+
             // Add to notifications
             let notificationObject = new NatsumiNotification(
                 "Welcome to Natsumi!",
@@ -154,6 +163,17 @@ class NatsumiWelcome {
                 10000
             )
             notificationObject.addToContainer();
+
+            if (shouldNotify) {
+                let restartNotificationObject = new NatsumiNotification(
+                    "Restart required",
+                    "You may need to restart your browser for some features to work.",
+                    "chrome://natsumi/content/icons/lucide/warning.svg",
+                    10000,
+                    "warning"
+                )
+                restartNotificationObject.addToContainer();
+            }
             return;
         }
 

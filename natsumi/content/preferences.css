@@ -994,6 +994,7 @@ SOFTWARE.
       justify-content: center;
       border: 1px solid color-mix(in srgb, var(--natsumi-keybind-color) 10%, transparent);
       background-color: color-mix(in srgb, var(--natsumi-keybind-color) 5%, transparent);
+      cursor: text;
 
       .natsumi-shortcut-key {
         min-width: 20px;
