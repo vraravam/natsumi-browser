@@ -6,6 +6,7 @@
 // ==/UserScript==
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import {NatsumiNotification} from "./notifications.sys.mjs";
 
 const shortcutsMap = {
     "compactMode": {
@@ -347,13 +348,24 @@ const shortcutXULString = `
 
 // Get window object
 let browserWindow;
+let preliminaryBrowserWindow;
 for (let win of ucApi.Windows.getAll(true)) {
     // Assuming keyboard shortcuts are synced among all browser windows, we only need to look for one
     // window with the shortcuts manager
     if (win.document.body.natsumiKBSManager) {
-        browserWindow = win;
-        break;
+        if (!preliminaryBrowserWindow) {
+            preliminaryBrowserWindow = win;
+        }
+
+        if (win.document.hasFocus()) {
+            browserWindow = win;
+            break;
+        }
     }
+}
+
+if (!browserWindow) {
+    browserWindow = preliminaryBrowserWindow;
 }
 
 let availableShortcuts = Object.keys(browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.shortcuts);
@@ -594,13 +606,38 @@ class NatsumiShortcutsPrefPane {
             canAssign = keyCombi.key === "backspace";
         }
 
-        console.log(keyCombi, keyCombi.key === "backspace");
-
-        if (keyCombi.key === "escape" && canAssign) {
+        if (keyCombi.key === "escape" && !canAssign) {
             this.toggleShortcutEdit(this.selected);
         }
 
         if (this.selected && this.editing && canAssign) {
+            // Check if conflicts exist
+            let conflictShortcut = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.checkConflicts(this.selected.id, keyCombi);
+
+            if (conflictShortcut) {
+                let conflictName = this.selected.id;
+
+                for (let categoryKey in shortcutsMap) {
+                    const categoryShortcuts = shortcutsMap[categoryKey].shortcuts;
+
+                    if (categoryShortcuts[conflictShortcut]) {
+                        conflictName = categoryShortcuts[conflictShortcut].name;
+                        break;
+                    }
+                }
+
+                let notificationObject = new NatsumiNotification(
+                    "This keybind cannot be used!",
+                    `Conflicts with: ${conflictName}`,
+                    "chrome://natsumi/content/icons/lucide/warning.svg",
+                    10000,
+                    "warning"
+                )
+                notificationObject.addToContainer();
+                this.toggleShortcutEdit(this.selected);
+                return;
+            }
+
             let shortcutObject = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.shortcuts[this.selected.id];
             let customizationData = {
                 "customKeybinds": true,
@@ -609,6 +646,7 @@ class NatsumiShortcutsPrefPane {
                 "alt": keyCombi.alt,
                 "shift": keyCombi.shift,
                 "key": keyCombi.key,
+                "unregistered": false,
                 "shortcutMode": shortcutObject.shortcutMode
             }
 
@@ -621,7 +659,13 @@ class NatsumiShortcutsPrefPane {
             }
 
             // Update shortcut
-            browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.updateShortcut(this.selected.id, customizationData);
+            let neverSaved = true;
+            ucApi.Windows.forEach((browserDocument, browserWindow) => {
+                if (browserDocument.body.natsumiKBSManager) {
+                    browserDocument.body.natsumiKBSManager.updateShortcut(this.selected.id, customizationData, true, neverSaved);
+                }
+                neverSaved = false;
+            });
 
             // Disable editing mode
             this.toggleShortcutEdit(this.selected);

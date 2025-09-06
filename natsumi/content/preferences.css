@@ -994,6 +994,7 @@ SOFTWARE.
       justify-content: center;
       border: 1px solid color-mix(in srgb, var(--natsumi-keybind-color) 10%, transparent);
       background-color: color-mix(in srgb, var(--natsumi-keybind-color) 5%, transparent);
+      cursor: text;
 
       .natsumi-shortcut-key {
         min-width: 20px;
@@ -1184,13 +1185,6 @@ SOFTWARE.
         border-color: #03b1fc;
         background-color: #03b1fc55;
       }
-    }
-  }
-
-  #natsumiKBSDevtoolsGroup {
-    .natsumi-shortcut-conflict-item:not([value="3"]) {
-      pointer-events: none;
-      opacity: 0.5 !important;
     }
   }
 
