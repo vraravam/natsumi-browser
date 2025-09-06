@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and forks that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -25,6 +25,7 @@ SOFTWARE.
 */
 
 import {NatsumiNotification} from "./notifications.sys.mjs";
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 export class NatsumiShortcutActions {
     static copyCurrentUrl() {
@@ -36,24 +37,43 @@ export class NatsumiShortcutActions {
         notificationObject.addToContainer();
     }
 
+    static toggleBrowserLayout() {
+        let isSingleToolbar = false;
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+            isSingleToolbar = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+        }
+
+        ucApi.Prefs.get("natsumi.theme.single-toolbar").value = !isSingleToolbar;
+    }
+
     static toggleCompactMode() {
         if (document.body.attributes["natsumi-compact-mode"]) {
             document.body.removeAttribute("natsumi-compact-mode");
+            document.body.removeAttribute("natsumi-compact-sidebar-extend");
+            document.body.removeAttribute("natsumi-compact-navbar-extend");
         } else {
             document.body.setAttribute("natsumi-compact-mode", "");
         }
     }
 
     static toggleCompactSidebar() {
-        if (document.body.attributes["natsumi-compact-sidebar-extend"]) {
+        if (!(document.body.hasAttribute("natsumi-compact-mode"))) {
+            return;
+        }
+
+        if (document.body.hasAttribute("natsumi-compact-sidebar-extend")) {
             document.body.removeAttribute("natsumi-compact-sidebar-extend");
         } else {
-            document.body.setAttribute("nnatsumi-compact-sidebar-extend", "");
+            document.body.setAttribute("natsumi-compact-sidebar-extend", "");
         }
     }
 
     static toggleCompactNavbar() {
-        if (document.body.attributes["natsumi-compact-navbar-extend"]) {
+        if (!(document.body.hasAttribute("natsumi-compact-mode"))) {
+            return;
+        }
+
+        if (document.body.hasAttribute("natsumi-compact-navbar-extend")) {
             document.body.removeAttribute("natsumi-compact-navbar-extend");
         } else {
             document.body.setAttribute("natsumi-compact-navbar-extend", "");

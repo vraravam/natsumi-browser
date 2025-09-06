@@ -2,6 +2,7 @@
 // @include   about:preferences*
 // @include   about:settings*
 // @ignorecache
+// @loadOrder 10
 // ==/UserScript==
 
 /*
@@ -1431,17 +1432,32 @@ const colors = {
 }
 
 const urlbarLayouts = {
-    "floating": new MCChoice (
+    "floating": new MCChoice(
         false,
         "Floating",
         "Lets the URL bar float above the browser window.",
         "<div id='urlbar-floating' class='natsumi-mc-choice-image-browser'></div>"
     ),
-    "classic": new MCChoice (
+    "classic": new MCChoice(
         true,
         "Classic",
         "Keeps the URL bar on the navbar.",
         "<div id='urlbar-classic' class='natsumi-mc-choice-image-browser'></div>"
+    )
+}
+
+const miniplayerLayouts = {
+    "stacked": new MCChoice(
+        false,
+        "Stacked",
+        "Places miniplayers on top of each other.",
+        "<div id='miniplayer-stacked' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "side-by-side": new MCChoice(
+        true,
+        "Side-by-side",
+        "Places miniplayers next to each other.",
+        "<div id='miniplayer-side-by-side' class='natsumi-mc-choice-image-browser'></div>"
     )
 }
 
@@ -1941,6 +1957,65 @@ function addSidebarButtonsPane() {
     prefsView.insertBefore(sidebarButtonsNode, homePane);
 }
 
+function addSidebarMiniplayerPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create layout selection
+    let miniplayerLayoutSelection = new MultipleChoicePreference(
+        "natsumiMiniplayerLayout",
+        "natsumi.miniplayer.scroll-view",
+        "Layout",
+        "Choose the layout you want for the Miniplayers."
+    );
+
+    for (let layout in miniplayerLayouts) {
+        miniplayerLayoutSelection.registerOption(layout, miniplayerLayouts[layout]);
+    }
+
+    miniplayerLayoutSelection.registerExtras("natsumiSidebarMiniplayerArtwork", new CheckboxChoice(
+        "natsumi.miniplayer.disable-artwork",
+        "natsumiSidebarMiniplayerArtwork",
+        "Show media thumbnail/artwork as Miniplayer background",
+        "",
+        true
+    ));
+
+    let miniplayerLayoutNode = miniplayerLayoutSelection.generateNode();
+
+    // Set listeners for each button
+    let miniplayerLayoutButtons = miniplayerLayoutNode.querySelectorAll(".natsumi-mc-choice");
+    miniplayerLayoutButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value") === "true";
+            console.log("Changing layout:", selectedValue);
+            setStringPreference("natsumi.miniplayer.scroll-view", selectedValue);
+            miniplayerLayoutButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = miniplayerLayoutNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(miniplayerLayoutNode, homePane);
+}
+
 function addPipMaterialPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2201,48 +2276,6 @@ function addURLbarBehaviorPane() {
     prefsView.insertBefore(behaviorNode, homePane);
 }
 
-function addShortcutsTogglePane() {
-    let prefsView = document.getElementById("mainPrefPane");
-    let homePane = prefsView.querySelector("#firefoxHomeCategory");
-
-    // Create choices group
-    let generalGroup = new OptionsGroup(
-        "natsumiURLBarBehavior",
-        "General",
-        "Natsumi Shortcuts are not customizable at the moment, but you can always turn them on or off."
-    );
-
-    generalGroup.registerOption("natsumiShortcutsDisabled", new CheckboxChoice(
-        "natsumi.shortcuts.disabled",
-        "natsumiURLbarAlwaysExpanded",
-        "Enable Natsumi Shortcuts",
-        "",
-        true
-    ));
-
-    let generalNode = generalGroup.generateNode();
-
-    // Set listeners for each checkbox
-    let checkboxes = generalNode.querySelectorAll("checkbox");
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("command", () => {
-            let prefName = checkbox.getAttribute("preference");
-            let isChecked = checkbox.checked;
-
-            if (checkbox.getAttribute("opposite") === "true") {
-                isChecked = !isChecked;
-            }
-
-            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
-
-            // noinspection JSUnresolvedReference
-            ucApi.Prefs.set(prefName, isChecked);
-        });
-    });
-
-    prefsView.insertBefore(generalNode, homePane);
-}
-
 function addPreferencesPanes() {
     // Category nodes
     let appearanceNode = convertToXUL(`
@@ -2253,6 +2286,11 @@ function addPreferencesPanes() {
     let sidebarNode = convertToXUL(`
         <hbox id="natsumiSidebarCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Sidebar &amp; Tabs</html:h1>
+        </hbox>
+    `);
+    let miniPlayerNode = convertToXUL(`
+        <hbox id="natsumiMiniplayerCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Miniplayer</html:h1>
         </hbox>
     `);
     let pipNode = convertToXUL(`
@@ -2274,6 +2312,14 @@ function addPreferencesPanes() {
         <hbox id="natsumiShortcutsCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Keyboard Shortcuts</html:h1>
         </hbox>
+        <groupbox id="natsumiShortcutsMovedInfo" data-category="paneNatsumiSettings" hidden="true">
+            <div class="natsumi-settings-info">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    Natsumi Shortcuts have moved to <html:a href="#natsumiShortcuts">Keyboard Shortcuts</html:a>!
+                </div>
+            </div>
+        </groupbox>
     `);
 
     let prefsView = document.getElementById("mainPrefPane");
@@ -2286,6 +2332,9 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarWorkspacesPane();
     addSidebarButtonsPane();
+
+    prefsView.insertBefore(miniPlayerNode, homePane);
+    addSidebarMiniplayerPane();
 
     let pipDisabled = false;
     if (ucApi.Prefs.get("natsumi.pip.disabled").exists()) {
@@ -2318,7 +2367,6 @@ function addPreferencesPanes() {
     }
 
     prefsView.insertBefore(shortcutsNode, homePane);
-    addShortcutsTogglePane();
 }
 
 console.log("Loading prefs panes...");

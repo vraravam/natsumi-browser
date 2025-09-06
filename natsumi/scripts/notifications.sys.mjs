@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and forks that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -110,11 +110,12 @@ export class NatsumiNotificationsParent {
 }
 
 export class NatsumiNotification {
-    constructor(body, subtext = null, icon = null, time = 5000) {
+    constructor(body, subtext = null, icon = null, time = 5000, type = "info") {
         this.body = body;
         this.subtext = subtext;
         this.icon = icon;
         this.document = null;
+        this.type = type ?? "info";
 
         ucApi.Windows.forEach((browserDocument, browserWindow) => {
             if (browserDocument.hasFocus()) {
@@ -126,6 +127,7 @@ export class NatsumiNotification {
         this.notificationElement = this.document.createElement("div");
         this.notificationElement.classList.add("natsumi-notification");
         this.notificationElement.setAttribute("natsumi-notification-time", time.toString());
+        this.notificationElement.setAttribute("natsumi-notification-type", this.type);
 
         // Add icon if provided
         if (this.icon) {
