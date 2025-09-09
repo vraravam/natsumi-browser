@@ -1598,6 +1598,11 @@ function addLayoutPane() {
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
     const osName = Services.appinfo.OS.toLowerCase();
 
+    let windowControlsDescription = "";
+    if (osName === "darwin") {
+        windowControlsDescription = "On macOS, this will move the window controls to the sidebar only when the sidebar is on the right."
+    }
+
     // Create theme selection
     let layoutSelection = new MultipleChoicePreference(
         "natsumiLayout",
@@ -1627,19 +1632,17 @@ function addLayoutPane() {
         "When the Bookmarks bar is expanded, the bar will stay hidden until hovered."
     )
 
+    let windowControlsCheckbox = new CheckboxChoice(
+        "natsumi.theme.force-window-controls-to-left",
+        "natsumiForceWinControlsToLeft",
+        "Display window controls on the sidebar in Single Toolbar",
+        windowControlsDescription
+    )
+
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
-
-    if (osName !== "darwin") {
-        let windowControlsCheckbox = new CheckboxChoice(
-            "natsumi.theme.force-window-controls-to-left",
-            "natsumiForceWinControlsToLeft",
-            "Display window controls on the sidebar in Single Toolbar",
-        )
-
-        layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
-    }
+    layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
 
     for (let layout in layouts) {
         layoutSelection.registerOption(layout, layouts[layout]);

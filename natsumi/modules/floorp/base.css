@@ -31,12 +31,14 @@ SOFTWARE.
     border: none !important;
   }
 
-  #sidebar-box {
-    order: 2 !important;
-  }
+  @media -moz-pref("sidebar.position_start") {
+    #sidebar-box {
+      order: 2 !important;
+    }
 
-  #sidebar-splitter {
-    order: 2 !important;
+    #sidebar-splitter {
+      order: 2 !important;
+    }
   }
 
   .browserContainer {
