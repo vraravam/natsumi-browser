@@ -153,7 +153,7 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
-#### Installing via Sine
+#### Installing via Sine (not recommended)
 While installing via Sine is possible, this is not recommended for Floorp users due to issues with icons.
 See [#123](https://github.com/greeeen-dev/natsumi-browser/issues/123).
 
@@ -162,9 +162,12 @@ Remember to take backups of your userChrome.css and userContent.css files before
 
 #### Installing Natsumi Browser and Natsumi Browser Pages
 1. Copy natsumi-config.css, userChrome.css, userContent.css and natsumi folder to your chrome folder.
-2. That's it - Natsumi is installed!
+2. That's it - Natsumi (CSS-only) is installed!
 
-#### Installing Natsumi Append
+#### Installing Natsumi Append (optional)
+Installing Natsumi Append allows you to use the full feature set of Natsumi Browser, but it's not
+recommended for the core parts of Natsumi to work.
+
 Natsumi Browser needs to be installed before you can install Natsumi Append.
 
 1. Install [fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig) to your browser. You need to
