@@ -65,6 +65,10 @@ SOFTWARE.
           #navigator-toolbox {
             right: calc(var(--natsumi-browser-separation) + 36px);
           }
+
+          body:not([natsumi-compact-mode]) #PersonalToolbar {
+            width: calc(var(--natsumi-bookmarks-width) - 36px - calc(var(--natsumi-browser-separation) * 2)) !important
+          }
         }
 
         #nora-statusbar.hidden {
@@ -75,6 +79,10 @@ SOFTWARE.
       @media -moz-pref("natsumi.theme.single-toolbar") {
         #navigator-toolbox {
           left: unset !important;
+        }
+
+        body:not([natsumi-compact-mode]) #PersonalToolbar {
+          margin-left: calc(-100vw + var(--natsumi-sidebar-width) + calc(var(--natsumi-browser-separation) * 2) + 36px) !important;
         }
       }
     }

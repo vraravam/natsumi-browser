@@ -142,6 +142,10 @@ SOFTWARE.
           #nav-bar .titlebar-buttonbox-container {
             display: none !important;
           }
+
+          #PersonalToolbar .titlebar-buttonbox {
+            margin-left: var(--natsumi-browser-separation) !important;
+          }
         }
 
         @media -moz-pref("natsumi.theme.force-window-controls-to-left") {
@@ -234,7 +238,9 @@ SOFTWARE.
             }
           }
         }
+      }
 
+      &:not([inFullscreen="true"]) body[natsumi-bookmarks-hover] {
         @media not -moz-pref("sidebar.position_start") {
           @media (-moz-platform: macos) {
             @media not (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
