@@ -82,15 +82,17 @@ SOFTWARE.
   }
 
   @media -moz-pref("natsumi.theme.single-toolbar") {
-    &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) {
-      #panel-sidebar-select-box {
-        transition: height 0.2s ease, margin-top 0.2s ease !important;
-        height: calc(100vh - 12px) !important;
-      }
+    @media -moz-pref("sidebar.position_start") {
+      &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) {
+        #panel-sidebar-select-box {
+          transition: height 0.2s ease, margin-top 0.2s ease !important;
+          height: calc(100vh - 12px) !important;
+        }
 
-      body[natsumi-bookmarks-hover] #panel-sidebar-select-box {
-        height: calc(100vh - 40px) !important;
-        margin-top: 34px !important;
+        body[natsumi-bookmarks-hover] #panel-sidebar-select-box {
+          height: calc(100vh - 40px) !important;
+          margin-top: 34px !important;
+        }
       }
     }
   }
