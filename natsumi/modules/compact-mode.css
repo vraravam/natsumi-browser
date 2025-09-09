@@ -38,20 +38,42 @@ SOFTWARE.
     display: none !important;
   }
 
+  @media -moz-pref("sidebar.position_start") {
+    #sidebar-box {
+      margin-left: var(--natsumi-browser-separation) !important;
+      margin-right: 0 !important;
+    }
+  }
+
+  @media not -moz-pref("sidebar.position_start") {
+    #sidebar-box {
+      margin-right: var(--natsumi-browser-separation) !important;
+    }
+  }
+
   #sidebar-main {
     position: absolute;
     z-index: 998 !important;
-    margin: 6px 0 6px 6px !important;
-    transition: opacity 0.2s ease, left 0.2s ease !important;
+    transition: opacity 0.2s ease, left 0.2s ease, right 0.2s ease !important;
     background-color: var(--natsumi-sidebar-color, var(--natsumi-toolbox-color)) !important;
     height: calc(100vh - 12px) !important;
     border-radius: 6px !important;
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     padding-top: 10px !important;
     opacity: 0;
-    --natsumi-compact-offset: calc(var(--natsumi-sidebar-width) - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
-    left: calc(var(--natsumi-compact-offset) * -1) !important;
+    --natsumi-compact-offset: var(--natsumi-sidebar-width);
     overflow-x: visible !important;
+
+    @media -moz-pref("sidebar.position_start") {
+      margin: 6px 0 6px 6px !important;
+      left: calc(var(--natsumi-compact-offset) * -1) !important;
+    }
+
+    @media not -moz-pref("sidebar.position_start") {
+      margin: 6px 6px 0 6px !important;
+      right: calc(var(--natsumi-compact-offset) * -1) !important;
+      left: unset !important;
+    }
 
     &:not([sidebar-launcher-expanded]) {
       --natsumi-compact-offset: calc(50px - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
@@ -63,14 +85,28 @@ SOFTWARE.
       height: 100%;
       position: absolute;
       border-radius: 0 !important;
-      left: calc(var(--natsumi-browser-separation) * -1) !important;
+
+      @media -moz-pref("sidebar.position_start") {
+        left: calc(var(--natsumi-browser-separation) * -1) !important;
+      }
+
+      @media not -moz-pref("sidebar.position_start") {
+        right: calc(var(--natsumi-browser-separation) * -1) !important;
+      }
     }
   }
 
   &[natsumi-compact-sidebar-hover], [natsumi-compact-sidebar-extend] {
     &:not(:has(#PersonalToolbar:hover)) #sidebar-main {
-      left: 0 !important;
       opacity: 1 !important;
+
+      @media -moz-pref("sidebar.position_start") {
+        left: 0 !important;
+      }
+
+      @media not -moz-pref("sidebar.position_start") {
+        right: 0 !important;
+      }
     }
   }
 
@@ -78,10 +114,19 @@ SOFTWARE.
     #nora-statusbar.hidden, #status-bar[collapsed="true"] {
       z-index: 999 !important;
       margin: var(--natsumi-browser-separation) !important;
-      transition: opacity 0.2s ease, left 0.2s ease !important;
+      transition: opacity 0.2s ease, left 0.2s ease, right 0.2s ease !important;
       --natsumi-compact-offset: calc(var(--natsumi-sidebar-width) - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
       left: calc(var(--natsumi-compact-offset) * -1) !important;
       opacity: 0 !important;
+
+      @media -moz-pref("sidebar.position_start") {
+        left: calc(var(--natsumi-compact-offset) * -1) !important;
+      }
+
+      @media not -moz-pref("sidebar.position_start") {
+        right: calc(var(--natsumi-compact-offset) * -1) !important;
+        left: unset !important;
+      }
     }
 
     &:has(#sidebar-main:not([sidebar-launcher-expanded])) {
@@ -93,13 +138,27 @@ SOFTWARE.
     &[natsumi-compact-sidebar-hover], &[natsumi-compact-sidebar-extend], &:has(#nora-statusbar.hidden toolbarbutton[open], #status-bar[collapsed="true"] toolbarbutton[open]) {
       &:not(:has(#PersonalToolbar:hover)) {
         #sidebar-main {
-          left: 0 !important;
           opacity: 1 !important;
+
+          @media -moz-pref("sidebar.position_start") {
+            left: 0 !important;
+          }
+
+          @media not -moz-pref("sidebar.position_start") {
+            right: 0 !important;
+          }
         }
 
         #nora-statusbar.hidden, #status-bar[collapsed="true"] {
-          left: var(--natsumi-browser-separation) !important;
           opacity: 1 !important;
+
+          @media -moz-pref("sidebar.position_start") {
+            left: var(--natsumi-browser-separation) !important;
+          }
+
+          @media not -moz-pref("sidebar.position_start") {
+            right: var(--natsumi-browser-separation) !important;
+          }
         }
       }
     }
@@ -141,6 +200,10 @@ SOFTWARE.
       }
     }
 
+    #sidebar-box {
+      margin-top: var(--natsumi-browser-separation) !important;
+    }
+
     &[natsumi-compact-navbar-hover] #navigator-toolbox,
     &[natsumi-compact-navbar-extend] #navigator-toolbox,
     #navigator-toolbox.fullscreen-with-menubar,
@@ -161,9 +224,16 @@ SOFTWARE.
       position: absolute !important;
       z-index: 999 !important;
       top: var(--natsumi-browser-separation) !important;
-      transition: left 0.2s ease !important;
+      transition: left 0.2s ease, right 0.2s ease !important;
       --natsumi-compact-offset: calc(var(--natsumi-sidebar-width) - var(--natsumi-compact-hoverable) + var(--natsumi-browser-separation));
-      left: calc(var(--natsumi-compact-offset) * -1) !important;
+
+      @media -moz-pref("sidebar.position_start") {
+        left: calc(var(--natsumi-compact-offset) * -1) !important;
+      }
+
+      @media not -moz-pref("sidebar.position_start") {
+        right: calc(var(--natsumi-compact-offset) * -1) !important;
+      }
     }
 
     #nav-bar {
@@ -181,12 +251,25 @@ SOFTWARE.
     &:has(toolbarbutton[open]), &[natsumi-compact-sidebar-hover], &[natsumi-compact-sidebar-extend] {
       &:not(:has(#PersonalToolbar:hover)) {
         #sidebar-main {
-          left: 0 !important;
           opacity: 1 !important;
+
+          @media -moz-pref("sidebar.position_start") {
+            left: 0 !important;
+          }
+
+          @media not -moz-pref("sidebar.position_start") {
+            right: 0 !important;
+          }
         }
 
         #navigator-toolbox {
-          left: var(--natsumi-browser-separation) !important;
+          @media -moz-pref("sidebar.position_start") {
+            left: var(--natsumi-browser-separation) !important;
+          }
+
+          @media not -moz-pref("sidebar.position_start") {
+            right: var(--natsumi-browser-separation) !important;
+          }
         }
 
         #nav-bar {
@@ -194,7 +277,13 @@ SOFTWARE.
         }
 
         #PersonalToolbar {
-          margin-left: 0 !important;
+          @media -moz-pref("sidebar.position_start") {
+            margin-left: 0 !important;
+          }
+
+          @media not -moz-pref("sidebar.position_start") {
+            margin-left: calc(-100vw + var(--natsumi-sidebar-width) + calc(var(--natsumi-browser-separation) * 2)) !important;
+          }
         }
 
         #urlbar {
@@ -203,8 +292,15 @@ SOFTWARE.
 
         @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
           #nora-statusbar.hidden, #status-bar[collapsed="true"] {
-            left: var(--natsumi-browser-separation) !important;
             opacity: 1 !important;
+
+            @media -moz-pref("sidebar.position_start") {
+              left: var(--natsumi-browser-separation) !important;
+            }
+
+            @media not -moz-pref("sidebar.position_start") {
+              right: var(--natsumi-browser-separation) !important;
+            }
           }
         }
       }
