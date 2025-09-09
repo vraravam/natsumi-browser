@@ -81,10 +81,8 @@ function removeHover(isWindowButton = false) {
 function detectBookmarkHover() {
     let bookmarksToolbar = document.getElementById("PersonalToolbar");
     let windowButtonsContainer = document.querySelector("#PersonalToolbar .titlebar-buttonbox-container");
-    let isMac = Services.appinfo.OS.toLowerCase() === "darwin";
-    console.log(windowButtonsContainer);
 
-    if (!windowButtonsContainer && !isMac) {
+    if (!windowButtonsContainer) {
         let originalWindowButtonsContainer = document.querySelector(".titlebar-buttonbox-container");
         console.log(originalWindowButtonsContainer);
         windowButtonsContainer = originalWindowButtonsContainer.cloneNode(true);
