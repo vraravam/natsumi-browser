@@ -79,6 +79,7 @@ SOFTWARE.
 
   &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) #panel-sidebar-select-box {
     margin-left: 0 !important;
+    order: 8 !important;
   }
 
   @media -moz-pref("natsumi.theme.single-toolbar") {
