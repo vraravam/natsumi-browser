@@ -144,7 +144,7 @@ cost of losing some features.
 You will need to install Natsumi by copying its files to your profile's chrome folder.
 
 ### Automatic install
-#### Installing via installer
+#### Installing via installer (macOS/Linux only)
 Every release of Natsumi from v5 comes with an installer binary. You can run it to install Natsumi
 Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of choice.
 
