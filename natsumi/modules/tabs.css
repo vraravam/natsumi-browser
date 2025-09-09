@@ -31,6 +31,16 @@ SOFTWARE.
   --attention-dot-color: transparent !important;
 }
 
+@keyframes backdrop-fadein {
+  from {
+    backdrop-filter: saturate(1) contrast(1);
+  }
+
+  to {
+    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast));
+  }
+}
+
 /* Base Natsumi design (Blade) */
 @media not -moz-pref("natsumi.tabs.use-custom-type") {
   #tabbrowser-arrowscrollbox {
@@ -82,6 +92,7 @@ SOFTWARE.
         overflow: visible !important;
         border-radius: var(--natsumi-tab-border-radius) !important;
         outline: none !important;
+        backdrop-filter: saturate(1) contrast(1);
         --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
         .tab-context-line {
@@ -105,8 +116,7 @@ SOFTWARE.
           }
 
           @media -moz-pref("sidebar.verticalTabs") {
-            top: var(--natsumi-tabs-blade-position-offset);
-            left: var(--tab-inner-inline-margin);
+            left: 0;
           }
         }
       }
@@ -145,7 +155,7 @@ SOFTWARE.
           box-shadow: 0 0 2px rgba(0, 0, 0, 0.5) !important;
 
           &::after {
-            width: calc(100% - calc(var(--tab-block-margin) * 2));
+            width: 100%;
             opacity: 1;
           }
         }

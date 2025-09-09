@@ -32,6 +32,8 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 let sidebarHovered = 0;
+let sidebarTimeout;
+let navbarTimeout;
 
 function handleElementEnter(event) {
     // Check if compact mode is enabled thru body attributes
@@ -40,17 +42,41 @@ function handleElementEnter(event) {
     }
 
     if (event.target.id === "sidebar-main") {
+        if (sidebarTimeout) {
+            clearTimeout(sidebarTimeout);
+            sidebarTimeout = null;
+        }
+
         sidebarHovered++;
     } else if (event.target.id === "navigator-toolbox") {
+        let isSingleToolbar = false;
         if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
             if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
+                isSingleToolbar = true;
+                if (sidebarTimeout) {
+                    clearTimeout(sidebarTimeout);
+                    sidebarTimeout = null;
+                }
+
                 sidebarHovered++;
+            }
+        }
+
+        if (!isSingleToolbar) {
+            if (navbarTimeout) {
+                clearTimeout(navbarTimeout);
+                navbarTimeout = null;
             }
         }
 
         document.body.setAttribute("natsumi-compact-navbar-hover", "")
     } else if (event.target.id === "nora-statusbar" || event.target.id === "status-bar") {
         if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
+            if (sidebarTimeout) {
+                clearTimeout(sidebarTimeout);
+                sidebarTimeout = null;
+            }
+
             sidebarHovered++;
         }
     }
@@ -76,7 +102,10 @@ function handleElementLeave(event) {
         }
 
         if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
-            document.body.removeAttribute("natsumi-compact-navbar-hover");
+            navbarTimeout = setTimeout(() => {
+                document.body.removeAttribute("natsumi-compact-navbar-hover");
+                navbarTimeout = null;
+            }, 1000);
         }
     } else if (event.target.id === "nora-statusbar" || event.target.id === "status-bar") {
         if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
@@ -85,7 +114,10 @@ function handleElementLeave(event) {
     }
 
     if (sidebarHovered <= 0) {
-        document.body.removeAttribute("natsumi-compact-sidebar-hover");
+        sidebarTimeout = setTimeout(() => {
+            document.body.removeAttribute("natsumi-compact-sidebar-hover");
+            sidebarTimeout = null;
+        }, 1000);
         sidebarHovered = 0;
     }
 }
@@ -102,6 +134,16 @@ function resetCompactMode() {
 
     if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
         document.body.removeAttribute("natsumi-compact-navbar-hover");
+    }
+
+    if (sidebarTimeout) {
+        clearTimeout(sidebarTimeout);
+        sidebarTimeout = null;
+    }
+
+    if (navbarTimeout) {
+        clearTimeout(navbarTimeout);
+        navbarTimeout = null;
     }
 
     sidebarHovered = 0;

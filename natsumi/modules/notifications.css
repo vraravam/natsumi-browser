@@ -86,6 +86,14 @@ SOFTWARE.
     max-width: 70vw;
     word-break: break-word;
 
+    &[natsumi-notification-type="warning"] {
+      --natsumi-primary-color: #ffaa00;
+    }
+
+    &[natsumi-notification-type="caution"] {
+      --natsumi-primary-color: #ffaa00;
+    }
+
     &:nth-child(n+5) {
       display: none !important;
     }

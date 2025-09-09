@@ -43,6 +43,7 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/urlbar.css";
 @import "modules/findbar.css";
 @import "modules/pip.css";
+@import "modules/miniplayer.css";
 @import "modules/notifications.css";
 @import "modules/compact-mode.css";
 @import "modules/welcome.css";
@@ -52,5 +53,8 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/floorp/split-view.css";
 @import "modules/floorp/panel-sidebar.css";
 @import "modules/floorp/workspaces.css";
+@import "modules/floorp/miniplayer.css";
 @import "modules/waterfox/base.css";
+@import "modules/waterfox/miniplayer.css";
 @import "modules/firefox/welcome.css";
+@import "modules/firefox/miniplayer.css";
