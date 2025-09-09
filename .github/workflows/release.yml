@@ -6,7 +6,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        os: [ macos-latest, ubuntu-latest ]
 
     runs-on: ${{ matrix.os }}
     permissions:
@@ -122,8 +122,7 @@ jobs:
           artifactErrorsFailBuild: true
           artifacts: 'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64,
             natsumi-installer-macos-x64/natsumi-installer-macos-intel,
-            natsumi-installer-linux/natsumi-installer-linux,
-            natsumi-installer-windows/natsumi-installer.exe'
+            natsumi-installer-linux/natsumi-installer-linux'
 
 
 
