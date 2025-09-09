@@ -24,9 +24,19 @@ jobs:
           pip install -r installer/requirements.txt
       - name: Build
         uses: Nuitka/Nuitka-Action@main
+        if: ${{ matrix.os != 'windows-latest' }}
         with:
           nuitka-version: main
           script-name: installer/installer.py
+          mode: onefile
+          disable-cache: true
+          include-data-files: "installer/installer.json=installer.json"
+      - name: Build (Windows)
+        uses: Nuitka/Nuitka-Action@main
+        if: ${{ matrix.os == 'windows-latest' }}
+        with:
+          nuitka-version: main
+          script-name: installer/installer-windows.py
           mode: onefile
           disable-cache: true
           include-data-files: "installer/installer.json=installer.json"
@@ -51,7 +61,7 @@ jobs:
           mv build_intel/installer.bin build_intel/natsumi-installer-macos-intel
       - name: Rename (PowerShell)
         if: ${{ matrix.os == 'windows-latest' }}
-        run: Rename-Item -Path build/installer.exe -NewName natsumi-installer.exe
+        run: Rename-Item -Path build/installer-windows.exe -NewName natsumi-installer.exe
       - name: Upload package (macOS arm64)
         uses: actions/upload-artifact@v4
         if: ${{ matrix.os == 'macos-latest' }}
