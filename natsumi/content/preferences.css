@@ -324,6 +324,36 @@ SOFTWARE.
     }
   }
 
+  #natsumiCompactSingleToolbar {
+    @media not -moz-pref("natsumi.theme.single-toolbar") {
+      display: none !important;
+    }
+  }
+
+  #natsumiCompactStyleGroup {
+    @media -moz-pref("natsumi.theme.single-toolbar") {
+      display: none !important;
+    }
+
+    .natsumi-mc-choice-image-browser {
+      &#compact-both::before {
+        margin: 4px !important;
+        width: calc(100% - 10px) !important;
+        height: calc(100% - 10px) !important;
+      }
+
+      &#compact-toolbar::before {
+        margin-top: 4px !important;
+        height: calc(100% - 10px) !important;
+      }
+
+      &#compact-sidebar::before {
+        margin-left: 4px !important;
+        width: calc(100% - 10px) !important;
+      }
+    }
+  }
+
   #natsumiMiniplayerLayoutGroup {
     .natsumi-mc-choice-image-browser {
       &::before, &::after {
