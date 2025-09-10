@@ -655,6 +655,11 @@ class NatsumiKBSManager {
             key = event.code.slice(3).toLowerCase();
         }
 
+        // Sometimes, arrow keys are reported as "ARROWUP", "ARROWDOWN", etc. and not "UP" or "DOWN"
+        if (key.startsWith("arrow") && key.length > 5) {
+            key = key.slice(5);
+        }
+
         if (event.keyCode >= 48 && event.keyCode <= 57) {
             key = `${event.keyCode - 48}`;
         }
