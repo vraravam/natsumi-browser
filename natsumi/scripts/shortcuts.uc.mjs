@@ -178,6 +178,7 @@ class NatsumiKBSManager {
         this.shortcuts = {
             "copyCurrentUrl": new NatsumiKeyboardShortcut(false, true, false, true, "c", 0, true),
             "toggleBrowserLayout": new NatsumiKeyboardShortcut(false, true, true, false, "l", 0, true),
+            "toggleVerticalTabs": new NatsumiKeyboardShortcut(false, true, true, false, "v", 0, true),
             "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", 0, true),
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
             "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
@@ -185,6 +186,7 @@ class NatsumiKBSManager {
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
             "toggleBrowserLayout": NatsumiShortcutActions.toggleBrowserLayout,
+            "toggleVerticalTabs": NatsumiShortcutActions.toggleVerticalTabs,
             "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode,
             "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
             "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar
