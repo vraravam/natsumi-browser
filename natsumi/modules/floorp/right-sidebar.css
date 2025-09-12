@@ -41,12 +41,6 @@ SOFTWARE.
       right: var(--natsumi-browser-separation);
     }
 
-    &:not([inDOMFullscreen="true"]):not([drawtitle]) body[natsumi-compact-mode] #browser:not([data-is-child="true"]) {
-      #tabbrowser-tabbox {
-        margin-right: var(--natsumi-browser-separation) !important;
-      }
-    }
-
     &:has(#panel-sidebar-select-box) {
       &:not([inDOMFullscreen="true"]):not([drawtitle]) body:not([natsumi-compact-mode]) #browser:not([data-is-child="true"]) {
         #tabbrowser-tabbox {

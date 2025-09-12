@@ -33,7 +33,7 @@ SOFTWARE.
 :root:not([inDOMFullscreen="true"]):not([drawtitle]) {
   #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
     margin-right: var(--natsumi-browser-separation) !important;
-    padding-bottom: var(--natsumi-browser-separation) !important;
+    margin-bottom: var(--natsumi-browser-separation) !important;
     box-shadow: none !important;
     outline: none !important;
 
@@ -82,7 +82,8 @@ SOFTWARE.
 
   &:has(#sidebar-main[hidden]) {
     #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
-      padding-left: var(--natsumi-browser-separation) !important;
+      margin-left: var(--natsumi-browser-separation) !important;
+      margin-right: var(--natsumi-browser-separation) !important;
     }
   }
 }
@@ -355,7 +356,7 @@ SOFTWARE.
 
 .tools-and-extensions {
   justify-content: space-between !important;
-  padding-bottom: var(--natsumi-browser-separation) !important;
+  margin-bottom: var(--natsumi-browser-separation) !important;
 
   &[orientation="horizontal"] {
     height: 40px !important;

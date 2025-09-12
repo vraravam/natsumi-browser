@@ -281,6 +281,9 @@ const shortcutsMap = {
             "toggleBrowserLayout": {
                 "name": "Toggle Browser Layout"
             },
+            "toggleVerticalTabs": {
+                "name": "Toggle Vertical Tabs"
+            },
             "key_enterFullScreen": {
                 "name": "Enter Full Screen"
             },

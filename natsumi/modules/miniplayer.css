@@ -210,8 +210,63 @@ SOFTWARE.
   }
 
   .natsumi-miniplayer-seekbar-container {
-    /* Unfortunately not possible w/o C++ injection, so skipping this */
+    /* Disable this for now */
     display: none !important;
+    padding-inline: 4px !important;
+    margin-top: 4px !important;
+
+    .natsumi-miniplayer-position, .natsumi-miniplayer-duration {
+      font-variant-numeric: tabular-nums;
+      color: white;
+
+      @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+        color: light-dark(black, white);
+      }
+    }
+
+    .natsumi-miniplayer-seekbar {
+      display: grid;
+      margin: auto 4px !important;
+      border-radius: 2px;
+      width: 100%;
+      height: 4px;
+      background-color: rgba(255, 255, 255, 0.3);
+      grid-template-columns: 1fr;
+
+      @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+        background-color: light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+      }
+
+      &::before {
+        content: "";
+        width: var(--natsumi-seekbar-position);
+        height: 4px;
+        border-radius: 2px;
+        grid-row-start: 1;
+        grid-column-start: 1;
+        pointer-events: none;
+        background-color: var(--natsumi-primary-color);
+
+        @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+          background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+        }
+      }
+
+      &::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        grid-row-start: 1;
+        grid-column-start: 1;
+        background-color: var(--natsumi-primary-color);
+        border-radius: 50%;
+        translate: calc(var(--natsumi-seekbar-position, 0) - 2px) -2px;
+
+        @media -moz-pref("natsumi.miniplayer.disable-artwork") {
+          background-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+        }
+      }
+    }
   }
 
   .natsumi-miniplayer-controls-container {

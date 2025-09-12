@@ -384,7 +384,7 @@ class NatsumiMiniplayer {
         this._tab.linkedBrowser.browsingContext.mediaController.seekBackward(5);
     }
 
-    /*handleSeekbarClick(event) {
+    handleSeekbarClick(event) {
         let seekbarNode = this._node.querySelector(".natsumi-miniplayer-seekbar");
 
         if (!seekbarNode) {
@@ -397,7 +397,7 @@ class NatsumiMiniplayer {
         this._tab.linkedBrowser.browsingContext.mediaController.seekTo(seekPosition);
         this.position = seekPosition;
         this.updateSeekbar();
-    }*/
+    }
 
     // UI updates
     async updateUI() {
@@ -476,7 +476,7 @@ class NatsumiMiniplayer {
             let durationSeconds = Math.floor(this.duration % 60);
             positionLabel.textContent = `${positionMinutes}:${positionSeconds.toString().padStart(2, "0")}`;
             durationLabel.textContent = `${durationMinutes}:${durationSeconds.toString().padStart(2, "0")}`;
-            // this.updateSeekbar();
+            this.updateSeekbar();
         }
     }
 
@@ -485,13 +485,18 @@ class NatsumiMiniplayer {
         let progress = (this.position / this.duration);
         let seekbarWidth = seekbarNode.getBoundingClientRect().width;
 
-        seekbarNode.style.setProperty("--natsumi-seekbar-position", `${progress * seekbarWidth}px`);
+        let seekbarPosition = progress * seekbarWidth;
+        if (isNaN(seekbarPosition)) {
+            seekbarPosition = 0;
+        }
+
+        seekbarNode.style.setProperty("--natsumi-seekbar-position", `${seekbarPosition}px`);
     }
 
     updatePosition(duration, position, playbackRate) {
         this.duration = duration;
         this.position = position;
-        /*this.updateSeekbar();
+        this.updateSeekbar();
 
         if (this.isPlaying) {
             if (this._positionIncrement) {
@@ -506,12 +511,12 @@ class NatsumiMiniplayer {
                     clearInterval(this._positionIncrement);
                     this._positionIncrement = null;
                 }
-                //this.updateUI();
+                this.updateUI();
             }, 1000);
         } else {
             clearInterval(this._positionIncrement);
             this._positionIncrement = null;
-        }*/
+        }
     }
 
     // Events
