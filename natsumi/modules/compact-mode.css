@@ -39,7 +39,7 @@ SOFTWARE.
     @media (
       not -moz-pref("natsumi.theme.compact-style", "toolbar")
     ) or -moz-pref("natsumi.theme.single-toolbar") {
-      padding-left: var(--natsumi-browser-separation) !important;
+      margin-left: var(--natsumi-browser-separation) !important;
     }
   }
 
@@ -51,12 +51,21 @@ SOFTWARE.
     #sidebar-box {
       margin-left: var(--natsumi-browser-separation) !important;
       margin-right: 0 !important;
+
+      @media -moz-pref("natsumi.theme.compact-style", "toolbar") and (not -moz-pref("natsumi.theme.single-toolbar")) {
+        margin-right: var(--natsumi-browser-separation) !important;
+        margin-left: 0 !important;
+      }
     }
   }
 
   @media not -moz-pref("sidebar.position_start") {
     #sidebar-box {
       margin-right: var(--natsumi-browser-separation) !important;
+
+      @media -moz-pref("natsumi.theme.compact-style", "toolbar") and (not -moz-pref("natsumi.theme.single-toolbar")) {
+        margin-right: 0 !important;
+      }
     }
   }
 

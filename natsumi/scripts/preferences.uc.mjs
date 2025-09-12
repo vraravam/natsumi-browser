@@ -1990,7 +1990,7 @@ function addCompactStylesPane() {
         "natsumiCompactStyle",
         "natsumi.theme.compact-style",
         "Style",
-        "Choose what you want to hide when Compact Mode is active.."
+        "Choose what you want to hide when Compact Mode is active."
     );
 
     for (let style in compactStyles) {
