@@ -1431,6 +1431,27 @@ const colors = {
     )*/
 }
 
+const compactStyles = {
+    "default": new MCChoice(
+        "default",
+        "Hide both",
+        "Hides both the toolbar and sidebar.",
+        "<div id='compact-both' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "toolbar": new MCChoice(
+        "toolbar",
+        "Hide toolbar",
+        "Hides the toolbar only.",
+        "<div id='compact-toolbar' class='natsumi-mc-choice-image-browser'></div>"
+    ),
+    "sidebar": new MCChoice(
+        "sidebar",
+        "Hide sidebar",
+        "Hides the sidebar only.",
+        "<div id='compact-sidebar' class='natsumi-mc-choice-image-browser'></div>"
+    )
+}
+
 const urlbarLayouts = {
     "floating": new MCChoice(
         false,
@@ -1598,6 +1619,11 @@ function addLayoutPane() {
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
     const osName = Services.appinfo.OS.toLowerCase();
 
+    let windowControlsDescription = "";
+    if (osName === "darwin") {
+        windowControlsDescription = "On macOS, this will move the window controls to the sidebar only when the sidebar is on the right."
+    }
+
     // Create theme selection
     let layoutSelection = new MultipleChoicePreference(
         "natsumiLayout",
@@ -1627,19 +1653,17 @@ function addLayoutPane() {
         "When the Bookmarks bar is expanded, the bar will stay hidden until hovered."
     )
 
+    let windowControlsCheckbox = new CheckboxChoice(
+        "natsumi.theme.force-window-controls-to-left",
+        "natsumiForceWinControlsToLeft",
+        "Display window controls on the sidebar in Single Toolbar",
+        windowControlsDescription
+    )
+
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
-
-    if (osName !== "darwin") {
-        let windowControlsCheckbox = new CheckboxChoice(
-            "natsumi.theme.force-window-controls-to-left",
-            "natsumiForceWinControlsToLeft",
-            "Display window controls on the sidebar in Single Toolbar",
-        )
-
-        layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
-    }
+    layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
 
     for (let layout in layouts) {
         layoutSelection.registerOption(layout, layouts[layout]);
@@ -1955,6 +1979,39 @@ function addSidebarButtonsPane() {
     });
 
     prefsView.insertBefore(sidebarButtonsNode, homePane);
+}
+
+function addCompactStylesPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create theme selection
+    let styleSelection = new MultipleChoicePreference(
+        "natsumiCompactStyle",
+        "natsumi.theme.compact-style",
+        "Style",
+        "Choose what you want to hide when Compact Mode is active."
+    );
+
+    for (let style in compactStyles) {
+        styleSelection.registerOption(style, compactStyles[style]);
+    }
+
+    let styleNode = styleSelection.generateNode();
+
+    // Set listeners for each button
+    let styleButtons = styleNode.querySelectorAll(".natsumi-mc-choice");
+    styleButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing style:", selectedValue);
+            setStringPreference("natsumi.theme.compact-style", selectedValue);
+            styleButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    prefsView.insertBefore(styleNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -2288,6 +2345,19 @@ function addPreferencesPanes() {
             <html:h1>Sidebar &amp; Tabs</html:h1>
         </hbox>
     `);
+    let compactModeNode = convertToXUL(`
+        <hbox id="natsumiCompactModeCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Compact Mode</html:h1>
+        </hbox>
+        <groupbox id="natsumiCompactSingleToolbar" data-category="paneNatsumiSettings" hidden="true">
+            <div class="natsumi-settings-info warning">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    You need to use Multiple Toolbars layout to change Compact Mode styles.
+                </div>
+            </div>
+        </groupbox>
+    `);
     let miniPlayerNode = convertToXUL(`
         <hbox id="natsumiMiniplayerCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Miniplayer</html:h1>
@@ -2332,6 +2402,9 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarWorkspacesPane();
     addSidebarButtonsPane();
+
+    prefsView.insertBefore(compactModeNode, homePane);
+    addCompactStylesPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();

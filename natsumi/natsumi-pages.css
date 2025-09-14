@@ -26,6 +26,11 @@ SOFTWARE.
 
 /* ==== Load config and Natsumi Browser Pages ==== */
 
+/*
+WARNING: DO NOT TOUCH THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING.
+Removing or modifying parts of this file may break some parts of Natsumi.
+*/
+
 @import "../natsumi-config.css";
 @import "content/preload.css";
 @import "global/colors.css";

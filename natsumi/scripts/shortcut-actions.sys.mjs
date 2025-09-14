@@ -46,6 +46,15 @@ export class NatsumiShortcutActions {
         ucApi.Prefs.get("natsumi.theme.single-toolbar").value = !isSingleToolbar;
     }
 
+    static toggleVerticalTabs() {
+        let isVerticalTabs = false;
+        if (ucApi.Prefs.get("sidebar.verticalTabs").exists()) {
+            isVerticalTabs = ucApi.Prefs.get("sidebar.verticalTabs").value;
+        }
+
+        ucApi.Prefs.get("sidebar.verticalTabs").value = !isVerticalTabs;
+    }
+
     static toggleCompactMode() {
         if (document.body.attributes["natsumi-compact-mode"]) {
             document.body.removeAttribute("natsumi-compact-mode");

@@ -45,6 +45,13 @@ changes appearance based on the context.
 Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it more consistent with
 the rest of the browser. You can even scroll to reposition the PiP window, too!
 
+### 🎛️ Meet your Miniplayer.
+#### Keep your media in control with the Miniplayer.
+![](./images/miniplayer.png)
+
+Natsumi lets you control your media through the Miniplayer located on the sidebar. And with support
+for multiple websites at a time, you don't have to make your tabs fight for a spot on the Miniplayer.
+
 ### 📄 PDF viewer, modernized.
 #### View your documents in the 21st century.
 
@@ -63,54 +70,12 @@ your installation of Natsumi graphically. No more figuring out which config does
 
 ### 🖼️ Express yourself with themes.
 #### A theming engine that lets your browser vibe with you.
-![](./images/all-the-themes.png)
+![](./images/custom-themes.png)
 
 Let your browser be yours! Choose from nine theme varieties to get the look that resonates with you.
 
-- **Default (default)**
-  
-  No changes, just the default look.
-  ![](./images/theme-default.png)
-- **Gradient (`gradient`)**
-  
-  A light gradient of the accent color, similar to my Zen Browser gradient.
-  ![](./images/theme-gradient.png)
-- **Complementary Gradient (`gradient-complementary`)**
-  
-  A gradient of the accent color and its opposite color, similar to Zen Browser's gradients.
-  ![](./images/theme-gradient-complementary.png)
-- **Colorful Solid (`colorful`)**
-  
-  A solid color with a tint of the accent color.
-  ![](./images/theme-colorful.png)
-- **Playful Solid (`playful`)**
-
-  A higher saturation version of Colorful Solid.
-  ![](./images/theme-playful.png)
-- **Lucid (`lucid`)**
-  
-  A recreation of the Zen Dream and Zen Galaxy themes.
-  ![](./images/theme-lucid.png)
-- **OLED (`oled`)**
-  
-  A completely black and white theme for the minimalists and OLED users.
-  ![](./images/theme-oled.png)
-- **LGBTQ 🏳️‍🌈 (`lgbtq`)**
-  
-  Browsing with pride!
-  ![](./images/theme-lgbtq.png)
-- **Transgender 🏳️‍⚧️ (`transgender`)**
-  
-  Trans rights are human rights!
-  ![](./images/theme-transgender.png)
-
-### 🖌️ Create your own custom look.
-#### Create your own themes that feel personal, not generated.
-
-![](./images/custom-themes.png)
-
-Not happy with Natsumi's base themes? Take full control of Natsumi's theming engine and create your
-very own gradient, all without being forced to stick to a specific color palette.
+Or, take full control of Natsumi's theming engine and create your very own gradient, all without
+being forced to stick to a specific color palette.
 
 ### 🎨 Color it all your way.
 #### Also with Firefox themes support!
@@ -141,6 +106,14 @@ Or, choose from one of the preset colors.
 Craving the Single Toolbar look you can get in a certain other browser? Natsumi adds it to your
 browser of choice.
 
+### ⌨️ Customize your shortcuts.
+#### Featuring keyboard shortcut conflict controls.
+![](./images/shortcuts.png)
+
+Take full control of your browser's keyboard shortcuts! Natsumi lets you customize your shortcuts
+to your likings and even lets you choose how it should handle shortcut conflicts between the browser
+and websites. No more being forced to show mercy to websites when shortcuts conflict.
+
 ### 🍰 Additional browser-specific goodies.
 #### Get extra features custom-made for specific browsers.
 ![](./images/floorp-features.png)
@@ -157,6 +130,7 @@ cost of losing some features.
 | Natsumi URLbar/Findbar             | :white_check_mark:              | :white_check_mark: |
 | Natsumi PDF Viewer                 | :white_check_mark:              | :white_check_mark: |
 | Natsumi PiP                        | :white_check_mark:              | :warning: Limited  |
+| Natsumi Miniplayer                 | :white_check_mark:              | :x:                |
 | Theming engine                     | :white_check_mark:              | :white_check_mark: |
 | Customize Natsumi preferences page | :white_check_mark:              | :x:                |
 | Custom themes                      | :white_check_mark:              | :x:                |
@@ -170,27 +144,29 @@ cost of losing some features.
 You will need to install Natsumi by copying its files to your profile's chrome folder.
 
 ### Automatic install
-#### Installing via installer
+#### Installing via installer (macOS/Linux only)
 Every release of Natsumi from v5 comes with an installer binary. You can run it to install Natsumi
 Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of choice.
+
+> [!CAUTION]
+> Installing via Sine is possible but not supported. Icons and Natsumi Append WILL NOT work.
 
 > [!NOTE]
 > For macOS users, you will need to override the unsigned binary warning (also known as the "Apple could
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
-#### Installing via Sine
-While installing via Sine is possible, this is not recommended for Floorp users due to issues with icons.
-See [#123](https://github.com/greeeen-dev/natsumi-browser/issues/123).
-
 ### Manual install
 Remember to take backups of your userChrome.css and userContent.css files before proceeding!
 
 #### Installing Natsumi Browser and Natsumi Browser Pages
 1. Copy natsumi-config.css, userChrome.css, userContent.css and natsumi folder to your chrome folder.
-2. That's it - Natsumi is installed!
+2. That's it - Natsumi (CSS-only) is installed!
 
-#### Installing Natsumi Append
+#### Installing Natsumi Append (optional)
+Installing Natsumi Append allows you to use the full feature set of Natsumi Browser, but it's not
+recommended for the core parts of Natsumi to work.
+
 Natsumi Browser needs to be installed before you can install Natsumi Append.
 
 1. Install [fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig) to your browser. You need to
