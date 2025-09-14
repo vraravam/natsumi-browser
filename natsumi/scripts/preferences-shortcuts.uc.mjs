@@ -8,7 +8,7 @@
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 import {NatsumiNotification} from "./notifications.sys.mjs";
 
-const shortcutsMap = {
+let shortcutsMap = {
     "compactMode": {
         "name": "Compact Mode",
         "shortcuts": {
@@ -234,6 +234,18 @@ const shortcutsMap = {
             }
         }
     },
+    "workspaces": {
+        "name": "Workspaces",
+        "browser": "floorp",
+        "shortcuts": {
+            "cycleWorkspaces": {
+                "name": "Next Workspace"
+            },
+            "cycleWorkspacesReverse": {
+                "name": "Previous Workspace"
+            }
+        }
+    },
     "devtools": {
         "name": "Developer Tools",
         "shortcuts": {
@@ -294,6 +306,22 @@ const shortcutsMap = {
                 "name": "Toggle Reader Mode"
             }
         }
+    }
+}
+
+// Respect browser-specific shortcuts
+let browserType = "firefox";
+if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+    browserType = ucApi.Prefs.get("natsumi.browser.type").value;
+}
+
+for (let categoryKey in shortcutsMap) {
+    if (!shortcutsMap[categoryKey]["browser"]) {
+        continue;
+    }
+
+    if (shortcutsMap[categoryKey]["browser"] !== browserType) {
+        delete shortcutsMap[categoryKey];
     }
 }
 

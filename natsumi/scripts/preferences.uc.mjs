@@ -1872,6 +1872,13 @@ function addSidebarWorkspacesPane() {
         "This does not make each icon clickable to switch Workspaces (for now)."
     ));
 
+    workspacesGroup.registerOption("natsumiSidebarPanelSidebarWorkspaces", new CheckboxChoice(
+        "natsumi.sidebar.panel-sidebar-workspaces",
+        "natsumiSidebarPanelSidebarWorkspaces",
+        "Show workspaces on the Panel Sidebar",
+        "This will allow you to manage your workspaces from the Panel Sidebar (like in Floorp 11)."
+    ));
+
     let sidebarWorkspacesNode = workspacesGroup.generateNode();
 
     // Set listeners for each checkbox
