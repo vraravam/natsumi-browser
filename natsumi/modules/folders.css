@@ -30,10 +30,6 @@ SOFTWARE.
   tab-group {
     --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
-    &:not(:has(.tabbrowser-tab:not([hidden]))) {
-      display: none !important;
-    }
-
     .tab-group-label-container {
       min-height: calc(var(--natsumi-tab-height) - 4px) !important;
       padding: 0 !important;
