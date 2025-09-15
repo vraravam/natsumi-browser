@@ -28,17 +28,12 @@ SOFTWARE.
 import json
 import os
 
-with open('theme.json', 'r') as file:
+with open('natsumi/version.json', 'r') as file:
     data = json.load(file)
 
+raw_version = data['version']
+version = 'v' + data['version']
+
 env_file = os.getenv('GITHUB_ENV')
-
-if data['version'].startswith('v'):
-    raw_version = data['version'][1:]
-    version = data['version']
-else:
-    raw_version = data['version']
-    version = 'v' + data['version']
-
 with open(env_file, "a") as myfile:
     myfile.write(f"RAW_VERSION={raw_version}\nVERSION={version}")
