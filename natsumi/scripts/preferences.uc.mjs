@@ -2385,19 +2385,6 @@ function addPreferencesPanes() {
             <html:h1>URL Bar</html:h1>
         </hbox>
     `);
-    let shortcutsNode = convertToXUL(`
-        <hbox id="natsumiShortcutsCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
-            <html:h1>Keyboard Shortcuts</html:h1>
-        </hbox>
-        <groupbox id="natsumiShortcutsMovedInfo" data-category="paneNatsumiSettings" hidden="true">
-            <div class="natsumi-settings-info">
-                <div class="natsumi-settings-info-icon"></div>
-                <div class="natsumi-settings-info-text">
-                    Natsumi Shortcuts have moved to <html:a href="#natsumiShortcuts">Keyboard Shortcuts</html:a>!
-                </div>
-            </div>
-        </groupbox>
-    `);
 
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2445,8 +2432,6 @@ function addPreferencesPanes() {
         addURLbarLayoutPane();
         addURLbarBehaviorPane();
     }
-
-    prefsView.insertBefore(shortcutsNode, homePane);
 }
 
 console.log("Loading prefs panes...");
