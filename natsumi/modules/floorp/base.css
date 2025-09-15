@@ -104,6 +104,12 @@ SOFTWARE.
     bottom: -40px !important;
   }
 
+  @media -moz-pref("natsumi.sidebar.hide-workspace-indicator") {
+    #natsumi-workspace-indicator {
+      display: none;
+    }
+  }
+
   @media (not -moz-pref("natsumi.sidebar.hide-workspace-indicator")) and -moz-pref("floorp.workspaces.enabled") {
     #sidebar-main[style*="--natsumi-workspace-name"] {
       #tabbrowser-arrowscrollbox {
