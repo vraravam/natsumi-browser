@@ -82,8 +82,16 @@ SOFTWARE.
     order: 8 !important;
   }
 
+  body:not([natsumi-panel-sidebar-on-right]) #panel-sidebar-box {
+    margin-left: var(--natsumi-browser-separation) !important;
+  }
+
   body[natsumi-panel-sidebar-on-right] #panel-sidebar-box {
     margin-right: var(--natsumi-browser-separation) !important;
+  }
+
+  body:not([natsumi-panel-sidebar-on-right]) #browser:has(#panel-sidebar-box[data-floating="false"][style*="; width"]) #tabbrowser-tabbox {
+    margin-left: 0 !important;
   }
 
   body[natsumi-panel-sidebar-on-right] #browser:has(#panel-sidebar-box[data-floating="false"][style*="; width"]) #tabbrowser-tabbox {
