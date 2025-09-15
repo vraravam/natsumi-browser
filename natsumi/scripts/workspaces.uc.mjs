@@ -588,21 +588,27 @@ if (isFloorp) {
     }
 
     let tabsListObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutationRecord) {
-            copyWorkspaceName();
-            copyAllWorkspaces();
-            copyAllWorkspaces();
-
-            if (document.body.natsumiPanelSidebarWorkspaces) {
-                document.body.natsumiPanelSidebarWorkspaces.refreshWorkspacesListIfNeeded();
+        // Prevent infinite loops
+        if (mutations.length === 1) {
+            let mutation = mutations[0];
+            if (mutation.target.id === "natsumi-workspace-indicator-name") {
+                return;
             }
+        }
 
-            if (document.body.natsumiWorkspaceIndicator) {
-                document.body.natsumiWorkspaceIndicator.refreshIndicator();
-            }
-        });
+        copyWorkspaceName();
+        copyAllWorkspaces();
+        copyAllWorkspaces();
+
+        if (document.body.natsumiPanelSidebarWorkspaces) {
+            document.body.natsumiPanelSidebarWorkspaces.refreshWorkspacesListIfNeeded();
+        }
+
+        if (document.body.natsumiWorkspaceIndicator) {
+            document.body.natsumiWorkspaceIndicator.refreshIndicator();
+        }
     });
-    tabsListObserver.observe(tabsList, {attributes: true, childList: true});
+    tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
