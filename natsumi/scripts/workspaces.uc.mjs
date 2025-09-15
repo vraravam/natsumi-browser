@@ -32,6 +32,11 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
+function convertToXUL(node) {
+    // noinspection JSUnresolvedReference
+    return window.MozXULElement.parseXULToFragment(node);
+}
+
 class NatsumiWorkspacesWrapper {
     // A wrapper class for managing workspaces in Floorp directly from the window
     constructor() {
@@ -154,6 +159,8 @@ class NatsumiWorkspacesWrapper {
 class NatsumiPanelSidebarWorkspaces {
     // A class to bring back workspaces management in the panel sidebar, a Floorp 11
     // feature requested for Floorp 12.
+    // Standalone MIT-licensed version: https://github.com/greeeen-dev/floorp-sidebar-workspaces
+
     constructor() {
         this.browserMutationObserver = null;
         this.panelSidebarNode = null;
@@ -359,6 +366,104 @@ class NatsumiPanelSidebarWorkspaces {
     }
 }
 
+class NatsumiWorkspaceIndicator {
+    // An indicator to show the current workspace in the tabs sidebar
+
+    constructor() {
+        this.workspacesWrapper = null;
+        this.indicatorNode = null;
+        this.tabsListNode = null;
+        this.verticalTabsMutationObserver = null;
+    }
+
+    init() {
+        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
+
+        // Set up observer
+        // This also runs the UI initialization so we can only run it once workspace data is available
+        if (this.workspacesWrapper.properInit) {
+            this.setVerticalTabsMutationObserver();
+        } else {
+            this.workspacesWrapper.dataRetrieveQueue.push(this.setVerticalTabsMutationObserver.bind(this));
+        }
+    }
+
+    addIndicator() {
+        // Remove existing indicator
+        let existingIndicator = document.getElementById("natsumi-workspace-indicator");
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Create workspace indicator
+        const indicatorXULString = `
+            <div id="natsumi-workspace-indicator">
+                <div id="natsumi-workspace-indicator-icon"></div>
+                <div id="natsumi-workspace-indicator-name"></div>
+            </div>
+        `
+        let indicatorFragment = convertToXUL(indicatorXULString);
+
+        // Append to sidebar then refetch indicator
+        let tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
+        tabsListNode.appendChild(indicatorFragment);
+
+        // Refetch indicator node
+        this.indicatorNode = document.getElementById("natsumi-workspace-indicator");
+
+        // Set click event listener
+        this.indicatorNode.addEventListener("click", () => {
+            if (this.workspacesWrapper) {
+                this.workspacesWrapper.showWorkspacesModal();
+            }
+        });
+
+        // Refresh data
+        this.refreshIndicator();
+    }
+
+    setVerticalTabsMutationObserver() {
+        const verticalTabsElement = document.getElementById("vertical-tabs");
+
+        if (this.verticalTabsMutationObserver) {
+            this.verticalTabsMutationObserver.disconnect();
+        }
+
+        // Check if #tabbrowser-tabs exists
+        this.verticalTabsMutationObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                const tabsListNode = document.getElementById("tabbrowser-tabs");
+                if (tabsListNode) {
+                    const needsUIInit = this.tabsListNode === null;
+                    this.tabsListNode = tabsListNode;
+
+                    if (needsUIInit) {
+                        this.addIndicator();
+                    }
+                } else {
+                    this.tabsListNode = null;
+                }
+            });
+        });
+
+        this.verticalTabsMutationObserver.observe(verticalTabsElement, {childList: true, subtree: true});
+    }
+
+    refreshIndicator() {
+        if (!this.indicatorNode) {
+            return;
+        }
+
+        // Get current workspace data
+        let currentWorkspaceData = getCurrentWorkspaceData();
+
+        // Set icon and name
+        this.indicatorNode.style.setProperty("--natsumi-workspace-icon", currentWorkspaceData["icon"]);
+        let nameNode = this.indicatorNode.querySelector("#natsumi-workspace-indicator-name");
+        nameNode.textContent = currentWorkspaceData["name"];
+    }
+}
+
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
@@ -367,9 +472,15 @@ function getCurrentWorkspaceData() {
     let workspaceIcon = null;
     let workspaceId = workspaceData["defaultID"];
 
-    if (availableTabs.length > 0) {
-        if ("floorpWorkspaceId" in availableTabs[0].attributes) {
-            workspaceId = availableTabs[0].attributes["floorpWorkspaceId"].value;
+    // Attempt to get workspace ID from workspaces wrapper if available
+    if (document.body.natsumiWorkspacesWrapper && document.body.natsumiWorkspacesWrapper.properInit) {
+        workspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+    } else {
+        // Use fallback method (fetch from tabs, not as accurate)
+        if (availableTabs.length > 0) {
+            if ("floorpWorkspaceId" in availableTabs[0].attributes) {
+                workspaceId = availableTabs[0].attributes["floorpWorkspaceId"].value;
+            }
         }
     }
 
@@ -485,9 +596,13 @@ if (isFloorp) {
             if (document.body.natsumiPanelSidebarWorkspaces) {
                 document.body.natsumiPanelSidebarWorkspaces.refreshWorkspacesListIfNeeded();
             }
+
+            if (document.body.natsumiWorkspaceIndicator) {
+                document.body.natsumiWorkspaceIndicator.refreshIndicator();
+            }
         });
     });
-    tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
+    tabsListObserver.observe(tabsList, {attributes: true, childList: true});
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
@@ -495,5 +610,9 @@ if (isFloorp) {
         // Initialize panel sidebar workspaces manager
         document.body.natsumiPanelSidebarWorkspaces = new NatsumiPanelSidebarWorkspaces();
         document.body.natsumiPanelSidebarWorkspaces.init();
+
+        // Initialize workspace indicator
+        document.body.natsumiWorkspaceIndicator = new NatsumiWorkspaceIndicator();
+        document.body.natsumiWorkspaceIndicator.init();
     })
 }

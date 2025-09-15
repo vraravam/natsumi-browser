@@ -47,6 +47,14 @@ SOFTWARE.
         min-height: 100vh !important;
       }
     }
+
+    body[natsumi-compact-mode] #vertical-tabs {
+      min-height: calc(100vh - 40px + calc(var(--natsumi-browser-separation) * 3)) !important;
+
+      @media -moz-pref("natsumi.theme.compact-style", "toolbar") {
+        min-height: 100vh !important;
+      }
+    }
   }
 
   @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
