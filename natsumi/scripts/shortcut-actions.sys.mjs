@@ -88,4 +88,33 @@ export class NatsumiShortcutActions {
             document.body.setAttribute("natsumi-compact-navbar-extend", "");
         }
     }
+
+    static cycleWorkspaces(reverse = false) {
+        if (!document.body.natsumiWorkspacesWrapper) {
+            return;
+        }
+
+        if (!document.body.natsumiWorkspacesWrapper.properInit) {
+            return;
+        }
+
+        const workspaceIds = document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        const currentWorkspace = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+        let currentWorkspaceIndex = workspaceIds.indexOf(currentWorkspace);
+
+        if (reverse) {
+            currentWorkspaceIndex--;
+        } else {
+            currentWorkspaceIndex++;
+        }
+
+        if (currentWorkspaceIndex < 0) {
+            currentWorkspaceIndex = workspaceIds.length - 1;
+        } else if (currentWorkspaceIndex >= workspaceIds.length) {
+            currentWorkspaceIndex = 0;
+        }
+
+        const newWorkspaceId = workspaceIds[currentWorkspaceIndex];
+        document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(newWorkspaceId);
+    }
 }

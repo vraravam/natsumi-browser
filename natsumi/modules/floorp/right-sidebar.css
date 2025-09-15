@@ -48,7 +48,7 @@ SOFTWARE.
         }
       }
 
-      &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) {
+      body[natsumi-panel-sidebar-on-right] {
         &:not([inDOMFullscreen="true"]):not([drawtitle]) #browser:not([data-is-child="true"]) {
           #tabbrowser-tabbox {
             padding-left: var(--natsumi-browser-separation) !important;

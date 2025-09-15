@@ -117,9 +117,11 @@ function copyWindowButtonsWidth() {
 
 let sidebar = document.querySelector("#sidebar-main");
 let isFloorp = false;
+let isWaterfox = false;
 
 if (ucApi.Prefs.get("natsumi.browser.type").exists) {
     isFloorp = ucApi.Prefs.get("natsumi.browser.type").value === "floorp";
+    isWaterfox = ucApi.Prefs.get("natsumi.browser.type").value === "waterfox";
 }
 
 if (!sidebar) {
@@ -165,7 +167,7 @@ if (sidebar) {
     });
     sidebarObserver.observe(sidebar, {attributes: true, attributeFilter: ["style"]});
 
-    if (isFloorp) {
+    if (isFloorp || isWaterfox) {
         let statusBarFloorp = document.querySelector("#nora-statusbar");
         let statusBarWaterfox = document.querySelector("#status-bar");
         let statusBarObserver = new MutationObserver(function (mutations) {
@@ -174,10 +176,10 @@ if (sidebar) {
             });
         });
 
-        if (statusBarFloorp) {
+        if (statusBarFloorp && isFloorp) {
             statusBarObserver.observe(statusBarFloorp, {attributes: true, childList: true, subtree: true});
         }
-        if (statusBarWaterfox) {
+        if (statusBarWaterfox && isWaterfox) {
             statusBarObserver.observe(statusBarWaterfox, {attributes: true, childList: true, subtree: true});
         }
     }

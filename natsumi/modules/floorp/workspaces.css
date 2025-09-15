@@ -118,4 +118,56 @@ SOFTWARE.
       }
     }
   }
+
+  /* Panel sidebar workspaces */
+  #natsumi-panel-sidebar-workspaces, #natsumi-panel-sidebar-workspaces-spacer {
+    display: none;
+
+    @media -moz-pref("natsumi.sidebar.panel-sidebar-workspaces") {
+      display: flex;
+    }
+  }
+
+  #natsumi-panel-sidebar-workspaces {
+    order: -2;
+    flex-direction: column;
+
+    .natsumi-panel-sidebar-workspace {
+      display: flex;
+      width: 28px;
+      min-height: 28px;
+      margin: var(--natsumi-panel-item-separation) !important;
+      border-radius: 4px;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+      &::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        margin: auto !important;
+        pointer-events: none;
+        background-image: var(--natsumi-workspace-icon) !important;
+        background-size: 16px !important;
+      }
+
+      &#natsumi-panel-sidebar-add-workspace::before {
+        background-image: url("../../icons/lucide/plus.svg") !important;
+        -moz-context-properties: stroke, stroke-opacity !important;
+        stroke: currentColor;
+      }
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color);
+      }
+
+      &:active, &[selected] {
+        background-color: var(--natsumi-button-active-color);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+  }
+
+  #natsumi-panel-sidebar-workspaces-spacer {
+    order: -1;
+  }
 }

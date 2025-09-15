@@ -181,7 +181,7 @@ class NatsumiKBSManager {
             "toggleVerticalTabs": new NatsumiKeyboardShortcut(false, true, true, false, "v", 0, true),
             "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", 0, true),
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
-            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
+            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -224,6 +224,19 @@ class NatsumiKBSManager {
                 "unregistered": false,
                 "shortcutMode": 3
             }
+        }
+
+        // Add browser-specific shortcuts
+        let browserType = "firefox";
+        if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+            browserType = ucApi.Prefs.get("natsumi.browser.type").value;
+        }
+
+        if (browserType === "floorp") {
+            this.shortcuts["cycleWorkspaces"] = new NatsumiKeyboardShortcut(false, false, true, false, "right", 3, false);
+            this.shortcuts["cycleWorkspacesReverse"] = new NatsumiKeyboardShortcut(false, false, true, false, "left", 3, false);
+            this.shortcutActions["cycleWorkspaces"] = NatsumiShortcutActions.cycleWorkspaces;
+            this.shortcutActions["cycleWorkspacesReverse"] = () => { NatsumiShortcutActions.cycleWorkspaces(true); };
         }
 
         // Add native shortcuts

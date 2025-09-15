@@ -312,26 +312,31 @@ SOFTWARE.
   }
 }
 
-@media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs") {
-  #tabbrowser-arrowscrollbox-periphery {
-    order: -1 !important;
-  }
-
-  #tabbrowser-tabs[overflow] {
-    #vertical-tabs-newtab-button {
+@media not -moz-pref("natsumi.tabs.hide-new-tab-button") {
+  @media -moz-pref("natsumi.tabs.new-tab-on-top")  and -moz-pref("sidebar.verticalTabs")  {
+    #tabbrowser-arrowscrollbox-periphery {
       order: -1 !important;
-      margin-bottom: -50px !important;
-      margin-top: 2px !important;
-      z-index: 1;
     }
 
-    #pinned-tabs-container {
-      order: -2 !important;
+    #vertical-tabs-newtab-button {
+      margin-top: 0 !important;
     }
 
-    #tabbrowser-arrowscrollbox::before {
-      content: "";
-      margin-bottom: 38px !important;
+    #sidebar-main #tabbrowser-tabs[overflow] {
+      #vertical-tabs-newtab-button {
+        order: -1 !important;
+        margin-bottom: -104px !important;
+        margin-top: 66px !important;
+        z-index: 1;
+      }
+
+      #pinned-tabs-container {
+        order: -2 !important;
+      }
+
+      #tabbrowser-arrowscrollbox {
+        padding-top: 38px !important;
+      }
     }
   }
 }

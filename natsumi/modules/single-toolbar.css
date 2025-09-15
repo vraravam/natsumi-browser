@@ -38,7 +38,7 @@ SOFTWARE.
       box-shadow: none !important;
     }
 
-    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[data-floating-splitter-side="start"])) #navigator-toolbox {
+    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) #navigator-toolbox {
       left: calc(calc(var(--natsumi-browser-separation) * 2) + 36px);
     }
 
@@ -172,7 +172,7 @@ SOFTWARE.
       background-color: var(--natsumi-toolbox-color) !important;
     }
 
-    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[data-floating-splitter-side="start"])) #PersonalToolbar {
+    &:not([natsumi-compact-mode]):has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) #PersonalToolbar {
       --natsumi-bookmarks-width: calc(100vw - var(--natsumi-sidebar-width) - 36px - calc(var(--natsumi-browser-separation) * 2));
     }
 
