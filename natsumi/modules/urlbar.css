@@ -86,11 +86,11 @@ SOFTWARE.
     &:not([open]) {
       @media (not -moz-pref("natsumi.theme.single-toolbar")) or (not -moz-pref("sidebar.verticalTabs")) {
         border-radius: 16px !important;
-      border: 1px solid light-dark(var(--natsumi-colors-border-alt), var(--natsumi-button-active-color)) !important;
+        border: 1px solid light-dark(var(--natsumi-colors-border-alt), var(--natsumi-button-active-color)) !important;
         transition: border 0.2s ease !important;
         height: 32px !important;
 
-        #urlbar-background {
+        #urlbar-background, .urlbar-background {
           border-radius: 16px !important;
           background-color: var(--natsumi-urlbar-hover-background-color) !important;
           transition: background-color 0.2s ease;
@@ -304,7 +304,7 @@ SOFTWARE.
           padding-right: 4px !important;
         }
 
-        #urlbar-background {
+        #urlbar-background, .urlbar-background {
           background-color: light-dark(var(--toolbar-field-background-color), color-mix(in srgb, currentColor 7%, transparent)) !important;
           border-radius: var(--natsumi-tab-border-radius) !important;
           transition: background-color 0.2s ease;
@@ -320,7 +320,7 @@ SOFTWARE.
         }
 
         &:hover {
-          #urlbar-background {
+          #urlbar-background, .urlbar-background {
             background-color: var(--natsumi-button-hover-color) !important;
           }
         }
@@ -562,7 +562,7 @@ SOFTWARE.
             --natsumi-urlbar-search-engine-text: white;
           }
 
-          #urlbar-background {
+          #urlbar-background, .urlbar-background {
             --natsumi-primary-color: var(--natsumi-urlbar-search-engine-color) !important;
           }
 
@@ -629,7 +629,7 @@ SOFTWARE.
           border-color: transparent !important;
         }
 
-        #urlbar-background {
+        #urlbar-background, .urlbar-background {
           border-radius: 12px !important;
           background-color: var(--natsumi-mat-th-background) !important;
           animation: floating-urlbar-appear-opacity 0.2s ease !important;
