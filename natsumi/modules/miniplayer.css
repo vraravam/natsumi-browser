@@ -62,7 +62,7 @@ SOFTWARE.
 .natsumi-miniplayer {
   border-radius: var(--natsumi-tab-border-radius);
   background: var(--natsumi-mat-hz-background);
-  backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) !important;
+  backdrop-filter: var(--natsumi-mat-hz-backdrop);
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
   min-width: 100%;
   min-height: 36px;
