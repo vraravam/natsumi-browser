@@ -76,7 +76,7 @@ SOFTWARE.
     .tabbrowser-tab {
       margin-left: 15px !important;
       opacity: 1;
-      max-height: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
+      max-height: var(--floorp-tab-min-height, 36px) !important;
       transition: min-height 0.2s ease, max-height 0.2s ease, opacity 0.2s ease !important;
     }
 
