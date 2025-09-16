@@ -38,6 +38,11 @@ SOFTWARE.
       mask-image: url("../../icons/lucide-firefox/meta.svg");
     }
 
+    #natsumi-about .category-icon {
+      background-color: currentColor;
+      mask-image: url("../../icons/lucide-firefox/info.svg");
+    }
+
     #custom::after {
       background-image: none !important;
       background-color: light-dark(black, white);
@@ -213,6 +218,13 @@ SOFTWARE.
       &.caution .natsumi-settings-info-icon {
         mask-image: url("../../icons/lucide-firefox/caution.svg");
       }
+    }
+
+    #natsumi-about-stability-badge::before {
+      background-image: none !important;
+      background-color: black;
+      mask-image: url("../../icons/lucide-firefox/experimental.svg");
+      mask-size: 16px;
     }
   }
 }

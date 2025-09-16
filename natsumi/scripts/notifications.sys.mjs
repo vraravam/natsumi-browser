@@ -59,8 +59,7 @@ export class NatsumiNotificationsParent {
 
         // Observe the notifications container for added nodes
         this.notificationsMutationObserver.observe(this.notificationsContainer, {
-            childList: true,
-            subtree: true
+            childList: true
         });
     }
 

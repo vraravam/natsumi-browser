@@ -30,7 +30,7 @@ SOFTWARE.
   tab-group {
     --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
-    &:not(:has(.tabbrowser-tab:not([hidden]))) {
+    .tab-group-overflow-count-container {
       display: none !important;
     }
 
@@ -81,7 +81,7 @@ SOFTWARE.
     }
 
     &[collapsed] {
-      .tabbrowser-tab {
+      .tabbrowser-tab:not([selected]) {
         display: flex !important;
         min-height: 0 !important;
         max-height: 0 !important;

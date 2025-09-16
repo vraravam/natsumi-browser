@@ -57,7 +57,7 @@ if (pinnedTabsContainer) {
         addMutatorObserver(tab);
     });
 
-    pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true, subtree: true});
+    pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true});
 }
 if (verticalPinnedTabsContainer) {
     // Initial copy of icons for already existing vertical pinned tabs
@@ -68,5 +68,5 @@ if (verticalPinnedTabsContainer) {
         addMutatorObserver(tab);
     });
 
-    pinnedTabsObserver.observe(verticalPinnedTabsContainer, {childList: true, subtree: true});
+    pinnedTabsObserver.observe(verticalPinnedTabsContainer, {childList: true});
 }
