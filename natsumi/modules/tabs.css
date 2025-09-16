@@ -37,7 +37,7 @@ SOFTWARE.
   }
 
   to {
-    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast));
+    backdrop-filter: var(--natsumi-mat-hz-backdrop);
   }
 }
 
