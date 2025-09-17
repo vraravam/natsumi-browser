@@ -62,8 +62,7 @@ class NatsumiPatchesManager {
         let patchesToApply = [];
 
         for (let patch of this.patches) {
-            if (patch.browserName.toLowerCase() === browserName.toLowerCase() &&
-                patch.browserVersion === browserVersion) {
+            if (patch.browserName.toLowerCase() === browserName.toLowerCase() && patch.browserVersion === browserVersion) {
                 patchesToApply.push(patch.patchId);
             }
         }
