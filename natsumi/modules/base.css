@@ -120,6 +120,11 @@ SOFTWARE.
       padding: 6px !important;
       transition: background-color 0.2s ease, box-shadow 0.2s ease;
       border-radius: 4px !important;
+
+      &.searchmode-switcher-icon, &.searchmode-switcher-dropmarker {
+        padding: 4px !important;
+        border-radius: 50% !important;
+      }
     }
 
     .toolbarbutton-badge {
@@ -128,7 +133,7 @@ SOFTWARE.
       top: 6px !important;
     }
 
-    &:hover .toolbarbutton-icon {
+    &:hover .toolbarbutton-icon:not(.searchmode-switcher-icon) {
       background-color: var(--natsumi-button-hover-color) !important;
     }
 
