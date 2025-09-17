@@ -77,7 +77,7 @@ SOFTWARE.
       }
     }
 
-    #searchmode-switcher-icon {
+    #searchmode-switcher-icon, .searchmode-switcher-icon {
       padding: 0 !important;
       background-color: transparent !important;
       box-shadow: none !important;
@@ -169,34 +169,32 @@ SOFTWARE.
           border-end-start-radius: 13px !important;
           border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
           border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
-          padding-right: 0 !important;
+          padding-inline: 3px 0 !important;
 
-          #searchmode-switcher-dropmarker {
+          #searchmode-switcher-dropmarker, .searchmode-switcher-dropmarker {
             padding: 5px !important;
             border-start-start-radius: 0 !important;
             border-end-start-radius: 0 !important;
             border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
             border-end-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
+            margin-left: 0 !important;
           }
 
           &[open] {
-            #searchmode-switcher-dropmarker {
-              border-start-start-radius: var(--natsumi-urlbar-button-end-radius) !important;
-              border-end-start-radius: var(--natsumi-urlbar-button-end-radius) !important;
-              border-start-end-radius: 0 !important;
-              border-end-end-radius: 0 !important;
+            #searchmode-switcher-icon, .searchmode-switcher-icon {
+              background-color: transparent !important;
             }
           }
 
           &:active, &[open] {
-            #searchmode-switcher-dropmarker {
+            #searchmode-switcher-dropmarker, .searchmode-switcher-dropmarker {
               background-color: var(--natsumi-button-hover-color) !important;
               box-shadow: none !important;
             }
           }
         }
 
-        #searchmode-switcher-chicklet {
+        #searchmode-switcher-chicklet, .searchmode-switcher-chicklet {
           background-color: var(--natsumi-urlbar-button-accent-color) !important;
           border-start-start-radius: 0 !important;
           border-end-start-radius: 0 !important;
@@ -511,8 +509,9 @@ SOFTWARE.
           border-radius: 12px !important;
           padding-right: 0 !important;
           background: var(--natsumi-urlbar-search-engine-color) !important;
+          --urlbar-searchmodeswitcher-inline-padding: 0 !important;
 
-          #searchmode-switcher-dropmarker {
+          #searchmode-switcher-dropmarker, .searchmode-switcher-dropmarker {
             width: 12px !important;
             height: 12px !important;
             border-radius: 12px !important;
@@ -567,35 +566,36 @@ SOFTWARE.
           }
 
           #urlbar-searchmode-switcher {
+            width: 24px !important;
             padding: 4px 4px !important;
             border-radius: 12px 0 0 12px !important;
           }
 
-          #searchmode-switcher-chicklet {
+          #searchmode-switcher-chicklet, .searchmode-switcher-chicklet {
             height: 24px !important;
             margin-top: auto !important;
             margin-bottom: auto !important;
             border-radius: 0 12px 12px 0 !important;
             background: var(--natsumi-urlbar-search-engine-color) !important;
 
-            #searchmode-switcher-title {
+            #searchmode-switcher-title, .searchmode-switcher-title {
               font-size: 12px !important;
               color: var(--natsumi-urlbar-search-engine-text) !important;
             }
           }
 
-          &:has(#searchmode-switcher-icon[style*="chrome"]) {
+          &:has(#searchmode-switcher-icon[style*="chrome"], .searchmode-switcher-icon[style*="chrome"]) {
             #urlbar-searchmode-switcher {
               display: none !important;
             }
 
-            #searchmode-switcher-chicklet {
+            #searchmode-switcher-chicklet, .searchmode-switcher-chicklet {
               border-radius: 12px !important;
               padding-left: 8px !important;
             }
           }
 
-          #searchmode-switcher-close {
+          #searchmode-switcher-close, .searchmode-switcher-close {
             width: 24px !important;
             height: 24px !important;
             padding: 6px !important;
