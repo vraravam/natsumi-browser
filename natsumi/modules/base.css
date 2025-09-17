@@ -33,7 +33,7 @@ SOFTWARE.
 :root:not([inDOMFullscreen="true"]):not([drawtitle]) {
   #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
     margin-right: var(--natsumi-browser-separation) !important;
-    padding-bottom: var(--natsumi-browser-separation) !important;
+    margin-bottom: var(--natsumi-browser-separation) !important;
     box-shadow: none !important;
     outline: none !important;
 
@@ -82,7 +82,8 @@ SOFTWARE.
 
   &:has(#sidebar-main[hidden]) {
     #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
-      padding-left: var(--natsumi-browser-separation) !important;
+      margin-left: var(--natsumi-browser-separation) !important;
+      margin-right: var(--natsumi-browser-separation) !important;
     }
   }
 }
@@ -119,6 +120,11 @@ SOFTWARE.
       padding: 6px !important;
       transition: background-color 0.2s ease, box-shadow 0.2s ease;
       border-radius: 4px !important;
+
+      &.searchmode-switcher-icon, &.searchmode-switcher-dropmarker {
+        padding: 4px !important;
+        border-radius: 50% !important;
+      }
     }
 
     .toolbarbutton-badge {
@@ -127,7 +133,7 @@ SOFTWARE.
       top: 6px !important;
     }
 
-    &:hover .toolbarbutton-icon {
+    &:hover .toolbarbutton-icon:not(.searchmode-switcher-icon) {
       background-color: var(--natsumi-button-hover-color) !important;
     }
 
@@ -232,10 +238,10 @@ SOFTWARE.
   border-radius: 50px !important;
   padding: 8px 10px !important;
   background-color: var(--natsumi-mat-hz-background) !important;
-  border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
-  box-shadow: 0 0 var(--natsumi-mat-hz-shadow-size) var(--natsumi-mat-hz-shadow-color) !important;
+  border: var(--natsumi-mat-hz-border-thin) !important;
+  box-shadow: var(--natsumi-mat-hz-shadow) !important;
   transition: opacity 0.2s ease, top 0.2s ease !important;
-  backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+  backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
   opacity: 0;
   margin: 0 !important;
   left: 50% !important;
@@ -355,7 +361,7 @@ SOFTWARE.
 
 .tools-and-extensions {
   justify-content: space-between !important;
-  padding-bottom: var(--natsumi-browser-separation) !important;
+  margin-bottom: var(--natsumi-browser-separation) !important;
 
   &[orientation="horizontal"] {
     height: 40px !important;

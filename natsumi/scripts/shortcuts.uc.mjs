@@ -178,13 +178,15 @@ class NatsumiKBSManager {
         this.shortcuts = {
             "copyCurrentUrl": new NatsumiKeyboardShortcut(false, true, false, true, "c", 0, true),
             "toggleBrowserLayout": new NatsumiKeyboardShortcut(false, true, true, false, "l", 0, true),
+            "toggleVerticalTabs": new NatsumiKeyboardShortcut(false, true, true, false, "v", 0, true),
             "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", 0, true),
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
-            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
+            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
             "toggleBrowserLayout": NatsumiShortcutActions.toggleBrowserLayout,
+            "toggleVerticalTabs": NatsumiShortcutActions.toggleVerticalTabs,
             "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode,
             "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
             "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar
@@ -222,6 +224,19 @@ class NatsumiKBSManager {
                 "unregistered": false,
                 "shortcutMode": 3
             }
+        }
+
+        // Add browser-specific shortcuts
+        let browserType = "firefox";
+        if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+            browserType = ucApi.Prefs.get("natsumi.browser.type").value;
+        }
+
+        if (browserType === "floorp") {
+            this.shortcuts["cycleWorkspaces"] = new NatsumiKeyboardShortcut(false, false, true, false, "right", 3, false);
+            this.shortcuts["cycleWorkspacesReverse"] = new NatsumiKeyboardShortcut(false, false, true, false, "left", 3, false);
+            this.shortcutActions["cycleWorkspaces"] = NatsumiShortcutActions.cycleWorkspaces;
+            this.shortcutActions["cycleWorkspacesReverse"] = () => { NatsumiShortcutActions.cycleWorkspaces(true); };
         }
 
         // Add native shortcuts
@@ -653,6 +668,11 @@ class NatsumiKBSManager {
         // In this case, we can get the key pressed from the event.code attribute
         if (altPressed && event.code.startsWith("Key") && key.length <= 2) {
             key = event.code.slice(3).toLowerCase();
+        }
+
+        // Sometimes, arrow keys are reported as "ARROWUP", "ARROWDOWN", etc. and not "UP" or "DOWN"
+        if (key.startsWith("arrow") && key.length > 5) {
+            key = key.slice(5);
         }
 
         if (event.keyCode >= 48 && event.keyCode <= 57) {

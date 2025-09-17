@@ -30,15 +30,21 @@ SOFTWARE.
 */
 
 // literally just a script for meowing because i felt cute :3
-// also does initial setup for natsumi append stuff
+// also does initial setup for natsumi stuff
 
 import {applyCustomColor, applyCustomTheme} from "./custom-theme.sys.mjs";
 
-function makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises() {
+function makeCatNoisesAndDoSomeVeryCuteInitialSetupBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoisesAndSomeSetup() {
+    // Set Natsumi Append installed status
     document.body.setAttribute("natsumi-append-installed", "");
-    //applyCustomColor();
+
+    // Apply customizations
     applyCustomTheme();
 
+    // Get Natsumi version
+    let versionPath = "chrome://natsumi/content/version.json";
+
+    // communicate in the average transfemme communication language (i.e. make cat noises) >:3333
     const catNoises = [
         "meow",
         "mrrp",
@@ -49,4 +55,4 @@ function makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAn
     console.log(`${catNoise} :3`);
 }
 
-makeCatNoisesBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoises();
+makeCatNoisesAndDoSomeVeryCuteInitialSetupBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoisesAndSomeSetup();

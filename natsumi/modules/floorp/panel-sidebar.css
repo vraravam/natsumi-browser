@@ -77,20 +77,58 @@ SOFTWARE.
     }
   }
 
-  &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) #panel-sidebar-select-box {
+  body[natsumi-panel-sidebar-on-right] #panel-sidebar-select-box {
+    margin-left: 0 !important;
+    order: 8 !important;
+  }
+
+  body:not([natsumi-panel-sidebar-on-right]) #panel-sidebar-box {
+    margin-left: var(--natsumi-browser-separation) !important;
+  }
+
+  body[natsumi-panel-sidebar-on-right] #panel-sidebar-box {
+    margin-right: var(--natsumi-browser-separation) !important;
+  }
+
+  body:not([natsumi-panel-sidebar-on-right]) #browser:has(#panel-sidebar-box[data-floating="false"][style*="; width"]) #tabbrowser-tabbox {
     margin-left: 0 !important;
   }
 
-  @media -moz-pref("natsumi.theme.single-toolbar") {
-    &:has(#panel-sidebar-box[data-floating-splitter-side="start"]) {
-      #panel-sidebar-select-box {
-        transition: height 0.2s ease, margin-top 0.2s ease !important;
-        height: calc(100vh - 12px) !important;
-      }
+  body[natsumi-panel-sidebar-on-right] #browser:has(#panel-sidebar-box[data-floating="false"][style*="; width"]) #tabbrowser-tabbox {
+    margin-right: 0 !important;
+  }
 
-      body[natsumi-bookmarks-hover] #panel-sidebar-select-box {
-        height: calc(100vh - 40px) !important;
-        margin-top: 34px !important;
+  @media not -moz-pref("natsumi.theme.single-toolbar") {
+    #panel-sidebar-select-box {
+      margin-top: 0 !important;
+    }
+
+    body[natsumi-compact-mode] #panel-sidebar-box[data-floating="false"] {
+      margin-top: var(--natsumi-browser-separation) !important;
+    }
+  }
+
+  @media -moz-pref("natsumi.theme.single-toolbar") {
+    @media -moz-pref("sidebar.position_start") {
+      body[natsumi-panel-sidebar-on-right] {
+        #panel-sidebar-select-box {
+          transition: height 0.2s ease, margin-top 0.2s ease !important;
+          height: calc(100vh - 12px) !important;
+        }
+
+        @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
+          body[natsumi-bookmarks-hover] #panel-sidebar-select-box {
+            height: calc(100vh - 40px) !important;
+            margin-top: 34px !important;
+          }
+        }
+
+        @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
+          &:has(#PersonalToolbar[collapsed="false"]) #panel-sidebar-select-box {
+            height: calc(100vh - 40px) !important;
+            margin-top: 34px !important;
+          }
+        }
       }
     }
   }

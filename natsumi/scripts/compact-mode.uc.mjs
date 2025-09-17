@@ -41,25 +41,45 @@ function handleElementEnter(event) {
         return;
     }
 
-    if (event.target.id === "sidebar-main") {
+    // Check single toolbar
+    let isSingleToolbar = false;
+    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
+            isSingleToolbar = true;
+        }
+    }
+
+    // Check hidden elements
+    let sidebarHidden = true;
+    let toolbarHidden = true;
+    if (!isSingleToolbar) {
+        if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
+            if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
+                toolbarHidden = false;
+            } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
+                sidebarHidden = false;
+            }
+        }
+    }
+
+    if (event.target.id === "sidebar-main" && sidebarHidden) {
         if (sidebarTimeout) {
             clearTimeout(sidebarTimeout);
             sidebarTimeout = null;
         }
 
         sidebarHovered++;
-    } else if (event.target.id === "navigator-toolbox") {
-        let isSingleToolbar = false;
-        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
-            if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
-                isSingleToolbar = true;
-                if (sidebarTimeout) {
-                    clearTimeout(sidebarTimeout);
-                    sidebarTimeout = null;
-                }
-
-                sidebarHovered++;
+    } else if ((
+        event.target.id === "nav-bar" && isSingleToolbar ||
+        event.target.id === "navigator-toolbox" && !isSingleToolbar
+    ) && toolbarHidden) {
+        if (isSingleToolbar) {
+            if (sidebarTimeout) {
+                clearTimeout(sidebarTimeout);
+                sidebarTimeout = null;
             }
+
+            sidebarHovered++;
         }
 
         if (!isSingleToolbar) {
@@ -70,7 +90,9 @@ function handleElementEnter(event) {
         }
 
         document.body.setAttribute("natsumi-compact-navbar-hover", "")
-    } else if (event.target.id === "nora-statusbar" || event.target.id === "status-bar") {
+    } else if ((
+        event.target.id === "nora-statusbar" || event.target.id === "status-bar"
+    ) && sidebarHidden) {
         if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
             if (sidebarTimeout) {
                 clearTimeout(sidebarTimeout);
@@ -92,13 +114,35 @@ function handleElementLeave(event) {
         return;
     }
 
-    if (event.target.id === "sidebar-main") {
-        sidebarHovered--;
-    } else if (event.target.id === "navigator-toolbox") {
-        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
-            if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
-                sidebarHovered--;
+    // Check single toolbar
+    let isSingleToolbar = false;
+    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
+            isSingleToolbar = true;
+        }
+    }
+
+    // Check hidden elements
+    let sidebarHidden = true;
+    let toolbarHidden = true;
+    if (!isSingleToolbar) {
+        if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
+            if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
+                toolbarHidden = false;
+            } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
+                sidebarHidden = false;
             }
+        }
+    }
+
+    if (event.target.id === "sidebar-main" && sidebarHidden) {
+        sidebarHovered--;
+    } else if ((
+        event.target.id === "nav-bar" && isSingleToolbar ||
+        event.target.id === "navigator-toolbox" && !isSingleToolbar
+    ) && toolbarHidden) {
+        if (isSingleToolbar) {
+            sidebarHovered--;
         }
 
         if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
@@ -107,7 +151,9 @@ function handleElementLeave(event) {
                 navbarTimeout = null;
             }, 1000);
         }
-    } else if (event.target.id === "nora-statusbar" || event.target.id === "status-bar") {
+    } else if ((
+        event.target.id === "nora-statusbar" || event.target.id === "status-bar"
+    ) && sidebarHidden) {
         if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
             sidebarHovered--;
         }
@@ -150,7 +196,8 @@ function resetCompactMode() {
 }
 
 let sidebarNode = document.getElementById("sidebar-main");
-let navbarNode = document.getElementById("navigator-toolbox");
+let navigatorToolboxNode = document.getElementById("navigator-toolbox");
+let navbarNode = document.getElementById("nav-bar");
 let statusbarNode = document.getElementById("nora-statusbar") || document.getElementById("status-bar");
 if (sidebarNode) {
     sidebarNode.addEventListener("mouseenter", handleElementEnter, true);
@@ -160,6 +207,11 @@ if (sidebarNode) {
 if (statusbarNode) {
     statusbarNode.addEventListener("mouseenter", handleElementEnter, true);
     statusbarNode.addEventListener("mouseleave", handleElementLeave, true);
+}
+
+if (navigatorToolboxNode) {
+    navigatorToolboxNode.addEventListener("mouseenter", handleElementEnter, true);
+    navigatorToolboxNode.addEventListener("mouseleave", handleElementLeave, true);
 }
 
 if (navbarNode) {

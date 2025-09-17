@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -24,24 +24,13 @@ SOFTWARE.
 
 */
 
-/* ==== Load config and Natsumi Browser Pages ==== */
+/* ==== Floorp patches ==== */
 
-/*
-WARNING: DO NOT TOUCH THIS FILE UNLESS YOU KNOW WHAT YOU ARE DOING.
-Removing or modifying parts of this file may break some parts of Natsumi.
-*/
-
-@import "../natsumi-config.css";
-@import "content/preload.css";
-@import "global/colors.css";
-@import "global/materials.css";
-@import "content/pdfjs.css";
-@import "content/ff-home.css";
-@import "content/preferences.css";
-@import "content/preferences-shortcuts.css";
-@import "content/preferences-about.css";
-@import "content/global.css";
-@import "content/floorp/preferences.css";
-@import "content/firefox/preferences.css";
-
-/* Do NOT enter any additional CSS below. */
+/* Floorp 12.2.0 patch: show navbar on macOS fullscreen */
+:root[sizemode="fullscreen"]:not([inDOMFullscreen="true"]) {
+  @media (-moz-platform: macos) and (not -moz-pref("natsumi.theme.disable-patches")) {
+    body[natsumi-patches*="floorp-12-2-0-navbar"] #nav-bar {
+      display: flex !important;
+    }
+  }
+}

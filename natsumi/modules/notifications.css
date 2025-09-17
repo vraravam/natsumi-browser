@@ -61,10 +61,10 @@ SOFTWARE.
     &::after {
       content: var(--natsumi-notifications-overflow);
       position: relative !important;
-      background-color: var(--natsumi-mat-hz-background-tinted);
-      border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
-      backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+      background-color: var(--natsumi-mat-th-background);
+      border: var(--natsumi-mat-hz-border) !important;
+      backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
+      box-shadow: var(--natsumi-mat-hz-shadow) !important;
       padding: 6px 8px !important;
       border-radius: 8px;
       top: 8px !important;
@@ -77,10 +77,10 @@ SOFTWARE.
     font-size: medium;
     padding: 10px 15px !important;
     border-radius: 15px !important;
-    background-color: var(--natsumi-mat-hz-background-tinted);
-    border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
-    backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+    background-color: var(--natsumi-mat-th-background);
+    border: var(--natsumi-mat-hz-border) !important;
+    backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
+    box-shadow: var(--natsumi-mat-hz-shadow) !important;
     margin-bottom: 10px !important;
     animation: notification-appear 0.3s ease;
     max-width: 70vw;

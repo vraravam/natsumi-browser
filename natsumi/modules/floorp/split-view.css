@@ -212,42 +212,90 @@ SOFTWARE.
       }
 
       /* Split view spacing */
-      &[style*="flex-direction: row;"], &[style*="flex-direction: column;"] {
-        --natsumi-split-separation-0-right: calc(var(--natsumi-browser-separation) / 2);
-        --natsumi-split-separation-1-left: calc(var(--natsumi-browser-separation) / 2);
-      }
-
-      &[style*="flex-direction: row-reverse;"], &[style*="flex-direction: column-reverse;"] {
-        --natsumi-split-separation-0-left: calc(var(--natsumi-browser-separation) / 2);
-        --natsumi-split-separation-1-right: calc(var(--natsumi-browser-separation) / 2);
-      }
-
       .browserSidebarContainer {
         margin: 0 !important;
       }
 
-      &[style*="flex-direction: row"] {
+      /* Resizable split views */
+      &[style*="flex-direction: row;"] {
         .browserSidebarContainer[style*="order: 0"] {
-          margin-right: var(--natsumi-split-separation-0-right) !important;
-          margin-left: var(--natsumi-split-separation-0-left) !important;
+          flex: 0 !important;
+          min-width: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
         }
 
         .browserSidebarContainer[style*="order: 1"] {
-          margin-right: var(--natsumi-split-separation-1-right) !important;
-          margin-left: var(--natsumi-split-separation-1-left) !important;
+          flex: 1 !important;
+        }
+      }
+
+      &[style*="flex-direction: row-reverse;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          flex: 1 !important;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          flex: 0 !important;
+          min-width: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+        }
+      }
+
+      &[style*="flex-direction: column;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          flex: 0 !important;
+          min-height: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          flex: 1 !important;
+        }
+      }
+
+      &[style*="flex-direction: column-reverse;"] {
+        .browserSidebarContainer[style*="order: 0"] {
+          flex: 1 !important;
+        }
+
+        .browserSidebarContainer[style*="order: 1"] {
+          flex: 0 !important;
+          min-height: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+        }
+      }
+
+      /* Split view spacer */
+      &[style*="flex-direction: row"] {
+        #natsumi-split-view-spacer {
+          min-width: var(--natsumi-browser-separation) !important;
         }
       }
 
       &[style*="flex-direction: column"] {
-        .browserSidebarContainer[style*="order: 0"] {
-          margin-bottom: var(--natsumi-split-separation-0-right) !important;
-          margin-top: var(--natsumi-split-separation-0-left) !important;
+        #natsumi-split-view-spacer {
+          min-height: var(--natsumi-browser-separation) !important;
         }
+      }
+    }
+  }
 
-        .browserSidebarContainer[style*="order: 1"] {
-          margin-bottom: var(--natsumi-split-separation-1-right) !important;
-          margin-top: var(--natsumi-split-separation-1-left) !important;
-        }
+  /* Split view splitter */
+  #tabbrowser-tabbox {
+    #natsumi-split-view-splitter {
+      position: absolute;
+    }
+    &:has(#tabbrowser-tabpanels[style*="flex-direction: row"]) {
+      #natsumi-split-view-splitter {
+        min-width: var(--natsumi-browser-separation) !important;
+        height: 100%;
+        cursor: col-resize !important;
+        left: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+      }
+    }
+
+    &:has(#tabbrowser-tabpanels[style*="flex-direction: column"]) {
+      #natsumi-split-view-splitter {
+        width: 100%;
+        min-height: var(--natsumi-browser-separation) !important;
+        cursor: row-resize !important;
+        top: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
       }
     }
   }

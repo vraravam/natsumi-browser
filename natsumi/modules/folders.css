@@ -30,7 +30,7 @@ SOFTWARE.
   tab-group {
     --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
-    &:not(:has(.tabbrowser-tab:not([hidden]))) {
+    .tab-group-overflow-count-container {
       display: none !important;
     }
 
@@ -76,12 +76,12 @@ SOFTWARE.
     .tabbrowser-tab {
       margin-left: 15px !important;
       opacity: 1;
-      max-height: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
+      max-height: var(--floorp-tab-min-height, 36px) !important;
       transition: min-height 0.2s ease, max-height 0.2s ease, opacity 0.2s ease !important;
     }
 
     &[collapsed] {
-      .tabbrowser-tab {
+      .tabbrowser-tab:not([selected]) {
         display: flex !important;
         min-height: 0 !important;
         max-height: 0 !important;
