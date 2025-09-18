@@ -113,44 +113,19 @@ SOFTWARE.
   @media (not -moz-pref("natsumi.sidebar.hide-workspace-indicator")) and -moz-pref("floorp.workspaces.enabled") {
     #sidebar-main[style*="--natsumi-workspace-name"] {
       #tabbrowser-arrowscrollbox {
-        padding-top: 40px !important;
+        &::before {
+          content: var(--natsumi-workspace-name);
+          width: 100%;
+          height: 40px;
+          font-weight: bold !important;
+          font-size: small !important;
+          vertical-align: middle !important;
+          padding: 12px var(--tab-inline-padding) !important;
+          margin-bottom: 4px !important;
+          color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
 
-        #natsumi-workspace-indicator {
-          display: flex;
-          width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
-          height: 36px;
-          margin: var(--tab-block-margin) var(--tab-inner-inline-margin) !important;
-          margin-top: calc(var(--tab-block-margin) - 40px) !important;
-          position: absolute;
-          border-radius: var(--natsumi-tab-border-radius);
-          padding: 0 calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) !important;
-          align-items: center;
-          transition: background-color 0.2s ease, box-shadow 0.2s ease;
-
-          #natsumi-workspace-indicator-icon {
-            min-width: 16px;
-            height: 16px;
-            margin-right: var(--tab-icon-end-margin) !important;
-            background-image: var(--natsumi-workspace-icon);
-          }
-
-          #natsumi-workspace-indicator-name {
-            display: inline-block;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            width: -moz-available;
-            font-weight: bold !important;
-            font-size: small !important;
-            color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
-          }
-
-          &:hover {
-            background-color: var(--natsumi-button-hover-color) !important;
-          }
-
-          &:active {
-            background-color: var(--natsumi-button-active-color) !important;
-            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+          @media -moz-pref("natsumi.tabs.new-tab-on-top") {
+            margin-bottom: 38px !important;
           }
         }
       }
@@ -176,6 +151,19 @@ SOFTWARE.
 
       #tabbrowser-tabs:not([overflow]) #tabbrowser-arrowscrollbox::before {
         margin-bottom: 4px !important;
+      }
+
+      &[style*="--natsumi-workspace-icon"] {
+        #tabbrowser-arrowscrollbox {
+          &::before {
+            padding-left: calc(var(--tab-inline-padding) + 23px) !important;
+            background-image: var(--natsumi-workspace-icon) !important;
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position-x: var(--tab-inline-padding);
+            background-position-y: center;
+          }
+        }
       }
 
       &:not([sidebar-launcher-expanded]) {

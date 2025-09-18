@@ -366,104 +366,6 @@ class NatsumiPanelSidebarWorkspaces {
     }
 }
 
-class NatsumiWorkspaceIndicator {
-    // An indicator to show the current workspace in the tabs sidebar
-
-    constructor() {
-        this.workspacesWrapper = null;
-        this.indicatorNode = null;
-        this.tabsListNode = null;
-        this.verticalTabsMutationObserver = null;
-    }
-
-    init() {
-        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
-
-        // Set up observer
-        // This also runs the UI initialization so we can only run it once workspace data is available
-        if (this.workspacesWrapper.properInit) {
-            this.setVerticalTabsMutationObserver();
-        } else {
-            this.workspacesWrapper.dataRetrieveQueue.push(this.setVerticalTabsMutationObserver.bind(this));
-        }
-    }
-
-    addIndicator() {
-        // Remove existing indicator
-        let existingIndicator = document.getElementById("natsumi-workspace-indicator");
-        if (existingIndicator) {
-            existingIndicator.remove();
-        }
-
-        // Create workspace indicator
-        const indicatorXULString = `
-            <div id="natsumi-workspace-indicator">
-                <div id="natsumi-workspace-indicator-icon"></div>
-                <div id="natsumi-workspace-indicator-name"></div>
-            </div>
-        `
-        let indicatorFragment = convertToXUL(indicatorXULString);
-
-        // Append to sidebar then refetch indicator
-        let tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
-        tabsListNode.appendChild(indicatorFragment);
-
-        // Refetch indicator node
-        this.indicatorNode = document.getElementById("natsumi-workspace-indicator");
-
-        // Set click event listener
-        this.indicatorNode.addEventListener("click", () => {
-            if (this.workspacesWrapper) {
-                this.workspacesWrapper.showWorkspacesModal();
-            }
-        });
-
-        // Refresh data
-        this.refreshIndicator();
-    }
-
-    setVerticalTabsMutationObserver() {
-        const verticalTabsElement = document.getElementById("vertical-tabs");
-
-        if (this.verticalTabsMutationObserver) {
-            this.verticalTabsMutationObserver.disconnect();
-        }
-
-        // Check if #tabbrowser-tabs exists
-        this.verticalTabsMutationObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                const tabsListNode = document.getElementById("tabbrowser-tabs");
-                if (tabsListNode) {
-                    const needsUIInit = this.tabsListNode === null;
-                    this.tabsListNode = tabsListNode;
-
-                    if (needsUIInit) {
-                        this.addIndicator();
-                    }
-                } else {
-                    this.tabsListNode = null;
-                }
-            });
-        });
-
-        this.verticalTabsMutationObserver.observe(verticalTabsElement, {childList: true, subtree: true});
-    }
-
-    refreshIndicator() {
-        if (!this.indicatorNode) {
-            return;
-        }
-
-        // Get current workspace data
-        let currentWorkspaceData = getCurrentWorkspaceData();
-
-        // Set icon and name
-        this.indicatorNode.style.setProperty("--natsumi-workspace-icon", currentWorkspaceData["icon"]);
-        let nameNode = this.indicatorNode.querySelector("#natsumi-workspace-indicator-name");
-        nameNode.textContent = currentWorkspaceData["name"];
-    }
-}
-
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
@@ -603,10 +505,6 @@ if (isFloorp) {
         if (document.body.natsumiPanelSidebarWorkspaces) {
             document.body.natsumiPanelSidebarWorkspaces.refreshWorkspacesListIfNeeded();
         }
-
-        if (document.body.natsumiWorkspaceIndicator) {
-            document.body.natsumiWorkspaceIndicator.refreshIndicator();
-        }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
@@ -616,9 +514,5 @@ if (isFloorp) {
         // Initialize panel sidebar workspaces manager
         document.body.natsumiPanelSidebarWorkspaces = new NatsumiPanelSidebarWorkspaces();
         document.body.natsumiPanelSidebarWorkspaces.init();
-
-        // Initialize workspace indicator
-        document.body.natsumiWorkspaceIndicator = new NatsumiWorkspaceIndicator();
-        document.body.natsumiWorkspaceIndicator.init();
     })
 }
