@@ -38,7 +38,7 @@ function addAboutPane() {
                 <div id="natsumi-about-name">Natsumi Browser</div>
                 <div id="natsumi-about-version-container">
                     <div id="natsumi-about-version"></div>
-                    <div id="natsumi-about-stability-badge" hidden="${isStable}"></div>
+                    <div id="natsumi-about-stability-badge"></div>
                 </div>
                 <div class="natsumi-about-vertical-separator"></div>
                 <div id="natsumi-about-mission-container">
@@ -63,6 +63,11 @@ function addAboutPane() {
         versionNode.textContent = `${version} on ${browserName} ${forkedVersion} (Firefox ${browserVersion})`;
     } else {
         versionNode.textContent = `${version} on Firefox ${browserVersion}`;
+    }
+
+    let stabilityBadge = document.getElementById("natsumi-about-stability-badge");
+    if (isStable) {
+        stabilityBadge.setAttribute("hidden", "true");
     }
 }
 
