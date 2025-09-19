@@ -51,6 +51,12 @@ SOFTWARE.
           border-radius: 0 var(--natsumi-browser-border-radius) var(--natsumi-browser-border-radius) 0 !important;
         }
       }
+
+      @media not (-moz-platform: macos) {
+        browser {
+          border-radius: var(--natsumi-browser-border-radius) !important;
+        }
+      }
     }
 
     #statuspanel {
