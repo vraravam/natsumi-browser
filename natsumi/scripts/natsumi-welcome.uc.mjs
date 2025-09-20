@@ -153,6 +153,9 @@ class NatsumiWelcome {
                     ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
                     shouldNotify = true;
                 }
+            } else {
+                ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                shouldNotify = true;
             }
 
             // Add to notifications
