@@ -51,6 +51,12 @@ SOFTWARE.
           border-radius: 0 var(--natsumi-browser-border-radius) var(--natsumi-browser-border-radius) 0 !important;
         }
       }
+
+      @media not (-moz-platform: macos) {
+        browser {
+          border-radius: var(--natsumi-browser-border-radius) !important;
+        }
+      }
     }
 
     #statuspanel {
@@ -94,10 +100,13 @@ SOFTWARE.
 
 #sidebar-box {
   padding: 0 !important;
-  margin-right: var(--natsumi-browser-separation) !important;
   margin-bottom: var(--natsumi-browser-separation) !important;
   border: 1px solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
   border-radius: var(--natsumi-browser-border-radius) !important;
+}
+
+#sidebar-splitter {
+  width: var(--natsumi-browser-separation) !important;
 }
 
 #vertical-spacer {
@@ -106,6 +115,10 @@ SOFTWARE.
 
 #vertical-tabs {
   -moz-window-dragging: drag;
+
+  &[collapsed="false"] {
+    visibility: visible;
+  }
 }
 
 #nav-bar-customization-target, #PanelUI-button, #nora-statusbar, #status-bar {
