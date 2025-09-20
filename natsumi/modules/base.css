@@ -115,6 +115,10 @@ SOFTWARE.
 
 #vertical-tabs {
   -moz-window-dragging: drag;
+
+  &[collapsed="false"] {
+    visibility: visible;
+  }
 }
 
 #nav-bar-customization-target, #PanelUI-button, #nora-statusbar, #status-bar {
