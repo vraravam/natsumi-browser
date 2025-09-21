@@ -314,7 +314,7 @@ SOFTWARE.
 
 @media not -moz-pref("natsumi.tabs.hide-new-tab-button") {
   @media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs")  {
-    #tabbrowser-arrowscrollbox-periphery {
+    #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
       visibility: collapse !important;
     }
 
@@ -335,7 +335,11 @@ SOFTWARE.
 }
 
 @media -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  #tabbrowser-arrowscrollbox-periphery, #vertical-tabs-newtab-button {
+  #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
+    visibility: collapse !important;
+  }
+
+  #vertical-tabs-newtab-button {
     display: none !important;
   }
 }
