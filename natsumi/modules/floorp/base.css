@@ -123,28 +123,18 @@ SOFTWARE.
           padding: 12px var(--tab-inline-padding) !important;
           margin-bottom: 4px !important;
           color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
-
-          @media -moz-pref("natsumi.tabs.new-tab-on-top") {
-            margin-bottom: 38px !important;
-          }
         }
       }
 
       @media not -moz-pref("natsumi.tabs.hide-new-tab-button") {
         @media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs") {
-          #tabbrowser-tabs[overflow] {
-            #tabbrowser-arrowscrollbox {
-              padding-top: 78px !important;
-            }
+          #tabbrowser-arrowscrollbox::before {
+            position: absolute !important;
+            margin-top: calc(-44px - max(var(--floorp-tab-min-height, 36px), 36px)) !important;
+          }
 
-            #vertical-tabs-newtab-button {
-              margin-bottom: -90px !important;
-              margin-top: 49px !important;
-            }
-
-            #natsumi-workspace-indicator {
-              margin-top: -77px !important;
-            }
+          #vertical-tabs-newtab-button {
+            margin-top: calc(max(var(--floorp-tab-min-height, 36px), 36px) + 6px) !important;
           }
         }
       }
