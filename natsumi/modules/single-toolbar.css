@@ -201,7 +201,7 @@ SOFTWARE.
       }
     }
 
-    body:has(#PersonalToolbar[collapsed="true"]) #personal-toolbar-empty {
+    body:has(#PersonalToolbar[collapsed]) #personal-toolbar-empty {
       display: none;
     }
 
@@ -254,7 +254,7 @@ SOFTWARE.
     }
 
     @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
-      body:has(#PersonalToolbar[collapsed="false"]) {
+      body:has(#PersonalToolbar:not([collapsed])) {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           margin-top: calc(var(--natsumi-browser-separation) + 30px) !important;
 
@@ -265,7 +265,7 @@ SOFTWARE.
         }
       }
 
-      body:has(#PersonalToolbar[collapsed="true"]) {
+      body:has(#PersonalToolbar[collapsed]) {
         @media not -moz-pref("sidebar.position_start") {
           @media (-moz-platform: macos) {
             @media not (-moz-pref("natsumi.theme.force-window-controls-to-left")) {
@@ -278,7 +278,7 @@ SOFTWARE.
       }
     }
 
-    &[inDOMFullscreen="true"] #tabbrowser-tabbox, &[inDOMFullscreen="true"]:has(#PersonalToolbar[collapsed="false"]) #tabbrowser-tabbox {
+    &[inDOMFullscreen="true"] #tabbrowser-tabbox, &[inDOMFullscreen="true"]:has(#PersonalToolbar:not([collapsed])) #tabbrowser-tabbox {
       transition: none !important;
       margin-top: 0 !important;
     }

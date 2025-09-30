@@ -121,7 +121,7 @@ SOFTWARE.
       }
     }
 
-    &:has(#PersonalToolbar[collapsed="false"]) #sidebar-main {
+    &:has(#PersonalToolbar:not([collapsed])) #sidebar-main {
       @media (
         not -moz-pref("natsumi.theme.compact-style", "toolbar")
       ) or -moz-pref("natsumi.theme.single-toolbar") {
@@ -230,7 +230,7 @@ SOFTWARE.
           opacity: 0 !important;
         }
 
-        &:has(#PersonalToolbar[collapsed="false"]) {
+        &:has(#PersonalToolbar:not([collapsed])) {
           --natsumi-compact-bookmarks-height: 28px !important;
         }
 
