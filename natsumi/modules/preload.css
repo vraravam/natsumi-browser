@@ -75,6 +75,10 @@ SOFTWARE.
   @media (-moz-platform: macos) or (-moz-platform: linux) {
     --natsumi-tab-border-radius: 12px;
   }
+
+  @media (-moz-platform: macos) {
+    --natsumi-browser-border-radius: 12px;
+  }
 }
 
 .tabbrowser-tab {
