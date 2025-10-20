@@ -103,7 +103,7 @@ SOFTWARE.
 
   &:has(#nora-statusbar:not(.hidden)), &:has(#nora-statusbar:not([style*="display:none"])) {
     #browser::before {
-      bottom: -40px !important;
+      top: -40px !important;
     }
   }
 
