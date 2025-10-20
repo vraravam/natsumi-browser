@@ -393,7 +393,7 @@ licenses are listed below.
   
   License: GPLv3
   
-  File used: `Borealis/stereo/desktop-login.ogg`
+  File used: `Borealis/stereo/desktop-login.ogg`, `Borealis/stereo/K3b_success.ogg`
   
   Changes made: none
   
