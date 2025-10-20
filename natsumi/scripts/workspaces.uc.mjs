@@ -32,11 +32,6 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
-function convertToXUL(node) {
-    // noinspection JSUnresolvedReference
-    return window.MozXULElement.parseXULToFragment(node);
-}
-
 class NatsumiWorkspacesWrapper {
     // A wrapper class for managing workspaces in Floorp directly from the window
     constructor() {
@@ -153,216 +148,6 @@ class NatsumiWorkspacesWrapper {
 
         // Show workspaces config modal
         await this.modalManager.showWorkspacesModal(workspaceId);
-    }
-}
-
-class NatsumiPanelSidebarWorkspaces {
-    // A class to bring back workspaces management in the panel sidebar, a Floorp 11
-    // feature requested for Floorp 12.
-    // Standalone MIT-licensed version: https://github.com/greeeen-dev/floorp-sidebar-workspaces
-
-    constructor() {
-        this.browserMutationObserver = null;
-        this.panelSidebarNode = null;
-        this.workspacesWrapper = null;
-        this.shownWorkspaces = [];
-    }
-
-    init() {
-        this.setBrowserMutationObserver();
-        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
-
-        // Get panel sidebar node (if possible)
-        const sidebarSelectBox = document.getElementById("panel-sidebar-select-box");
-        if (sidebarSelectBox) {
-            this.panelSidebarNode = sidebarSelectBox;
-        }
-
-        // Set up observer
-        // This also runs the UI initialization so we can only run it once workspace data is available
-        if (this.workspacesWrapper.properInit) {
-            this.setBrowserMutationObserver();
-        } else {
-            this.workspacesWrapper.dataRetrieveQueue.push(this.setBrowserMutationObserver.bind(this));
-        }
-    }
-
-    setBrowserMutationObserver() {
-        const browserElement = document.getElementById("browser");
-
-        if (this.browserMutationObserver) {
-            this.browserMutationObserver.disconnect();
-        }
-
-        // Check if #panel-sidebar-select-box exists
-        this.browserMutationObserver = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                const sidebarSelectBox = document.getElementById("panel-sidebar-select-box");
-                if (sidebarSelectBox) {
-                    const needsUIInit = this.panelSidebarNode === null;
-                    this.panelSidebarNode = sidebarSelectBox;
-
-                    if (needsUIInit) {
-                        this.initWorkspacesList();
-                    }
-                } else {
-                    this.panelSidebarNode = null;
-                }
-            });
-        });
-
-        this.browserMutationObserver.observe(browserElement, {childList: true, subtree: true});
-    }
-
-    initWorkspacesList() {
-        if (!this.panelSidebarNode) {
-            return;
-        }
-
-        // Check if workspaces list already exists
-        let workspacesList = document.getElementById("natsumi-panel-sidebar-workspaces")
-        if (workspacesList) {
-            return;
-        }
-
-        // Create workspaces list container
-        workspacesList = document.createElement("div");
-        workspacesList.id = "natsumi-panel-sidebar-workspaces";
-        this.panelSidebarNode.appendChild(workspacesList);
-
-        // Also add a spacer
-        let sidebarSpacer = document.createXULElement("spacer");
-        sidebarSpacer.id = "natsumi-panel-sidebar-workspaces-spacer"
-        sidebarSpacer.setAttribute("flex", "1");
-        this.panelSidebarNode.appendChild(sidebarSpacer);
-
-        // Re-add workspaces
-        this.refreshWorkspacesList();
-    }
-
-    refreshWorkspacesListIfNeeded() {
-        if (!this.panelSidebarNode) {
-            return;
-        }
-
-        let workspaceIds = this.workspacesWrapper.getAllWorkspaceIDs();
-        if (workspaceIds.length > 0) {
-            // Check 1: check the workspaces data length
-            if (workspaceIds.length !== this.shownWorkspaces.length) {
-                this.refreshWorkspacesList();
-            } else {
-                // Check 2: compare workspace IDs
-                for (let index in workspaceIds) {
-                    let workspaceId = workspaceIds[index];
-                    if (!this.shownWorkspaces.includes(workspaceId)) {
-                        this.refreshWorkspacesList();
-                        break;
-                    }
-                }
-            }
-
-            // Update the selected workspace
-            this.refreshSelectedWorkspace();
-        }
-    }
-
-    refreshWorkspacesList() {
-        if (!this.panelSidebarNode) {
-            return;
-        }
-
-        // Get workspaces list
-        let workspacesList = document.getElementById("natsumi-panel-sidebar-workspaces");
-        if (!workspacesList) {
-            return;
-        }
-
-        // Clear existing workspaces
-        while (workspacesList.firstChild) {
-            workspacesList.removeChild(workspacesList.firstChild);
-        }
-        this.shownWorkspaces = [];
-
-        // Get workspace data
-        let workspacesData = {};
-        if (ucApi.Prefs.get("floorp.workspaces.v4.store").exists()) {
-            workspacesData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
-        }
-
-        // Add workspaces
-        if (workspacesData["data"]) {
-            for (let index in workspacesData["data"]) {
-                // Get workspace data
-                let workspaceId = workspacesData["data"][index][0];
-                let workspaceIcon = workspacesData["data"][index][1]["icon"];
-
-                if (!workspaceIcon) {
-                    workspaceIcon = `url("chrome://noraneko/content/assets/svg/fingerprint.svg")`;
-                } else {
-                    workspaceIcon = `url("chrome://noraneko/content/assets/svg/${workspaceIcon}.svg")`;
-                }
-
-                // Create workspace button
-                let workspaceButton = document.createElement("div");
-                workspaceButton.classList.add("natsumi-panel-sidebar-workspace");
-                workspaceButton.style.setProperty("--natsumi-workspace-icon", workspaceIcon);
-                workspaceButton.setAttribute("workspace", workspaceId);
-                workspacesList.appendChild(workspaceButton);
-
-                // Set selected attribute if this is the current workspace
-                if (this.workspacesWrapper.getCurrentWorkspaceID() === workspaceId) {
-                    workspaceButton.setAttribute("selected", "");
-                }
-
-                // Add event listener
-                workspaceButton.addEventListener("click", () => {
-                    if (this.workspacesWrapper) {
-                        this.workspacesWrapper.setCurrentWorkspaceID(workspaceId);
-                    }
-                });
-            }
-
-            // Create "Add Workspace" button
-            let addWorkspaceButton = document.createElement("div");
-            addWorkspaceButton.id = "natsumi-panel-sidebar-add-workspace";
-            addWorkspaceButton.classList.add("natsumi-panel-sidebar-workspace");
-
-            // Add event listener to add workspace button
-            addWorkspaceButton.addEventListener("click", () => {
-                if (this.workspacesWrapper) {
-                    this.workspacesWrapper.createWorkspace();
-                    this.refreshWorkspacesList();
-                }
-            });
-
-            // Add workspaces to shown workspaces
-            workspacesList.appendChild(addWorkspaceButton);
-        }
-    }
-
-    refreshSelectedWorkspace() {
-        if (!this.panelSidebarNode) {
-            return;
-        }
-
-        // Get workspaces list
-        let workspacesList = document.getElementById("natsumi-panel-sidebar-workspaces");
-        if (!workspacesList) {
-            return;
-        }
-
-        // Get current workspace ID
-        let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
-
-        // Update selected attribute
-        const workspaceButtons = workspacesList.querySelectorAll(".natsumi-panel-sidebar-workspace");
-        workspaceButtons.forEach((button) => {
-            if (button.getAttribute("workspace") === currentWorkspaceId) {
-                button.setAttribute("selected", "");
-            } else {
-                button.removeAttribute("selected");
-            }
-        });
     }
 }
 
@@ -501,18 +286,12 @@ if (isFloorp) {
         copyWorkspaceName();
         copyAllWorkspaces();
         copyAllWorkspaces();
-
-        if (document.body.natsumiPanelSidebarWorkspaces) {
-            document.body.natsumiPanelSidebarWorkspaces.refreshWorkspacesListIfNeeded();
-        }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
     document.body.natsumiWorkspacesWrapper.init().then(() => {
-        // Initialize panel sidebar workspaces manager
-        document.body.natsumiPanelSidebarWorkspaces = new NatsumiPanelSidebarWorkspaces();
-        document.body.natsumiPanelSidebarWorkspaces.init();
+        // We don't really need to do anything here, but it's good to keep this just in case
     })
 }
