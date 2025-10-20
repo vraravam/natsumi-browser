@@ -269,7 +269,6 @@ SOFTWARE.
       & > .tab-stack > .tab-background {
         &::after {
           width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
-          left: auto;
         }
       }
     }
