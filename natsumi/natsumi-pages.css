@@ -42,6 +42,5 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "content/preferences-about.css";
 @import "content/global.css";
 @import "content/floorp/preferences.css";
-@import "content/firefox/preferences.css";
 
 /* Do NOT enter any additional CSS below. */
