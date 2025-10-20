@@ -95,18 +95,62 @@ class NatsumiWelcome {
                 </div>
             </div>
         `);
+        this.drumRolls = convertToXUL(`
+            <div id="natsumi-welcome-drumroll-progress" class="natsumi-welcome-drumroll">
+                <div class="natsumi-welcome-drumroll-icon"></div>
+                <div class="natsumi-welcome-drumroll-text"></div>
+            </div>
+            <div id="natsumi-welcome-drumroll-complete" class="natsumi-welcome-drumroll">
+                <div class="natsumi-welcome-drumroll-icon"></div>
+                <div class="natsumi-welcome-drumroll-text">
+                    Welcome to Natsumi                    
+                </div>
+            </div>
+        `)
+        this.drumRollCombos = [
+            {
+                "icon": "chrome://natsumi/content/icons/lucide/drum.svg",
+                "text": "Drumroll please..."
+            },
+            {
+                "icon": "chrome://natsumi/content/icons/lucide/rocket.svg",
+                "text": "Preparing for liftoff..."
+            },
+            {
+                "icon": "chrome://natsumi/content/icons/lucide/fire.svg",
+                "text": "Warming up..."
+            }
+        ]
         this.panes = []
         this.step = -1;
         this.node = null;
 
         document.body.setAttribute("natsumi-welcome", "");
         document.body.appendChild(this.welcomeNode);
+
+        // Add drumroll screens
+        let welcomeNode = document.getElementById("natsumi-welcome");
+        welcomeNode.appendChild(this.drumRolls);
+
+        // Create welcome audio
+        const drumrollAudioUrl = "https://github.com/MX-Linux/mx-sound-theme-borealis/raw/refs/heads/master/Borealis/stereo/K3b_success.ogg";
+        this.drumrollAudio = new Audio(drumrollAudioUrl);
+        this.drumrollAudio.load();
+        this.drumrollAudio.volume = 0.2;
     }
 
     start() {
         let welcomeNode = document.querySelector("#natsumi-welcome");
         welcomeNode.classList.add("natsumi-welcome-initial-animation");
         this.node = welcomeNode;
+
+        // Set drumroll text and icon
+        let drumRollIndex = Math.floor(Math.random() * this.drumRollCombos.length);
+        const drumRollText = this.drumRollCombos[drumRollIndex].text;
+        const drumRollIcon = this.drumRollCombos[drumRollIndex].icon;
+        document.body.style.setProperty("--natsumi-welcome-drumroll-icon", `url("${drumRollIcon}")`);
+        let drumrollProgressTextNode = document.querySelector("#natsumi-welcome-drumroll-progress .natsumi-welcome-drumroll-text");
+        drumrollProgressTextNode.textContent = drumRollText;
     }
 
     addPane(pane) {
@@ -143,40 +187,65 @@ class NatsumiWelcome {
         }
 
         if (this.step === this.panes.length) {
-            document.body.removeAttribute("natsumi-welcome");
+            // Let the drumroll commence
             ucApi.Prefs.set("natsumi.welcome.viewed", true);
+            this.drumrollAudio.play().catch((error) => {
+                console.warn("Failed to play audio:", error);
+            });
 
-            // Also set userChromeJS.persistent_domcontent_callback to true
-            let shouldNotify = false;
-            if (ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").exists()) {
-                if (!ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").value) {
-                    ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
-                    shouldNotify = true;
-                }
-            } else {
-                ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
-                shouldNotify = true;
-            }
+            waitForAudioLoad(this.drumrollAudio).then(() => {
+                document.body.setAttribute("natsumi-welcome-complete", "");
 
-            // Add to notifications
-            let notificationObject = new NatsumiNotification(
-                "Welcome to Natsumi!",
-                "You can always customize Natsumi to your likings in the preferences page.",
-                "chrome://natsumi/content/icons/lucide/party.svg",
-                10000
-            )
-            notificationObject.addToContainer();
+                setTimeout(() => {
+                    // Show welcome complete drumroll
+                    document.body.setAttribute("natsumi-welcome-drumroll-complete", "");
+                }, 2800);
 
-            if (shouldNotify) {
-                let restartNotificationObject = new NatsumiNotification(
-                    "Restart required",
-                    "You may need to restart your browser for some features to work.",
-                    "chrome://natsumi/content/icons/lucide/warning.svg",
-                    10000,
-                    "warning"
-                )
-                restartNotificationObject.addToContainer();
-            }
+                setTimeout(() => {
+                    // Remove drumrolls
+                    document.body.setAttribute("natsumi-welcome-complete-full", "");
+                }, 4300);
+
+                setTimeout(() => {
+                    // We're finally through with the welcome
+                    document.body.removeAttribute("natsumi-welcome");
+                    document.body.removeAttribute("natsumi-welcome-complete");
+                    document.body.removeAttribute("natsumi-welcome-drumroll-complete");
+                    document.body.removeAttribute("natsumi-welcome-complete-full");
+
+                    // Also set userChromeJS.persistent_domcontent_callback to true
+                    let shouldNotify = false;
+                    if (ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").exists()) {
+                        if (!ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").value) {
+                            ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                            shouldNotify = true;
+                        }
+                    } else {
+                        ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                        shouldNotify = true;
+                    }
+
+                    // Add to notifications
+                    let notificationObject = new NatsumiNotification(
+                        "Welcome to Natsumi!",
+                        "You can always customize Natsumi to your likings in the preferences page.",
+                        "chrome://natsumi/content/icons/lucide/party.svg",
+                        10000
+                    )
+                    notificationObject.addToContainer();
+
+                    if (shouldNotify) {
+                        let restartNotificationObject = new NatsumiNotification(
+                            "Restart required",
+                            "You may need to restart your browser for some features to work.",
+                            "chrome://natsumi/content/icons/lucide/warning.svg",
+                            10000,
+                            "warning"
+                        )
+                        restartNotificationObject.addToContainer();
+                    }
+                }, 4800);
+            });
             return;
         }
 
@@ -409,7 +478,7 @@ function createURLbarPane() {
     natsumiWelcomeObject.addPane(themesPane);
 }
 
-const audioUrl = "https://github.com/MX-Linux/mx-sound-theme-borealis/raw/refs/heads/master/Borealis/stereo/desktop-login.ogg";
+const welcomeAudioUrl = "https://github.com/MX-Linux/mx-sound-theme-borealis/raw/refs/heads/master/Borealis/stereo/desktop-login.ogg";
 
 let welcomeViewed = false;
 if (ucApi.Prefs.get("natsumi.welcome.viewed").exists()) {
@@ -425,7 +494,7 @@ if (!welcomeViewed) {
     createURLbarPane();
 
     // Play welcome audio
-    let audio = new Audio(audioUrl);
+    let audio = new Audio(welcomeAudioUrl);
     audio.load();
     audio.volume = 0.2;
     audio.play().catch((error) => {
