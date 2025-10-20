@@ -32,11 +32,15 @@ SOFTWARE.
 // literally just a script for meowing because i felt cute :3
 // also does initial setup for natsumi stuff
 
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 import {applyCustomColor, applyCustomTheme} from "./custom-theme.sys.mjs";
 
 function makeCatNoisesAndDoSomeVeryCuteInitialSetupBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoisesAndSomeSetup() {
     // Set Natsumi Append installed status
     document.body.setAttribute("natsumi-append-installed", "");
+
+    // Ensure icons work on Firefox
+    ucApi.Prefs.set("svg.context-properties.content.enabled", true);
 
     // Apply customizations
     applyCustomTheme();

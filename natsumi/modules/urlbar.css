@@ -766,7 +766,7 @@ SOFTWARE.
         border-color: transparent !important;
 
         .urlbar-input-container {
-          max-width: 300px !important;
+          max-width: min(300px, 100%) !important;
           left: calc(50% - 150px) !important;
           transition: max-width 0.2s ease 0.5s, left 0.2s ease 0.5s;
         }

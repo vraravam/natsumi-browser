@@ -86,6 +86,9 @@ class CustomThemePicker {
         if (this.singleColor) {
             this.data = {"color": {}};
         }
+
+        // Shift pressed
+        this.shiftPressed = false;
     }
 
     init() {
@@ -299,6 +302,12 @@ class CustomThemePicker {
                 let relativeY = event.clientY - gradientAngleNode.getBoundingClientRect().top;
                 this.moveAngle(relativeX, relativeY);
             });
+        });
+        document.addEventListener("keydown", (event) => {
+            this.shiftPressed = event.shiftKey;
+        })
+        document.addEventListener("keyup", (event) => {
+            this.shiftPressed = event.shiftKey;
         });
     }
 
@@ -937,7 +946,18 @@ class CustomThemePicker {
         // Only allow angle modification since radial gradients don't have angles to adjust
         if (this.gradientType === "linear" || this.gradientType === "conic") {
             const angleData = this.calculateAngleRadius(relativeX, relativeY, angleNode.getBoundingClientRect().width, angleNode.getBoundingClientRect().height, false, true);
-            this.angle = angleData["angle"];
+            let newAngle = angleData["angle"];
+
+            if (this.shiftPressed) {
+                // Snap to nearest 15 degree increment
+                newAngle = Math.round(newAngle / 15) * 15;
+            }
+
+            if (newAngle === 360) {
+                this.angle = 0;
+            }
+
+            this.angle = newAngle;
         }
 
         this.renderAngle();
@@ -956,6 +976,12 @@ class CustomThemePicker {
 
         // The sliders are inverted (left = 1, right = 0), so we'd need to factor that in
         let sliderValue = 1 - (relativeX / sliderWidth);
+
+        if (this.shiftPressed) {
+            // Snap to nearest 0.1 increment
+            sliderValue = Math.round(sliderValue * 10) / 10;
+            relativeX = Math.round(sliderWidth * (1 - sliderValue));
+        }
 
         if (this.lastSelected === null) {
             // No color selected here, so we can't modify its properties
@@ -1870,13 +1896,6 @@ function addSidebarWorkspacesPane() {
         "natsumiSidebarWorkspacesAsIcons",
         "Display Workspaces as an icon strip",
         "This does not make each icon clickable to switch Workspaces (for now)."
-    ));
-
-    workspacesGroup.registerOption("natsumiSidebarPanelSidebarWorkspaces", new CheckboxChoice(
-        "natsumi.sidebar.panel-sidebar-workspaces",
-        "natsumiSidebarPanelSidebarWorkspaces",
-        "Show workspaces on the Panel Sidebar",
-        "This will allow you to manage your workspaces from the Panel Sidebar (like in Floorp 11)."
     ));
 
     let sidebarWorkspacesNode = workspacesGroup.generateNode();

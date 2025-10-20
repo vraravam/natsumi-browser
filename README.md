@@ -267,7 +267,7 @@ All browsers must be based on Firefox 137 or above.
 
 | Browser     | Status                        | Versions | Notes                                                              |
 |-------------|-------------------------------|----------|--------------------------------------------------------------------|
-| Floorp      | :star: Recommended            | 12+      | Natsumi works best on Floorp!                                      |
+| Floorp      | :star: Recommended            | 12.3.0+  | Natsumi works best on Floorp!                                      |
 | Firefox     | :white_check_mark: Supported  | 137+     |                                                                    |
 | Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                                    |
 | Librewolf   | :white_check_mark: Supported  | 137+     | May have performance issues, but other than that fully compatible. |

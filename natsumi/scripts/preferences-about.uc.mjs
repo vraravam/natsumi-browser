@@ -24,8 +24,8 @@ function addAboutPane() {
     let forkedVersion = AppConstants.MOZ_APP_VERSION_DISPLAY;
 
     if (browserName.toLowerCase() === "floorp") {
-        // Browser version format: [Firefox version]@[Floorp version] (e.g. 142.0.2@12.1.14)
-        forkedVersion = forkedVersion.split("@")[1];
+        // Browser version format: [Floorp version]@[Firefox version] (e.g. 12.3.0@144.0)
+        forkedVersion = forkedVersion.split("@")[0];
     }
 
     let nodeString = `

@@ -167,7 +167,7 @@ SOFTWARE.
         display: flex;
         flex-basis: 100% !important;
 
-        &:is([hidden="true"]) {
+        &[hidden=""] {
           display: none;
         }
       }

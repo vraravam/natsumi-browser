@@ -152,7 +152,7 @@ SOFTWARE.
   }
 }
 
-:root[data-title-default="Ablaze Floorp"] {
+@media -moz-pref("natsumi.browser.type", "floorp") {
   #tabbrowser-tabpanels {
     /* Hide browser windows that aren't open */
     .browserSidebarContainer:not(.deck-selected):not([split="true"]) {
@@ -281,12 +281,20 @@ SOFTWARE.
     #natsumi-split-view-splitter {
       position: absolute;
     }
+
     &:has(#tabbrowser-tabpanels[style*="flex-direction: row"]) {
       #natsumi-split-view-splitter {
         min-width: var(--natsumi-browser-separation) !important;
         height: 100%;
         cursor: col-resize !important;
-        left: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+
+        &:not(:active) {
+          left: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+        }
+
+        &:active {
+          width: 100% !important;
+        }
       }
     }
 
@@ -295,7 +303,14 @@ SOFTWARE.
         width: 100%;
         min-height: var(--natsumi-browser-separation) !important;
         cursor: row-resize !important;
-        top: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+
+        &:not(:active) {
+          top: calc(var(--natsumi-split-size, 50%) - calc(var(--natsumi-browser-separation) / 2)) !important;
+        }
+
+        &:active {
+          height: 100% !important;
+        }
       }
     }
   }

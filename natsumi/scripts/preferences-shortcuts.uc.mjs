@@ -223,6 +223,9 @@ let shortcutsMap = {
     "tools": {
         "name": "Tools",
         "shortcuts": {
+            "toggleNatsumiToolkit": {
+                "name": "Toggle Toolkit"
+            },
             "key_openDownloads": {
                 "name": "Open Downloads"
             },

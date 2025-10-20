@@ -42,6 +42,8 @@ class NatsumiPatch {
 class NatsumiPatchesManager {
     static patches = [
         new NatsumiPatch("floorp-12-2-0-navbar", "floorp", "12.2.0"),
+        new NatsumiPatch("floorp-12-3-0-navbar", "floorp", "12.3.0"),
+        new NatsumiPatch("floorp-12-3-0-undo-closed-tab", "floorp", "12.3.0"),
     ]
 
     static getPatches() {
@@ -51,8 +53,8 @@ class NatsumiPatchesManager {
         let forkedVersion = AppConstants.MOZ_APP_VERSION_DISPLAY;
 
         if (browserName.toLowerCase() === "floorp") {
-            // Browser version format: [Firefox version]@[Floorp version] (e.g. 142.0.2@12.1.14)
-            forkedVersion = forkedVersion.split("@")[1];
+            // Browser version format: [Floorp version]@[Firefox version] (e.g. 12.3.0@144.0)
+            forkedVersion = forkedVersion.split("@")[0];
         }
 
         if (forkedFox) {

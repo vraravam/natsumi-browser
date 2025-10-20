@@ -137,8 +137,40 @@ SOFTWARE.
   }
 }
 
+@keyframes drumroll-progress {
+  0% {
+    opacity: 1;
+    scale: 1;
+  }
+
+  75% {
+    opacity: 1;
+    scale: 1;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 0.7;
+  }
+}
+
+@keyframes drumroll-complete {
+  0% {
+    scale: 1;
+  }
+
+  50% {
+    scale: 1.2;
+  }
+
+  100% {
+    scale: 1;
+  }
+}
+
 #natsumi-welcome {
   position: absolute;
+  display: grid;
   width: 100vw;
   height: 100vh;
   z-index: 998 !important;
@@ -178,6 +210,8 @@ SOFTWARE.
   }
 
   #natsumi-welcome-content {
+    grid-row-start: 1;
+    grid-column-start: 1;
     width: 60%;
     height: 60%;
     border-radius: 15px;
@@ -539,17 +573,120 @@ SOFTWARE.
       }
     }
   }
+
+  /* Drumrolls */
+  .natsumi-welcome-drumroll {
+    display: none;
+    grid-row-start: 1;
+    grid-column-start: 1;
+    margin: auto !important;
+
+    .natsumi-welcome-drumroll-icon {
+      width: 36px;
+      height: 36px;
+      background-size: 36px;
+      -moz-context-properties: stroke, stroke-opacity !important;
+      stroke: light-dark(black, white);
+      margin-inline: auto !important;
+    }
+
+    .natsumi-welcome-drumroll-text {
+      font-size: x-large;
+      font-weight: bold;
+    }
+  }
+
+  #natsumi-welcome-drumroll-progress {
+    .natsumi-welcome-drumroll-icon {
+      background-image: var(--natsumi-welcome-drumroll-icon);
+    }
+  }
+
+  #natsumi-welcome-drumroll-complete {
+    .natsumi-welcome-drumroll-icon {
+      background-image: url("../icons/lucide/party.svg");
+    }
+  }
 }
 
-body[natsumi-welcome] {
+body[natsumi-welcome-complete] {
   #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
-    display: none !important;
-    opacity: 0 !important;
+    opacity: 0;
+    transition: opacity 0.3s ease !important;
     pointer-events: none !important;
   }
 
   #sidebar-main, #TabsToolbar-customization-target {
+    opacity: 0;
+    transition: opacity 0.3s ease !important;
+    pointer-events: none !important;
+  }
+
+  #natsumi-welcome-content-body, #natsumi-welcome-button-next {
+    display: none;
+  }
+
+  #natsumi-welcome-drumroll-progress {
+    display: block;
+    animation: drumroll-progress 1.5s linear;
+    animation-fill-mode: forwards;
+  }
+
+  #natsumi-welcome-content {
+    transition: opacity 0.3s ease !important;
     opacity: 0 !important;
+  }
+}
+
+body[natsumi-welcome-drumroll-complete] {
+  #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
+    opacity: 0.5;
+  }
+
+  #sidebar-main, #TabsToolbar-customization-target {
+    opacity: 0.5;
+  }
+
+  #natsumi-welcome-drumroll-progress {
+    display: none !important;
+  }
+
+  #natsumi-welcome-drumroll-complete {
+    display: block !important;
+
+    .natsumi-welcome-drumroll-icon {
+      animation: drumroll-complete 0.3s linear;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+body[natsumi-welcome-complete-full] {
+  #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
+    opacity: 1;
+  }
+
+  #sidebar-main, #TabsToolbar-customization-target {
+    opacity: 1;
+  }
+
+  #natsumi-welcome-drumroll-complete {
+    transition: opacity 0.3s ease !important;
+    opacity: 0 !important;
+  }
+}
+
+body[natsumi-welcome] {
+  &:not([natsumi-welcome-complete]) {
+    #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels, #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar {
+      display: none !important;
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+  }
+
+  #sidebar-main, #TabsToolbar-customization-target {
+    opacity: 0;
     pointer-events: none !important;
   }
 

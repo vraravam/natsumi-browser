@@ -117,4 +117,12 @@ export class NatsumiShortcutActions {
         const newWorkspaceId = workspaceIds[currentWorkspaceIndex];
         document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(newWorkspaceId);
     }
+
+    static toggleNatsumiToolkit() {
+        if (document.body.hasAttribute("natsumi-toolkit")) {
+            document.body.removeAttribute("natsumi-toolkit");
+        } else {
+            document.body.setAttribute("natsumi-toolkit", "");
+        }
+    }
 }
