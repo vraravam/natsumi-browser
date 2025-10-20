@@ -96,6 +96,7 @@ SOFTWARE.
 
 #sidebar {
   box-shadow: none !important;
+  border-radius: var(--natsumi-browser-border-radius) !important;
 }
 
 #sidebar-box {
@@ -154,6 +155,13 @@ SOFTWARE.
       .toolbarbutton-icon {
         background-color: var(--natsumi-button-active-color) !important;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      }
+
+      &:hover {
+        .toolbarbutton-icon {
+          background-color: var(--natsumi-button-active-color) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
       }
     }
   }
