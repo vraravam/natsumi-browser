@@ -316,7 +316,11 @@ If you try to apply Natsumi on Chrome/Chromium-based browsers like Arc, you can'
 userchrome CSS files, making Natsumi completely incompatible with those browsers.
 
 ### "I don't like the design, please change it!"
-If I like the design, nah. My personal skin, my rules.
+Although Natsumi is designed to be as customizable as possible, there may be some opinionated
+design choices that I may not change. In the end, Natsumi is still my personal browser skin.
+
+If you would like me to add options for certain aspects of the browser, please open a feature request
+and I will consider it.
 
 ### "Can I use your code for my browser?"
 If your browser is open-source and licensed under the GPLv3 or later (or AGPLv3 or later), then yes.
