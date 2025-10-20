@@ -39,6 +39,7 @@ class NatsumiWorkspacesWrapper {
         this.workspacesContext = null;
         this.modalManager = null;
         this.tabManager = null;
+        this.iconManager = null;
         this.initialized = false;
         this.properInit = false;
         this.initInterval = null;
@@ -46,8 +47,8 @@ class NatsumiWorkspacesWrapper {
     }
 
     async init() {
-        this.workspacesModule = await import("chrome://noraneko/content/assets/js/modules/workspaces.js");
-        let workspacesContext = this.workspacesModule.default.getCtx();
+        this.workspacesModule = await import("chrome://noraneko/content/assets/js/index22.js");
+        let workspacesContext = this.workspacesModule._.getCtx();
 
         if (workspacesContext) {
             this.setManagers(workspacesContext);
@@ -66,7 +67,7 @@ class NatsumiWorkspacesWrapper {
         }
 
         this.initInterval = setInterval(() => {
-            let workspacesContext = this.workspacesModule.default.getCtx();
+            let workspacesContext = this.workspacesModule._.getCtx();
             if (workspacesContext) {
                 console.log("Workspaces context retrieved, initializing now.");
 
@@ -91,6 +92,7 @@ class NatsumiWorkspacesWrapper {
         this.workspacesContext = workspacesContext;
         this.modalManager = workspacesContext.modalCtx;
         this.tabManager = workspacesContext.tabManagerCtx;
+        this.iconManager = workspacesContext.iconCtx;
     }
 
     getCurrentWorkspaceID() {
@@ -149,6 +151,10 @@ class NatsumiWorkspacesWrapper {
         // Show workspaces config modal
         await this.modalManager.showWorkspacesModal(workspaceId);
     }
+
+    getWorkspaceIconUrl(icon) {
+        return this.iconManager.getWorkspaceIconUrl(icon);
+    }
 }
 
 function getCurrentWorkspaceData() {
@@ -178,9 +184,9 @@ function getCurrentWorkspaceData() {
             workspaceIcon = workspace[1]["icon"]
 
             if (!workspaceIcon) {
-                workspaceIcon = `url("chrome://noraneko/content/assets/svg/fingerprint.svg")`;
+                workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
             } else {
-                workspaceIcon = `url("chrome://noraneko/content/assets/svg/${workspaceIcon}.svg")`;
+                workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl(workspaceIcon)})`;
             }
 
             break;
@@ -223,9 +229,9 @@ function copyAllWorkspaces() {
         let workspaceIcon = workspace[1]["icon"];
 
         if (!workspaceIcon) {
-            workspaceIcon = `url('chrome://noraneko/content/assets/svg/fingerprint.svg')`;
+            workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
         } else {
-            workspaceIcon = `url('chrome://noraneko/content/assets/svg/${workspaceIcon}.svg')`;
+            workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl(workspaceIcon)})`;
         }
 
         let newButtonNode = document.createElement("div");
@@ -259,6 +265,37 @@ if (isFloorp) {
                 let newWorkspacesButton = document.getElementById("workspaces-toolbar-button");
                 if (newWorkspacesButton) {
                     copyAllWorkspaces();
+
+                    // Ensure workspace button is always visible
+                    let isVerticalTabs = ucApi.Prefs.get("sidebar.verticalTabs").value;
+                    if (isVerticalTabs && newWorkspacesButton.parentNode.id === "TabsToolbar-customization-target") {
+                        // This shouldn't be here
+                        let targetStatusbar = false;
+                        if (ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").exists) {
+                            targetStatusbar = ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").value;
+                        }
+
+                        if (targetStatusbar) {
+                            let statusBar = document.getElementById("nora-statusbar");
+                            let existingButtons = statusBar.querySelectorAll("toolbarbutton");
+
+                            if (existingButtons.length === 2) {
+                                statusBar.insertBefore(newWorkspacesButton, existingButtons[1]);
+                            } else {
+                                statusBar.appendChild(newWorkspacesButton);
+                            }
+                        } else {
+                            let navbarTarget = document.getElementById("nav-bar-customization-target");
+                            let sidebarNode = navbarTarget.querySelector("sidebar-button");
+
+                            if (sidebarNode) {
+                                navbarTarget.insertBefore(newWorkspacesButton, sidebarNode.nextSibling);
+                            } else {
+                                navbarTarget.insertBefore(newWorkspacesButton, navbarTarget.firstChild);
+                            }
+                        }
+                    }
+
                     toolbarsObserver.disconnect(); // Stop observing once the button exists
                 }
             });

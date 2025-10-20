@@ -26,11 +26,22 @@ SOFTWARE.
 
 /* ==== Floorp patches ==== */
 
-/* Floorp 12.2.0 patch: show navbar on macOS fullscreen */
+/* Floorp 12.2.0/12.3.0 patch: show navbar on macOS fullscreen */
 :root[sizemode="fullscreen"]:not([inDOMFullscreen="true"]) {
   @media (-moz-platform: macos) and (not -moz-pref("natsumi.theme.disable-patches")) {
-    body[natsumi-patches*="floorp-12-2-0-navbar"] #nav-bar {
-      display: flex !important;
+    body[natsumi-patches*="floorp-12-2-0-navbar"], body[natsumi-patches*="floorp-12-3-0-navbar"] {
+      #nav-bar {
+        display: flex !important;
+      }
+    }
+  }
+}
+
+/* Floorp 12.3.0 patch: allow hiding the undo closed tab button that keeps being added to toolbar */
+body[natsumi-patches*="floorp-12-3-0-undo-closed-tab"] {
+  @media -moz-pref("natsumi.theme.patch-undo-closed-tab-button") {
+    #undo-closed-tab {
+      display: none !important;
     }
   }
 }
