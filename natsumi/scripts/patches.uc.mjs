@@ -44,6 +44,7 @@ class NatsumiPatchesManager {
         new NatsumiPatch("floorp-12-3-0-navbar", "floorp", "12.3.0"),
         new NatsumiPatch("floorp-12-3-0-undo-closed-tab", "floorp", "12.3.0"),
         new NatsumiPatch("floorp-12-3-1-undo-closed-tab", "floorp", "12.3.1"),
+        new NatsumiPatch("floorp-12-3-2-undo-closed-tab", "floorp", "12.3.2"),
     ]
 
     static getPatches() {
