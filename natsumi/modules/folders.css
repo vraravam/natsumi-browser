@@ -34,6 +34,11 @@ SOFTWARE.
       display: none !important;
     }
 
+    .tab-group-label-hover-highlight {
+      background-color: transparent !important;
+      box-shadow: none !important;
+    }
+
     .tab-group-label-container {
       min-height: calc(var(--natsumi-tab-height) - 4px) !important;
       padding: 0 !important;
