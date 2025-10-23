@@ -41,6 +41,17 @@ SOFTWARE.
     ) or -moz-pref("natsumi.theme.single-toolbar") {
       margin-left: var(--natsumi-browser-separation) !important;
     }
+
+    @media -moz-pref("natsumi.theme.compact-marginless") {
+      &:not(:has(#tabbrowser-tabpanels[split-view="true"])) {
+        margin: 0 !important;
+
+        .browserSidebarContainer {
+          border: none !important;
+          border-radius: 0 !important;
+        }
+      }
+    }
   }
 
   #sidebar-launcher-splitter, #panel-sidebar-select-box {

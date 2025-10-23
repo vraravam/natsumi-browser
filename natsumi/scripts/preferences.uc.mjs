@@ -2023,6 +2023,13 @@ function addCompactStylesPane() {
         styleSelection.registerOption(style, compactStyles[style]);
     }
 
+    styleSelection.registerExtras("natsumiCompactMarginless", new CheckboxChoice(
+        "natsumi.theme.compact-marginless",
+        "natsumiCompactMarginless",
+        "Marginless Compact Mode",
+        "Removes the borders around the website content when in Compact Mode."
+    ));
+
     let styleNode = styleSelection.generateNode();
 
     // Set listeners for each button
@@ -2034,6 +2041,24 @@ function addCompactStylesPane() {
             setStringPreference("natsumi.theme.compact-style", selectedValue);
             styleButtons.forEach(btn => btn.classList.remove("selected"));
             button.classList.add("selected");
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = styleNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
         });
     });
 
