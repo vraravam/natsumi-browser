@@ -32,20 +32,13 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 function detectFork() {
-    let browserTitle = "";
-
-    try {
-        browserTitle = document.body.parentNode.attributes["data-title-default"].nodeValue;
-    } catch (e) {
-        console.error("Error detecting fork:", e);
-        return null;
-    }
+    const browserName = AppConstants.MOZ_APP_BASENAME.toLowerCase();
 
     let forkName = "firefox";
 
-    if (browserTitle === "Ablaze Floorp") {
+    if (browserName === "floorp") {
         forkName = "floorp";
-    } else if (browserTitle === "Waterfox") {
+    } else if (browserTitle === "waterfox") {
         forkName = "waterfox";
     }
 
