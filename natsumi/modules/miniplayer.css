@@ -210,8 +210,7 @@ SOFTWARE.
   }
 
   .natsumi-miniplayer-seekbar-container {
-    /* Disable this for now */
-    display: none !important;
+    display: none;
     padding-inline: 4px !important;
     margin-top: 4px !important;
 
