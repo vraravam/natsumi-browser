@@ -1871,6 +1871,9 @@ function addSidebarWorkspacesPane() {
         if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
             return;
         }
+    } else {
+        // Assume we're on Firefox
+        return;
     }
 
     let prefsView = document.getElementById("mainPrefPane");
