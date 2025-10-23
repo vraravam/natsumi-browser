@@ -26,7 +26,7 @@ SOFTWARE.
 
 /* ==== Floorp-specific theming engine extension ==== */
 
-:root[data-title-default="Ablaze Floorp"] {
+@media -moz-pref("natsumi.browser.type", "floorp") {
   * {
     --natsumi-primary-color: var(--floorp-tab-panel-bg-color, var(--natsumi-custom-primary-color, var(--natsumi-accent-color, #a0d490)));
   }

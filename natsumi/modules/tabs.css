@@ -37,7 +37,7 @@ SOFTWARE.
   }
 
   to {
-    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast));
+    backdrop-filter: var(--natsumi-mat-hz-backdrop);
   }
 }
 
@@ -112,7 +112,7 @@ SOFTWARE.
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
 
           @media -moz-pref("natsumi.browser.type", "floorp") {
-            height: max(calc(var(--natsumi-tab-height) - 4px), 32px);
+            height: max(calc(var(--natsumi-tab-height) - 8px), 32px);
           }
 
           @media -moz-pref("sidebar.verticalTabs") {
@@ -144,7 +144,7 @@ SOFTWARE.
           animation-fill-mode: forwards;
 
           &::after {
-            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
+            width: calc(100% - 4px);
             opacity: 1;
           }
         }
@@ -269,14 +269,13 @@ SOFTWARE.
       & > .tab-stack > .tab-background {
         &::after {
           width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
-          left: auto;
         }
       }
     }
   }
 
   #tabs-newtab-button, #vertical-tabs-newtab-button {
-    min-height: calc(var(--floorp-tab-min-height, calc(var(--tab-min-height) + 4px)) - 4px) !important;
+    min-height: calc(max(var(--floorp-tab-min-height, 36px), 36px) - 4px) !important;
     transition: background-color 0.2s ease;
     border-radius: var(--natsumi-tab-border-radius) !important;
     
@@ -313,36 +312,33 @@ SOFTWARE.
 }
 
 @media not -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  @media -moz-pref("natsumi.tabs.new-tab-on-top")  and -moz-pref("sidebar.verticalTabs")  {
-    #tabbrowser-arrowscrollbox-periphery {
-      order: -1 !important;
+  @media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs")  {
+    #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
+      visibility: collapse !important;
     }
 
     #vertical-tabs-newtab-button {
-      margin-top: 0 !important;
+      display: flex !important;
+      margin-top: 2px !important;
+      margin-bottom: -4px !important;
     }
 
-    #sidebar-main #tabbrowser-tabs[overflow] {
-      #vertical-tabs-newtab-button {
-        order: -1 !important;
-        margin-bottom: -104px !important;
-        margin-top: 66px !important;
-        z-index: 1;
-      }
+    #tabbrowser-arrowscrollbox {
+      order: 1 !important;
+    }
 
-      #pinned-tabs-container {
-        order: -2 !important;
-      }
-
-      #tabbrowser-arrowscrollbox {
-        padding-top: 38px !important;
-      }
+    #tabbrowser-tabs::after {
+      order: 2 !important;
     }
   }
 }
 
 @media -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  #tabbrowser-arrowscrollbox-periphery, #vertical-tabs-newtab-button {
+  #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
+    visibility: collapse !important;
+  }
+
+  #vertical-tabs-newtab-button {
     display: none !important;
   }
 }

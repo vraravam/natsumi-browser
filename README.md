@@ -265,15 +265,16 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 ## Browser support
 All browsers must be based on Firefox 137 or above.
 
-| Browser     | Status                       | Versions | Notes                                                              |
-|-------------|------------------------------|----------|--------------------------------------------------------------------|
-| Floorp      | :star: Recommended           | 12+      | Natsumi works best on Floorp!                                      |
-| Firefox     | :white_check_mark: Supported | 137+     |                                                                    |
-| Waterfox    | :white_check_mark: Supported | 6.6.0+   |                                                                    |
-| Librewolf   | :white_check_mark: Supported | 137+     | May have performance issues, but other than that fully compatible. |
-| Midori      | :x: Unsupported              | -        | Incompatible (based on ESR128)                                     |
-| Mullvad/Tor | :x: Unsupported              | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
-| Zen         | :x: Unsupported              | -        | Incompatible since Natsumi v4 (see FAQ)                            |
+| Browser     | Status                        | Versions | Notes                                                              |
+|-------------|-------------------------------|----------|--------------------------------------------------------------------|
+| Floorp      | :star: Recommended            | 12.3.0+  | Natsumi works best on Floorp!                                      |
+| Firefox     | :white_check_mark: Supported  | 137+     |                                                                    |
+| Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                                    |
+| Librewolf   | :white_check_mark: Supported  | 137+     | May have performance issues, but other than that fully compatible. |
+| Firedragon  | :warning: Partially supported | 12+      | Theoretically supported, but not yet tested.                       |
+| Midori      | :x: Unsupported               | -        | Incompatible (based on ESR128)                                     |
+| Mullvad/Tor | :x: Unsupported               | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
+| Zen         | :x: Unsupported               | -        | Incompatible since Natsumi v4 (see FAQ)                            |
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
@@ -315,7 +316,11 @@ If you try to apply Natsumi on Chrome/Chromium-based browsers like Arc, you can'
 userchrome CSS files, making Natsumi completely incompatible with those browsers.
 
 ### "I don't like the design, please change it!"
-If I like the design, nah. My personal skin, my rules.
+Although Natsumi is designed to be as customizable as possible, there may be some opinionated
+design choices that I may not change. In the end, Natsumi is still my personal browser skin.
+
+If you would like me to add options for certain aspects of the browser, please open a feature request
+and I will consider it.
 
 ### "Can I use your code for my browser?"
 If your browser is open-source and licensed under the GPLv3 or later (or AGPLv3 or later), then yes.
@@ -388,7 +393,7 @@ licenses are listed below.
   
   License: GPLv3
   
-  File used: `Borealis/stereo/desktop-login.ogg`
+  File used: `Borealis/stereo/desktop-login.ogg`, `Borealis/stereo/K3b_success.ogg`
   
   Changes made: none
   

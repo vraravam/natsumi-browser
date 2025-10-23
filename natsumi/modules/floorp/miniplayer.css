@@ -26,7 +26,7 @@ SOFTWARE.
 
 /* ==== Floorp miniplayer fixes ==== */
 
-:root[data-title-default="Ablaze Floorp"] {
+@media -moz-pref("natsumi.browser.type", "floorp") {
   @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
     @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
       &:has(#nora-statusbar.hidden) #natsumi-sidebar-container {

@@ -74,6 +74,19 @@ SOFTWARE.
       }
     }
 
+    /* Set material */
+    * {
+      --natsumi-material-background: var(--natsumi-mat-hz-background);
+      --natsumi-material-backdrop: var(--natsumi-mat-hz-backdrop);
+      --natsumi-material-border: var(--natsumi-mat-hz-border);
+      --natsumi-material-border-thin: var(--natsumi-mat-hz-border-thin);
+      --natsumi-material-shadow: var(--natsumi-mat-hz-shadow);
+
+      @media -moz-pref("natsumi.pip.material", "tinted-haze") {
+        --natsumi-material-background: var(--natsumi-mat-th-background);
+      }
+    }
+
     html {
       animation: pip-fadein-html 0.5s ease !important;
     }
@@ -100,23 +113,19 @@ SOFTWARE.
         opacity: 0 !important;
         top: 0 !important;
         border-radius: 50% !important;
-        transition: opacity 0.3s ease, top 0.3s ease, background-color 0.2s ease !important;
-        backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-        background-color: var(--natsumi-mat-hz-background) !important;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+        transition: opacity 0.3s ease, top 0.3s ease, background-color 0.2s ease, box-shadow 0.2s ease !important;
+        backdrop-filter: var(--natsumi-material-background) !important;
+        background-color: var(--natsumi-material-background) !important;
+        box-shadow: var(--natsumi-material-shadow) !important;
         background-size: 16px !important;
-        border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
+        border: var(--natsumi-material-border) !important;
 
         &:hover {
-          background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, white) !important;
-
-          @media (prefers-color-scheme: light) {
-            background-color: color-mix(in srgb, var(--natsumi-mat-ga-background) 80%, black) !important;
-          }
+          background-color: var(--natsumi-button-hover-color) !important;
         }
 
-        @media -moz-pref("natsumi.pip.material", "tinted-haze") {
-          background-color: var(--natsumi-mat-hz-background-tinted) !important;
+        &:active {
+          background-color: var(--natsumi-button-active-color) !important;
         }
       }
 
@@ -140,15 +149,11 @@ SOFTWARE.
 
         .start-controls, .center-controls, .end-controls {
           border-radius: 18px !important;
-          background-color: var(--natsumi-mat-hz-background) !important;
-          border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
-          backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
+          background-color: var(--natsumi-material-background) !important;
+          border: var(--natsumi-material-border) !important;
+          backdrop-filter: var(--natsumi-material-backdrop) !important;
           gap: 0 !important;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
-
-          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
-            background-color: var(--natsumi-mat-hz-background-tinted) !important;
-          }
+          box-shadow: var(--natsumi-material-shadow) !important;
         }
 
         #timestamp {
@@ -225,14 +230,10 @@ SOFTWARE.
           width: calc(100% - 4px) !important;
           height: 6px !important;
           padding: 0 !important;
-          border: 2px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
-          background-color: var(--natsumi-mat-hz-background) !important;
-          backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
-
-          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
-            background-color: var(--natsumi-mat-hz-background-tinted) !important;
-          }
+          border: var(--natsumi-material-border) !important;
+          background-color: var(--natsumi-material-background) !important;
+          backdrop-filter: var(--natsumi-material-backdrop) !important;
+          box-shadow: var(--natsumi-material-shadow) !important;
 
           &::-moz-range-track {
             height: 6px !important;
@@ -247,12 +248,8 @@ SOFTWARE.
           }
 
           &::-moz-range-thumb {
-            border: 4px solid var(--natsumi-mat-hz-background) !important;
-            backdrop-filter: saturate(3) contrast(2) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-
-            @media -moz-pref("natsumi.pip.material", "tinted-haze") {
-              border-color: var(--natsumi-mat-hz-background-tinted) !important;
-            }
+            border: 4px solid var(--natsumi-material-background) !important;
+            backdrop-filter: var(--natsumi-material-backdrop) !important;
           }
         }
 
@@ -360,16 +357,11 @@ SOFTWARE.
 
         /*noinspection CssInvalidFunction*/
         & > .panel-fieldset {
-          background-color: var(--natsumi-mat-hz-background) !important;
-          backdrop-filter: blur(15px);
-          backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-          border: 1px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
-          box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+          background-color: var(--natsumi-material-background) !important;
+          backdrop-filter: var(--natsumi-material-backdrop) !important;
+          border: var(--natsumi-material-border-thin) !important;
+          box-shadow: var(--natsumi-material-shadow) !important;
           padding: 0 !important;
-
-          @media -moz-pref("natsumi.pip.material", "tinted-haze") {
-            background-color: var(--natsumi-mat-hz-background-tinted) !important;
-          }
         }
 
         /*noinspection CssInvalidFunction*/

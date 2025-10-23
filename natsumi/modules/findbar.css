@@ -42,11 +42,11 @@ SOFTWARE.
 
 @keyframes glass-disappear {
   0% {
-    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+    backdrop-filter: var(--natsumi-mat-hz-backdrop);
   }
 
   99% {
-    backdrop-filter: blur(var(--natsumi-mat-mc-blur-radius));
+    backdrop-filter: var(--natsumi-mat-hz-backdrop);
   }
 
   100% {
@@ -66,14 +66,14 @@ SOFTWARE.
     height: auto !important;
     flex-wrap: wrap;
     border-radius: 15px;
-    background: var(--natsumi-mat-hz-background-tinted) !important;
-    backdrop-filter: saturate(var(--natsumi-mat-hz-saturation)) contrast(var(--natsumi-mat-hz-contrast)) blur(var(--natsumi-mat-hz-blur-radius)) !important;
-    border: 1px solid light-dark(rgba(20, 20, 20, 0.2), rgba(235, 235, 235, 0.3)) !important;
+    background: var(--natsumi-mat-th-background) !important;
+    backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
+    border: var(--natsumi-mat-hz-border-thin) !important;
     opacity: 1;
     transition: background 0.2s ease, opacity 0.2s ease, visibility 0.2s ease, top 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease !important;
     animation: initial-animation 0.2s ease;
     filter: blur(0);
-    box-shadow: 0 0 var(--natsumi-mat-mc-shadow-size) var(--natsumi-mat-mc-shadow-color) !important;
+    box-shadow: var(--natsumi-mat-hz-shadow) !important;
 
     /* Restore old width */
     @media -moz-pref("natsumi.findbar.wider-findbar") {
@@ -167,7 +167,7 @@ SOFTWARE.
         display: flex;
         flex-basis: 100% !important;
 
-        &:is([hidden="true"]) {
+        &[hidden=""] {
           display: none;
         }
       }

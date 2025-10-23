@@ -24,8 +24,8 @@ function addAboutPane() {
     let forkedVersion = AppConstants.MOZ_APP_VERSION_DISPLAY;
 
     if (browserName.toLowerCase() === "floorp") {
-        // Browser version format: [Firefox version]@[Floorp version] (e.g. 142.0.2@12.1.14)
-        forkedVersion = forkedVersion.split("@")[1];
+        // Browser version format: [Floorp version]@[Firefox version] (e.g. 12.3.0@144.0)
+        forkedVersion = forkedVersion.split("@")[0];
     }
 
     let nodeString = `
@@ -38,7 +38,7 @@ function addAboutPane() {
                 <div id="natsumi-about-name">Natsumi Browser</div>
                 <div id="natsumi-about-version-container">
                     <div id="natsumi-about-version"></div>
-                    <div id="natsumi-about-stability-badge" hidden="${isStable}"></div>
+                    <div id="natsumi-about-stability-badge"></div>
                 </div>
                 <div class="natsumi-about-vertical-separator"></div>
                 <div id="natsumi-about-mission-container">
@@ -63,6 +63,11 @@ function addAboutPane() {
         versionNode.textContent = `${version} on ${browserName} ${forkedVersion} (Firefox ${browserVersion})`;
     } else {
         versionNode.textContent = `${version} on Firefox ${browserVersion}`;
+    }
+
+    let stabilityBadge = document.getElementById("natsumi-about-stability-badge");
+    if (isStable) {
+        stabilityBadge.setAttribute("hidden", "true");
     }
 }
 

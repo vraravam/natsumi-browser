@@ -24,21 +24,24 @@ SOFTWARE.
 
 */
 
-/* ==== Firefox welcome pane next button fix ==== */
+/* ==== Floorp patches ==== */
 
-:root[data-title-default="Mozilla Firefox"] {
-  @media not -moz-pref("svg.context-properties.content.enabled") {
-    #natsumi-welcome-button-next {
-      background-image: none !important;
-
-      &::before {
-        content: "";
-        width: 24px;
-        height: 24px;
-        margin: auto;
-        background-color: black;
-        mask-image: url("../../icons/lucide-firefox/move-right.svg");
+/* Floorp 12.2.0/12.3.0 patch: show navbar on macOS fullscreen */
+:root[sizemode="fullscreen"]:not([inDOMFullscreen="true"]) {
+  @media (-moz-platform: macos) and (not -moz-pref("natsumi.theme.disable-patches")) {
+    body[natsumi-patches*="floorp-12-2-0-navbar"], body[natsumi-patches*="floorp-12-3-0-navbar"] {
+      #nav-bar {
+        display: flex !important;
       }
+    }
+  }
+}
+
+/* Floorp 12.3.0 patch: allow hiding the undo closed tab button that keeps being added to toolbar */
+body[natsumi-patches*="floorp-12-3-0-undo-closed-tab"], body[natsumi-patches*="floorp-12-3-1-undo-closed-tab"] {
+  @media -moz-pref("natsumi.theme.patch-undo-closed-tab-button") {
+    #undo-closed-tab {
+      display: none !important;
     }
   }
 }

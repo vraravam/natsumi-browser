@@ -144,11 +144,11 @@ class NatsumiNativeKeyboardShortcut extends NatsumiKeyboardShortcut {
             // Firefox uses "accel" for Meta and Ctrl, but still has "control" for Ctrl
             // On Windows accel = Ctrl, everywhere else accel = Meta
             const osName = Services.appinfo.OS.toLowerCase();
-            if (osName === "winnt") {
-                ctrl = shortcutElement.getAttribute("modifiers").includes("accel") || shortcutElement.getAttribute("modifiers").includes("control");
-            } else {
+            if (osName === "darwin") {
                 meta = shortcutElement.getAttribute("modifiers").includes("accel");
                 ctrl = shortcutElement.getAttribute("modifiers").includes("control");
+            } else {
+                ctrl = shortcutElement.getAttribute("modifiers").includes("accel") || shortcutElement.getAttribute("modifiers").includes("control");
             }
 
             // Other modifiers
@@ -181,7 +181,8 @@ class NatsumiKBSManager {
             "toggleVerticalTabs": new NatsumiKeyboardShortcut(false, true, true, false, "v", 0, true),
             "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", 0, true),
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
-            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true)
+            "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
+            //"toggleNatsumiToolkit": new NatsumiKeyboardShortcut(false, true, true, false, "t", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -189,7 +190,8 @@ class NatsumiKBSManager {
             "toggleVerticalTabs": NatsumiShortcutActions.toggleVerticalTabs,
             "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode,
             "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
-            "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar
+            "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar,
+            //"toggleNatsumiToolkit": NatsumiShortcutActions.toggleNatsumiToolkit
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};
@@ -233,8 +235,8 @@ class NatsumiKBSManager {
         }
 
         if (browserType === "floorp") {
-            this.shortcuts["cycleWorkspaces"] = new NatsumiKeyboardShortcut(false, false, true, false, "right", 3, false);
-            this.shortcuts["cycleWorkspacesReverse"] = new NatsumiKeyboardShortcut(false, false, true, false, "left", 3, false);
+            this.shortcuts["cycleWorkspaces"] = new NatsumiKeyboardShortcut(false, true, true, false, "right", 3, false);
+            this.shortcuts["cycleWorkspacesReverse"] = new NatsumiKeyboardShortcut(false, true, true, false, "left", 3, false);
             this.shortcutActions["cycleWorkspaces"] = NatsumiShortcutActions.cycleWorkspaces;
             this.shortcutActions["cycleWorkspacesReverse"] = () => { NatsumiShortcutActions.cycleWorkspaces(true); };
         }

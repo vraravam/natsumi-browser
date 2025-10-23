@@ -34,6 +34,7 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "../natsumi-config.css";
 @import "modules/preload.css";
 @import "global/colors.css";
+@import "global/materials.css";
 @import "modules/themer.css";
 @import "modules/base.css";
 @import "modules/backdrop-blur.css";
@@ -48,6 +49,7 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/right-sidebar.css";
 @import "modules/compact-mode.css";
 @import "modules/welcome.css";
+@import "modules/floorp/patches.css";
 @import "modules/floorp/themer.css";
 @import "modules/floorp/base.css";
 @import "modules/floorp/icons.css";
@@ -59,5 +61,3 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/floorp/compact-mode.css";
 @import "modules/waterfox/base.css";
 @import "modules/waterfox/miniplayer.css";
-@import "modules/firefox/welcome.css";
-@import "modules/firefox/miniplayer.css";

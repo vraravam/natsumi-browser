@@ -26,7 +26,7 @@ SOFTWARE.
 
 /* ==== Floorp panel sidebar ==== */
 
-:root[data-title-default="Ablaze Floorp"] {
+@media -moz-pref("natsumi.browser.type", "floorp") {
   #panel-sidebar-splitter {
     background-color: transparent !important;
     border-color: transparent !important;
@@ -124,7 +124,7 @@ SOFTWARE.
         }
 
         @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
-          &:has(#PersonalToolbar[collapsed="false"]) #panel-sidebar-select-box {
+          &:has(#PersonalToolbar:not([collapsed])) #panel-sidebar-select-box {
             height: calc(100vh - 40px) !important;
             margin-top: 34px !important;
           }
