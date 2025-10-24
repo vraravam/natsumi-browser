@@ -328,6 +328,7 @@ SOFTWARE.
         background: var(--natsumi-mat-hz-background);
         backdrop-filter: var(--natsumi-mat-hz-backdrop);
         border-radius: 5px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
 
         &::after {
           --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
@@ -361,14 +362,15 @@ SOFTWARE.
         background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
         border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
         border-radius: 3px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
       }
     }
 
     #tab-classic {
       .natsumi-mc-tab {
         background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
-        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
         border-radius: 3px;
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
       }
     }
   }
