@@ -333,6 +333,7 @@ SOFTWARE.
           --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
           content: "";
           position: absolute;
+          z-index: -1;
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
           border: 2px solid var(--natsumi-tab-highlight-color) !important;
           width: calc(100% - 4px);
