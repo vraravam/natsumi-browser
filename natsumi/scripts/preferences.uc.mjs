@@ -45,6 +45,7 @@ import {
     applyCustomColor,
     applyCustomTheme
 } from "./custom-theme.sys.mjs";
+import {resetTabStyleIfNeeded} from "./reset-tab-style.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -1478,6 +1479,61 @@ const compactStyles = {
     )
 }
 
+const tabDesigns = {
+    "default": new MCChoice(
+        "default",
+        "Blade",
+        "A modern and sleek, yet dynamic tab design.",
+        `
+            <div id='tab-blade' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "fusion": new MCChoice(
+        "fusion",
+        "Fusion",
+        "A Lepton-like design that 'combines' tab and web content.",
+        `
+            <div id='tab-fusion' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "material": new MCChoice(
+        "material",
+        "Material",
+        "A Zen alpha-inspired design with a material-like look.",
+        `
+            <div id='tab-material' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "classic": new MCChoice(
+        "classic",
+        "Classic",
+        "Just the standard Firefox look.",
+        `
+            <div id='tab-classic' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+}
+
 const urlbarLayouts = {
     "floating": new MCChoice(
         false,
@@ -1558,13 +1614,14 @@ class OptionsGroup {
 }
 
 class MultipleChoicePreference {
-    constructor(id, preference, label, description) {
+    constructor(id, preference, label, description, overrideDefault = null) {
         this.id = id;
         this.preference = preference;
         this.label = label;
         this.description = description;
         this.options = {};
         this.extras = {}
+        this.overrideDefault = overrideDefault;
     }
 
     registerOption(option, choiceObject) {
@@ -1577,6 +1634,10 @@ class MultipleChoicePreference {
 
     getSelected() {
         // noinspection JSUnresolvedReference
+        if (this.overrideDefault !== null) {
+            return this.overrideDefault;
+        }
+
         if (ucApi.Prefs.get(this.preference).exists()) {
             // noinspection JSUnresolvedReference
             return ucApi.Prefs.get(this.preference).value;
@@ -1874,7 +1935,94 @@ function addColorsPane() {
     //customColorPickerUi.init();
 }
 
+function addSidebarTabsPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Ensure Blade is always used when custom styles is off
+    let selectedOverride = null;
+    if (ucApi.Prefs.get("natsumi.tabs.use-custom-type").exists()) {
+        if (!(ucApi.Prefs.get("natsumi.tabs.use-custom-type").value)) {
+            selectedOverride = "default";
+        }
+    }
+
+    // Create theme selection
+    let tabDesignSelection = new MultipleChoicePreference(
+        "natsumiTabDesign",
+        "natsumi.tabs.type",
+        "Tab design",
+        "Choose the design you want for your tabs.",
+        selectedOverride
+    );
+
+    for (let style in tabDesigns) {
+        tabDesignSelection.registerOption(style, tabDesigns[style]);
+    }
+
+    tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(
+        "natsumi.tabs.fusion-highlight",
+        "natsumiTabFusionHighlight",
+        "Enable Fusion tab highlight",
+        "This will add a Photon (Firefox Quantum)-like highlight to Fusion."
+    ));
+
+    let tabDesignNode = tabDesignSelection.generateNode();
+
+    // Set listeners for each button
+    let tabDesignButtons = tabDesignNode.querySelectorAll(".natsumi-mc-choice");
+    tabDesignButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing style:", selectedValue);
+
+            // For non-Blade tab designs, we need to enable custom styles
+            setStringPreference("natsumi.tabs.use-custom-type", selectedValue !== "default");
+
+            // After that, we can set tab type
+            setStringPreference("natsumi.tabs.type", selectedValue);
+            tabDesignButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+
+            // Reset Floorp tab styles if needed
+            if (selectedValue !== "classic") {
+                let resetStyle = resetTabStyleIfNeeded();
+                if (resetStyle) {
+                    let tabStyleResetObject = new NatsumiNotification(
+                        "Heads up: your tab style was reset to Proton.",
+                        "If you want to use other tab styles, simply enable the Classic tab design in settings.",
+                        "chrome://natsumi/content/icons/lucide/info.svg",
+                        10000
+                    )
+                    tabStyleResetObject.addToContainer();
+                }
+            }
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = tabDesignNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(tabDesignNode, homePane);
+}
+
 function addSidebarWorkspacesPane() {
+    // Note: This is a Floorp-only feature, it shouldn't be seen on other browsers
     if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
         if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
             return;
@@ -2449,6 +2597,7 @@ function addPreferencesPanes() {
     addColorsPane();
 
     prefsView.insertBefore(sidebarNode, homePane);
+    addSidebarTabsPane();
     addSidebarWorkspacesPane();
     addSidebarButtonsPane();
 

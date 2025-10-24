@@ -32,12 +32,20 @@ SOFTWARE.
   }
 
   @media -moz-pref("sidebar.position_start") {
-    #sidebar-box {
-      order: 2 !important;
-    }
+    &:not(:has(#panel-sidebar-box[style*="; width:"])) {
+      #sidebar-box {
+        order: 2 !important;
+      }
 
-    #sidebar-splitter {
-      order: 2 !important;
+      #sidebar-splitter {
+        order: 2 !important;
+      }
+    }
+  }
+
+  @media not -moz-pref("sidebar.position_start") {
+    #sidebar-launcher-splitter {
+      order: 7 !important;
     }
   }
 
@@ -103,7 +111,9 @@ SOFTWARE.
 
   &:has(#nora-statusbar:not(.hidden)), &:has(#nora-statusbar:not([style*="display:none"])) {
     #browser::before {
-      top: -40px !important;
+      @media -moz-pref("sidebar.verticalTabs") {
+        top: -40px !important;
+      }
     }
   }
 
@@ -293,10 +303,17 @@ SOFTWARE.
         justify-content: space-between !important;
         flex-wrap: wrap;
         position: absolute;
-        left: var(--natsumi-browser-separation);
         bottom: calc(var(--natsumi-browser-separation) + var(--space-small) + 40px);
         width: calc(var(--natsumi-sidebar-width) - calc(var(--natsumi-browser-separation) * 2)) !important;
         background: transparent !important;
+
+        @media -moz-pref("sidebar.position_start") {
+          left: var(--natsumi-browser-separation);
+        }
+
+        @media not -moz-pref("sidebar.position_start") {
+          right: var(--natsumi-browser-separation);
+        }
 
         @media -moz-pref("natsumi.sidebar.hide-sidebar-controls") {
           bottom: var(--natsumi-browser-separation) !important;

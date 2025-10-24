@@ -24,48 +24,26 @@ SOFTWARE.
 
 */
 
-/* ==== Tabs ==== */
+/* ==== Tabs design (Material) ==== */
+/* Material is a tab design inspired by Zen's alpha tab design. */
 
-/* Import tab designs */
-@import url("tabs/blade.css");
-@import url("tabs/fusion.css");
-@import url("tabs/material.css");
+@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "material") {
+  #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab {
+      & > .tab-stack > .tab-background {
+        box-shadow: none !important;
+      }
 
-/* Global tweaks for tabs */
-.tabbrowser-tab {
-  --attention-dot-color: transparent !important;
-}
+      &[selected], &[visuallyselected] {
+        & > .tab-stack > .tab-background {
+          background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
 
-/* New tab button position */
-@media not -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  @media -moz-pref("natsumi.tabs.new-tab-on-top") and -moz-pref("sidebar.verticalTabs")  {
-    #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
-      visibility: collapse !important;
+          @media -moz-pref("natsumi.theme.type", "oled") {
+            border: none !important;
+          }
+        }
+      }
     }
-
-    #vertical-tabs-newtab-button {
-      display: flex !important;
-      margin-top: 2px !important;
-      margin-bottom: -4px !important;
-    }
-
-    #tabbrowser-arrowscrollbox {
-      order: 1 !important;
-    }
-
-    #tabbrowser-tabs::after {
-      order: 2 !important;
-    }
-  }
-}
-
-/* Hide new tab button */
-@media -moz-pref("natsumi.tabs.hide-new-tab-button") {
-  #tabbrowser-arrowscrollbox:not([overflowing]) #tabbrowser-arrowscrollbox-periphery {
-    visibility: collapse !important;
-  }
-
-  #vertical-tabs-newtab-button {
-    display: none !important;
   }
 }

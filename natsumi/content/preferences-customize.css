@@ -273,6 +273,111 @@ SOFTWARE.
     }
   }
 
+  #natsumiTabDesignSettings {
+    .natsumi-mc-choice-image-browser {
+      display: grid;
+      grid-template-columns: 1fr;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ff9393, #ffb78b, #ffe88c, #5ce4a2, #97a6ff, #be9dff);
+
+      @media (prefers-color-scheme: dark) {
+        background: linear-gradient(135deg, #994444, #895f46, #8d804b, #3e8663, #3e456d, #625084) !important;
+      }
+
+      &::before {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        margin-left: auto;
+        margin-right: 0;
+        margin-bottom: 0;
+        height: calc(100% - 10px);
+        width: 10px;
+        border-right: none;
+        border-bottom: none;
+        border-radius: 5px 0 0 0;
+      }
+
+      .natsumi-mc-tab {
+        width: calc(100% - 18px);
+        margin-left: 4px;
+        margin-top: 16px;
+        height: 16px;
+        grid-row-start: 1;
+        grid-column-start: 1;
+
+        .natsumi-mc-tab-icon {
+          background-color: light-dark(black, white);
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          margin: auto 6px;
+        }
+
+        .natsumi-mc-tab-text {
+          background-color: light-dark(black, white);
+          width: 50%;
+          height: 4px;
+          border-radius: 2px;
+          margin: auto 0;
+        }
+      }
+    }
+
+    #tab-blade {
+      .natsumi-mc-tab {
+        background: var(--natsumi-mat-hz-background);
+        backdrop-filter: var(--natsumi-mat-hz-backdrop);
+        border-radius: 5px;
+
+        &::after {
+          --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+          content: "";
+          position: absolute;
+          background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+          border: 2px solid var(--natsumi-tab-highlight-color) !important;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          border-radius: 5px;
+          mask-image: linear-gradient(to right, black, transparent 30%);
+        }
+      }
+    }
+
+    #tab-fusion {
+      &::before {
+        outline: 2px solid light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+      }
+
+      .natsumi-mc-tab {
+        background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+        width: calc(100% - 17px);
+        border-radius: 2px 0 0 2px;
+      }
+    }
+
+    #tab-material {
+      .natsumi-mc-tab {
+        background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
+        border-radius: 3px;
+      }
+    }
+
+    #tab-classic {
+      .natsumi-mc-tab {
+        background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
+        box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
+        border-radius: 3px;
+      }
+    }
+  }
+
+  @media (not -moz-pref("natsumi.tabs.use-custom-type")) or (not -moz-pref("natsumi.tabs.type", "fusion")) {
+    #natsumiTabFusionHighlight {
+      display: none !important;
+    }
+  }
+
   #natsumiPipMaterialGroup, #natsumiPDFMaterialGroup, #natsumiURLbarLayoutGroup {
     .natsumi-mc-choice {
       .natsumi-mc-choice-image-browser {

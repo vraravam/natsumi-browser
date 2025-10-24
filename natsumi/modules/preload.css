@@ -76,7 +76,8 @@ SOFTWARE.
     --natsumi-tab-border-radius: 12px;
   }
 
-  @media (-moz-platform: macos) {
+  /* macOS 26 border radius */
+  @media (-moz-mac-tahoe-theme) {
     --natsumi-browser-border-radius: 12px;
   }
 }
