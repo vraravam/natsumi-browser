@@ -1042,7 +1042,7 @@ SOFTWARE.
   }
 
   /* Hide stuff not available on some platforms */
-  @media not (-moz-platform: macos) {
+  @media (-moz-platform: linux) {
     #natsumiTranslucencyLegacyBox {
       display: none !important;
     }
