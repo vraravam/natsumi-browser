@@ -43,7 +43,11 @@ SOFTWARE.
 /*noinspection CssInvalidPropertyValue*/
 :root:not([windowtype*="ssb-window"]) body {
   /* Make window translucent (except on PWAs) */
-  appearance: -moz-window-titlebar !important;
+  appearance: -moz-sidebar;
+
+  @media -moz-pref("natsumi.theme.use-legacy-translucency") {
+    appearance: -moz-window-titlebar;
+  }
 }
 
 /* Theme color engine */

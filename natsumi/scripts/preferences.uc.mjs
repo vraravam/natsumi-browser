@@ -1750,6 +1750,13 @@ function addThemesPane() {
         true
     )
 
+    let translucencyLegacyCheckbox = new CheckboxChoice(
+        "natsumi.theme.use-legacy-translucency",
+        "natsumiTranslucencyLegacyToggle",
+        "Use legacy translucency",
+        "This will inherit the material from the 'titlebar' rather than the 'sidebar'."
+    )
+
     let grayOutCheckbox = new CheckboxChoice(
         "natsumi.theme.gray-out-when-inactive",
         "natsumiGrayOutWhenInactive",
@@ -1760,6 +1767,7 @@ function addThemesPane() {
 
     themeSelection.registerExtras("natsumiCustomThemePickerBox", customThemePickerUi);
     themeSelection.registerExtras("natsumiTranslucencyBox", translucencyCheckbox);
+    themeSelection.registerExtras("natsumiTranslucencyLegacyBox", translucencyLegacyCheckbox);
     themeSelection.registerExtras("natsumiInactiveBox", grayOutCheckbox);
 
     for (let theme in themes) {
