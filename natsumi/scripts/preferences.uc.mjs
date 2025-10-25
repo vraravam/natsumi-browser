@@ -1448,7 +1448,7 @@ const colors = {
         "System Accent",
         "Use the system accent color.",
         "",
-        "AccentColor"
+        "oklch(from AccentColor 0.825 0.1 h)"
     ),
     /*"custom": new MCChoice(
         "custom",
@@ -1794,6 +1794,7 @@ function addLayoutPane() {
 function addThemesPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
+    const osName = Services.appinfo.OS.toLowerCase();
 
     // Create theme selection
     let themeSelection = new MultipleChoicePreference(
@@ -1811,11 +1812,16 @@ function addThemesPane() {
         true
     )
 
+    let windowsAppend = "";
+    if (osName === "winnt") {
+        windowsAppend = " Windows users: please use this if translucency is broken and let me know of the issue."
+    }
+
     let translucencyLegacyCheckbox = new CheckboxChoice(
         "natsumi.theme.use-legacy-translucency",
         "natsumiTranslucencyLegacyToggle",
         "Use legacy translucency",
-        "This will inherit the material from the 'titlebar' rather than the 'sidebar'."
+        `This will inherit the material from the 'titlebar' rather than the 'sidebar'.${windowsAppend}`
     )
 
     let grayOutCheckbox = new CheckboxChoice(
