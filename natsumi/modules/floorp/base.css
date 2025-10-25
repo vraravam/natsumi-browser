@@ -109,14 +109,6 @@ SOFTWARE.
     }
   }
 
-  &:has(#nora-statusbar:not(.hidden)), &:has(#nora-statusbar:not([style*="display:none"])) {
-    #browser::before {
-      @media -moz-pref("sidebar.verticalTabs") {
-        top: -40px !important;
-      }
-    }
-  }
-
   @media -moz-pref("natsumi.sidebar.hide-workspace-indicator") {
     #natsumi-workspace-indicator {
       display: none;
@@ -241,61 +233,6 @@ SOFTWARE.
     }
   }
 
-  @media -moz-pref("natsumi.sidebar.floorp-floating-panel") {
-    @keyframes panel-appear {
-      0% {
-        left: -36px;
-        opacity: 0;
-      }
-
-      50% {
-        left: 0;
-        opacity: 1;
-      }
-
-      100% {
-        left: -6px;
-        opacity: 1;
-      }
-    }
-
-    #panel-sidebar-select-box {
-      position: absolute !important;
-      box-sizing: content-box !important;
-      padding-left: calc(6px + var(--natsumi-browser-separation)) !important;
-      height: calc(100% - var(--natsumi-browser-separation)) !important;
-      left: calc(-42px - var(--natsumi-browser-separation) - var(--natsumi-browser-separation)) !important;
-      opacity: 0;
-      z-index: 999;
-      transition: opacity 0.3s ease, left 0.3s ease;
-
-      &::before {
-        content: "";
-        background: red;
-        width: 38px;
-        height: 100%;
-        position: absolute;
-      }
-
-      &::after {
-        content: "";
-        background: green;
-        width: 6px;
-        height: 100%;
-        position: absolute;
-        left: calc(44px + var(--natsumi-browser-separation));
-      }
-
-      &::after:hover {
-        animation: panel-appear 0.5s ease;
-        animation-fill-mode: forwards;
-      }
-
-      &:not(:hover) {
-      }
-    }
-  }
-
   @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
     &:not([customizing]) {
       #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
@@ -331,9 +268,11 @@ SOFTWARE.
       }
     }
 
-    &:has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
-        left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
+    @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
+      &:has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) {
+        #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+          left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
+        }
       }
     }
 

@@ -2086,6 +2086,70 @@ function addSidebarWorkspacesPane() {
     prefsView.insertBefore(sidebarWorkspacesNode, homePane);
 }
 
+function addSidebarPanelSidebarPane() {
+    // Note: This is a Floorp-only feature, it shouldn't be seen on other browsers
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
+            return;
+        }
+    } else {
+        // Assume we're on Firefox
+        return;
+    }
+
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let panelSidebarGroup = new OptionsGroup(
+        "natsumiSidebarPanelSidebar",
+        "Panel Sidebar",
+        "Tweak Floorp's Panel Sidebar."
+    );
+
+    panelSidebarGroup.registerOption("natsumiSidebarFloatingPanelSidebar", new CheckboxChoice(
+        "natsumi.sidebar.hide-workspace-indicator",
+        "natsumiSidebarFloatingPanelSidebar",
+        "Floating Panel Sidebar",
+        "When enabled, the Panel Sidebar selection box will hide and float over the browser similarly to the main sidebar in Compact Mode.",
+    ));
+
+    let panelSidebarNode = panelSidebarGroup.generateNode();
+
+    // Add notice if Panel Sidebar is disabled
+    let panelSidebarDisabledNotice = convertToXUL(`
+        <div id="natsumiPanelSidebarDisabledWarning" class="natsumi-settings-info warning">
+            <div class="natsumi-settings-info-icon"></div>
+            <div class="natsumi-settings-info-text">
+                You need to enable Panel Sidebar in <html:a href="about:hub#/features/sidebar">Floorp Hub</html:a> to
+                customize these settings.
+            </div>
+        </div>
+    `)
+    let firstCheckbox = panelSidebarNode.querySelector("checkbox");
+    firstCheckbox.parentNode.insertBefore(panelSidebarDisabledNotice, firstCheckbox);
+
+    // Set listeners for each checkbox
+    let checkboxes = panelSidebarNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(panelSidebarNode, homePane);
+}
+
 function addSidebarButtonsPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2605,6 +2669,7 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarTabsPane();
     addSidebarWorkspacesPane();
+    addSidebarPanelSidebarPane();
     addSidebarButtonsPane();
 
     prefsView.insertBefore(compactModeNode, homePane);

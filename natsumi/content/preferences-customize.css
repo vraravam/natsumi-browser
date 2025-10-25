@@ -381,6 +381,22 @@ SOFTWARE.
     }
   }
 
+  #natsumiSidebarPanelSidebarGroup {
+    #natsumiPanelSidebarDisabledWarning {
+      display: none;
+    }
+
+    @media not -moz-pref("floorp.panelSidebar.enabled") {
+      #natsumiPanelSidebarDisabledWarning {
+        display: flex;
+      }
+
+      checkbox, description.indent {
+        display: none;
+      }
+    }
+  }
+
   #natsumiPipMaterialGroup, #natsumiPDFMaterialGroup, #natsumiURLbarLayoutGroup {
     .natsumi-mc-choice {
       .natsumi-mc-choice-image-browser {

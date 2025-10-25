@@ -109,29 +109,31 @@ SOFTWARE.
         }
       }
 
-      &:has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[style*="; width:"]:not([data-floating="true"]))) {
-        @media -moz-pref("sidebar.position_start") {
-          #tabbrowser-tabbox::before {
-            left: var(--natsumi-browser-separation);
-          }
+      @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
+        &:has(#panel-sidebar-select-box):not(:has(#panel-sidebar-box[style*="; width:"]:not([data-floating="true"]))) {
+          @media -moz-pref("sidebar.position_start") {
+            #tabbrowser-tabbox::before {
+              left: var(--natsumi-browser-separation);
+            }
 
-          &[natsumi-panel-sidebar-on-right] {
-            #panel-sidebar-select-box {
-              margin-bottom: 0 !important;
-              padding-bottom: var(--natsumi-browser-separation) !important;
-              border-radius: 0 8px 0 0 !important;
-              background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+            &[natsumi-panel-sidebar-on-right] {
+              #panel-sidebar-select-box {
+                margin-bottom: 0 !important;
+                padding-bottom: var(--natsumi-browser-separation) !important;
+                border-radius: 0 8px 0 0 !important;
+                background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+              }
             }
           }
-        }
 
-        @media not -moz-pref("sidebar.position_start") {
-          &:not([natsumi-panel-sidebar-on-right]) {
-            #panel-sidebar-select-box {
-              margin-bottom: 0 !important;
-              padding-bottom: var(--natsumi-browser-separation) !important;
-              border-radius: 8px 0 0 0 !important;
-              background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+          @media not -moz-pref("sidebar.position_start") {
+            &:not([natsumi-panel-sidebar-on-right]) {
+              #panel-sidebar-select-box {
+                margin-bottom: 0 !important;
+                padding-bottom: var(--natsumi-browser-separation) !important;
+                border-radius: 8px 0 0 0 !important;
+                background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+              }
             }
           }
         }
