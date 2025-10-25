@@ -85,6 +85,13 @@ class NatsumiMiniplayerCounter {
             }
         }
 
+        const miniplayerNode = document.getElementById("natsumi-miniplayer-container");
+        if (this._visibleMiniplayers === 0) {
+            miniplayerNode.setAttribute("hide-margin", "true");
+        } else {
+            miniplayerNode.removeAttribute("hide-margin");
+        }
+
         this.updateSelected();
     }
 
