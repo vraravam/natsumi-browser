@@ -2108,7 +2108,7 @@ function addSidebarPanelSidebarPane() {
     );
 
     panelSidebarGroup.registerOption("natsumiSidebarFloatingPanelSidebar", new CheckboxChoice(
-        "natsumi.sidebar.hide-workspace-indicator",
+        "natsumi.sidebar.floorp-floating-panel",
         "natsumiSidebarFloatingPanelSidebar",
         "Floating Panel Sidebar",
         "When enabled, the Panel Sidebar selection box will hide and float over the browser similarly to the main sidebar in Compact Mode.",
