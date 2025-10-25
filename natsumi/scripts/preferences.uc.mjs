@@ -1519,6 +1519,19 @@ const tabDesigns = {
             </div>
         `
     ),
+    "hexagonal": new MCChoice(
+        "hexagonal",
+        "Hexagonal",
+        "A tab design inspired by Floorp's hexagonal branding.",
+        `
+            <div id='tab-hexagonal' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
     "classic": new MCChoice(
         "classic",
         "Classic",
