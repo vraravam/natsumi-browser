@@ -5,7 +5,7 @@
 
 /*
 
-Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -231,3 +231,10 @@ bodyMutationOnserver.observe(document.body, {
     attributes: true,
     attributeFilter: ["natsumi-compact-mode"]
 });
+
+// Enable compact mode if set to be enabled by default
+if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").exists()) {
+    if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").value) {
+        document.body.setAttribute("natsumi-compact-mode", "");
+    }
+}
