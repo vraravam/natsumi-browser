@@ -2193,7 +2193,7 @@ function addSidebarButtonsPane() {
                 "natsumi.sidebar.use-statusbar-in-sidebar",
                 "natsumiSidebarEnableToolbar",
                 "Use Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
-                "This will allow you to add toolbar buttons (e.g. Bookmarks menu, New tab) to the Sidebar just like Zen."
+                "This will move the Status Bar to the bottom of the sidebar when it is in its hidden state."
             ));
         }
     }
