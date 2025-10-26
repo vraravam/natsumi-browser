@@ -2005,6 +2005,16 @@ function addSidebarTabsPane() {
 
             // Reset Floorp tab styles if needed
             if (selectedValue !== "classic") {
+                // Check if we're on Floorp
+                if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+                    if (ucApi.Prefs.get("natsumi.browser.type").value !== "floorp") {
+                        return;
+                    }
+                } else {
+                    // Assume we're on Firefox
+                    return;
+                }
+
                 let resetStyle = resetTabStyleIfNeeded();
                 if (resetStyle) {
                     let tabStyleResetObject = new NatsumiNotification(
@@ -2305,6 +2315,47 @@ function addCompactStylesPane() {
     });
 
     prefsView.insertBefore(styleNode, homePane);
+}
+
+function addCompactBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let compactBehaviorGroup = new OptionsGroup(
+        "natsumiCOmpactBehavior",
+        "Behavior",
+        "Tweak how you want Compact Mode to behave."
+    );
+
+    compactBehaviorGroup.registerOption("natsumiCompactNewWindow", new CheckboxChoice(
+        "natsumi.theme.compact-on-new-window",
+        "natsumiCompactNewWindow",
+        "Enable Compact Mode by default",
+        "If enabled, new windows will open with Compact Mode active."
+    ));
+
+    let compactBehaviorNode = compactBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = compactBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(compactBehaviorNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -2687,6 +2738,7 @@ function addPreferencesPanes() {
 
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
+    addCompactBehaviorPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();

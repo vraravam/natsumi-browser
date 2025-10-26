@@ -231,3 +231,10 @@ bodyMutationOnserver.observe(document.body, {
     attributes: true,
     attributeFilter: ["natsumi-compact-mode"]
 });
+
+// Enable compact mode if set to be enabled by default
+if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").exists()) {
+    if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").value) {
+        document.body.setAttribute("natsumi-compact-mode", "");
+    }
+}
