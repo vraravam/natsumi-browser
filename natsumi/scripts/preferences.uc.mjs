@@ -1281,7 +1281,7 @@ const layouts = {
     ),
     "single": new MCChoice(
         true,
-        "Single Toolbar (Zen-like)",
+        "Single Toolbar",
         "Merges everything into the sidebar for simplicity.",
         "<div id='single-toolbar' class='natsumi-mc-choice-image-browser'></div>"
     )
