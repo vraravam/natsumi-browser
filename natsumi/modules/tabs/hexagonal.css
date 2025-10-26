@@ -72,6 +72,10 @@ SOFTWARE.
         .tab-content {
           padding-left: var(--tab-inner-inline-margin) !important;
           padding-right: calc(var(--tab-inline-padding) + 5px) !important;
+
+          @media not -moz-pref("sidebar.verticalTabs") {
+            padding-left: 0 !important;
+          }
         }
 
         & > .tab-background {
