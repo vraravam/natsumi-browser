@@ -93,6 +93,7 @@ SOFTWARE.
       box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
       padding-top: 10px !important;
       opacity: 0;
+      bottom: 0 !important;
       --natsumi-compact-offset: var(--natsumi-sidebar-width);
       overflow-x: visible !important;
 
