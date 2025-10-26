@@ -30,6 +30,7 @@ SOFTWARE.
 @import url("tabs/blade.css");
 @import url("tabs/fusion.css");
 @import url("tabs/material.css");
+@import url("tabs/hexagonal.css");
 
 /* Global tweaks for tabs */
 .tabbrowser-tab {

@@ -366,6 +366,54 @@ SOFTWARE.
       }
     }
 
+    #tab-hexagonal {
+      .natsumi-mc-tab {
+        --natsumi-tab-height: 16px;
+        --horizontal-dist: calc(calc(var(--natsumi-tab-height) / 2) * tan(30deg));
+        --hexagon-side-length: calc(calc(var(--natsumi-tab-height) / 2) / sin(60deg));
+        --icon-container-width: calc(var(--horizontal-dist) * 2 + var(--hexagon-side-length));
+        background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
+        clip-path: polygon(
+                0 50%,
+                var(--horizontal-dist) 0,
+                calc(100% - var(--horizontal-dist)) 0,
+                100% 50%,
+                calc(100% - var(--horizontal-dist)) 100%,
+                var(--horizontal-dist) 100%
+        );
+
+        .natsumi-mc-tab-icon {
+          display: grid;
+          grid-template-columns: 1fr;
+
+          &::before {
+            --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+            content: "";
+            grid-row-start: 1;
+            grid-column-start: 1;
+            z-index: -1;
+            background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+            min-width: var(--icon-container-width);
+            height: 16px;
+            margin-top: -5px;
+            margin-left: -6px;
+            clip-path: polygon(
+                    0 50%,
+                    var(--horizontal-dist) 0,
+                    calc(100% - var(--horizontal-dist)) 0,
+                    100% 50%,
+                    calc(100% - var(--horizontal-dist)) 100%,
+                    var(--horizontal-dist) 100%
+            );
+          }
+        }
+
+        .natsumi-mc-tab-text {
+          margin-left: 2px;
+        }
+      }
+    }
+
     #tab-classic {
       .natsumi-mc-tab {
         background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
@@ -378,6 +426,22 @@ SOFTWARE.
   @media (not -moz-pref("natsumi.tabs.use-custom-type")) or (not -moz-pref("natsumi.tabs.type", "fusion")) {
     #natsumiTabFusionHighlight {
       display: none !important;
+    }
+  }
+
+  #natsumiSidebarPanelSidebarGroup {
+    #natsumiPanelSidebarDisabledWarning {
+      display: none;
+    }
+
+    @media not -moz-pref("floorp.panelSidebar.enabled") {
+      #natsumiPanelSidebarDisabledWarning {
+        display: flex;
+      }
+
+      checkbox, description.indent {
+        display: none;
+      }
     }
   }
 

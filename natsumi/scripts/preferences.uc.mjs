@@ -1519,6 +1519,19 @@ const tabDesigns = {
             </div>
         `
     ),
+    "hexagonal": new MCChoice(
+        "hexagonal",
+        "Hexagonal",
+        "A tab design inspired by Floorp's hexagonal branding.",
+        `
+            <div id='tab-hexagonal' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
     "classic": new MCChoice(
         "classic",
         "Classic",
@@ -1992,6 +2005,16 @@ function addSidebarTabsPane() {
 
             // Reset Floorp tab styles if needed
             if (selectedValue !== "classic") {
+                // Check if we're on Floorp
+                if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+                    if (ucApi.Prefs.get("natsumi.browser.type").value !== "floorp") {
+                        return;
+                    }
+                } else {
+                    // Assume we're on Firefox
+                    return;
+                }
+
                 let resetStyle = resetTabStyleIfNeeded();
                 if (resetStyle) {
                     let tabStyleResetObject = new NatsumiNotification(
@@ -2084,6 +2107,70 @@ function addSidebarWorkspacesPane() {
     });
 
     prefsView.insertBefore(sidebarWorkspacesNode, homePane);
+}
+
+function addSidebarPanelSidebarPane() {
+    // Note: This is a Floorp-only feature, it shouldn't be seen on other browsers
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
+            return;
+        }
+    } else {
+        // Assume we're on Firefox
+        return;
+    }
+
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let panelSidebarGroup = new OptionsGroup(
+        "natsumiSidebarPanelSidebar",
+        "Panel Sidebar",
+        "Tweak Floorp's Panel Sidebar."
+    );
+
+    panelSidebarGroup.registerOption("natsumiSidebarFloatingPanelSidebar", new CheckboxChoice(
+        "natsumi.sidebar.floorp-floating-panel",
+        "natsumiSidebarFloatingPanelSidebar",
+        "Floating Panel Sidebar",
+        "When enabled, the Panel Sidebar selection box will hide and float over the browser similarly to the main sidebar in Compact Mode.",
+    ));
+
+    let panelSidebarNode = panelSidebarGroup.generateNode();
+
+    // Add notice if Panel Sidebar is disabled
+    let panelSidebarDisabledNotice = convertToXUL(`
+        <div id="natsumiPanelSidebarDisabledWarning" class="natsumi-settings-info warning">
+            <div class="natsumi-settings-info-icon"></div>
+            <div class="natsumi-settings-info-text">
+                You need to enable Panel Sidebar in <html:a href="about:hub#/features/sidebar">Floorp Hub</html:a> to
+                customize these settings.
+            </div>
+        </div>
+    `)
+    let firstCheckbox = panelSidebarNode.querySelector("checkbox");
+    firstCheckbox.parentNode.insertBefore(panelSidebarDisabledNotice, firstCheckbox);
+
+    // Set listeners for each checkbox
+    let checkboxes = panelSidebarNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(panelSidebarNode, homePane);
 }
 
 function addSidebarButtonsPane() {
@@ -2228,6 +2315,47 @@ function addCompactStylesPane() {
     });
 
     prefsView.insertBefore(styleNode, homePane);
+}
+
+function addCompactBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let compactBehaviorGroup = new OptionsGroup(
+        "natsumiCOmpactBehavior",
+        "Behavior",
+        "Tweak how you want Compact Mode to behave."
+    );
+
+    compactBehaviorGroup.registerOption("natsumiCompactNewWindow", new CheckboxChoice(
+        "natsumi.theme.compact-on-new-window",
+        "natsumiCompactNewWindow",
+        "Enable Compact Mode by default",
+        "If enabled, new windows will open with Compact Mode active."
+    ));
+
+    let compactBehaviorNode = compactBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = compactBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(compactBehaviorNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -2605,10 +2733,12 @@ function addPreferencesPanes() {
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarTabsPane();
     addSidebarWorkspacesPane();
+    addSidebarPanelSidebarPane();
     addSidebarButtonsPane();
 
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
+    addCompactBehaviorPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();
