@@ -165,7 +165,7 @@ Remember to take backups of your userChrome.css and userContent.css files before
 
 #### Installing Natsumi Append (optional)
 Installing Natsumi Append allows you to use the full feature set of Natsumi Browser, but it's not
-recommended for the core parts of Natsumi to work.
+required for the core parts of Natsumi to work.
 
 Natsumi Browser needs to be installed before you can install Natsumi Append.
 
