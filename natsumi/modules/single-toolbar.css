@@ -109,7 +109,6 @@ SOFTWARE.
 
     #PersonalToolbar {
       --natsumi-bookmarks-width: calc(100vw - var(--natsumi-sidebar-width));
-      visibility: visible !important;
       width: var(--natsumi-bookmarks-width) !important;
       margin-left: var(--natsumi-sidebar-width) !important;
       padding-inline: 0 !important;
@@ -215,6 +214,20 @@ SOFTWARE.
       display: none;
     }
 
+    @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
+      #PersonalToolbar[collapsed] {
+        visibility: collapse;
+
+        #PersonalToolbar .chromeclass-toolbar-additional {
+          visibility: collapse;
+        }
+
+        .titlebar-buttonbox-container {
+          display: none !important;
+        }
+      }
+    }
+
     @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
       #PlacesToolbar, #PersonalToolbar .chromeclass-toolbar-additional {
         visibility: collapse;
@@ -223,9 +236,7 @@ SOFTWARE.
       #PersonalToolbar .titlebar-buttonbox-container {
         display: none !important;
       }
-    }
 
-    @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
       body[natsumi-bookmarks-hover] {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           transition-delay: 0s !important;
