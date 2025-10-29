@@ -429,6 +429,12 @@ SOFTWARE.
     }
   }
 
+  @media (not -moz-pref("natsumi.tabs.use-custom-type")) or (not -moz-pref("natsumi.tabs.type", "material")) {
+    #natsumiTabMaterialAlternate {
+      display: none !important;
+    }
+  }
+
   #natsumiSidebarPanelSidebarGroup {
     #natsumiPanelSidebarDisabledWarning {
       display: none;

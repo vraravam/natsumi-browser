@@ -2007,11 +2007,20 @@ function addSidebarTabsPane() {
         tabDesignSelection.registerOption(style, tabDesigns[style]);
     }
 
+    // Fusion options
     tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(
         "natsumi.tabs.fusion-highlight",
         "natsumiTabFusionHighlight",
         "Enable Fusion tab highlight",
         "This will add a Photon (Firefox Quantum)-like highlight to Fusion."
+    ));
+
+    // Material options
+    tabDesignSelection.registerExtras("natsumiTabMaterialAlternate", new CheckboxChoice(
+        "natsumi.tabs.material-alt-design",
+        "natsumiTabMaterialAlternate",
+        "Use alternative design for Material tabs",
+        "This will make tabs have a similar design to toolbar buttons."
     ));
 
     let tabDesignNode = tabDesignSelection.generateNode();
