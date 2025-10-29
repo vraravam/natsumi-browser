@@ -489,6 +489,40 @@ function createURLbarPane() {
     natsumiWelcomeObject.addPane(themesPane);
 }
 
+function createCompatibilityWarning() {
+    // This function is only to be used if the browser is INTENTIONALLY made incompatible
+
+    document.body.setAttribute("natsumi-welcome", "");
+
+    // Get browser name
+    let browserName = AppConstants.MOZ_APP_BASENAME;
+
+    let warningNode = convertToXUL(`
+        <div id="natsumi-compat-warning">
+            <div id="natsumi-compat-warning-content">
+                <image id="natsumi-compat-warning-icon"></image>
+                <div id="natsumi-compat-warning-header">
+                    This browser isn't compatible
+                </div>
+                <div id="natsumi-compat-warning-body-1"></div>
+                <div id="natsumi-compat-warning-body-2"></div>
+            </div>
+        </div>
+    `);
+
+    document.body.appendChild(warningNode);
+
+    // Set up text content
+    try {
+        let warningBodyNode = document.getElementById("natsumi-compat-warning-body-1");
+        warningBodyNode.textContent = `Natsumi is incompatible with ${browserName}. This can be due to compatibility issues or severe concerns such as security/privacy or ethics.`;
+        let warningBodyNode2 = document.getElementById("natsumi-compat-warning-body-2");
+        warningBodyNode2.textContent = `Please use a supported browser or uninstall Natsumi.`;
+    } catch (e) {
+        console.error("Failed to set compatibility warning text:", e);
+    }
+}
+
 const welcomeAudioUrl = "https://github.com/MX-Linux/mx-sound-theme-borealis/raw/refs/heads/master/Borealis/stereo/desktop-login.ogg";
 
 let welcomeViewed = false;
@@ -533,5 +567,22 @@ if (!welcomeViewed) {
 
     if (isFloorp) {
         tabStyleReset = resetTabStyleIfNeeded();
+    }
+}
+
+// Show compatibility warning on unsupported browsers
+const unsupportedBrowsers = [
+    "zen" // Zen Browser, reason: see README FAQ
+]
+
+try {
+    if (unsupportedBrowsers.includes(AppConstants.MOZ_APP_NAME.toLowerCase())) {
+        createCompatibilityWarning();
+    }
+} catch (e) {
+    // Check if AppConstants even exists
+    if (typeof AppConstants === "undefined") {
+        // This browser is very broken (or it's something like Pale Moon), best to show the warning
+        createCompatibilityWarning();
     }
 }
