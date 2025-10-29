@@ -98,18 +98,6 @@ function addAboutPane() {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            About Natsumi
-        </label>
-    </richlistitem>
-    `
-    let sidebar = document.getElementById("categories");
-    const generalPane = sidebar.querySelector("#category-general");
-    sidebar.appendChild(convertToXUL(nodeString));
-
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiAbout", {
         _initted: true,

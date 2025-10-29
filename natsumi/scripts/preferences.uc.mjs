@@ -1695,17 +1695,37 @@ class MultipleChoicePreference {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            Customize Natsumi
-        </label>
-    </richlistitem>
+    let customizeNodeString = `
+        <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Customize Natsumi
+            </label>
+        </richlistitem>
+    `
+    let shortcutsNodeString = `
+        <richlistitem id="natsumi-shortcuts" class="category" value="paneNatsumiShortcuts" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Keyboard Shortcuts">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Keyboard Shortcuts
+            </label>
+        </richlistitem>
+    `
+    let aboutNodeString = `
+        <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                About Natsumi
+            </label>
+        </richlistitem>
     `
     let sidebar = document.getElementById("categories");
     const generalPane = sidebar.querySelector("#category-general");
-    sidebar.insertBefore(convertToXUL(nodeString), generalPane.nextSibling);
+
+    // Add entries to sidebar all in one go to ensure consistent ordering
+    sidebar.insertBefore(convertToXUL(customizeNodeString), generalPane.nextSibling);
+    sidebar.insertBefore(convertToXUL(shortcutsNodeString), generalPane.nextSibling.nextSibling);
+    sidebar.appendChild(convertToXUL(aboutNodeString));
 
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiSettings", {
