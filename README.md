@@ -165,7 +165,7 @@ Remember to take backups of your userChrome.css and userContent.css files before
 
 #### Installing Natsumi Append (optional)
 Installing Natsumi Append allows you to use the full feature set of Natsumi Browser, but it's not
-recommended for the core parts of Natsumi to work.
+required for the core parts of Natsumi to work.
 
 Natsumi Browser needs to be installed before you can install Natsumi Append.
 
@@ -359,6 +359,23 @@ You can fix this by going to Floorp Hub => Tab & Appearance in Floorp or Look & 
 ### "I can't use custom skin X with Natsumi, please add support for it!"
 This is not something I am able to help with. Natsumi is not tested with other themes in mind, so it is
 possible that installing incompatible themes alongside Natsumi may break one or more of them.
+
+### "Why is my browser showing as not compatible with Natsumi?"
+> [!NOTE]
+> This is for users seeing the compatibility warning after installing Natsumi. If you're wondering why
+> the browser shows up as not compatible on the compatibility table, you may want to refer to the notes
+> for each incompatible browser.
+
+If you see this warning, it means Natsumi intentionally isn't supported on your browser due to serious
+concerns or severe compatibility issues.
+
+When a browser's developers have stances that go against Natsumi's core values (especially regarding
+user customization) or a browser is heavily modified from Firefox to the point that it basically doesn't
+use Firefox's selectors, this can sometimes lead to me having to push out patches often just to address
+feature restrictions, compatibility issues and so on. This is not sustainable for me as Natsumi's
+developer, so I intentionally do not support such browsers out of caution.
+
+Please consider using another compatible browser or uninstall Natsumi.
 
 ### "Something's bugged!"
 There may be userchromes that you're using alongside Natsumi Browser that breaks things. Please disable

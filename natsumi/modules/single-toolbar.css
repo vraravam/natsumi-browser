@@ -80,6 +80,34 @@ SOFTWARE.
         #unified-extensions-button {
           padding-left: 0 !important;
         }
+
+        #PanelUI-button {
+          display: flex !important;
+        }
+      }
+
+      @media not -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        #stop-reload-button {
+          margin-right: var(--urlbar-margin-inline) !important;
+        }
+      }
+    }
+
+    #nav-bar:not([overflowing], [nonemptyoverflow], [customizing]) {
+      #stop-reload-button {
+        margin-right: var(--urlbar-margin-inline) !important;
+      }
+    }
+
+    #nav-bar-overflow-button {
+      order: 999 !important;
+
+      @media not -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        display: none !important;
+      }
+
+      @media -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        margin-right: var(--urlbar-margin-inline) !important;
       }
     }
 
@@ -104,12 +132,12 @@ SOFTWARE.
     }
 
     #stop-reload-button {
-      padding-right: var(--space-small) !important;
+      width: 36px !important;
+      padding-right: 0 !important;
     }
 
     #PersonalToolbar {
       --natsumi-bookmarks-width: calc(100vw - var(--natsumi-sidebar-width));
-      visibility: visible !important;
       width: var(--natsumi-bookmarks-width) !important;
       margin-left: var(--natsumi-sidebar-width) !important;
       padding-inline: 0 !important;
@@ -215,6 +243,20 @@ SOFTWARE.
       display: none;
     }
 
+    @media not -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
+      #PersonalToolbar[collapsed] {
+        visibility: collapse;
+
+        #PersonalToolbar .chromeclass-toolbar-additional {
+          visibility: collapse;
+        }
+
+        .titlebar-buttonbox-container {
+          display: none !important;
+        }
+      }
+    }
+
     @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
       #PlacesToolbar, #PersonalToolbar .chromeclass-toolbar-additional {
         visibility: collapse;
@@ -223,9 +265,7 @@ SOFTWARE.
       #PersonalToolbar .titlebar-buttonbox-container {
         display: none !important;
       }
-    }
 
-    @media -moz-pref("natsumi.theme.show-bookmarks-on-hover") {
       body[natsumi-bookmarks-hover] {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           transition-delay: 0s !important;

@@ -429,6 +429,12 @@ SOFTWARE.
     }
   }
 
+  @media (not -moz-pref("natsumi.tabs.use-custom-type")) or (not -moz-pref("natsumi.tabs.type", "material")) {
+    #natsumiTabMaterialAlternate {
+      display: none !important;
+    }
+  }
+
   #natsumiSidebarPanelSidebarGroup {
     #natsumiPanelSidebarDisabledWarning {
       display: none;
@@ -1162,7 +1168,7 @@ SOFTWARE.
   }
 
   @media not -moz-pref("natsumi.theme.single-toolbar") {
-    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
+    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowToolbarButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
       display: none !important;
     }
   }

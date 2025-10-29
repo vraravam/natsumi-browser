@@ -1281,7 +1281,7 @@ const layouts = {
     ),
     "single": new MCChoice(
         true,
-        "Single Toolbar (Zen-like)",
+        "Single Toolbar",
         "Merges everything into the sidebar for simplicity.",
         "<div id='single-toolbar' class='natsumi-mc-choice-image-browser'></div>"
     )
@@ -1695,17 +1695,37 @@ class MultipleChoicePreference {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            Customize Natsumi
-        </label>
-    </richlistitem>
+    let customizeNodeString = `
+        <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Customize Natsumi
+            </label>
+        </richlistitem>
+    `
+    let shortcutsNodeString = `
+        <richlistitem id="natsumi-shortcuts" class="category" value="paneNatsumiShortcuts" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Keyboard Shortcuts">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Keyboard Shortcuts
+            </label>
+        </richlistitem>
+    `
+    let aboutNodeString = `
+        <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                About Natsumi
+            </label>
+        </richlistitem>
     `
     let sidebar = document.getElementById("categories");
     const generalPane = sidebar.querySelector("#category-general");
-    sidebar.insertBefore(convertToXUL(nodeString), generalPane.nextSibling);
+
+    // Add entries to sidebar all in one go to ensure consistent ordering
+    sidebar.insertBefore(convertToXUL(customizeNodeString), generalPane.nextSibling);
+    sidebar.insertBefore(convertToXUL(shortcutsNodeString), generalPane.nextSibling.nextSibling);
+    sidebar.appendChild(convertToXUL(aboutNodeString));
 
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiSettings", {
@@ -1746,6 +1766,13 @@ function addLayoutPane() {
         true
     )
 
+    let customizableToolbarCheckbox = new CheckboxChoice(
+        "natsumi.theme.customizable-single-toolbar",
+        "natsumiShowToolbarButton",
+        "Show toolbar buttons",
+        "This will show other toolbar buttons in the overflow menu."
+    )
+
     let bookmarksOnHoverCheckbox = new CheckboxChoice(
         "natsumi.theme.show-bookmarks-on-hover",
         "natsumiShowBookmarksOnHover",
@@ -1762,6 +1789,7 @@ function addLayoutPane() {
 
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowToolbarButtonBox", customizableToolbarCheckbox);
     layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
     layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
 
@@ -1979,11 +2007,20 @@ function addSidebarTabsPane() {
         tabDesignSelection.registerOption(style, tabDesigns[style]);
     }
 
+    // Fusion options
     tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(
         "natsumi.tabs.fusion-highlight",
         "natsumiTabFusionHighlight",
         "Enable Fusion tab highlight",
         "This will add a Photon (Firefox Quantum)-like highlight to Fusion."
+    ));
+
+    // Material options
+    tabDesignSelection.registerExtras("natsumiTabMaterialAlternate", new CheckboxChoice(
+        "natsumi.tabs.material-alt-design",
+        "natsumiTabMaterialAlternate",
+        "Use alternative design for Material tabs",
+        "This will make tabs have a similar design to toolbar buttons."
     ));
 
     let tabDesignNode = tabDesignSelection.generateNode();
@@ -2193,7 +2230,7 @@ function addSidebarButtonsPane() {
                 "natsumi.sidebar.use-statusbar-in-sidebar",
                 "natsumiSidebarEnableToolbar",
                 "Use Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
-                "This will allow you to add toolbar buttons (e.g. Bookmarks menu, New tab) to the Sidebar just like Zen."
+                "This will move the Status Bar to the bottom of the sidebar when it is in its hidden state."
             ));
         }
     }
