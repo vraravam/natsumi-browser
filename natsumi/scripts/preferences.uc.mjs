@@ -1746,6 +1746,13 @@ function addLayoutPane() {
         true
     )
 
+    let customizableToolbarCheckbox = new CheckboxChoice(
+        "natsumi.theme.customizable-single-toolbar",
+        "natsumiShowToolbarButton",
+        "Show toolbar buttons",
+        "This will show other toolbar buttons in the overflow menu."
+    )
+
     let bookmarksOnHoverCheckbox = new CheckboxChoice(
         "natsumi.theme.show-bookmarks-on-hover",
         "natsumiShowBookmarksOnHover",
@@ -1762,6 +1769,7 @@ function addLayoutPane() {
 
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowToolbarButtonBox", customizableToolbarCheckbox);
     layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
     layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
 

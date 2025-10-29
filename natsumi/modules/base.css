@@ -147,20 +147,22 @@ SOFTWARE.
       top: 6px !important;
     }
 
-    &:hover .toolbarbutton-icon:not(.searchmode-switcher-icon) {
-      background-color: var(--natsumi-button-hover-color) !important;
-    }
-
-    &:active, &[open], &[checked] {
-      .toolbarbutton-icon {
-        background-color: var(--natsumi-button-active-color) !important;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+    &:not([disabled]) {
+      &:hover .toolbarbutton-icon:not(.searchmode-switcher-icon) {
+        background-color: var(--natsumi-button-hover-color) !important;
       }
 
-      &:hover {
+      &:active, &[open], &[checked] {
         .toolbarbutton-icon {
           background-color: var(--natsumi-button-active-color) !important;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+
+        &:hover {
+          .toolbarbutton-icon {
+            background-color: var(--natsumi-button-active-color) !important;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+          }
         }
       }
     }
@@ -249,6 +251,31 @@ SOFTWARE.
 
   .avatar-container {
     margin-left: 6px !important;
+  }
+}
+
+#nav-bar-overflow-button {
+  width: 36px !important;
+  padding-inline: 4px !important;
+
+  .toolbarbutton-icon {
+    padding: 6px !important;
+    width: 28px !important;
+    height: 28px !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  &:hover {
+    .toolbarbutton-icon {
+      background-color: var(--natsumi-button-hover-color) !important;
+    }
+  }
+
+  &:active, &[open] {
+    .toolbarbutton-icon {
+      background-color: var(--natsumi-button-active-color) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+    }
   }
 }
 

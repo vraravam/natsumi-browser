@@ -80,6 +80,34 @@ SOFTWARE.
         #unified-extensions-button {
           padding-left: 0 !important;
         }
+
+        #PanelUI-button {
+          display: flex !important;
+        }
+      }
+
+      @media not -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        #stop-reload-button {
+          margin-right: var(--urlbar-margin-inline) !important;
+        }
+      }
+    }
+
+    #nav-bar:not([overflowing], [nonemptyoverflow], [customizing]) {
+      #stop-reload-button {
+        margin-right: var(--urlbar-margin-inline) !important;
+      }
+    }
+
+    #nav-bar-overflow-button {
+      order: 999 !important;
+
+      @media not -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        display: none !important;
+      }
+
+      @media -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        margin-right: var(--urlbar-margin-inline) !important;
       }
     }
 
@@ -104,7 +132,8 @@ SOFTWARE.
     }
 
     #stop-reload-button {
-      padding-right: var(--space-small) !important;
+      width: 36px !important;
+      padding-right: 0 !important;
     }
 
     #PersonalToolbar {
