@@ -26,7 +26,13 @@ export async function enableCustomizableToolbar() {
     let currentRelativePosition = 0;
     for (let i = 0; i < widgets.length; i++) {
         let widgetObject = widgets[i];
-        let widgetNode = widgets[i].instances[0].node;
+
+        // Ensure widget is not null
+        if (!widgetObject) {
+            continue;
+        }
+
+        let widgetNode = widgetObject.instances[0].node;
 
         if (blacklistedIds.includes(widgetObject.id)) {
             continue;
@@ -67,7 +73,6 @@ export async function resetCustomizableToolbar() {
         console.error("Failed to read single toolbar buttons customization file:", e);
         return;
     }
-    console.log(widgetsData);
 
     // Move widgets back into place
     for (let i = 0; i < widgetsData.length; i++) {

@@ -1162,7 +1162,7 @@ SOFTWARE.
   }
 
   @media not -moz-pref("natsumi.theme.single-toolbar") {
-    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
+    #natsumiShowAddonsButtonBox, #natsumiShowMenuButtonBox, #natsumiShowToolbarButtonBox, #natsumiShowBookmarksOnHoverBox, #natsumiForceWinControlsToLeftBox {
       display: none !important;
     }
   }
