@@ -288,6 +288,19 @@ their author(s) have been provided above the used code.
         box-shadow: none !important;
         border-radius: 50px !important;
       }
+
+      .fake-editable {
+        background-color: transparent !important;
+      }
+    }
+
+    .search-inner-wrapper {
+      .search-handoff-button {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
     }
 
     /* Modals */
