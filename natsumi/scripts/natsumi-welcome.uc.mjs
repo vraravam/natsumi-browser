@@ -580,9 +580,6 @@ try {
         createCompatibilityWarning();
     }
 } catch (e) {
-    // Check if AppConstants even exists
-    if (typeof AppConstants === "undefined") {
-        // This browser is very broken (or it's something like Pale Moon), best to show the warning
-        createCompatibilityWarning();
-    }
+    // Forego compatibility check (for the sake of reliability)
+    console.error("Compatibility check failed: ", e);
 }
