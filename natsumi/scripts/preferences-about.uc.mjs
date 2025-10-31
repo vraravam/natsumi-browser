@@ -76,6 +76,8 @@ function addAboutPane() {
                 <div class="natsumi-about-vertical-separator"></div>
                 <div id="natsumi-about-links-container">
                     <html:a href="https://github.com/greeeen-dev/natsumi-browser" class="natsumi-about-link">Source code</html:a>
+                    <html:a href="https://natsumi.greeeen.dev" class="natsumi-about-link">Website</html:a>
+                    <html:a href="https://natsumi.greeeen.dev/discord" class="natsumi-about-link">Discord</html:a>
                 </div>
             </div>
         </groupbox>
