@@ -273,6 +273,114 @@ SOFTWARE.
     }
   }
 
+  #natsumiIconsGroup {
+    .natsumi-mc-choice-image-browser {
+      display: grid !important;
+      grid-template-columns: 1fr;
+
+      &::before {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        margin-left: auto;
+        margin-right: 0;
+        margin-bottom: 0;
+        height: calc(100% - 20px);
+        width: calc(100% - 20px);
+        border-right: none;
+        border-bottom: none;
+        border-radius: 5px 0 0 0;
+      }
+
+      .natsumi-mc-choice-icon {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        width: 12px;
+        height: 12px;
+        margin: 4px !important;
+        background-size: 12px;
+        -moz-context-properties: fill, stroke;
+
+        &.icon-bookmarks {
+          margin-left: 28px !important;
+        }
+
+        &.icon-back {
+          margin-left: 52px !important;
+        }
+
+        &.icon-reload {
+          margin-left: 76px !important;
+        }
+      }
+
+      &#icons-default {
+        .natsumi-mc-choice-icon {
+          fill: currentColor;
+        }
+
+        .icon-sidebar {
+          background-image: url("chrome://browser/skin/sidebar-collapsed.svg");
+        }
+
+        .icon-bookmarks {
+          background-image: url("chrome://browser/skin/synced-tabs.svg");
+        }
+
+        .icon-back {
+          background-image: url("chrome://browser/skin/back.svg");
+        }
+
+        .icon-reload {
+          background-image: url("chrome://global/skin/icons/reload.svg");
+        }
+      }
+
+      &#icons-lucide {
+        .natsumi-mc-choice-icon {
+          stroke: currentColor;
+        }
+
+        .icon-sidebar {
+          background-image: url("../icons/lucide/sidebar.svg");
+        }
+
+        .icon-bookmarks {
+          background-image: url("../icons/lucide/devices.svg");
+        }
+
+        .icon-back {
+          background-image: url("../icons/lucide/arrow-left.svg");
+        }
+
+        .icon-reload {
+          background-image: url("../icons/lucide/rotate-right.svg");
+        }
+      }
+
+      &#icons-fluent {
+        .natsumi-mc-choice-icon {
+          fill: currentColor;
+        }
+
+        .icon-sidebar {
+          background-image: url("../icons/fluent/sidebar.svg");
+        }
+
+        .icon-bookmarks {
+          background-image: url("../icons/fluent/devices.svg");
+        }
+
+        .icon-back {
+          background-image: url("../icons/fluent/arrow-left.svg");
+        }
+
+        .icon-reload {
+          background-image: url("../icons/fluent/rotate-right.svg");
+        }
+      }
+    }
+  }
+
   #natsumiTabDesignSettings {
     .natsumi-mc-choice-image-browser {
       display: grid;

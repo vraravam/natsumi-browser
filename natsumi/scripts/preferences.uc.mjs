@@ -152,17 +152,17 @@ class CustomThemePicker {
             // Add a new color at the clicked position
             this.addNewColor(relativeX, relativeY);
         });
-        customThemeColorGrid.addEventListener("mouseenter", (event) => {
+        customThemeColorGrid.addEventListener("mouseenter", () => {
             this.newColorAllowed = true;
         });
-        customThemeColorGrid.addEventListener("mouseleave", (event) => {
+        customThemeColorGrid.addEventListener("mouseleave", () => {
             this.newColorAllowed = false;
         });
 
         // Add listeners for top controls
         for (let i = 0; i < this.availableLayers; i++) {
             let layerButton = this.node.querySelector(`.natsumi-custom-layer-${i + 1}`);
-            layerButton.addEventListener("click", (event) => {
+            layerButton.addEventListener("click", () => {
                 this.loadLayer(i);
                 layerButton.setAttribute("selected", "");
 
@@ -178,13 +178,13 @@ class CustomThemePicker {
         let darkModeButton = this.node.querySelector(".natsumi-custom-mode-dark");
 
         if (!this.singleColor) {
-            lightModeButton.addEventListener("click", (event) => {
+            lightModeButton.addEventListener("click", () => {
                 this.theme = "light";
                 lightModeButton.setAttribute("selected", "");
                 darkModeButton.removeAttribute("selected");
                 this.loadLayer(this.layer);
             });
-            darkModeButton.addEventListener("click", (event) => {
+            darkModeButton.addEventListener("click", () => {
                 this.theme = "dark";
                 darkModeButton.setAttribute("selected", "");
                 lightModeButton.removeAttribute("selected");
@@ -196,10 +196,10 @@ class CustomThemePicker {
         let exportButton = this.node.querySelector(".natsumi-custom-export");
 
         if (!this.singleColor) {
-            importButton.addEventListener("click", (event) => {
+            importButton.addEventListener("click", () => {
                 this.import();
             });
-            exportButton.addEventListener("click", (event) => {
+            exportButton.addEventListener("click", () => {
                 this.export();
             });
         }
@@ -212,20 +212,20 @@ class CustomThemePicker {
         let hexButton = this.node.querySelector(".natsumi-hex-button");
 
         if (!this.singleColor) {
-            presetButton.addEventListener("click", (event) => {
+            presetButton.addEventListener("click", () => {
                 this.cyclePreset();
             });
 
-            gradientTypeButton.addEventListener("click", (event) => {
+            gradientTypeButton.addEventListener("click", () => {
                 this.cycleGradientType();
             });
         }
 
-        resetButton.addEventListener("click", (event) => {
+        resetButton.addEventListener("click", () => {
             this.removeAllColors();
         });
 
-        hexButton.addEventListener("click", (event) => {
+        hexButton.addEventListener("click", () => {
             let hexInputContainer = this.node.querySelector(".natsumi-custom-theme-hex-input");
             if (hexInputContainer.attributes["hidden"]) {
                 hexInputContainer.removeAttribute("hidden");
@@ -257,7 +257,7 @@ class CustomThemePicker {
 
         // Add listener for HEX submit button
         let hexSubmitButton = this.node.querySelector(".natsumi-hex-submit");
-        hexSubmitButton.addEventListener("click", (event) => {
+        hexSubmitButton.addEventListener("click", () => {
             let hexInputNode = this.node.querySelector(".natsumi-hex-input");
             let hexCode = hexInputNode.value.trim();
 
@@ -324,7 +324,7 @@ class CustomThemePicker {
         let uploadTimeout;
 
         const filePromise = new Promise((resolve, reject) => {
-            uploadNode.onchange = (event) => {
+            uploadNode.onchange = () => {
                 if (uploadTimeout) {
                     clearTimeout(uploadTimeout);
                 }
@@ -1446,7 +1446,7 @@ const colors = {
     "system": new MCChoice(
         "system",
         "System Accent",
-        "Use the system accent color.",
+        "Uses the system accent color.",
         "",
         "oklch(from AccentColor 0.825 0.1 h)"
     ),
@@ -1456,6 +1456,48 @@ const colors = {
         "Pick a color of your choice!",
         ""
     )*/
+}
+
+const icons = {
+    "default": new MCChoice(
+        "default",
+        "Firefox default",
+        "The base icons bundled with Firefox.",
+        `
+            <div id='icons-default' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    ),
+    "lucide": new MCChoice(
+        "lucide",
+        "Lucide",
+        "An icon pack based on Lucide.",
+        `
+            <div id='icons-lucide' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    ),
+    "fluent": new MCChoice(
+        "fluent",
+        "Fluent",
+        "An icon pack based on Microsoft Fluent UI icons.",
+        `
+            <div id='icons-fluent' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    )
 }
 
 const compactStyles = {
@@ -1980,6 +2022,39 @@ function addColorsPane() {
 
     prefsView.insertBefore(colorNode, homePane);
     //customColorPickerUi.init();
+}
+
+function addIconsPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create icons selection
+    let iconSelection = new MultipleChoicePreference(
+        "natsumiIcons",
+        "natsumi.theme.icons",
+        "Icons",
+        "Choose the icon pack you want to use."
+    );
+
+    for (let iconPack in icons) {
+        iconSelection.registerOption(iconPack, icons[iconPack]);
+    }
+
+    let iconNode = iconSelection.generateNode();
+
+    // Set listeners for each button
+    let iconButtons = iconNode.querySelectorAll(".natsumi-mc-choice");
+    iconButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing icon pack:", selectedValue);
+            setStringPreference("natsumi.theme.icons", selectedValue);
+            iconButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    prefsView.insertBefore(iconNode, homePane);
 }
 
 function addSidebarTabsPane() {
@@ -2766,6 +2841,7 @@ function addPreferencesPanes() {
     addLayoutPane();
     addThemesPane();
     addColorsPane();
+    addIconsPane();
 
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarTabsPane();

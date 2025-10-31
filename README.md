@@ -406,6 +406,10 @@ changed or removed after this date, it may not be accurately reflected in the sc
 Natsumi Browser uses code or files from other open-source projects. The original sources and their
 licenses are listed below.
 
+> [!NOTE]
+> For icon packs attribution, please check the README and LICENSE files in the icons folder for the
+> respective icon pack.
+
 - [MX-Linux/mx-sound-theme-borealis](https://github.com/MX-Linux/mx-sound-theme-borealis)
   
   License: GPLv3

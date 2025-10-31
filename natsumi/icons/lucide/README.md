@@ -1,2 +1,5 @@
-# Lucide icons for Floorp
-Natsumi uses Lucide icons for Floorp. [View license](./LICENSE)
+# Lucide icons
+Natsumi uses Lucide icons as an icon pack. [View license](./LICENSE)
+
+- [Website](https://lucide.dev)
+- [GitHub](https://github.com/lucide-icons/lucide)

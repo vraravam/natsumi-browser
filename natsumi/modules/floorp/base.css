@@ -334,4 +334,9 @@ SOFTWARE.
       border-bottom: var(--tabstrip-inner-border) !important;
     }
   }
+
+  /* Private browsing */
+  .private-browsing-indicator-icon {
+    list-style-image: url("chrome://branding/content/about-logo-private.png") !important;
+  }
 }
