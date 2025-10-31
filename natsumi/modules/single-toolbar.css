@@ -94,8 +94,10 @@ SOFTWARE.
     }
 
     #nav-bar:not([overflowing], [nonemptyoverflow], [customizing]) {
-      #stop-reload-button {
-        margin-right: var(--urlbar-margin-inline) !important;
+      @media not -moz-pref("natsumi.theme.force-customizable-single-toolbar") {
+        #stop-reload-button {
+          margin-right: var(--urlbar-margin-inline) !important;
+        }
       }
     }
 
@@ -104,6 +106,10 @@ SOFTWARE.
 
       @media not -moz-pref("natsumi.theme.customizable-single-toolbar") {
         display: none !important;
+      }
+
+      @media -moz-pref("natsumi.theme.force-customizable-single-toolbar") and -moz-pref("natsumi.theme.customizable-single-toolbar") {
+        display: flex !important;
       }
 
       @media -moz-pref("natsumi.theme.customizable-single-toolbar") {
