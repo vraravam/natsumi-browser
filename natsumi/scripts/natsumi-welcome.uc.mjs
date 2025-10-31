@@ -458,27 +458,83 @@ function createThemesPane() {
     natsumiWelcomeObject.addPane(themesPane);
 }
 
+function createIconsPane() {
+    // noinspection HtmlUnknownAttribute
+    let iconSelection = `
+        <div class="natsumi-welcome-selection selected" pref="natsumi.theme.icons" type="string" value="default">
+            <div id="natsumi-welcome-icons-default" class="natsumi-welcome-selection-preview">
+                <div class="natsumi-welcome-selection-icon icon-sidebar"></div>
+                <div class="natsumi-welcome-selection-icon icon-bookmarks"></div>
+                <div class="natsumi-welcome-selection-icon icon-back"></div>
+                <div class="natsumi-welcome-selection-icon icon-reload"></div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Firefox default
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.theme.icons" type="string" value="lucide">
+            <div id="natsumi-welcome-icons-lucide" class="natsumi-welcome-selection-preview">
+                <div class="natsumi-welcome-selection-icon icon-sidebar"></div>
+                <div class="natsumi-welcome-selection-icon icon-bookmarks"></div>
+                <div class="natsumi-welcome-selection-icon icon-back"></div>
+                <div class="natsumi-welcome-selection-icon icon-reload"></div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Lucide
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.theme.icons" type="string" value="fluent">
+            <div id="natsumi-welcome-icons-fluent" class="natsumi-welcome-selection-preview">
+                <div class="natsumi-welcome-selection-icon icon-sidebar"></div>
+                <div class="natsumi-welcome-selection-icon icon-bookmarks"></div>
+                <div class="natsumi-welcome-selection-icon icon-back"></div>
+                <div class="natsumi-welcome-selection-icon icon-reload"></div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Fluent
+            </div>
+        </div>
+    `
+
+    let layoutPane = new NatsumiWelcomePane(
+        "natsumi-welcome-icons",
+        "Choose your icons",
+        `
+            <div class="natsumi-welcome-paragraph">
+                Choose the icon pack you want to use. Please note that some icons may not be changed regardless of icon pack.
+            </div>
+            <div class="natsumi-welcome-selection-container">
+                ${iconSelection}
+            </div>
+        `,
+    );
+
+    natsumiWelcomeObject.addPane(layoutPane);
+}
+
 function createURLbarPane() {
     // noinspection HtmlUnknownAttribute
     let themesSelection = `
         <div class="natsumi-welcome-selection selected" pref="natsumi.urlbar.do-not-float" type="bool" value="false">
+            <div id="natsumi-welcome-urlbar-floating" class="natsumi-welcome-selection-preview"></div>
             <div class="natsumi-welcome-selection-label">
-                Make the URL bar float
+                Floating
             </div>
         </div>
         <div class="natsumi-welcome-selection" pref="natsumi.urlbar.do-not-float" type="bool" value="true">
+            <div id="natsumi-welcome-urlbar-classic" class="natsumi-welcome-selection-preview"></div>
             <div class="natsumi-welcome-selection-label">
-                Keep the classic URL bar position
+                Classic
             </div>
         </div>
     `
 
     let themesPane = new NatsumiWelcomePane(
         "natsumi-welcome-urlbar",
-        "Make your URL bar float",
+        "Choose your URL bar style",
         `
             <div class="natsumi-welcome-paragraph">
-                You can choose to make your URL bar float or keep its original position.
+                You can choose to make your URL bar float or keep the original design.
             </div>
             <div class="natsumi-welcome-selection-container">
                 ${themesSelection}
@@ -537,6 +593,7 @@ if (!welcomeViewed) {
     createLayoutPane();
     createColorsPane();
     createThemesPane();
+    createIconsPane();
     createURLbarPane();
 
     // Play welcome audio
