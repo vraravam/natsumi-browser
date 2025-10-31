@@ -24,7 +24,7 @@ SOFTWARE.
 
 */
 
-/* ==== Lucide icons for browser ==== */
+/* ==== Fluent icons for browser ==== */
 
 @media -moz-pref("natsumi.theme.icons", "fluent") {
   /* Toolbar icons */
@@ -35,7 +35,7 @@ SOFTWARE.
 
   /* Scale toolbar icons consistently w/ Lucide icons */
   #nav-bar-customization-target, #PanelUI-button, #nora-statusbar, #status-bar {
-    & toolbarbutton {
+    & toolbarbutton:not(.unified-extensions-item-action-button) {
       & .toolbarbutton-icon {
         width: 18px !important;
         height: 18px !important;
