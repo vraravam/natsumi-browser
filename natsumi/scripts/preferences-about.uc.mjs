@@ -76,6 +76,8 @@ function addAboutPane() {
                 <div class="natsumi-about-vertical-separator"></div>
                 <div id="natsumi-about-links-container">
                     <html:a href="https://github.com/greeeen-dev/natsumi-browser" class="natsumi-about-link">Source code</html:a>
+                    <html:a href="https://natsumi.greeeen.dev" class="natsumi-about-link">Website</html:a>
+                    <html:a href="https://natsumi.greeeen.dev/discord" class="natsumi-about-link">Discord</html:a>
                 </div>
             </div>
         </groupbox>
@@ -98,18 +100,6 @@ function addAboutPane() {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            About Natsumi
-        </label>
-    </richlistitem>
-    `
-    let sidebar = document.getElementById("categories");
-    const generalPane = sidebar.querySelector("#category-general");
-    sidebar.appendChild(convertToXUL(nodeString));
-
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiAbout", {
         _initted: true,

@@ -900,18 +900,6 @@ function convertToXUL(node) {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-shortcuts" class="category" value="paneNatsumiShortcuts" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Keyboard Shortcuts">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            Keyboard Shortcuts
-        </label>
-    </richlistitem>
-    `
-    let sidebar = document.getElementById("categories");
-    const generalPane = sidebar.querySelector("#category-general");
-    sidebar.insertBefore(convertToXUL(nodeString), generalPane.nextSibling);
-
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiShortcuts", {
         _initted: true,

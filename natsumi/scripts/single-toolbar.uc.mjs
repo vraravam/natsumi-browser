@@ -30,6 +30,11 @@ SOFTWARE.
 */
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import {
+    customizationFilePath,
+    enableCustomizableToolbar,
+    resetCustomizableToolbar
+} from "./single-toolbar-customization.sys.mjs";
 
 let hoverTimeout = null;
 let hoveredElements = 0;
@@ -110,7 +115,6 @@ function detectBookmarkHover() {
 
     if (!windowButtonsContainer) {
         let originalWindowButtonsContainer = document.querySelector(".titlebar-buttonbox-container");
-        console.log(originalWindowButtonsContainer);
         windowButtonsContainer = originalWindowButtonsContainer.cloneNode(true);
         bookmarksToolbar.appendChild(windowButtonsContainer);
     }
@@ -136,3 +140,56 @@ function detectBookmarkHover() {
 }
 
 detectBookmarkHover();
+
+// Check if single toolbar is active
+let singleToolbarEnabled = false;
+if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+    singleToolbarEnabled = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+}
+
+if (singleToolbarEnabled) {
+    // Check if customization file exists
+    IOUtils.exists(customizationFilePath).then((exists) => {
+        if (!exists) {
+            enableCustomizableToolbar();
+        }
+    });
+}
+
+// Create observer for single toolbar pref
+Services.prefs.addObserver("natsumi.theme.single-toolbar", async () => {
+    // Since the pref already exists, we don't need to check for its existence
+    let singleToolbarEnabled = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+
+    if (singleToolbarEnabled) {
+        await enableCustomizableToolbar();
+    } else {
+        await resetCustomizableToolbar();
+    }
+});
+
+// Add event listeners for customization
+window.gNavToolbox.addEventListener("aftercustomization", () => {
+    let singleToolbarEnabled = false;
+    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+        singleToolbarEnabled = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+    }
+
+    if (!singleToolbarEnabled) {
+        return;
+    }
+
+    enableCustomizableToolbar();
+})
+window.gNavToolbox.addEventListener("customizationready", () => {
+    let singleToolbarEnabled = false;
+    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+        singleToolbarEnabled = ucApi.Prefs.get("natsumi.theme.single-toolbar").value;
+    }
+
+    if (!singleToolbarEnabled) {
+        return;
+    }
+
+    resetCustomizableToolbar();
+});
