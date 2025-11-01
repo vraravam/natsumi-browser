@@ -7,6 +7,9 @@
 <p align="center">
   Welcome to your <strong>personal</strong> internet.
 </p>
+<h5 align="center">
+  <a href="https://natsumi.greeeen.dev">Website (under construction)</a> • <a href="https://natsumi.greeeen.dev/discord">Discord</a>
+</h5>
 
 ![](./images/main-backgroundless.png)
 
