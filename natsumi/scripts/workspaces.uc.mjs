@@ -191,10 +191,15 @@ function getCurrentWorkspaceData() {
             workspaceName = workspace[1]["name"]
             workspaceIcon = workspace[1]["icon"]
 
-            if (!workspaceIcon) {
-                workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
-            } else {
-                workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl(workspaceIcon)})`;
+            try {
+                if (!workspaceIcon) {
+                    workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
+                } else {
+                    workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl(workspaceIcon)})`;
+                }
+            } catch (e) {
+                console.warn("Failed to get workspace icon: ", e);
+                workspaceIcon = null;
             }
 
             break;
@@ -336,6 +341,9 @@ if (isFloorp) {
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
+    document.body.natsumiWorkspacesWrapper.dataRetrieveQueue.push(() => {
+        copyWorkspaceName();
+    })
     document.body.natsumiWorkspacesWrapper.init().then(() => {
         // We don't really need to do anything here, but it's good to keep this just in case
     })
