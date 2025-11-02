@@ -175,4 +175,15 @@ SOFTWARE.
       }
     }
   }
+
+  .privacy-detailedoption {
+    &.selected {
+      border-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      background-color: color-mix(in srgb, var(--natsumi-primary-color) 30%, transparent) !important;
+    }
+
+    .content-blocking-warning {
+      background-color: color-mix(in srgb, var(--natsumi-primary-color) 30%, transparent) !important;
+    }
+  }
 }
