@@ -176,6 +176,11 @@ SOFTWARE.
     }
   }
 
+  groupbox moz-input-search {
+    background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+    border-radius: 19px;
+  }
+
   .privacy-detailedoption {
     &.selected {
       border-color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
