@@ -1,22 +1,35 @@
-export class NatsumiTasterTabsParentextends extends JSWindowActorParent {
+export class NatsumiTasterTabsChild extends JSWindowActorChild {
     constructor() {
         super();
+        console.log("hello world - child");
     }
 
-    receiveMessage(message) {
-        if (message.name === "Natsumi:TasterTest") {
-            console.log("Received test message from child:", message.data);
+    handleEvent(event) {
+        if (event.type === 'DOMContentLoaded') {
+            // Trigger on loading the page
+        }
+    }
+
+    async receiveMessage(message) {
+        switch (message.name) {
+            // Use this to trigger and receive content from the parent script.
         }
     }
 }
 
-export class NatsumiTasterTabsChild extends JSWindowActorChild {
+/*class NatsumiTasterTabsChild extends JSWindowActorChild {
     constructor() {
         super();
         this.modifierPressed = false;
     }
 
+    actorCreated() {
+        console.log("actor is here! :3");
+    }
+
     handleEvent(event) {
+        console.log(event);
+
         if (event.defaultPrevented) {
             return;
         }
@@ -47,3 +60,6 @@ export class NatsumiTasterTabsChild extends JSWindowActorChild {
         }
     }
 }
+
+export default NatsumiTasterTabsChild;
+*/
