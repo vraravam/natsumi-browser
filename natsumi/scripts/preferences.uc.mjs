@@ -2797,6 +2797,47 @@ function addURLbarBehaviorPane() {
     prefsView.insertBefore(behaviorNode, homePane);
 }
 
+function addMiscPreferencesPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let miscPreferencesGroup = new OptionsGroup(
+        "natsumiMiscPreferences",
+        "Preferences",
+        "Tweak how you want the preferences page to look."
+    );
+
+    miscPreferencesGroup.registerOption("natsumiMiscPreferencesRevert", new CheckboxChoice(
+        "natsumi.theme.classic-preferences",
+        "natsumiMiscPreferencesRevert",
+        "Revert to classic preferences look",
+        "If you don't like Natsumi's custom preferences design, you can enable this to disable it."
+    ));
+
+    let miscPreferencesNode = miscPreferencesGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = miscPreferencesNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(miscPreferencesNode, homePane);
+}
+
 function addPreferencesPanes() {
     // Category nodes
     let appearanceNode = convertToXUL(`
@@ -2840,6 +2881,11 @@ function addPreferencesPanes() {
     let urlbarNode = convertToXUL(`
         <hbox id="natsumiUrlbarCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>URL Bar</html:h1>
+        </hbox>
+    `);
+    let miscNode = convertToXUL(`
+        <hbox id="natsumiMiscCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Miscellaneous</html:h1>
         </hbox>
     `);
 
@@ -2893,8 +2939,43 @@ function addPreferencesPanes() {
         addURLbarLayoutPane();
         addURLbarBehaviorPane();
     }
+
+    prefsView.insertBefore(miscNode, homePane);
+    addMiscPreferencesPane();
+}
+
+function addHideFloorpWarnings() {
+    let isFloorp = false;
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+            isFloorp = true;
+        }
+    }
+
+    if (!isFloorp) {
+        return;
+    }
+
+    let mainPrefPane = document.getElementById("mainPrefPane");
+
+    // Create "hide warning"
+    let hideWarnings = `
+        <div id="natsumi-hide-floorp-warnings">Hide these warnings</div>
+    `
+
+    let hideWarningsFragment = convertToXUL(hideWarnings);
+    mainPrefPane.parentElement.insertBefore(hideWarningsFragment, mainPrefPane);
+
+    // Get node
+    let hideWarningsNode = document.getElementById("natsumi-hide-floorp-warnings");
+
+    // Set event listener
+    hideWarningsNode.addEventListener("click", () => {
+        ucApi.Prefs.set("natsumi.theme.floorp-hide-preferences-warnings", true);
+    });
 }
 
 console.log("Loading prefs panes...");
 addToSidebar();
 addPreferencesPanes();
+addHideFloorpWarnings();
