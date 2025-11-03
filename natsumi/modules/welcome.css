@@ -572,6 +572,171 @@ SOFTWARE.
         }
       }
     }
+
+    /* Icons pane */
+    #natsumi-welcome-icons {
+      .natsumi-welcome-selection-preview {
+        display: grid !important;
+        grid-template-columns: 1fr;
+        width: 140px;
+        height: 80px;
+        border-radius: 4px;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)) !important;
+
+        &::before {
+          content: "";
+          width: 118px;
+          height: 58px;
+          margin-left: 21px;
+          margin-top: 21px;
+          border-radius: 2px !important;
+          background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)) !important;
+          box-sizing: border-box !important;
+          grid-row-start: 1;
+          grid-column-start: 1;
+        }
+
+        .natsumi-welcome-selection-icon {
+          grid-row-start: 1;
+          grid-column-start: 1;
+          width: 12px;
+          height: 12px;
+          margin: 4px !important;
+          background-size: 12px;
+          -moz-context-properties: fill, stroke;
+
+          &.icon-bookmarks {
+            margin-left: 28px !important;
+          }
+
+          &.icon-back {
+            margin-left: 52px !important;
+          }
+
+          &.icon-reload {
+            margin-left: 76px !important;
+          }
+        }
+
+        &#natsumi-welcome-icons-default {
+          .natsumi-welcome-selection-icon {
+            fill: light-dark(black, white);
+          }
+
+          .icon-sidebar {
+            background-image: url("chrome://browser/skin/sidebar-collapsed.svg");
+          }
+
+          .icon-bookmarks {
+            background-image: url("chrome://browser/skin/synced-tabs.svg");
+          }
+
+          .icon-back {
+            background-image: url("chrome://browser/skin/back.svg");
+          }
+
+          .icon-reload {
+            background-image: url("chrome://global/skin/icons/reload.svg");
+          }
+        }
+
+        &#natsumi-welcome-icons-lucide {
+          .natsumi-welcome-selection-icon {
+            stroke: light-dark(black, white);
+          }
+
+          .icon-sidebar {
+            background-image: url("../icons/lucide/sidebar.svg");
+          }
+
+          .icon-bookmarks {
+            background-image: url("../icons/lucide/devices.svg");
+          }
+
+          .icon-back {
+            background-image: url("../icons/lucide/arrow-left.svg");
+          }
+
+          .icon-reload {
+            background-image: url("../icons/lucide/rotate-right.svg");
+          }
+        }
+
+        &#natsumi-welcome-icons-fluent {
+          .natsumi-welcome-selection-icon {
+            fill: light-dark(black, white);
+          }
+
+          .icon-sidebar {
+            background-image: url("../icons/fluent/sidebar.svg");
+          }
+
+          .icon-bookmarks {
+            background-image: url("../icons/fluent/devices.svg");
+          }
+
+          .icon-back {
+            background-image: url("../icons/fluent/arrow-left.svg");
+          }
+
+          .icon-reload {
+            background-image: url("../icons/fluent/rotate-right.svg");
+          }
+        }
+      }
+    }
+
+    /* URLbar pane */
+    #natsumi-welcome-urlbar {
+      .natsumi-welcome-selection-preview {
+        display: grid;
+        grid-template-columns: 1fr;
+        width: 140px;
+        height: 80px;
+        border-radius: 4px;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)) !important;
+
+        &::before {
+          content: "";
+          grid-row-start: 1;
+          grid-column-start: 1;
+          width: 102px;
+          height: 60px;
+          margin: auto 4px 4px auto !important;
+          border-radius: 2px !important;
+          background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)) !important;
+          box-sizing: border-box !important;
+        }
+
+        &::after {
+          content: "";
+          display: block;
+          width: 75px;
+          height: 45px;
+          margin-top: -58px;
+          margin-left: auto;
+          margin-right: auto;
+          border: 1px solid light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1));
+          background-color: var(--natsumi-mat-th-background);
+          backdrop-filter: var(--natsumi-mat-hz-backdrop);
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+          border-radius: 3px;
+        }
+
+        &#natsumi-welcome-urlbar-classic {
+          &::after {
+            margin-top: -70px;
+            width: 60px;
+            height: 40px;
+            background-color: light-dark(white, #777);
+            border: 1px solid light-dark(rgba(20, 20, 20, 0.3), rgba(235, 235, 235, 0.3));
+            backdrop-filter: none;
+          }
+        }
+      }
+    }
   }
 
   /* Drumrolls */

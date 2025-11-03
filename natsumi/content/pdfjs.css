@@ -60,7 +60,7 @@ SOFTWARE.
 
       body {
         @media (prefers-color-scheme: dark) {
-          background-color: color-mix(in srgb, var(--natsumi-colors-tertiary) 70%, #0f0f0f 30%) !important;
+          background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, #0f0f0f 80%) !important;
         }
       }
 
@@ -247,7 +247,7 @@ SOFTWARE.
         &::before {
           mask-size: contain !important;
           mask-repeat: no-repeat;
-          -moz-context-properties: stroke;
+          -moz-context-properties: stroke, fill;
           stroke: black;
 
           @media (prefers-color-scheme: dark) {
@@ -431,160 +431,6 @@ SOFTWARE.
           @media (prefers-color-scheme: dark) {
             background-color: #363636 !important;
           }
-        }
-      }
-
-      @media -moz-pref("natsumi.browser.type", "floorp") {
-        #previous::before {
-          mask-image: url('../icons/lucide/arrow-up.svg') !important;
-        }
-
-        #next::before {
-          mask-image: url('../icons/lucide/arrow-down.svg') !important;
-        }
-
-        #zoomOutButton::before {
-          mask-image: url('../icons/lucide/minus.svg') !important;
-        }
-
-        #zoomInButton::before {
-          mask-image: url('../icons/lucide/plus.svg') !important;
-        }
-
-        #sidebarToggleButton::before {
-          mask-image: url('../icons/lucide/sidebar.svg') !important;
-        }
-
-        #editorSignatureButton::before {
-          mask-image: url('../icons/lucide/sign.svg') !important;
-        }
-
-        #editorHighlightButton::before {
-          mask-image: url('../icons/lucide/highlighter.svg') !important;
-        }
-
-        #editorFreeTextButton::before {
-          mask-image: url('../icons/lucide/text.svg') !important;
-        }
-
-        #editorInkButton::before {
-          mask-image: url('../icons/lucide/pen.svg') !important;
-        }
-
-        #editorStampButton::before {
-          mask-image: url('../icons/lucide/image-plus.svg') !important;
-        }
-
-        #secondaryPrint::before, #printButton::before {
-          mask-image: url('../icons/lucide/printer.svg') !important;
-        }
-
-        #secondaryDownload::before, #downloadButton::before {
-          mask-image: url('../icons/lucide/save.svg') !important;
-        }
-
-        #presentationMode::before {
-          mask-image: url('../icons/lucide/presentation.svg') !important;
-        }
-
-        #viewBookmark::before {
-          mask-image: url('../icons/lucide/page.svg') !important;
-        }
-
-        #firstPage::before {
-          mask-image: url('../icons/lucide/arrow-up.svg') !important;
-        }
-
-        #lastPage::before {
-          mask-image: url('../icons/lucide/arrow-down.svg') !important;
-        }
-
-        #pageRotateCw::before {
-          mask-image: url('../icons/lucide/rotate-left.svg') !important;
-        }
-
-        #pageRotateCcw::before {
-          mask-image: url('../icons/lucide/rotate-right.svg') !important;
-        }
-
-        #cursorSelectTool::before {
-          mask-image: url('../icons/lucide/cursor.svg') !important;
-        }
-
-        #cursorHandTool::before {
-          mask-image: url('../icons/lucide/hand.svg') !important;
-        }
-
-        #scrollPage::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollPage.svg') !important;
-        }
-
-        #scrollVertical::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollVertical.svg') !important;
-        }
-
-        #scrollHorizontal::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollHorizontal.svg') !important;
-        }
-
-        #scrollWrapped::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-scrollWrapped.svg') !important;
-        }
-
-        #spreadNone::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadNone.svg') !important;
-        }
-
-        #spreadOdd::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadOdd.svg') !important;
-        }
-
-        #spreadEven::before {
-          mask-image: url('resource://pdf.js/web/images/secondaryToolbarButton-spreadEven.svg') !important;
-        }
-
-        #imageAltTextSettings::before {
-          mask-image: url('../icons/lucide/image.svg') !important;
-        }
-
-        #documentProperties::before {
-          mask-image: url('../icons/lucide/info.svg') !important;
-        }
-
-        #editorStampAddImage::before {
-          mask-image: url('../icons/lucide/plus.svg') !important;
-        }
-
-        #secondaryToolbarToggleButton::before {
-          mask-image: url('../icons/lucide/arrow-right.svg') !important;
-        }
-
-        /* Sidebar buttons */
-
-        #viewThumbnail::before {
-          mask-image: url('../icons/lucide/grid.svg') !important;
-        }
-
-        #viewOutline::before {
-          mask-image: url('../icons/lucide/list.svg') !important;
-        }
-
-        #viewAttachments::before {
-          mask-image: url('../icons/lucide/attachments.svg') !important;
-        }
-
-        #viewLayers::before {
-          mask-image: url('../icons/lucide/stack.svg') !important;
-        }
-
-        #currentOutlineItem::before {
-          mask-image: url('resource://pdf.js/web/images/toolbarButton-currentOutlineItem.svg') !important;
-        }
-
-        /* Checked buttons */
-
-        #secondaryToolbarButtonContainer .toolbarButton[aria-checked="true"]::before {
-          mask-image: url('../icons/lucide/check.svg') !important;
         }
       }
     }

@@ -101,4 +101,8 @@ SOFTWARE.
     border-top: 1px dashed light-dark(black, white);
     opacity: 0.5;
   }
+
+  #natsumi-about-links-container {
+    gap: 10px;
+  }
 }

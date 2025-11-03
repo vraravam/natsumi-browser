@@ -7,6 +7,9 @@
 <p align="center">
   Welcome to your <strong>personal</strong> internet.
 </p>
+<h5 align="center">
+  <a href="https://natsumi.greeeen.dev">Website (under construction)</a> • <a href="https://natsumi.greeeen.dev/discord">Discord</a>
+</h5>
 
 ![](./images/main-backgroundless.png)
 
@@ -405,6 +408,10 @@ changed or removed after this date, it may not be accurately reflected in the sc
 ## Attribution
 Natsumi Browser uses code or files from other open-source projects. The original sources and their
 licenses are listed below.
+
+> [!NOTE]
+> For icon packs attribution, please check the README and LICENSE files in the icons folder for the
+> respective icon pack.
 
 - [MX-Linux/mx-sound-theme-borealis](https://github.com/MX-Linux/mx-sound-theme-borealis)
   
