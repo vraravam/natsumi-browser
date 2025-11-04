@@ -17,6 +17,9 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
                 this.onClickEvent(event);
                 break;
             }
+            case "keydown": {
+
+            }
             default: {
                 // Do nothing
                 break;
@@ -26,12 +29,14 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
 
     onClickEvent(event) {
         // for testing, force activation to be alt
-        if (event.altKey && event.target.href) {
+        let detectedLink = event.target.href || event.target.closest("A").href;
+
+        if (event.altKey && detectedLink) {
             event.preventDefault();
             event.stopPropagation();
 
             this.sendAsyncMessage("Natsumi:Glimpse", {
-                content: event.target.href
+                content: detectedLink
             });
         }
     }

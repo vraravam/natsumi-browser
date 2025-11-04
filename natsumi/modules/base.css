@@ -38,9 +38,11 @@ SOFTWARE.
     outline: none !important;
 
     .browserSidebarContainer {
-      border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
-      border-radius: var(--natsumi-browser-border-radius) !important;
-      overflow: hidden !important;
+      .browserContainer {
+        border: var(--natsumi-border-width) solid light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+        border-radius: var(--natsumi-browser-border-radius) !important;
+        overflow: hidden !important;
+      }
 
       &:has(.devtools-toolbox-side-iframe) {
         .browserContainer browser {

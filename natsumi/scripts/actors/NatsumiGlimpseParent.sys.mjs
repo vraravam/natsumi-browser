@@ -5,7 +5,7 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
 
         // Register listeners
         this.registerMessageListener("Natsumi:ConsoleLog", (message) => {
-            console.log("[Child]", message.data["message"]);
+            console.log("[Glimpse]", message.data["message"]);
         })
         this.registerMessageListener("Natsumi:Glimpse", (message) => {
             console.log("[Glimpse] Got Glimpse link from child:", message.data["content"]);
@@ -23,7 +23,7 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
 
     async receiveMessage(message) {
         if (!this.natsumiMessageListeners[message.name]) {
-            console.warn("Got unexpected message from child:", message.name);
+            console.warn("Got unexpected message from Glimpse child:", message.name);
             return;
         }
 

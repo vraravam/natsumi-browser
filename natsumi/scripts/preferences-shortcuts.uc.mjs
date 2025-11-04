@@ -49,6 +49,17 @@ let shortcutsMap = {
             }
         }
     },
+    "glimpse": {
+        "name": "Glimpse",
+        "shortcuts": {
+            "closeGlimpse": {
+                "name": "Close Glimpse tab"
+            },
+            "graduateGlimpse": {
+                "name": "Expand Glimpse tab"
+            }
+        }
+    },
     "navigation": {
         "name": "Navigation",
         "shortcuts": {
