@@ -36,7 +36,9 @@ SOFTWARE.
 /* Global tweaks for tabs */
 .tabbrowser-tab {
   --attention-dot-color: transparent !important;
+}
 
+#tabbrowser-arrowscrollbox .tabbrowser-tab {
   &[natsumi-glimpse-selected] {
     .tab-label-container {
       opacity: 1 !important;

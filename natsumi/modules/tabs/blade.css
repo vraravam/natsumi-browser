@@ -198,7 +198,8 @@ SOFTWARE.
         transition: background-color 0.2s ease;
       }
 
-      .tabbrowser-tab[selected][style*="--natsumi-tab-icon"] {
+    .tabbrowser-tab[selected], .tabbrowser-tab[natsumi-glimpse-selected] {
+      &[style*="--natsumi-tab-icon"] {
         .tab-background {
           background: transparent !important;
           overflow: clip !important;

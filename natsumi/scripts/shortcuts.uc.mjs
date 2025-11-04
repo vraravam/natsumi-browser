@@ -209,7 +209,7 @@ class NatsumiKBSManager {
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
             "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
             "closeGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "w", 3, false),
-            "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "t", 3, false)
+            "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "f", 3, false)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,

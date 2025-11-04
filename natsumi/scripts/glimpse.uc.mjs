@@ -184,6 +184,7 @@ class NatsumiGlimpse {
             tabbox.removeAttribute("natsumi-glimpse-active");
             this.currentGlimpseTab.renderLayers = false;
             this.currentGlimpseTab = null;
+            this.removeGlimpseInterval();
         }
 
         // Check if we're in a glimpse tab

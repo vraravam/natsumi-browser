@@ -310,4 +310,16 @@ SOFTWARE.
       }
     }
   }
+
+  #pinned-tabs-container {
+    .tabbrowser-tab {
+      &[natsumi-glimpse-selected] {
+        & > .tab-stack > .tab-background {
+          background-color: var(--tab-selected-bgcolor) !important;
+          box-shadow: var(--tab-selected-shadow);
+          outline-color: var(--tab-selected-outline-color);
+        }
+      }
+    }
+  }
 }

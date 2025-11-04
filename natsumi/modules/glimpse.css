@@ -62,6 +62,7 @@
   position: absolute !important;
   left: 46px !important;
   width: calc(100% - 92px);
+  height: 100%;
 
   .browserContainer {
     background-color: light-dark(#fff, #444);
@@ -72,11 +73,14 @@
   .natsumi-glimpse-controls {
     order: -1;
     width: 41px;
+    position: absolute;
+    left: 0;
     margin-left: -41px !important;
     margin-top: 20px !important;
     height: 80px;
     flex-direction: column;
     gap: 8px;
+    z-index: -1;
 
     .natsumi-glimpse-close-button, .natsumi-glimpse-expand-button {
       width: 36px;
@@ -84,8 +88,9 @@
       border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
       background-color: light-dark(white, #555);
       border-radius: 18px;
-      -moz-context-properties: stroke;
+      -moz-context-properties: stroke, fill;
       stroke: light-dark(black, white);
+      fill: transparent;
       background-size: 20px;
       background-position: center;
       background-repeat: no-repeat;
@@ -149,6 +154,8 @@
 
   .natsumi-glimpse-controls {
     pointer-events: none;
+    transition: left 0.3s ease;
+    left: 46px !important;
   }
 }
 
