@@ -118,11 +118,35 @@ export class NatsumiShortcutActions {
         document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(newWorkspaceId);
     }
 
-    static toggleNatsumiToolkit() {
-        if (document.body.hasAttribute("natsumi-toolkit")) {
-            document.body.removeAttribute("natsumi-toolkit");
-        } else {
-            document.body.setAttribute("natsumi-toolkit", "");
+    static closeGlimpse() {
+        if (!window.natsumiGlimpse) {
+            return;
+        }
+
+        if (window.natsumiGlimpse.currentGlimpseTab) {
+            // Get Glimpse tab
+            let glimpseParentTabId = window.natsumiGlimpse.currentGlimpseTab.linkedPanel;
+            let glimpseData = window.natsumiGlimpse.glimpse[glimpseParentTabId];
+
+            if (glimpseData) {
+                window.natsumiGlimpse.deactivateGlimpseWithAnim(glimpseData.glimpseTabId);
+            }
+        }
+    }
+
+    static graduateGlimpse() {
+        if (!window.natsumiGlimpse) {
+            return;
+        }
+
+        if (window.natsumiGlimpse.currentGlimpseTab) {
+            // Get Glimpse tab
+            let glimpseParentTabId = window.natsumiGlimpse.currentGlimpseTab.linkedPanel;
+            let glimpseData = window.natsumiGlimpse.glimpse[glimpseParentTabId];
+
+            if (glimpseData) {
+                window.natsumiGlimpse.graduateGlimpseWithAnim(glimpseData.glimpseTabId);
+            }
         }
     }
 }

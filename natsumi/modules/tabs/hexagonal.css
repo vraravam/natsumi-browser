@@ -84,7 +84,7 @@ SOFTWARE.
         }
       }
 
-      &[selected], &[visuallyselected], &:hover {
+      &[selected], &[visuallyselected], &:hover, &[natsumi-glimpse-selected] {
         & > .tab-stack {
           & > .tab-background {
             clip-path: polygon(
@@ -99,7 +99,7 @@ SOFTWARE.
         }
       }
 
-      &[selected], &[visuallyselected] {
+      &[selected], &[visuallyselected], &[natsumi-glimpse-selected] {
         & > .tab-stack {
           filter: drop-shadow(0 0 2px rgba(50, 50, 0, 0.5));
         }

@@ -208,7 +208,8 @@ class NatsumiKBSManager {
             "toggleCompactMode": new NatsumiKeyboardShortcut(false, true, false, true, "s", 0, true),
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
             "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
-            //"toggleNatsumiToolkit": new NatsumiKeyboardShortcut(false, true, true, false, "t", 0, true)
+            "closeGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "w", 3, false),
+            "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "t", 3, false)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -217,7 +218,8 @@ class NatsumiKBSManager {
             "toggleCompactMode": NatsumiShortcutActions.toggleCompactMode,
             "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
             "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar,
-            //"toggleNatsumiToolkit": NatsumiShortcutActions.toggleNatsumiToolkit
+            "closeGlimpse": NatsumiShortcutActions.closeGlimpse,
+            "graduateGlimpse": NatsumiShortcutActions.graduateGlimpse
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};

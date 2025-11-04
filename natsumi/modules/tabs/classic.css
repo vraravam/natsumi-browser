@@ -24,38 +24,16 @@ SOFTWARE.
 
 */
 
-/* ==== Tabs design (Material) ==== */
-/* Material is a tab design inspired by Zen's alpha tab design. */
+/* ==== Tabs design (Classic) ==== */
+/* Just the standard Firefox tabs design */
 
-@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "material") {
+@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "classic") {
   .tabbrowser-tab {
-    & > .tab-stack > .tab-background {
-      transition: background-color 0.2s ease, box-shadow 0.2s ease !important;
-      box-shadow: none !important;
-    }
-
-    @media -moz-pref("natsumi.tabs.material-alt-design") {
-      &:hover {
-        & > .tab-stack > .tab-background {
-          background-color: var(--natsumi-button-hover-color) !important;
-        }
-      }
-    }
-
-    &[selected], &[visuallyselected], &[natsumi-glimpse-selected] {
+    &[natsumi-glimpse-selected] {
       & > .tab-stack > .tab-background {
-        background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
-        border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
-
-        @media -moz-pref("natsumi.theme.type", "oled") {
-          border: none !important;
-        }
-
-        @media -moz-pref("natsumi.tabs.material-alt-design") {
-          border: none !important;
-          background-color: var(--natsumi-button-active-color) !important;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
-        }
+        background-color: var(--tab-selected-bgcolor);
+        box-shadow: var(--tab-selected-shadow);
+        outline-color: var(--tab-selected-outline-color);
       }
     }
   }

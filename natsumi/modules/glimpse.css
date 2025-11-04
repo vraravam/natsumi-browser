@@ -1,0 +1,189 @@
+@keyframes natsumi-glimpse-popup {
+  0% {
+    opacity: 0;
+    scale: 90%;
+  }
+
+  100% {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+@keyframes natsumi-glimpse-controls-appear {
+  0% {
+    opacity: 0;
+    translate: 41px 0;
+  }
+
+  70% {
+    opacity: 1;
+    translate: -5px 0;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
+@keyframes natsumi-glimpse-disappear {
+  0% {
+    opacity: 1;
+    scale: 100%;
+  }
+
+  100% {
+    opacity: 0;
+    scale: 95%;
+  }
+}
+
+@keyframes natsumi-glimpse-graduate {
+  0% {
+    translate: 0;
+    width: calc(100% - 92px);
+  }
+
+  100% {
+    translate: -46px;
+    width: 100%;
+  }
+}
+
+.browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
+  visibility: visible !important;
+  opacity: 0.5;
+  scale: 98%;
+  -moz-subtree-hidden-only-visually: 0 !important;
+}
+
+.browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+  position: absolute !important;
+  left: 46px !important;
+  width: calc(100% - 92px);
+
+  .browserContainer {
+    background-color: light-dark(#fff, #444);
+  }
+}
+
+.browserSidebarContainer {
+  .natsumi-glimpse-controls {
+    order: -1;
+    width: 41px;
+    margin-left: -41px !important;
+    margin-top: 20px !important;
+    height: 80px;
+    flex-direction: column;
+    gap: 8px;
+
+    .natsumi-glimpse-close-button, .natsumi-glimpse-expand-button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      background-color: light-dark(white, #555);
+      border-radius: 18px;
+      -moz-context-properties: stroke;
+      stroke: light-dark(black, white);
+      background-size: 20px;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: light-dark(#ddd, #777);
+      }
+    }
+
+    .natsumi-glimpse-close-button {
+      background-image: url("../icons/lucide/close.svg");
+      opacity: 0;
+      animation: natsumi-glimpse-controls-appear 0.4s ease;
+      animation-delay: 0.3s;
+      animation-fill-mode: forwards;
+    }
+
+    .natsumi-glimpse-expand-button {
+      background-image: url("../icons/lucide/fullscreen.svg");
+      opacity: 0;
+      animation: natsumi-glimpse-controls-appear 0.4s ease;
+      animation-delay: 0.4s;
+      animation-fill-mode: forwards;
+    }
+  }
+}
+
+#tabbrowser-tabbox[natsumi-glimpse-animate] {
+  .browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
+    transition: scale 0.3s ease;
+  }
+
+  .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+    animation: natsumi-glimpse-popup 0.3s ease;
+  }
+}
+
+#tabbrowser-tabbox[natsumi-glimpse-animate-disappear] {
+  .browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
+    opacity: 1;
+    scale: 100%;
+    transition: scale 0.3s ease;
+  }
+
+  .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+    animation: natsumi-glimpse-disappear 0.3s ease;
+    animation-fill-mode: forwards;
+  }
+
+  .natsumi-glimpse-controls {
+    pointer-events: none;
+  }
+}
+
+#tabbrowser-tabbox[natsumi-glimpse-animate-graduate] {
+  .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+    animation: natsumi-glimpse-graduate 0.3s ease;
+    animation-fill-mode: forwards;
+  }
+
+  .natsumi-glimpse-controls {
+    pointer-events: none;
+  }
+}
+
+.tabbrowser-tab[natsumi-glimpse-tab] {
+  display: none !important;
+  pointer-events: none !important;
+  min-height: 24px !important;
+  width: 24px !important;
+  margin-left: 8px !important;
+
+  .tab-close-button {
+    display: none !important;
+  }
+
+  .tab-icon-stack {
+    margin-inline: auto !important;
+
+    & > * {
+      margin-inline: auto !important;
+    }
+  }
+
+  .tab-background {
+    margin-inline: 0 !important;
+    width: 24px !important;
+    min-height: 24px !important;
+    box-shadow: none !important;
+    background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+  }
+
+  .tab-content {
+    padding-inline: 0 !important;
+  }
+
+  .tab-label-container {
+    display: none !important;
+  }
+}
