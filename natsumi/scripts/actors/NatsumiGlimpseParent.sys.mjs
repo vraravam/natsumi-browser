@@ -7,8 +7,8 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
         this.registerMessageListener("Natsumi:ConsoleLog", (message) => {
             console.log("[Child]", message.data["message"]);
         })
-        this.registerMessageListener("Natsumi:TasterTest", (message) => {
-            console.log("[Child] Got Glimpse link:", message.data["content"]);
+        this.registerMessageListener("Natsumi:Glimpse", (message) => {
+            console.log("[Glimpse] Got Glimpse link from child:", message.data["content"]);
             this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
         })
     }
