@@ -467,6 +467,15 @@ let JSWindowActors = {
                 DOMContentLoaded: {},
                 click: {
                     capture: true
+                },
+                mousedown: {
+                    capture: true
+                },
+                mouseup: {
+                    capture: true
+                },
+                drag: {
+                    capture: true
                 }
             },
         },

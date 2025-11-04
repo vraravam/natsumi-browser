@@ -1570,8 +1570,8 @@ const glimpseKeys = {
         "Shift",
         ""
     ),
-    "long": new RadioChoice(
-        "long",
+    "hold": new RadioChoice(
+        "hold",
         "Hold click",
         ""
     )

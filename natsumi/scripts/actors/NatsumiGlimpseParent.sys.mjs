@@ -2,6 +2,7 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
     constructor() {
         super();
         this.natsumiMessageListeners = {}
+        this.glimpseHoldTimeout = null;
 
         // Register listeners
         this.registerMessageListener("Natsumi:ConsoleLog", (message) => {
@@ -10,6 +11,19 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
         this.registerMessageListener("Natsumi:Glimpse", (message) => {
             console.log("[Glimpse] Got Glimpse link from child:", message.data["content"]);
             this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
+        })
+        this.registerMessageListener("Natsumi:GlimpseHold", (message) => {
+            console.log("[Glimpse] Got Glimpse hold link from child:", message.data["content"]);
+            this.glimpseHoldTimeout = this.browsingContext.topChromeWindow.setTimeout(() => {
+                this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
+                this.sendAsyncMessage("Natsumi:GlimpseHoldActivate", {});
+            }, 500);
+        });
+        this.registerMessageListener("Natsumi:GlimpseHoldCancel", () => {
+            if (this.glimpseHoldTimeout) {
+                this.browsingContext.topChromeWindow.clearTimeout(this.glimpseHoldTimeout);
+                this.glimpseHoldTimeout = null;
+            }
         })
         this.registerMessageListener("Natsumi:GlimpseActivationMethodRequest", () => {
             this.pushActivationMethod();

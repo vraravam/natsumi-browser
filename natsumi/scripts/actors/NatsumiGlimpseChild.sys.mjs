@@ -29,6 +29,10 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
                 this.onMouseUpEvent(event);
                 break;
             }
+            case "drag": {
+                this.onMouseUpEvent(event);
+                break;
+            }
             default: {
                 // Do nothing
                 break;
@@ -37,6 +41,8 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
     }
 
     onMouseDownEvent(event) {
+        this.consoleLog("Holding...");
+        this.usedHoldClick = false;
         if (this.activationMethod !== "hold") {
             return;
         }
@@ -46,23 +52,18 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
             return;
         }
 
-        this.holdClickTimeout = setTimeout(() => {
-            this.usedHoldClick = true;
-            this.sendAsyncMessage("Natsumi:Glimpse", {
-                content: detectedLink
-            });
-        }, 500);
+        this.sendAsyncMessage("Natsumi:GlimpseHold", {
+            content: detectedLink
+        });
     }
 
     onMouseUpEvent() {
+        this.consoleLog("Not holding");
         if (this.activationMethod !== "hold") {
             return;
         }
 
-        if (this.holdClickTimeout) {
-            clearTimeout(this.holdClickTimeout);
-            this.holdClickTimeout = null;
-        }
+        this.sendAsyncMessage("Natsumi:GlimpseHoldCancel", {});
     }
 
     onClickEvent(event) {
@@ -95,8 +96,15 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
     }
 
     async receiveMessage(message) {
-        if (message.name === "Natsumi:GlimpseActivationMethod") {
-            this.activationMethod = message.data["method"];
+        switch (message.name) {
+            case "Natsumi:GlimpseActivationMethod": {
+                this.activationMethod = message.data["method"];
+                break;
+            }
+            case "Natsumi:GlimpseHoldActivate": {
+                this.usedHoldClick = true;
+                break;
+            }
         }
     }
 }
