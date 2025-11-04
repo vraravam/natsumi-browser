@@ -1272,6 +1272,34 @@ class MCChoice {
     }
 }
 
+class RadioChoice extends MCChoice {
+    constructor(value, label, description) {
+        super(value, label, description, "", "");
+    }
+
+    generateNode(selected = false, color = false) {
+        let nodeString = `
+            <radio class="natsumi-radio-choice" title="${this.description}" value="${this.value}">
+                <image class="radio-check"></image>
+                <hbox class="radio-label-box" align="center" flex="1">
+                    <image class="radio-icon"></image>
+                    <label class="radio-label" flex="1">${this.label}</label>
+                </hbox>
+            </radio>
+        `;
+        let node = convertToXUL(nodeString);
+        let choiceButton = node.querySelector(".natsumi-radio-choice");
+
+        if (selected) {
+            choiceButton.setAttribute("selected", "true");
+            let checkNode = choiceButton.querySelector(".radio-check");
+            checkNode.setAttribute("selected", "true");
+        }
+
+        return node;
+    }
+}
+
 const layouts = {
     "default": new MCChoice(
         false,
@@ -1521,6 +1549,34 @@ const compactStyles = {
     )
 }
 
+const glimpseKeys = {
+    "alt": new RadioChoice(
+        "alt",
+        "Alt (Option)",
+        ""
+    ),
+    "ctrl": new RadioChoice(
+        "ctrl",
+        "Control",
+        ""
+    ),
+    "meta": new RadioChoice(
+        "meta",
+        "Meta (Super/Command)",
+        ""
+    ),
+    "shift": new RadioChoice(
+        "shift",
+        "Shift",
+        ""
+    ),
+    "long": new RadioChoice(
+        "long",
+        "Hold click",
+        ""
+    )
+}
+
 const tabDesigns = {
     "default": new MCChoice(
         "default",
@@ -1726,6 +1782,45 @@ class MultipleChoicePreference {
         }
 
         let form = node.querySelector(".natsumi-mc-chooser");
+        for (let option in this.options) {
+            let choice = this.options[option];
+            const selected = (this.getSelected() === choice.value);
+            let choiceNode = choice.generateNode(selected, color);
+            form.appendChild(choiceNode);
+        }
+        return node;
+    }
+}
+
+class RadioPreference extends MultipleChoicePreference {
+    constructor(id, preference, label, description, overrideDefault = null) {
+        super(id, preference, label, description, overrideDefault);
+    }
+
+    generateNode(color = false) {
+        let nodeString = `
+            <groupbox id="${this.id}Group" data-category="paneNatsumiSettings" hidden="true">
+                <html:h2>${this.label}</html:h2>
+                <html:div id="${this.id}Settings">
+                    <description class="description-deemphasized">
+                        ${this.description}
+                    </description>
+                    <radiogroup class="natsumi-radio-chooser">
+                    </radiogroup>
+                </html:div>
+            </groupbox>
+        `
+        let node = convertToXUL(nodeString);
+        let groupNode = node.querySelector(`#${this.id}Group`);
+
+        for (let extra in this.extras) {
+            let extraNode = convertToXUL(`<vbox id="${extra}"></vbox>`)
+            let extraBox = extraNode.querySelector(`#${extra}`);
+            extraBox.appendChild(this.extras[extra].generateNode());
+            groupNode.appendChild(extraNode);
+        }
+
+        let form = node.querySelector(".natsumi-radio-chooser");
         for (let option in this.options) {
             let choice = this.options[option];
             const selected = (this.getSelected() === choice.value);
@@ -2437,6 +2532,52 @@ function addCompactStylesPane() {
     prefsView.insertBefore(styleNode, homePane);
 }
 
+function addGlimpseKeyPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Check if glimpse key exists
+    let defaultOverride = null;
+    if (ucApi.Prefs.get("natsumi.glimpse.key").exists()) {
+        defaultOverride = ucApi.Prefs.get("natsumi.glimpse.key").value;
+    }
+
+    // Create theme selection
+    let glimpseKeySelection = new RadioPreference(
+        "natsumiGlimpseKey",
+        "natsumi.glimpse.key",
+        "Activation method",
+        "Choose how Glimpse should be activated.",
+        defaultOverride
+    );
+
+    for (let activationKey in glimpseKeys) {
+        glimpseKeySelection.registerOption(activationKey, glimpseKeys[activationKey]);
+    }
+
+    let glimpseKeyNode = glimpseKeySelection.generateNode();
+
+    // Set listeners for each button
+    let glimpseKeyButtons = glimpseKeyNode.querySelectorAll(".natsumi-radio-choice");
+    glimpseKeyButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing key:", selectedValue);
+            setStringPreference("natsumi.glimpse.key", selectedValue);
+            glimpseKeyButtons.forEach((btn) => {
+                btn.removeAttribute("selected")
+                let radioCheck = btn.querySelector(".radio-check");
+                radioCheck.removeAttribute("selected");
+            });
+            button.setAttribute("selected", "true");
+            let radioCheck = button.querySelector(".radio-check");
+            radioCheck.setAttribute("selected", "true");
+        });
+    });
+
+    prefsView.insertBefore(glimpseKeyNode, homePane);
+}
+
 function addCompactBehaviorPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2863,6 +3004,11 @@ function addPreferencesPanes() {
             </div>
         </groupbox>
     `);
+    let glimpseNode = convertToXUL(`
+        <hbox id="natsumiGlimpseCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Glimpse</html:h1>
+        </hbox>
+    `);
     let miniPlayerNode = convertToXUL(`
         <hbox id="natsumiMiniplayerCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Miniplayer</html:h1>
@@ -2906,6 +3052,9 @@ function addPreferencesPanes() {
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
     addCompactBehaviorPane();
+
+    prefsView.insertBefore(glimpseNode, homePane);
+    addGlimpseKeyPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();

@@ -11,6 +11,24 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
             console.log("[Glimpse] Got Glimpse link from child:", message.data["content"]);
             this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
         })
+        this.registerMessageListener("Natsumi:GlimpseActivationMethodRequest", () => {
+            this.pushActivationMethod();
+        })
+
+        Services.prefs.addObserver("natsumi.glimpse.key", this.pushActivationMethod.bind(this));
+    }
+
+    pushActivationMethod() {
+        // Get activation method
+        let activationMethod = "alt";
+
+        try {
+            activationMethod = Services.prefs.getStringPref("natsumi.glimpse.key");
+        } catch (e) {
+            // Activation method hasn't been changed
+        }
+
+        this.sendAsyncMessage("Natsumi:GlimpseActivationMethod", {"method": activationMethod});
     }
 
     registerMessageListener(messageName, callback) {
