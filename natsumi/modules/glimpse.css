@@ -1,0 +1,13 @@
+.browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
+  visibility: visible !important;
+  opacity: 0.5;
+  scale: 98%;
+  -moz-subtree-hidden-only-visually: 0 !important;
+  transition: scale 0.3s ease;
+}
+
+.browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+  position: absolute !important;
+  left: 5% !important;
+  width: 90% !important;
+}
