@@ -74,7 +74,6 @@ SOFTWARE.
   #natsumi-about-version, #natsumi-about-browser-version {
     font-size: medium;
     font-family: monospace;
-    text-transform: uppercase;
     opacity: 0.7;
   }
 
