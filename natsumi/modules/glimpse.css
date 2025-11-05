@@ -125,6 +125,10 @@
       &:hover {
         background-color: light-dark(#ddd, #777);
       }
+
+      @media -moz-pref("natsumi.glimpse.controls-on-right") {
+        margin-left: auto;
+      }
     }
 
     .natsumi-glimpse-close-button {

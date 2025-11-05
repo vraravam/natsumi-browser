@@ -488,7 +488,7 @@ class NatsumiGlimpse {
 
             // Check if parent tab is the last tab
             if (parentTab.nextSibling) {
-                gBrowser.moveTabTo(glimpseTab, {elementIndex: parentTabIndex + gBrowser.pinnedTabCount});
+                gBrowser.moveTabTo(glimpseTab, {elementIndex: parentTabIndex + gBrowser.pinnedTabCount + 1});
             } else {
                 gBrowser.moveTabToEnd(glimpseTab);
             }

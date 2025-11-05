@@ -46,6 +46,18 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
             return;
         }
 
+        // Check if modifiers are being pressed
+        const hasModifier = (
+            event.altKey ||
+            event.ctrlKey ||
+            event.shiftKey ||
+            event.metaKey
+        )
+
+        if (hasModifier) {
+            return;
+        }
+
         let detectedLink = event.target.href || event.target.closest("A").href;
         if (!detectedLink) {
             return;
