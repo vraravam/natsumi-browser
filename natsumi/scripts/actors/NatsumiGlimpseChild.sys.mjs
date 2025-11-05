@@ -41,7 +41,6 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
     }
 
     onMouseDownEvent(event) {
-        this.consoleLog("Holding...");
         this.usedHoldClick = false;
         if (this.activationMethod !== "hold") {
             return;
@@ -58,7 +57,6 @@ export class NatsumiGlimpseChild extends JSWindowActorChild {
     }
 
     onMouseUpEvent() {
-        this.consoleLog("Not holding");
         if (this.activationMethod !== "hold") {
             return;
         }

@@ -175,6 +175,14 @@ class NatsumiGlimpse {
         let tabSelectedBrowser = tabSelected.linkedBrowser;
         let tabbox = document.getElementById("tabbrowser-tabbox");
 
+        // Run sanity check (ensure Glimpse tab is always hidden)
+        for (let tab of gBrowser.tabs) {
+            if (tab.attributes["natsumi-glimpse-tab"] && !tab.hidden) {
+                tab.setAttribute("hidden", "true");
+            }
+        }
+        gBrowser.tabContainer._invalidateCachedVisibleTabs();
+
         // Remove attributes from previous glimpse tab
         if (this.currentGlimpseTab) {
             let currentGlimpseTabId = this.currentGlimpseTab.linkedPanel;
@@ -304,6 +312,8 @@ class NatsumiGlimpse {
         tabbox.setAttribute("natsumi-glimpse-active", "");
         tabbox.setAttribute("natsumi-glimpse-animate", "");
         newTab.setAttribute("natsumi-glimpse-tab", "true");
+        newTab.setAttribute("hidden", "true");
+        gBrowser.tabContainer._invalidateCachedVisibleTabs();
 
         // Create Glimpse controls
         let glimpseControlsFragment = convertToXUL(`
@@ -444,6 +454,8 @@ class NatsumiGlimpse {
 
         // Graduate Glimpse tab
         glimpseTab.removeAttribute("natsumi-glimpse-tab");
+        glimpseTab.removeAttribute("hidden");
+        gBrowser.tabContainer._invalidateCachedVisibleTabs();
         let glimpseBrowser = glimpseTab.linkedBrowser;
         glimpseBrowser.removeAttribute("natsumi-is-glimpse");
         glimpseBrowser.removeAttribute("natsumi-glimpse-parent");
@@ -458,26 +470,27 @@ class NatsumiGlimpse {
         // Remove attributes from parent tab
         let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
         let parentBrowser = parentTab.linkedBrowser;
+        let nonPinnedTabs = document.getElementById("tabbrowser-arrowscrollbox");
         parentTab.removeAttribute("natsumi-glimpse-selected");
         parentBrowser.removeAttribute("natsumi-has-glimpse");
 
         // Move graduated Glimpse tab if needed
         if (parentTab.pinned) {
             // Move to the beginning of non-pinned tabs
-            let nonPinnedTabs = document.getElementById("tabbrowser-arrowscrollbox");
             let firstNonPinned = nonPinnedTabs.querySelector("& > .tabbrowser-tab");
 
             if (firstNonPinned) {
-                nonPinnedTabs.insertBefore(glimpseTab, firstNonPinned);
-            } else {
-                nonPinnedTabs.appendChild(glimpseTab);
+                gBrowser.moveTabToStart(glimpseTab);
             }
         } else if (glimpseTab.previousSibling !== parentTab) {
+            let allNonpinned = nonPinnedTabs.querySelectorAll("& > .tabbrowser-tab");
+            let parentTabIndex = Array.from(allNonpinned).indexOf(parentTab);
+
             // Check if parent tab is the last tab
             if (parentTab.nextSibling) {
-                parentTab.parentElement.insertBefore(glimpseTab, parentTab.nextSibling);
+                gBrowser.moveTabTo(glimpseTab, {elementIndex: parentTabIndex + gBrowser.pinnedTabCount});
             } else {
-                parentTab.parentElement.appendChild(glimpseTab);
+                gBrowser.moveTabToEnd(glimpseTab);
             }
         }
 
