@@ -461,6 +461,16 @@ class NatsumiGlimpse {
         parentTab.removeAttribute("natsumi-glimpse-selected");
         parentBrowser.removeAttribute("natsumi-has-glimpse");
 
+        // Move graduated Glimpse tab if needed
+        if (glimpseTab.previousSibling !== parentTab) {
+            // Check if parent tab is the last tab
+            if (parentTab.nextSibling) {
+                parentTab.parentElement.insertBefore(glimpseTab, parentTab.nextSibling);
+            } else {
+                parentTab.parentElement.appendChild(glimpseTab);
+            }
+        }
+
         // Unregister glimpse
         this.unregisterGlimpse(parentTabId);
     }
