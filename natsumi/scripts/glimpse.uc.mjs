@@ -58,6 +58,7 @@ class NatsumiGlimpse {
         gBrowser.addProgressListener({
             onLocationChange: () => {
                 if (this.currentGlimpseTab) {
+                    this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
                     this.currentGlimpseTab.linkedBrowser.renderLayers = true;
                 }
             }
@@ -68,6 +69,7 @@ class NatsumiGlimpse {
         this.glimpseInterval = setInterval(() => {
             if (this.currentGlimpseTab) {
                 if (!this.currentGlimpseTab.linkedBrowser.renderLayers) {
+                    this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
                     this.currentGlimpseTab.linkedBrowser.renderLayers = true;
                 }
             }

@@ -68,7 +68,7 @@
   }
 }
 
-.browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
+:root:not([inDOMFullscreen="true"]) .browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
   visibility: visible !important;
   opacity: 0.5;
   scale: 98%;
@@ -76,7 +76,7 @@
   -moz-subtree-hidden-only-visually: 0 !important;
 }
 
-.browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
+:root:not([inDOMFullscreen="true"]) .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
   position: absolute !important;
   left: 46px !important;
   width: calc(100% - 92px);
