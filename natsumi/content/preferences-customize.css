@@ -486,7 +486,7 @@ SOFTWARE.
           width: 50%;
           height: 100%;
           border-radius: 5px;
-          mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.3), transparent);
+          mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
         }
       }
     }
