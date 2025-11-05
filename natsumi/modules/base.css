@@ -38,12 +38,10 @@ SOFTWARE.
     outline: none !important;
 
     .browserSidebarContainer {
-      .browserContainer {
-        --natsumi-browser-border-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
-        border: var(--natsumi-border-width) solid var(--natsumi-browser-border-color) !important;
-        border-radius: var(--natsumi-browser-border-radius) !important;
-        overflow: hidden !important;
-      }
+      --natsumi-browser-border-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+      border: var(--natsumi-border-width) solid var(--natsumi-browser-border-color) !important;
+      border-radius: var(--natsumi-browser-border-radius) !important;
+      overflow: hidden;
 
       &:has(.devtools-toolbox-side-iframe) {
         .browserContainer browser {

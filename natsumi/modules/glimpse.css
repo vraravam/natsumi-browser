@@ -112,11 +112,21 @@
   left: 46px;
   width: calc(100% - 92px);
   height: 100%;
+  overflow: visible !important;
+
+  @media -moz-pref("natsumi.glimpse.alt-border") {
+    --natsumi-browser-border-color: var(--natsumi-primary-color) !important;
+  }
 
   .browserContainer {
-    @media -moz-pref("natsumi.glimpse.alt-border") {
-      --natsumi-browser-border-color: var(--natsumi-primary-color) !important;
-    }
+    border-radius: calc(var(--natsumi-browser-border-radius) - 1px) !important;
+    overflow: hidden;
+  }
+
+  &:has(.devtools-toolbox-side-iframe) .browserContainer {
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    overflow: hidden;
   }
 
   .browserStack {
