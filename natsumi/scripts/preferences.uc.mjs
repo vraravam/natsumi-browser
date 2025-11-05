@@ -2843,14 +2843,14 @@ function addPDFCompactPane() {
     // Create choices group
     let compactGroup = new OptionsGroup(
         "natsumiPDFCompact",
-        "Compact Mode",
-        "Compact Mode lets you focus on the document at hand by hiding the sidebar and toolbar when you don't need it."
+        "Toolbar autohide",
+        "Toolbar autohide lets you focus on the document at hand by hiding the sidebar and toolbar when you don't need it."
     );
 
     compactGroup.registerOption("natsumiPDFEnableCompact", new CheckboxChoice(
         "natsumi.pdfjs.compact",
         "natsumiPDFEnableCompact",
-        "Enable Compact Mode"
+        "Enable Toolbar autohide"
     ));
 
     let compactSubgroup = new OptionsGroup(
@@ -2862,8 +2862,8 @@ function addPDFCompactPane() {
     compactSubgroup.registerOption("natsumiPDFDynamicCompact", new CheckboxChoice(
         "natsumi.pdfjs.compact-dynamic",
         "natsumiPDFDynamicCompact",
-        "Dynamic Compact Mode",
-        "Compact Mode will automatically disable if the sidebar is open."
+        "Dynamic autohide",
+        "Toolbar autohide will automatically disable if the sidebar is open."
     ));
 
     compactGroup.registerOption("natsumiPDFCompactOptions", compactSubgroup);
