@@ -1591,6 +1591,32 @@ const tabDesigns = {
             </div>
         `
     ),
+    "origin": new MCChoice(
+        "origin",
+        "Origin",
+        "A box-like design inspired by Natsumi v1.",
+        `
+            <div id='tab-origin' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "curve": new MCChoice(
+        "curve",
+        "Curve",
+        "A curve-like design inspired by Natsumi v2.",
+        `
+            <div id='tab-curve' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
     "fusion": new MCChoice(
         "fusion",
         "Fusion",

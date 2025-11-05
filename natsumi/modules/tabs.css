@@ -28,6 +28,8 @@ SOFTWARE.
 
 /* Import tab designs */
 @import url("tabs/blade.css");
+@import url("tabs/origin.css");
+@import url("tabs/curve.css");
 @import url("tabs/fusion.css");
 @import url("tabs/material.css");
 @import url("tabs/hexagonal.css");
