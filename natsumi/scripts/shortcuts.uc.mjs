@@ -717,6 +717,45 @@ class NatsumiKBSManager {
     async replaceShortcuts(data) {
         let shouldAbort = false;
 
+        // Run sanity check
+        let hasShortcutsData = false;
+        const availableKeys = [
+            "customKeybinds",
+            "shortcutMode",
+            "unregistered",
+            "meta",
+            "ctrl",
+            "alt",
+            "shift",
+            "key"
+        ]
+        const requiredKeys = [
+            "customKeybinds",
+            "shortcutMode"
+        ];
+
+        for (const key in data) {
+            if (this.shortcuts[key]) {
+                hasShortcutsData = true;
+
+                // Check if required keys exist
+                let dataKeys = Object.keys(data[key]);
+                let hasRequiredKeys = requiredKeys.every(reqKey => dataKeys.includes(reqKey));
+                let hasOnlyAvailableKeys = dataKeys.every(dataKey => availableKeys.includes(dataKey));
+
+                if (!hasRequiredKeys || !hasOnlyAvailableKeys) {
+                    console.error(`Shortcut data for ${key} has invalid data, aborting replacement.`);
+                    hasShortcutsData = false;
+                    break;
+                }
+            }
+        }
+
+        if (!hasShortcutsData) {
+            console.error("No valid shortcut data found, aborting replacement.");
+            return false;
+        }
+
         // Reset shortcuts
         await this.resetAllShortcuts(false);
         this.applyMacShortcuts();
