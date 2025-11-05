@@ -343,7 +343,7 @@ if (isFloorp) {
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
     document.body.natsumiWorkspacesWrapper.dataRetrieveQueue.push(() => {
         copyWorkspaceName();
-    })
+    });
     document.body.natsumiWorkspacesWrapper.init().then(() => {
         // We don't really need to do anything here, but it's good to keep this just in case
     })
