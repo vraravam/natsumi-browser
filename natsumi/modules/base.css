@@ -26,6 +26,26 @@ SOFTWARE.
 
 /* ==== Base theme ==== */
 
+@keyframes dialog-stack-fadein {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-popup {
+  0% {
+    translate: 0 15px;
+  }
+
+  100% {
+    translate: 0;
+  }
+}
+
 #nav-bar {
   border: none !important;
 }
@@ -426,5 +446,14 @@ SOFTWARE.
 
   #tabbrowser-tabs::after {
     border-color: transparent !important;
+  }
+}
+
+/* Dialogs */
+.dialogStack:not([hidden]) {
+  animation: dialog-stack-fadein 0.3s ease;
+
+  .dialogBox {
+    animation: dialog-popup 0.3s ease;
   }
 }
