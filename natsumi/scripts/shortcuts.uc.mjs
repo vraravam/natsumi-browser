@@ -653,10 +653,14 @@ class NatsumiKBSManager {
         }
     }
 
-    updateAllShortcuts() {
+    updateAllShortcuts(baseOnly = false) {
         // This function will only apply shortcut customizations and will not apply them
         for (const shortcutName in this.shortcuts) {
-            const data = this.shortcutCustomizationData[shortcutName] || this.baseCustomizations[shortcutName];
+            let data = this.shortcutCustomizationData[shortcutName] || this.baseCustomizations[shortcutName];
+
+            if (baseOnly) {
+                data = this.baseCustomizations[shortcutName];
+            }
 
             if (!data) {
                 continue;
@@ -679,12 +683,92 @@ class NatsumiKBSManager {
         }
     }
 
-    async saveCustomizationData() {
+    async saveCustomizationData(data = null) {
+        if (typeof data === "object" && data !== null) {
+            this.shortcutCustomizationData = data;
+        }
+
         try {
             await IOUtils.writeJSON(this.filePath, this.shortcutCustomizationData);
         } catch (e) {
             console.error("Failed to save Natsumi KBS customization data:", e);
         }
+    }
+
+    async resetAllShortcuts(saveChanges = true) {
+        // Reset all shortcuts to default
+        if (saveChanges) {
+            await this.saveCustomizationData({});
+        }
+
+        for (const shortcutName in this.shortcuts) {
+            const shortcut = this.shortcuts[shortcutName];
+            shortcut.resetShortcut();
+        }
+
+        // Reapply initial customizations
+        this.applyMacShortcuts();
+
+        if (saveChanges) {
+            this.applyCustomShortcuts();
+        }
+    }
+
+    async replaceShortcuts(data) {
+        let shouldAbort = false;
+
+        // Reset shortcuts
+        await this.resetAllShortcuts(false);
+        this.applyMacShortcuts();
+        this.updateAllShortcuts(true);
+
+        // Apply shortcuts first
+        for (const shortcutName in this.shortcuts) {
+            const shortcutData = data[shortcutName];
+
+            if (!shortcutData) {
+                continue;
+            }
+
+            try {
+                this.updateShortcut(shortcutName, shortcutData, false);
+            } catch (e) {
+                console.error(`Failed to update shortcut ${shortcutName}:`, e);
+            }
+        }
+
+        // Check for conflicts
+        for (const shortcutName in this.shortcuts) {
+            const shortcutData = data[shortcutName];
+
+            if (!shortcutData) {
+                continue;
+            }
+            if (!shortcutData["customKeybinds"]) {
+                continue;
+            }
+
+            const conflicts = this.checkConflicts(shortcutName, shortcutData);
+
+            if (conflicts) {
+                shouldAbort = true;
+                console.error(`${shortcutName} conflicts with ${conflicts}, aborting replacement.`);
+                break;
+            }
+        }
+
+        if (shouldAbort) {
+            // Revert to initial shortcuts
+            this.initialApplyCustomShortcuts();
+        } else {
+            // Save customization data
+            await this.saveCustomizationData();
+
+            // Apply shortcuts
+            this.applyCustomShortcuts();
+        }
+
+        return !shouldAbort;
     }
 
     getKeyCombination(event) {
