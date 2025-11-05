@@ -140,6 +140,14 @@ SOFTWARE.
           background-position: center;
           background-repeat: no-repeat;
           background-image: url("../icons/lucide/check.svg");
+
+          &[disabled="true"] {
+            filter: grayscale(1);
+          }
+        }
+
+        &[disabled="true"] {
+          opacity: 0.5;
         }
       }
     }
