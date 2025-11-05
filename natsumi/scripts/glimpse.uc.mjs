@@ -327,6 +327,17 @@ class NatsumiGlimpse {
         let newBrowserContainer = newBrowser.parentElement.parentElement.parentElement;
         newBrowserContainer.appendChild(glimpseControlsFragment);
 
+        // Create Glimpse indicator
+        let glimpseIndicatorFragment = convertToXUL(`
+            <div class="natsumi-glimpse-indicator">
+                <div class="natsumi-glimpse-indicator-icon"></div>
+                <div class="natsumi-glimpse-indicator-label">
+                    You are viewing this tab in Glimpse mode.
+                </div>
+            </div>
+        `);
+        newBrowserContainer.appendChild(glimpseIndicatorFragment);
+
         // Set event listeners for Glimpse controls
         let glimpseCloseButton = newBrowserContainer.querySelector(".natsumi-glimpse-close-button");
         let glimpseExpandButton = newBrowserContainer.querySelector(".natsumi-glimpse-expand-button");
@@ -465,8 +476,12 @@ class NatsumiGlimpse {
         // Destroy Glimpse controls
         let glimpseTabContainer = glimpseBrowser.parentElement.parentElement.parentElement;
         let glimpseControls = glimpseTabContainer.querySelector(".natsumi-glimpse-controls");
+        let glimpseIndicator = glimpseTabContainer.querySelector(".natsumi-glimpse-indicator");
         if (glimpseControls) {
             glimpseControls.remove();
+        }
+        if (glimpseIndicator) {
+            glimpseIndicator.remove();
         }
 
         // Remove attributes from parent tab

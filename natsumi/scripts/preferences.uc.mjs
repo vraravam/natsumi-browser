@@ -2665,6 +2665,53 @@ function addGlimpseKeyPane() {
     prefsView.insertBefore(glimpseKeyNode, homePane);
 }
 
+function addGlimpseAccessibilityPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let glimpseAccessibilityGroup = new OptionsGroup(
+        "natsumiGlimpseAccessibility",
+        "Accessibility",
+        "Tweak Glimpse to make it easier to use."
+    );
+
+    glimpseAccessibilityGroup.registerOption("natsumiGlimpseIndicator", new CheckboxChoice(
+        "natsumi.glimpse.show-indicator",
+        "natsumiGlimpseIndicator",
+        "Show Glimpse indicator above content"
+    ));
+
+    glimpseAccessibilityGroup.registerOption("natsumiGlimpseBorder", new CheckboxChoice(
+        "natsumi.glimpse.alt-border",
+        "natsumiGlimpseBorder",
+        "Use an alternate border color for Glimpse",
+        "This may help as a quick way to identify Glimpse tabs."
+    ));
+
+    let glimpseAccessibilityNode = glimpseAccessibilityGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = glimpseAccessibilityNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(glimpseAccessibilityNode, homePane);
+}
+
 function addSidebarMiniplayerPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -3102,6 +3149,7 @@ function addPreferencesPanes() {
     prefsView.insertBefore(glimpseNode, homePane);
     addGlimpseBehaviorPane();
     addGlimpseKeyPane();
+    addGlimpseAccessibilityPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();

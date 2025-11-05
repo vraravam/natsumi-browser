@@ -44,6 +44,23 @@
   }
 }
 
+@keyframes natsumi-glimpse-indicator-appear {
+  0% {
+    opacity: 0;
+    translate: 0 41px;
+  }
+
+  70% {
+    opacity: 1;
+    translate: 0 -5px;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
 @keyframes natsumi-glimpse-disappear {
   0% {
     opacity: 1;
@@ -68,6 +85,20 @@
   }
 }
 
+@keyframes natsumi-glimpse-graduate-indicator {
+  0% {
+    translate: 0;
+    width: calc(100% - 92px);
+    height: calc(100% - 46px);
+  }
+
+  100% {
+    translate: -46px -46px;
+    width: 100%;
+    height: 100%;
+  }
+}
+
 :root:not([inDOMFullscreen="true"]) .browserSidebarContainer:has(browser[natsumi-has-glimpse]) {
   visibility: visible !important;
   opacity: 0.5;
@@ -78,12 +109,23 @@
 
 :root:not([inDOMFullscreen="true"]) .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
   position: absolute !important;
-  left: 46px !important;
+  left: 46px;
   width: calc(100% - 92px);
   height: 100%;
 
   .browserContainer {
+    @media -moz-pref("natsumi.glimpse.alt-border") {
+      --natsumi-browser-border-color: var(--natsumi-primary-color) !important;
+    }
+  }
+
+  .browserStack {
     background-color: light-dark(#fff, #444);
+  }
+
+  @media -moz-pref("natsumi.glimpse.show-indicator") {
+    top: 46px;
+    height: calc(100% - 46px);
   }
 }
 
@@ -155,6 +197,46 @@
       }
     }
   }
+
+  .natsumi-glimpse-indicator {
+    display: none; /* Hide indicator by default */
+    position: absolute;
+    width: auto;
+    height: 36px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: -41px;
+    top: 0;
+    opacity: 0;
+    border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+    background-color: light-dark(white, #555);
+    border-radius: 18px;
+    animation: natsumi-glimpse-indicator-appear 0.4s ease;
+    animation-delay: 0.3s;
+    animation-fill-mode: forwards;
+    z-index: -1;
+
+    @media -moz-pref("natsumi.glimpse.show-indicator") {
+      display: flex;
+    }
+
+    .natsumi-glimpse-indicator-icon {
+      width: 20px;
+      height: 20px;
+      -moz-context-properties: stroke, fill;
+      stroke: light-dark(black, white);
+      background-size: 100%;
+      background-image: url("../icons/lucide/glimpse.svg");
+      margin: auto 8px;
+    }
+
+    .natsumi-glimpse-indicator-label {
+      font-size: small;
+      margin-block: auto;
+      margin-right: 10px;
+      white-space: nowrap;
+    }
+  }
 }
 
 #tabbrowser-tabbox[natsumi-glimpse-animate] {
@@ -188,6 +270,10 @@
   .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
     animation: natsumi-glimpse-graduate 0.3s ease;
     animation-fill-mode: forwards;
+
+    @media -moz-pref("natsumi.glimpse.show-indicator") {
+      animation-name: natsumi-glimpse-graduate-indicator;
+    }
   }
 
   .natsumi-glimpse-controls {
@@ -202,6 +288,11 @@
       transition: right 0.3s ease;
       right: 46px !important;
     }
+  }
+
+  .natsumi-glimpse-indicator {
+    transition: top 0.3s ease;
+    top: 46px !important;
   }
 }
 
