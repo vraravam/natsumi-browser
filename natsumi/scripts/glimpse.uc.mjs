@@ -462,7 +462,17 @@ class NatsumiGlimpse {
         parentBrowser.removeAttribute("natsumi-has-glimpse");
 
         // Move graduated Glimpse tab if needed
-        if (glimpseTab.previousSibling !== parentTab) {
+        if (parentTab.pinned) {
+            // Move to the beginning of non-pinned tabs
+            let nonPinnedTabs = document.getElementById("tabbrowser-arrowscrollbox");
+            let firstNonPinned = nonPinnedTabs.querySelector("& > .tabbrowser-tab");
+
+            if (firstNonPinned) {
+                nonPinnedTabs.insertBefore(glimpseTab, firstNonPinned);
+            } else {
+                nonPinnedTabs.appendChild(glimpseTab);
+            }
+        } else if (glimpseTab.previousSibling !== parentTab) {
             // Check if parent tab is the last tab
             if (parentTab.nextSibling) {
                 parentTab.parentElement.insertBefore(glimpseTab, parentTab.nextSibling);
@@ -513,8 +523,7 @@ let JSWindowActors = {
         },
         allFrames: true,
         matches: [
-            "*://*/*",
-            "about:*"
+            "*://*/*"
         ],
         enablePreference: "natsumi.glimpse.enabled"
     }
