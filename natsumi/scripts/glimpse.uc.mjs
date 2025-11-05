@@ -296,10 +296,17 @@ class NatsumiGlimpse {
             return;
         }
 
+        // Get tab container ID (if it exists)
+        let tabContainerId = null;
+        if (currentTab.hasAttribute("usercontextid")) {
+            tabContainerId = currentTab.getAttribute("usercontextid");
+        }
+
         // Open glimpse link in new tab
         let newTab = gBrowser.addTab(link, {
             skipAnimation: true,
             inBackground: true,
+            userContextId: tabContainerId,
             triggeringPrincipal: gBrowser.contentPrincipal,
         });
         let newTabId = newTab.linkedPanel;
