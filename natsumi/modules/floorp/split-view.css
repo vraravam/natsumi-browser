@@ -280,6 +280,7 @@ SOFTWARE.
   #tabbrowser-tabbox {
     #natsumi-split-view-splitter {
       position: absolute;
+      opacity: 0 !important;
     }
 
     &:has(#tabbrowser-tabpanels[style*="flex-direction: row"]) {
