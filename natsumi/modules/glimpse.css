@@ -27,6 +27,23 @@
   }
 }
 
+@keyframes natsumi-glimpse-controls-appear-right {
+  0% {
+    opacity: 0;
+    translate: -41px 0;
+  }
+
+  70% {
+    opacity: 1;
+    translate: 5px 0;
+  }
+
+  100% {
+    opacity: 1;
+    translate: 0;
+  }
+}
+
 @keyframes natsumi-glimpse-disappear {
   0% {
     opacity: 1;
@@ -72,16 +89,24 @@
 
 .browserSidebarContainer {
   .natsumi-glimpse-controls {
-    order: -1;
     width: 41px;
     position: absolute;
-    left: 0;
-    margin-left: -41px !important;
     margin-top: 20px !important;
     height: 80px;
     flex-direction: column;
     gap: 8px;
     z-index: -1;
+
+    @media not -moz-pref("natsumi.glimpse.controls-on-right") {
+      order: -1;
+      margin-left: -41px !important;
+      left: 0;
+    }
+
+    @media -moz-pref("natsumi.glimpse.controls-on-right") {
+      margin-right: -41px !important;
+      right: 0;
+    }
 
     .natsumi-glimpse-close-button, .natsumi-glimpse-expand-button {
       width: 36px;
@@ -108,6 +133,10 @@
       animation: natsumi-glimpse-controls-appear 0.4s ease;
       animation-delay: 0.3s;
       animation-fill-mode: forwards;
+
+      @media -moz-pref("natsumi.glimpse.controls-on-right") {
+        animation-name: natsumi-glimpse-controls-appear-right;
+      }
     }
 
     .natsumi-glimpse-expand-button {
@@ -116,6 +145,10 @@
       animation: natsumi-glimpse-controls-appear 0.4s ease;
       animation-delay: 0.4s;
       animation-fill-mode: forwards;
+
+      @media -moz-pref("natsumi.glimpse.controls-on-right") {
+        animation-name: natsumi-glimpse-controls-appear-right;
+      }
     }
   }
 }
@@ -155,8 +188,16 @@
 
   .natsumi-glimpse-controls {
     pointer-events: none;
-    transition: left 0.3s ease;
-    left: 46px !important;
+
+    @media not -moz-pref("natsumi.glimpse.controls-on-right") {
+      transition: left 0.3s ease;
+      left: 46px !important;
+    }
+
+    @media -moz-pref("natsumi.glimpse.controls-on-right") {
+      transition: right 0.3s ease;
+      right: 46px !important;
+    }
   }
 }
 

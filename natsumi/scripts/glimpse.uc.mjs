@@ -30,6 +30,7 @@ SOFTWARE.
 */
 
 import { NatsumiActorWrapper } from "./actors/js-actors.js";
+import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -38,7 +39,6 @@ function convertToXUL(node) {
 
 class NatsumiGlimpse {
     constructor() {
-        console.log("glimpse real");
         this.glimpse = {};
         this.glimpseTabs = []; // Array to quickly check if a tab is a glimpse tab
         this.currentGlimpseTab = null;
@@ -46,6 +46,11 @@ class NatsumiGlimpse {
     }
 
     init() {
+        // Ensure Glimpse enabled pref exists
+        if (!ucApi.Prefs.get("natsumi.glimpse.enabled").exists()) {
+            ucApi.Prefs.get("natsumi.glimpse.enabled").value = true;
+        }
+
         // Set event listener
         document.addEventListener("select", this.onSelect.bind(this));
         document.addEventListener("keydown", this.onKeyDown.bind(this));
@@ -128,9 +133,26 @@ class NatsumiGlimpse {
             parentTab.removeAttribute("natsumi-glimpse-selected");
             if (parentTab) {
                 if (shouldSwitchToParent) {
-                    parentTab.linkedBrowser.removeAttribute("natsumi-has-glimpse");
                     gBrowser.selectedTab = parentTab;
                 } else {
+                    let parentBrowser = parentTab.linkedBrowser;
+                    parentBrowser.removeAttribute("natsumi-has-glimpse");
+                    this.unregisterGlimpse(parentTabId);
+
+                    // Check if parent is a pinned tab
+                    if (parentTab.pinned) {
+                        // Don't close parent tab in this case, instead switch to the first non-pinned tab
+                        let nonPinnedTabs = document.getElementById("tabbrowser-arrowscrollbox");
+                        let firstNonPinned = nonPinnedTabs.querySelector("& > .tabbrowser-tab:not([hidden]):not([natsumi-glimpse-tab])");
+
+                        if (firstNonPinned) {
+                            gBrowser.selectedTab = firstNonPinned;
+                        } else {
+                            window.BrowserCommands.openTab();
+                        }
+                        return;
+                    }
+
                     gBrowser.removeTab(parentTab);
                 }
             }
@@ -357,8 +379,8 @@ class NatsumiGlimpse {
         let tabbox = document.getElementById("tabbrowser-tabbox");
         tabbox.setAttribute("natsumi-glimpse-animate-disappear", "true");
         setTimeout(() => {
-            tabbox.removeAttribute("natsumi-glimpse-animate-disappear");
             this.deactivateGlimpse(glimpseTabId);
+            tabbox.removeAttribute("natsumi-glimpse-animate-disappear");
         }, 300);
     }
 
@@ -397,8 +419,8 @@ class NatsumiGlimpse {
         let tabbox = document.getElementById("tabbrowser-tabbox");
         tabbox.setAttribute("natsumi-glimpse-animate-graduate", "true");
         setTimeout(() => {
-            tabbox.removeAttribute("natsumi-glimpse-animate-graduate");
             this.graduateGlimpse(glimpseTabId);
+            tabbox.removeAttribute("natsumi-glimpse-animate-graduate");
         }, 300);
     }
 
@@ -483,9 +505,13 @@ let JSWindowActors = {
         matches: [
             "*://*/*",
             "about:*"
-        ]
+        ],
+        enablePreference: "natsumi.glimpse.enabled"
     }
 }
+
+window.natsumiGlimpse = new NatsumiGlimpse();
+window.natsumiGlimpse.init();
 
 try {
     let actorWrapper = new NatsumiActorWrapper();
@@ -494,6 +520,3 @@ try {
 } catch (e) {
     console.error("Failed to add Natsumi JS Window Actors:", e);
 }
-
-window.natsumiGlimpse = new NatsumiGlimpse();
-window.natsumiGlimpse.init();

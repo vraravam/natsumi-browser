@@ -2532,6 +2532,93 @@ function addCompactStylesPane() {
     prefsView.insertBefore(styleNode, homePane);
 }
 
+function addCompactBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let compactBehaviorGroup = new OptionsGroup(
+        "natsumiCompactBehavior",
+        "Behavior",
+        "Tweak how you want Compact Mode to behave."
+    );
+
+    compactBehaviorGroup.registerOption("natsumiCompactNewWindow", new CheckboxChoice(
+        "natsumi.theme.compact-on-new-window",
+        "natsumiCompactNewWindow",
+        "Enable Compact Mode by default",
+        "If enabled, new windows will open with Compact Mode active."
+    ));
+
+    let compactBehaviorNode = compactBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = compactBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(compactBehaviorNode, homePane);
+}
+
+function addGlimpseBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let glimpseBehaviorGroup = new OptionsGroup(
+        "natsumiGlimpseBehavior",
+        "Behavior",
+        "Tweak how you want Glimpse to behave."
+    );
+
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseEnabled", new CheckboxChoice(
+        "natsumi.glimpse.enabled",
+        "natsumiGlimpseEnabled",
+        "Enable Glimpse"
+    ));
+
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseRightControls", new CheckboxChoice(
+        "natsumi.glimpse.controls-on-right",
+        "natsumiGlimpseRightControls",
+        "Move Glimpse controls to the right"
+    ));
+
+    let glimpseBehaviorNode = glimpseBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = glimpseBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(glimpseBehaviorNode, homePane);
+}
+
 function addGlimpseKeyPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -2576,47 +2663,6 @@ function addGlimpseKeyPane() {
     });
 
     prefsView.insertBefore(glimpseKeyNode, homePane);
-}
-
-function addCompactBehaviorPane() {
-    let prefsView = document.getElementById("mainPrefPane");
-    let homePane = prefsView.querySelector("#firefoxHomeCategory");
-
-    // Create choices group
-    let compactBehaviorGroup = new OptionsGroup(
-        "natsumiCOmpactBehavior",
-        "Behavior",
-        "Tweak how you want Compact Mode to behave."
-    );
-
-    compactBehaviorGroup.registerOption("natsumiCompactNewWindow", new CheckboxChoice(
-        "natsumi.theme.compact-on-new-window",
-        "natsumiCompactNewWindow",
-        "Enable Compact Mode by default",
-        "If enabled, new windows will open with Compact Mode active."
-    ));
-
-    let compactBehaviorNode = compactBehaviorGroup.generateNode();
-
-    // Set listeners for each checkbox
-    let checkboxes = compactBehaviorNode.querySelectorAll("checkbox");
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener("command", () => {
-            let prefName = checkbox.getAttribute("preference");
-            let isChecked = checkbox.checked;
-
-            if (checkbox.getAttribute("opposite") === "true") {
-                isChecked = !isChecked;
-            }
-
-            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
-
-            // noinspection JSUnresolvedReference
-            ucApi.Prefs.set(prefName, isChecked);
-        });
-    });
-
-    prefsView.insertBefore(compactBehaviorNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -3054,6 +3100,7 @@ function addPreferencesPanes() {
     addCompactBehaviorPane();
 
     prefsView.insertBefore(glimpseNode, homePane);
+    addGlimpseBehaviorPane();
     addGlimpseKeyPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
