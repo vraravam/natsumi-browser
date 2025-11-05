@@ -6,7 +6,7 @@
 
 /*
 
-Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -47,7 +47,15 @@ class NatsumiWorkspacesWrapper {
     }
 
     async init() {
-        this.workspacesModule = await import("chrome://noraneko/content/assets/js/index22.js");
+        let workspacesModulePath = "chrome://noraneko/content/assets/js/index22.js";
+
+        // Get Floorp version
+        let floorpVersion = AppConstants.MOZ_APP_VERSION_DISPLAY.split("@")[0];
+        if (floorpVersion.startsWith("12.4.")) {
+            workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
+        }
+
+        this.workspacesModule = await import(workspacesModulePath);
         let workspacesContext = this.workspacesModule._.getCtx();
 
         if (workspacesContext) {

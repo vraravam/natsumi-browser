@@ -5,7 +5,7 @@
 
 /*
 
-Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -44,9 +44,6 @@ function makeCatNoisesAndDoSomeVeryCuteInitialSetupBecauseIFeltVeryCuteWhenWriti
 
     // Apply customizations
     applyCustomTheme();
-
-    // Get Natsumi version
-    let versionPath = "chrome://natsumi/content/version.json";
 
     // communicate in the average transfemme communication language (i.e. make cat noises) >:3333
     const catNoises = [

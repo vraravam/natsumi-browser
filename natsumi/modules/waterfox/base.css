@@ -115,7 +115,7 @@ SOFTWARE.
     }
 
     &:has(#status-bar[collapsed="true"]) #vertical-tabs {
-      padding-bottom: calc(var(--natsumi-statusbar-height) + 3px + var(--natsumi-browser-separation)) !important;
+      padding-bottom: calc(var(--natsumi-statusbar-height, 28px) + 3px + var(--natsumi-browser-separation)) !important;
     }
 
     #tabbrowser-tabs::after {

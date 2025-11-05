@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -276,12 +276,31 @@ their author(s) have been provided above the used code.
       }
     }
 
-    .search-handoff-button {
+    .search-handoff-button , .search-inner-wrapper {
       border-radius: 50px !important;
       background-color: var(--natsumi-mat-hz-background) !important;
       box-shadow: var(--natsumi-mat-hz-shadow) !important;
       backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
       border: var(--natsumi-mat-hz-border-thin) !important;
+
+      #newtab-search-text {
+        background-color: transparent !important;
+        box-shadow: none !important;
+        border-radius: 50px !important;
+      }
+
+      .fake-editable {
+        background-color: transparent !important;
+      }
+    }
+
+    .search-inner-wrapper {
+      .search-handoff-button {
+        background-color: transparent !important;
+        backdrop-filter: none !important;
+        box-shadow: none !important;
+        border: none !important;
+      }
     }
 
     /* Modals */

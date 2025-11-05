@@ -7,7 +7,7 @@
 
 /*
 
-Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -45,6 +45,7 @@ import {
     applyCustomColor,
     applyCustomTheme
 } from "./custom-theme.sys.mjs";
+import {resetTabStyleIfNeeded} from "./reset-tab-style.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -151,17 +152,17 @@ class CustomThemePicker {
             // Add a new color at the clicked position
             this.addNewColor(relativeX, relativeY);
         });
-        customThemeColorGrid.addEventListener("mouseenter", (event) => {
+        customThemeColorGrid.addEventListener("mouseenter", () => {
             this.newColorAllowed = true;
         });
-        customThemeColorGrid.addEventListener("mouseleave", (event) => {
+        customThemeColorGrid.addEventListener("mouseleave", () => {
             this.newColorAllowed = false;
         });
 
         // Add listeners for top controls
         for (let i = 0; i < this.availableLayers; i++) {
             let layerButton = this.node.querySelector(`.natsumi-custom-layer-${i + 1}`);
-            layerButton.addEventListener("click", (event) => {
+            layerButton.addEventListener("click", () => {
                 this.loadLayer(i);
                 layerButton.setAttribute("selected", "");
 
@@ -177,13 +178,13 @@ class CustomThemePicker {
         let darkModeButton = this.node.querySelector(".natsumi-custom-mode-dark");
 
         if (!this.singleColor) {
-            lightModeButton.addEventListener("click", (event) => {
+            lightModeButton.addEventListener("click", () => {
                 this.theme = "light";
                 lightModeButton.setAttribute("selected", "");
                 darkModeButton.removeAttribute("selected");
                 this.loadLayer(this.layer);
             });
-            darkModeButton.addEventListener("click", (event) => {
+            darkModeButton.addEventListener("click", () => {
                 this.theme = "dark";
                 darkModeButton.setAttribute("selected", "");
                 lightModeButton.removeAttribute("selected");
@@ -195,10 +196,10 @@ class CustomThemePicker {
         let exportButton = this.node.querySelector(".natsumi-custom-export");
 
         if (!this.singleColor) {
-            importButton.addEventListener("click", (event) => {
+            importButton.addEventListener("click", () => {
                 this.import();
             });
-            exportButton.addEventListener("click", (event) => {
+            exportButton.addEventListener("click", () => {
                 this.export();
             });
         }
@@ -211,20 +212,20 @@ class CustomThemePicker {
         let hexButton = this.node.querySelector(".natsumi-hex-button");
 
         if (!this.singleColor) {
-            presetButton.addEventListener("click", (event) => {
+            presetButton.addEventListener("click", () => {
                 this.cyclePreset();
             });
 
-            gradientTypeButton.addEventListener("click", (event) => {
+            gradientTypeButton.addEventListener("click", () => {
                 this.cycleGradientType();
             });
         }
 
-        resetButton.addEventListener("click", (event) => {
+        resetButton.addEventListener("click", () => {
             this.removeAllColors();
         });
 
-        hexButton.addEventListener("click", (event) => {
+        hexButton.addEventListener("click", () => {
             let hexInputContainer = this.node.querySelector(".natsumi-custom-theme-hex-input");
             if (hexInputContainer.attributes["hidden"]) {
                 hexInputContainer.removeAttribute("hidden");
@@ -256,7 +257,7 @@ class CustomThemePicker {
 
         // Add listener for HEX submit button
         let hexSubmitButton = this.node.querySelector(".natsumi-hex-submit");
-        hexSubmitButton.addEventListener("click", (event) => {
+        hexSubmitButton.addEventListener("click", () => {
             let hexInputNode = this.node.querySelector(".natsumi-hex-input");
             let hexCode = hexInputNode.value.trim();
 
@@ -323,7 +324,7 @@ class CustomThemePicker {
         let uploadTimeout;
 
         const filePromise = new Promise((resolve, reject) => {
-            uploadNode.onchange = (event) => {
+            uploadNode.onchange = () => {
                 if (uploadTimeout) {
                     clearTimeout(uploadTimeout);
                 }
@@ -1280,7 +1281,7 @@ const layouts = {
     ),
     "single": new MCChoice(
         true,
-        "Single Toolbar (Zen-like)",
+        "Single Toolbar",
         "Merges everything into the sidebar for simplicity.",
         "<div id='single-toolbar' class='natsumi-mc-choice-image-browser'></div>"
     )
@@ -1445,9 +1446,9 @@ const colors = {
     "system": new MCChoice(
         "system",
         "System Accent",
-        "Use the system accent color.",
+        "Uses the system accent color.",
         "",
-        "AccentColor"
+        "oklch(from AccentColor 0.825 0.1 h)"
     ),
     /*"custom": new MCChoice(
         "custom",
@@ -1455,6 +1456,48 @@ const colors = {
         "Pick a color of your choice!",
         ""
     )*/
+}
+
+const icons = {
+    "default": new MCChoice(
+        "default",
+        "Firefox default",
+        "The base icons bundled with Firefox.",
+        `
+            <div id='icons-default' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    ),
+    "lucide": new MCChoice(
+        "lucide",
+        "Lucide",
+        "An icon pack based on Lucide.",
+        `
+            <div id='icons-lucide' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    ),
+    "fluent": new MCChoice(
+        "fluent",
+        "Fluent",
+        "An icon pack based on Microsoft Fluent UI icons.",
+        `
+            <div id='icons-fluent' class='natsumi-mc-choice-image-browser'>
+                <div class="natsumi-mc-choice-icon icon-sidebar"></div>
+                <div class="natsumi-mc-choice-icon icon-bookmarks"></div>
+                <div class="natsumi-mc-choice-icon icon-back"></div>
+                <div class="natsumi-mc-choice-icon icon-reload"></div>
+            </div>
+        `
+    )
 }
 
 const compactStyles = {
@@ -1476,6 +1519,74 @@ const compactStyles = {
         "Hides the sidebar only.",
         "<div id='compact-sidebar' class='natsumi-mc-choice-image-browser'></div>"
     )
+}
+
+const tabDesigns = {
+    "default": new MCChoice(
+        "default",
+        "Blade",
+        "A modern and sleek, yet dynamic tab design.",
+        `
+            <div id='tab-blade' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "fusion": new MCChoice(
+        "fusion",
+        "Fusion",
+        "A Lepton-like design that 'combines' tab and web content.",
+        `
+            <div id='tab-fusion' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "material": new MCChoice(
+        "material",
+        "Material",
+        "A Zen alpha-inspired design with a material-like look.",
+        `
+            <div id='tab-material' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "hexagonal": new MCChoice(
+        "hexagonal",
+        "Hexagonal",
+        "A tab design inspired by Floorp's hexagonal branding.",
+        `
+            <div id='tab-hexagonal' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "classic": new MCChoice(
+        "classic",
+        "Classic",
+        "Just the standard Firefox look.",
+        `
+            <div id='tab-classic' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
 }
 
 const urlbarLayouts = {
@@ -1558,13 +1669,14 @@ class OptionsGroup {
 }
 
 class MultipleChoicePreference {
-    constructor(id, preference, label, description) {
+    constructor(id, preference, label, description, overrideDefault = null) {
         this.id = id;
         this.preference = preference;
         this.label = label;
         this.description = description;
         this.options = {};
         this.extras = {}
+        this.overrideDefault = overrideDefault;
     }
 
     registerOption(option, choiceObject) {
@@ -1577,6 +1689,10 @@ class MultipleChoicePreference {
 
     getSelected() {
         // noinspection JSUnresolvedReference
+        if (this.overrideDefault !== null) {
+            return this.overrideDefault;
+        }
+
         if (ucApi.Prefs.get(this.preference).exists()) {
             // noinspection JSUnresolvedReference
             return ucApi.Prefs.get(this.preference).value;
@@ -1621,17 +1737,37 @@ class MultipleChoicePreference {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            Customize Natsumi
-        </label>
-    </richlistitem>
+    let customizeNodeString = `
+        <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Customize Natsumi
+            </label>
+        </richlistitem>
+    `
+    let shortcutsNodeString = `
+        <richlistitem id="natsumi-shortcuts" class="category" value="paneNatsumiShortcuts" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Keyboard Shortcuts">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                Keyboard Shortcuts
+            </label>
+        </richlistitem>
+    `
+    let aboutNodeString = `
+        <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
+            <image class="category-icon"/>
+            <label class="category-name" flex="1">
+                About Natsumi
+            </label>
+        </richlistitem>
     `
     let sidebar = document.getElementById("categories");
     const generalPane = sidebar.querySelector("#category-general");
-    sidebar.insertBefore(convertToXUL(nodeString), generalPane.nextSibling);
+
+    // Add entries to sidebar all in one go to ensure consistent ordering
+    sidebar.insertBefore(convertToXUL(customizeNodeString), generalPane.nextSibling);
+    sidebar.insertBefore(convertToXUL(shortcutsNodeString), generalPane.nextSibling.nextSibling);
+    sidebar.appendChild(convertToXUL(aboutNodeString));
 
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiSettings", {
@@ -1672,6 +1808,20 @@ function addLayoutPane() {
         true
     )
 
+    let customizableToolbarCheckbox = new CheckboxChoice(
+        "natsumi.theme.customizable-single-toolbar",
+        "natsumiShowToolbarButton",
+        "Show toolbar buttons",
+        "This will show other toolbar buttons in the overflow menu."
+    )
+
+    let forceCustomizableToolbarCheckbox = new CheckboxChoice(
+        "natsumi.theme.force-customizable-single-toolbar",
+        "natsumiForceToolbarButton",
+        "Force show overflow button",
+        "Use this if the overflow button doesn't show when it should."
+    )
+
     let bookmarksOnHoverCheckbox = new CheckboxChoice(
         "natsumi.theme.show-bookmarks-on-hover",
         "natsumiShowBookmarksOnHover",
@@ -1688,6 +1838,8 @@ function addLayoutPane() {
 
     layoutSelection.registerExtras("natsumiShowMenuButtonBox", menuButtonCheckbox);
     layoutSelection.registerExtras("natsumiShowAddonsButtonBox", addonsButtonCheckbox);
+    layoutSelection.registerExtras("natsumiShowToolbarButtonBox", customizableToolbarCheckbox);
+    layoutSelection.registerExtras("natsumiForceToolbarButtonBox", forceCustomizableToolbarCheckbox);
     layoutSelection.registerExtras("natsumiShowBookmarksOnHoverBox", bookmarksOnHoverCheckbox);
     layoutSelection.registerExtras("natsumiForceWinControlsToLeftBox", windowControlsCheckbox);
 
@@ -1733,6 +1885,7 @@ function addLayoutPane() {
 function addThemesPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
+    const osName = Services.appinfo.OS.toLowerCase();
 
     // Create theme selection
     let themeSelection = new MultipleChoicePreference(
@@ -1750,6 +1903,18 @@ function addThemesPane() {
         true
     )
 
+    let windowsAppend = "";
+    if (osName === "winnt") {
+        windowsAppend = " Windows users: please use this if translucency is broken and let me know of the issue."
+    }
+
+    let translucencyLegacyCheckbox = new CheckboxChoice(
+        "natsumi.theme.use-legacy-translucency",
+        "natsumiTranslucencyLegacyToggle",
+        "Use legacy translucency",
+        `This will inherit the material from the 'titlebar' rather than the 'sidebar'.${windowsAppend}`
+    )
+
     let grayOutCheckbox = new CheckboxChoice(
         "natsumi.theme.gray-out-when-inactive",
         "natsumiGrayOutWhenInactive",
@@ -1760,6 +1925,7 @@ function addThemesPane() {
 
     themeSelection.registerExtras("natsumiCustomThemePickerBox", customThemePickerUi);
     themeSelection.registerExtras("natsumiTranslucencyBox", translucencyCheckbox);
+    themeSelection.registerExtras("natsumiTranslucencyLegacyBox", translucencyLegacyCheckbox);
     themeSelection.registerExtras("natsumiInactiveBox", grayOutCheckbox);
 
     for (let theme in themes) {
@@ -1866,7 +2032,146 @@ function addColorsPane() {
     //customColorPickerUi.init();
 }
 
+function addIconsPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create icons selection
+    let iconSelection = new MultipleChoicePreference(
+        "natsumiIcons",
+        "natsumi.theme.icons",
+        "Icons",
+        "Choose the icon pack you want to use."
+    );
+
+    for (let iconPack in icons) {
+        iconSelection.registerOption(iconPack, icons[iconPack]);
+    }
+
+    let iconNode = iconSelection.generateNode();
+
+    // Set listeners for each button
+    let iconButtons = iconNode.querySelectorAll(".natsumi-mc-choice");
+    iconButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing icon pack:", selectedValue);
+            setStringPreference("natsumi.theme.icons", selectedValue);
+            iconButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        });
+    });
+
+    prefsView.insertBefore(iconNode, homePane);
+}
+
+function addSidebarTabsPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Ensure Blade is always used when custom styles is off
+    let selectedOverride = null;
+    if (ucApi.Prefs.get("natsumi.tabs.use-custom-type").exists()) {
+        if (!(ucApi.Prefs.get("natsumi.tabs.use-custom-type").value)) {
+            selectedOverride = "default";
+        }
+    }
+
+    // Create theme selection
+    let tabDesignSelection = new MultipleChoicePreference(
+        "natsumiTabDesign",
+        "natsumi.tabs.type",
+        "Tab design",
+        "Choose the design you want for your tabs.",
+        selectedOverride
+    );
+
+    for (let style in tabDesigns) {
+        tabDesignSelection.registerOption(style, tabDesigns[style]);
+    }
+
+    // Fusion options
+    tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(
+        "natsumi.tabs.fusion-highlight",
+        "natsumiTabFusionHighlight",
+        "Enable Fusion tab highlight",
+        "This will add a Photon (Firefox Quantum)-like highlight to Fusion."
+    ));
+
+    // Material options
+    tabDesignSelection.registerExtras("natsumiTabMaterialAlternate", new CheckboxChoice(
+        "natsumi.tabs.material-alt-design",
+        "natsumiTabMaterialAlternate",
+        "Use alternative design for Material tabs",
+        "This will make tabs have a similar design to toolbar buttons."
+    ));
+
+    let tabDesignNode = tabDesignSelection.generateNode();
+
+    // Set listeners for each button
+    let tabDesignButtons = tabDesignNode.querySelectorAll(".natsumi-mc-choice");
+    tabDesignButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing style:", selectedValue);
+
+            // For non-Blade tab designs, we need to enable custom styles
+            setStringPreference("natsumi.tabs.use-custom-type", selectedValue !== "default");
+
+            // After that, we can set tab type
+            setStringPreference("natsumi.tabs.type", selectedValue);
+            tabDesignButtons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+
+            // Reset Floorp tab styles if needed
+            if (selectedValue !== "classic") {
+                // Check if we're on Floorp
+                if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+                    if (ucApi.Prefs.get("natsumi.browser.type").value !== "floorp") {
+                        return;
+                    }
+                } else {
+                    // Assume we're on Firefox
+                    return;
+                }
+
+                let resetStyle = resetTabStyleIfNeeded();
+                if (resetStyle) {
+                    let tabStyleResetObject = new NatsumiNotification(
+                        "Heads up: your tab style was reset to Proton.",
+                        "If you want to use other tab styles, simply enable the Classic tab design in settings.",
+                        "chrome://natsumi/content/icons/lucide/info.svg",
+                        10000
+                    )
+                    tabStyleResetObject.addToContainer();
+                }
+            }
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = tabDesignNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(tabDesignNode, homePane);
+}
+
 function addSidebarWorkspacesPane() {
+    // Note: This is a Floorp-only feature, it shouldn't be seen on other browsers
     if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
         if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
             return;
@@ -1924,6 +2229,70 @@ function addSidebarWorkspacesPane() {
     prefsView.insertBefore(sidebarWorkspacesNode, homePane);
 }
 
+function addSidebarPanelSidebarPane() {
+    // Note: This is a Floorp-only feature, it shouldn't be seen on other browsers
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (!(ucApi.Prefs.get("natsumi.browser.type").value === "floorp")) {
+            return;
+        }
+    } else {
+        // Assume we're on Firefox
+        return;
+    }
+
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let panelSidebarGroup = new OptionsGroup(
+        "natsumiSidebarPanelSidebar",
+        "Panel Sidebar",
+        "Tweak Floorp's Panel Sidebar."
+    );
+
+    panelSidebarGroup.registerOption("natsumiSidebarFloatingPanelSidebar", new CheckboxChoice(
+        "natsumi.sidebar.floorp-floating-panel",
+        "natsumiSidebarFloatingPanelSidebar",
+        "Floating Panel Sidebar",
+        "When enabled, the Panel Sidebar selection box will hide and float over the browser similarly to the main sidebar in Compact Mode.",
+    ));
+
+    let panelSidebarNode = panelSidebarGroup.generateNode();
+
+    // Add notice if Panel Sidebar is disabled
+    let panelSidebarDisabledNotice = convertToXUL(`
+        <div id="natsumiPanelSidebarDisabledWarning" class="natsumi-settings-info warning">
+            <div class="natsumi-settings-info-icon"></div>
+            <div class="natsumi-settings-info-text">
+                You need to enable Panel Sidebar in <html:a href="about:hub#/features/sidebar">Floorp Hub</html:a> to
+                customize these settings.
+            </div>
+        </div>
+    `)
+    let firstCheckbox = panelSidebarNode.querySelector("checkbox");
+    firstCheckbox.parentNode.insertBefore(panelSidebarDisabledNotice, firstCheckbox);
+
+    // Set listeners for each checkbox
+    let checkboxes = panelSidebarNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(panelSidebarNode, homePane);
+}
+
 function addSidebarButtonsPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -1944,7 +2313,7 @@ function addSidebarButtonsPane() {
                 "natsumi.sidebar.use-statusbar-in-sidebar",
                 "natsumiSidebarEnableToolbar",
                 "Use Status Bar in the Sidebar when the Status Bar is &#34;hidden&#34;",
-                "This will allow you to add toolbar buttons (e.g. Bookmarks menu, New tab) to the Sidebar just like Zen."
+                "This will move the Status Bar to the bottom of the sidebar when it is in its hidden state."
             ));
         }
     }
@@ -2026,6 +2395,13 @@ function addCompactStylesPane() {
         styleSelection.registerOption(style, compactStyles[style]);
     }
 
+    styleSelection.registerExtras("natsumiCompactMarginless", new CheckboxChoice(
+        "natsumi.theme.compact-marginless",
+        "natsumiCompactMarginless",
+        "Marginless Compact Mode",
+        "Removes the borders around the website content when in Compact Mode."
+    ));
+
     let styleNode = styleSelection.generateNode();
 
     // Set listeners for each button
@@ -2040,7 +2416,66 @@ function addCompactStylesPane() {
         });
     });
 
+    // Set listeners for each checkbox
+    let checkboxes = styleNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
     prefsView.insertBefore(styleNode, homePane);
+}
+
+function addCompactBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let compactBehaviorGroup = new OptionsGroup(
+        "natsumiCOmpactBehavior",
+        "Behavior",
+        "Tweak how you want Compact Mode to behave."
+    );
+
+    compactBehaviorGroup.registerOption("natsumiCompactNewWindow", new CheckboxChoice(
+        "natsumi.theme.compact-on-new-window",
+        "natsumiCompactNewWindow",
+        "Enable Compact Mode by default",
+        "If enabled, new windows will open with Compact Mode active."
+    ));
+
+    let compactBehaviorNode = compactBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = compactBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(compactBehaviorNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -2414,13 +2849,17 @@ function addPreferencesPanes() {
     addLayoutPane();
     addThemesPane();
     addColorsPane();
+    addIconsPane();
 
     prefsView.insertBefore(sidebarNode, homePane);
+    addSidebarTabsPane();
     addSidebarWorkspacesPane();
+    addSidebarPanelSidebarPane();
     addSidebarButtonsPane();
 
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
+    addCompactBehaviorPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();

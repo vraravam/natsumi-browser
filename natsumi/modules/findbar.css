@@ -1,6 +1,6 @@
 /*
 
-Natsumi Browser - A userchrome for Zen Browser that makes things flow.
+Natsumi Browser - Welcome to your personal internet.
 
 Copyright (c) 2024-present Green (@greeeen-dev)
 
@@ -81,7 +81,7 @@ SOFTWARE.
     }
 
     /*noinspection CssInvalidPropertyValue*/
-    &:is([hidden="true"]) {
+    &[hidden] {
       visibility: inherit !important;
       pointer-events: none !important;
       opacity: 0 !important;
@@ -92,7 +92,7 @@ SOFTWARE.
     }
 
     /*noinspection CssInvalidFunction*/
-    &:has(.findbar-textbox:is([status="notfound"])) {
+    &:has(.findbar-textbox[status="notfound"]) {
       @media not -moz-pref("natsumi.findbar.disable-not-found-bg") {
         --natsumi-primary-color: color-mix(in srgb, light-dark(rgb(255, 146, 146), rgb(255, 100, 100)) 75%, transparent) !important;
       }

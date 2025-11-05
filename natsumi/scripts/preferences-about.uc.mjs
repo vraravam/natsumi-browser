@@ -5,6 +5,32 @@
 // @loadOrder 11
 // ==/UserScript==
 
+/*
+
+Natsumi Browser - Welcome to your personal internet.
+
+Copyright (c) 2024-present Green (@greeeen-dev)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
 let version;
 let branch;
 
@@ -50,6 +76,8 @@ function addAboutPane() {
                 <div class="natsumi-about-vertical-separator"></div>
                 <div id="natsumi-about-links-container">
                     <html:a href="https://github.com/greeeen-dev/natsumi-browser" class="natsumi-about-link">Source code</html:a>
+                    <html:a href="https://natsumi.greeeen.dev" class="natsumi-about-link">Website</html:a>
+                    <html:a href="https://natsumi.greeeen.dev/discord" class="natsumi-about-link">Discord</html:a>
                 </div>
             </div>
         </groupbox>
@@ -72,18 +100,6 @@ function addAboutPane() {
 }
 
 function addToSidebar() {
-    let nodeString = `
-    <richlistitem id="natsumi-about" class="category" value="paneNatsumiAbout" data-l10n-id="category-natsumi-shortcuts" data-l10n-attrs="tooltiptext" align="center" tooltiptext="About Natsumi">
-        <image class="category-icon"/>
-        <label class="category-name" flex="1">
-            About Natsumi
-        </label>
-    </richlistitem>
-    `
-    let sidebar = document.getElementById("categories");
-    const generalPane = sidebar.querySelector("#category-general");
-    sidebar.appendChild(convertToXUL(nodeString));
-
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiAbout", {
         _initted: true,
