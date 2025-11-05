@@ -192,5 +192,9 @@ SOFTWARE.
         background-color: color-mix(in srgb, var(--natsumi-primary-color) 30%, transparent) !important;
       }
     }
+
+    .pane-container a {
+      color: light-dark(color-mix(in srgb, var(--natsumi-primary-color) 70%, black), var(--natsumi-primary-color)) !important;
+    }
   }
 }
