@@ -2471,8 +2471,7 @@ function addSidebarButtonsPane() {
         "natsumi.tabs.replace-new-tab",
         "natsumiSidebarReplaceNewTab",
         "Replace New Tab",
-        "This will remove the New Tab entirely and open the URL bar instead.",
-        true
+        "This will remove the New Tab entirely and open the URL bar instead."
     ));
 
     let sidebarButtonsNode = buttonsGroup.generateNode();
