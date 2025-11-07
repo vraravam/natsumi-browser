@@ -156,14 +156,14 @@ class NatsumiGlimpse {
 
             // Switch to parent tab if needed
             let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
-            parentTab.removeAttribute("natsumi-glimpse-selected");
             if (parentTab) {
+                let parentBrowser = parentTab.linkedBrowser;
+                parentTab.removeAttribute("natsumi-glimpse-selected");
+                parentBrowser.removeAttribute("natsumi-has-glimpse");
+
                 if (shouldSwitchToParent) {
                     gBrowser.selectedTab = parentTab;
                 } else {
-                    let parentBrowser = parentTab.linkedBrowser;
-                    parentBrowser.removeAttribute("natsumi-has-glimpse");
-
                     // Check if parent is a pinned tab
                     if (parentTab.pinned) {
                         // Don't close parent tab in this case, instead switch to the first non-pinned tab
@@ -453,12 +453,6 @@ class NatsumiGlimpse {
         if (!parentTabId) {
             return;
         }
-
-        // Remove attributes from parent tab
-        let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
-        let parentBrowser = parentTab.linkedBrowser;
-        parentTab.removeAttribute("natsumi-glimpse-selected");
-        parentBrowser.removeAttribute("natsumi-has-glimpse");
 
         // Add attribute to indicate closure
         glimpseTab.setAttribute("natsumi-glimpse-closed", "true");
