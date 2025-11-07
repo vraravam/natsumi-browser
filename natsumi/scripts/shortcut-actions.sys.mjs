@@ -149,4 +149,20 @@ export class NatsumiShortcutActions {
             }
         }
     }
+
+    static openNewTab() {
+        let replaceNewTab = false; // To be done later
+
+        if (ucApi.Prefs.get("natsumi.tabs.replace-new-tab").exists()) {
+            replaceNewTab = ucApi.Prefs.get("natsumi.tabs.replace-new-tab").value;
+        }
+
+        if (replaceNewTab) {
+            // Do nothing yet
+        } else {
+            // Open new tab
+            let keyElement = document.getElementById("key_newNavigatorTab");
+            keyElement.doCommand();
+        }
+    }
 }

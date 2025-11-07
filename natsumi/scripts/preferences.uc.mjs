@@ -2467,6 +2467,14 @@ function addSidebarButtonsPane() {
 
     buttonsGroup.registerOption("natsumiSidebarNewTabOptions", hideNewTabSubgroup);
 
+    buttonsGroup.registerOption("natsumiSidebarReplaceNewTab", new CheckboxChoice(
+        "natsumi.tabs.replace-new-tab",
+        "natsumiSidebarReplaceNewTab",
+        "Replace New Tab",
+        "This will remove the New Tab entirely and open the URL bar instead.",
+        true
+    ));
+
     let sidebarButtonsNode = buttonsGroup.generateNode();
 
     let newTabPositionCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarNewTabPosition");

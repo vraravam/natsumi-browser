@@ -135,11 +135,12 @@ export class NatsumiKeyboardShortcut {
 }
 
 class NatsumiNativeKeyboardShortcut extends NatsumiKeyboardShortcut {
-    constructor(meta, ctrl, alt, shift, key, command, isDevSet) {
+    constructor(meta, ctrl, alt, shift, key, command, isDevSet, interceptedBy = null) {
         super(meta, ctrl, alt, shift, key, 3, false);
         this.command = command; // The command that this shortcut triggers
         this.isDevSet = isDevSet; // If true, this shortcut is part of the developer toolbox shortcuts
         this.isNativeShortcut = true;
+        this.interceptedBy = interceptedBy; // If set, a Natsumi shortcut can intercept this native shortcut
     }
 
     static fromShortcutElement(shortcutElement) {
@@ -209,7 +210,8 @@ class NatsumiKBSManager {
             "toggleCompactSidebar": new NatsumiKeyboardShortcut(false, true, true, true, "s", 0, true),
             "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
             "closeGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "w", 3, false),
-            "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "f", 3, false)
+            "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "f", 3, false),
+            "natsumiNewTab": new NatsumiKeyboardShortcut(false, true, false, false, "t", 3, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -219,7 +221,8 @@ class NatsumiKBSManager {
             "toggleCompactSidebar": NatsumiShortcutActions.toggleCompactSidebar,
             "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar,
             "closeGlimpse": NatsumiShortcutActions.closeGlimpse,
-            "graduateGlimpse": NatsumiShortcutActions.graduateGlimpse
+            "graduateGlimpse": NatsumiShortcutActions.graduateGlimpse,
+            "natsumiNewTab": NatsumiShortcutActions.openNewTab
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};
@@ -253,6 +256,9 @@ class NatsumiKBSManager {
                 "key": "c",
                 "unregistered": false,
                 "shortcutMode": 3
+            },
+            "key_newNavigatorTab": {
+                "interceptedBy": "natsumiNewTab"
             }
         }
 
@@ -544,9 +550,68 @@ class NatsumiKBSManager {
                 // Disable shortcut if needed
                 // If the shortcut is not set to be handled natively, the native event handlers should be
                 // disabled to prevent duplicate execution of shortcut
-                if (shortcutObject.unregistered || shortcutObject.shortcutMode === 2 || shortcutObject.shortcutMode === 0) {
+                if (
+                    shortcutObject.unregistered || shortcutObject.shortcutMode === 2 ||
+                    shortcutObject.shortcutMode === 0 || shortcutObject.interceptedBy
+                ) {
                     keyElement.setAttribute("disabled", "true");
                     originalKeyNode.setAttribute("disabled", "true");
+
+                    if (shortcutObject.interceptedBy) {
+                        // Apply custom shortcut to the intercepting Natsumi shortcut
+                        let interceptingShortcut = this.shortcuts[shortcutObject.interceptedBy];
+                        if (interceptingShortcut) {
+                            let interceptingKeyNode = document.getElementById(shortcutObject.interceptedBy);
+                            if (interceptingKeyNode) {
+                                // Set modifiers
+                                let modifiers = [];
+                                if (shortcutObject.meta) {
+                                    modifiers.push("accel");
+                                }
+                                if (shortcutObject.ctrl) {
+                                    modifiers.push("control");
+                                }
+                                if (shortcutObject.alt) {
+                                    modifiers.push("alt");
+                                }
+                                if (shortcutObject.shift) {
+                                    modifiers.push("shift");
+                                }
+                                if (modifiers.length > 0) {
+                                    interceptingKeyNode.setAttribute("modifiers", modifiers.join(","));
+                                } else {
+                                    interceptingKeyNode.removeAttribute("modifiers");
+                                }
+
+                                // Set key or keycode
+                                if (shortcutObject.key.length === 1) {
+                                    interceptingKeyNode.setAttribute("key", shortcutObject.key.toUpperCase());
+                                } else if (shortcutObject.key.length > 1) {
+                                    interceptingKeyNode.setAttribute("keycode", `VK_${shortcutObject.key.toUpperCase()}`);
+                                }
+
+                                // Disable intercepting shortcut if needed
+                                if (
+                                    interceptingShortcut.unregistered || interceptingShortcut.shortcutMode === 2 ||
+                                    interceptingShortcut.shortcutMode === 0
+                                ) {
+                                    interceptingKeyNode.setAttribute("disabled", "true");
+                                } else {
+                                    interceptingKeyNode.removeAttribute("disabled");
+                                }
+                            }
+
+                            // Apply shortcuts to the intercepting shortcut object
+                            interceptingShortcut.setShortcutKeybind(
+                                shortcutObject.meta,
+                                shortcutObject.ctrl,
+                                shortcutObject.alt,
+                                shortcutObject.shift,
+                                shortcutObject.key
+                            );
+                            interceptingShortcut.setShortcutMode(shortcutObject.shortcutMode);
+                        }
+                    }
                 } else {
                     keyElement.removeAttribute("disabled");
 
@@ -632,6 +697,10 @@ class NatsumiKBSManager {
                 data.shift ?? shortcutObject.shift,
                 data.key ?? shortcutObject.key
             );
+        }
+
+        if (data["interceptedBy"]) {
+            shortcutObject.interceptedBy = data.interceptedBy;
         }
 
         if (typeof data.unregistered === "boolean") {
@@ -975,6 +1044,11 @@ class NatsumiKBSManager {
 
         // If the shortcut is set to be handled by Firefox, do nothing here
         if (selectedShortcutObject.nativeHandle) {
+            return;
+        }
+
+        // If the shortcut is intercepted by another Natsumi shortcut, do nothing here
+        if (selectedShortcutObject.interceptedBy) {
             return;
         }
 
