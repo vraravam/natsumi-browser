@@ -2439,6 +2439,13 @@ function addSidebarButtonsPane() {
         }
     }
 
+    buttonsGroup.registerOption("natsumiSidebarReplaceNewTab", new CheckboxChoice(
+        "natsumi.tabs.replace-new-tab",
+        "natsumiSidebarReplaceNewTab",
+        "Replace New Tab",
+        "This will remove the New Tab entirely and open the URL bar instead."
+    ));
+
     buttonsGroup.registerOption("natsumiSidebarHideControls", new CheckboxChoice(
         "natsumi.sidebar.hide-sidebar-controls",
         "natsumiSidebarHideControls",
@@ -2466,13 +2473,6 @@ function addSidebarButtonsPane() {
     ));
 
     buttonsGroup.registerOption("natsumiSidebarNewTabOptions", hideNewTabSubgroup);
-
-    buttonsGroup.registerOption("natsumiSidebarReplaceNewTab", new CheckboxChoice(
-        "natsumi.tabs.replace-new-tab",
-        "natsumiSidebarReplaceNewTab",
-        "Replace New Tab",
-        "This will remove the New Tab entirely and open the URL bar instead."
-    ));
 
     let sidebarButtonsNode = buttonsGroup.generateNode();
 

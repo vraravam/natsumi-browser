@@ -53,10 +53,10 @@ let shortcutsMap = {
         "name": "Glimpse",
         "shortcuts": {
             "closeGlimpse": {
-                "name": "Close Glimpse tab"
+                "name": "Close Glimpse Tab"
             },
             "graduateGlimpse": {
-                "name": "Expand Glimpse tab"
+                "name": "Expand Glimpse Tab"
             }
         }
     },
