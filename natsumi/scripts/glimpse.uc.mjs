@@ -163,7 +163,6 @@ class NatsumiGlimpse {
                 } else {
                     let parentBrowser = parentTab.linkedBrowser;
                     parentBrowser.removeAttribute("natsumi-has-glimpse");
-                    this.unregisterGlimpse(parentTabId);
 
                     // Check if parent is a pinned tab
                     if (parentTab.pinned) {
@@ -463,9 +462,6 @@ class NatsumiGlimpse {
 
         // Add attribute to indicate closure
         glimpseTab.setAttribute("natsumi-glimpse-closed", "true");
-
-        // Unregister glimpse
-        this.unregisterGlimpse(parentTabId);
 
         // Close Glimpse tab
         gBrowser.removeTab(glimpseTab);
