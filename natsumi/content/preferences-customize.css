@@ -468,6 +468,7 @@ SOFTWARE.
         backdrop-filter: saturate(1); /* Just so we don't lose our pseudoelements */
         border-radius: 5px;
         box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+        overflow: hidden;
 
         &::before {
           content: "";

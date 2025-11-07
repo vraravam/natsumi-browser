@@ -57,9 +57,32 @@ class NatsumiGlimpse {
         gBrowser.tabContainer.addEventListener("TabClose", this.onTabClose.bind(this));
         gBrowser.addProgressListener({
             onLocationChange: () => {
-                if (this.currentGlimpseTab) {
-                    this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
-                    this.currentGlimpseTab.linkedBrowser.renderLayers = true;
+                let glimpseParentTab = this.currentGlimpseTab;
+
+                // Attempt to fetch glimpse tab so we don't have to wait for currentGlimpseTab to change
+                if (!glimpseParentTab) {
+                    let currentTab = gBrowser.selectedTab;
+                    let currentTabId = currentTab.linkedPanel;
+                    let glimpseData = this.glimpse[currentTabId];
+
+                    if (!glimpseData) {
+                        // Try to check if this is a Glimpse tab
+                        let isGlimpseTab = this.glimpseTabs.includes(currentTabId);
+                        if (isGlimpseTab) {
+                            let parentTabId = this.getGlimpseParent(currentTabId);
+                            if (parentTabId) {
+                                glimpseParentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
+                            }
+                        }
+                    } else {
+                        // This is a parent of Glimpse
+                        glimpseParentTab = currentTab;
+                    }
+                }
+
+                if (glimpseParentTab) {
+                    glimpseParentTab.linkedBrowser.browsingContext.isActive = true;
+                    glimpseParentTab.linkedBrowser.renderLayers = true;
                 }
             }
         });
@@ -67,7 +90,7 @@ class NatsumiGlimpse {
 
     setGlimpseInterval() {
         this.glimpseInterval = setInterval(() => {
-            if (this.currentGlimpseTab) {
+            if (this.currentGlimpseTab && this.currentGlimpseTab.linkedBrowser) {
                 if (!this.currentGlimpseTab.linkedBrowser.renderLayers) {
                     this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
                     this.currentGlimpseTab.linkedBrowser.renderLayers = true;
@@ -84,7 +107,8 @@ class NatsumiGlimpse {
     }
 
     onMouseMove() {
-        if (this.currentGlimpseTab) {
+        if (this.currentGlimpseTab && this.currentGlimpseTab.linkedBrowser) {
+            this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
             this.currentGlimpseTab.linkedBrowser.renderLayers = true;
         }
     }
@@ -216,7 +240,6 @@ class NatsumiGlimpse {
             tabbox.removeAttribute("natsumi-glimpse-active");
             this.currentGlimpseTab.renderLayers = false;
             this.currentGlimpseTab = null;
-            this.removeGlimpseInterval();
         }
 
         // Check if we're in a glimpse tab
@@ -426,8 +449,23 @@ class NatsumiGlimpse {
             return;
         }
 
+        // Find parent tab
+        let parentTabId = this.getGlimpseParent(glimpseTabId);
+        if (!parentTabId) {
+            return;
+        }
+
+        // Remove attributes from parent tab
+        let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
+        let parentBrowser = parentTab.linkedBrowser;
+        parentTab.removeAttribute("natsumi-glimpse-selected");
+        parentBrowser.removeAttribute("natsumi-has-glimpse");
+
         // Add attribute to indicate closure
         glimpseTab.setAttribute("natsumi-glimpse-closed", "true");
+
+        // Unregister glimpse
+        this.unregisterGlimpse(parentTabId);
 
         // Close Glimpse tab
         gBrowser.removeTab(glimpseTab);
@@ -532,6 +570,15 @@ class NatsumiGlimpse {
 
         // Unregister glimpse
         delete this.glimpse[parentTabId];
+    }
+}
+
+class NatsumiGlimpseLauncher {
+    constructor() {
+        this.init();
+    }
+
+    init() {
     }
 }
 
