@@ -256,10 +256,10 @@ class NatsumiKBSManager {
                 "key": "c",
                 "unregistered": false,
                 "shortcutMode": 3
-            },
-            "key_newNavigatorTab": {
-                "interceptedBy": "natsumiNewTab"
             }
+        }
+        this.interceptions = {
+            "key_newNavigatorTab": "natsumiNewTab"
         }
 
         // Add browser-specific shortcuts
@@ -325,7 +325,7 @@ class NatsumiKBSManager {
         }
     }
 
-    addDevShortcuts () {
+    addDevShortcuts() {
         let devShortcuts = document.getElementById("devtoolsKeyset").children;
         for (let i = 0; i < devShortcuts.length; i++) {
             let devShortcut = devShortcuts[i];
@@ -699,8 +699,8 @@ class NatsumiKBSManager {
             );
         }
 
-        if (data["interceptedBy"]) {
-            shortcutObject.interceptedBy = data.interceptedBy;
+        if (this.interceptions[shortcut]) {
+            shortcutObject.interceptedBy = this.interceptions[shortcut];
         }
 
         if (typeof data.unregistered === "boolean") {
@@ -905,7 +905,28 @@ class NatsumiKBSManager {
     }
 
     checkConflicts(targetShortcut, keyCombination) {
+        let shouldCheckConflicts = {};
+        let ignoreCheck = [];
+
+        // Populate dictionary of shortcuts to check for conflicts
         for (const shortcutName in this.shortcuts) {
+            if (ignoreCheck.includes(shortcutName)) {
+                continue;
+            }
+
+            const shortcut = this.shortcuts[shortcutName];
+
+            if (shortcut.interceptedBy) {
+                ignoreCheck.push(shortcut.interceptedBy);
+
+                // Remove intercepted shortcut from conflict check if it's added
+                if (shouldCheckConflicts[shortcut.interceptedBy]) {
+                    delete shouldCheckConflicts[shortcut.interceptedBy];
+                }
+            }
+        }
+
+        for (const shortcutName in shouldCheckConflicts) {
             if (targetShortcut === shortcutName) {
                 continue;
             }

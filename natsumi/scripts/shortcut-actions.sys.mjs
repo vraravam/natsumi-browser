@@ -151,7 +151,7 @@ export class NatsumiShortcutActions {
     }
 
     static openNewTab() {
-        let replaceNewTab = false; // To be done later
+        let replaceNewTab = false;
 
         if (ucApi.Prefs.get("natsumi.tabs.replace-new-tab").exists()) {
             replaceNewTab = ucApi.Prefs.get("natsumi.tabs.replace-new-tab").value;
