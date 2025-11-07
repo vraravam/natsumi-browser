@@ -158,7 +158,8 @@ export class NatsumiShortcutActions {
         }
 
         if (replaceNewTab) {
-            // Do nothing yet
+            let commandEvent = new Event("command", {bubbles: true, cancelable: true});
+            document.body.natsumiURLBarController.openAsNewTab(commandEvent);
         } else {
             // Open new tab
             let keyElement = document.getElementById("key_newNavigatorTab");

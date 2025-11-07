@@ -2443,7 +2443,7 @@ function addSidebarButtonsPane() {
         "natsumi.tabs.replace-new-tab",
         "natsumiSidebarReplaceNewTab",
         "Replace New Tab",
-        "This will remove the New Tab entirely and open the URL bar instead."
+        "This will remove the New Tab entirely and open the URL bar instead. Warning: This will override browser.urlbar.openintab."
     ));
 
     buttonsGroup.registerOption("natsumiSidebarHideControls", new CheckboxChoice(
