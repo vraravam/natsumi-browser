@@ -935,7 +935,7 @@ class NatsumiKBSManager {
             }
         }
 
-        for (const shortcutName in shouldCheckConflicts) {
+        for (const shortcutName of shouldCheckConflicts) {
             if (targetShortcut === shortcutName) {
                 continue;
             }
