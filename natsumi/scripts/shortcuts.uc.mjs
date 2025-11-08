@@ -912,7 +912,7 @@ class NatsumiKBSManager {
     }
 
     checkConflicts(targetShortcut, keyCombination) {
-        let shouldCheckConflicts = {};
+        let shouldCheckConflicts = [];
         let ignoreCheck = [];
 
         // Populate dictionary of shortcuts to check for conflicts
@@ -930,6 +930,8 @@ class NatsumiKBSManager {
                 if (shouldCheckConflicts[shortcut.interceptedBy]) {
                     delete shouldCheckConflicts[shortcut.interceptedBy];
                 }
+            } else {
+                shouldCheckConflicts.push(shortcutName);
             }
         }
 
