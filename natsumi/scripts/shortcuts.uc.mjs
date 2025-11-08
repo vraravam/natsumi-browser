@@ -527,10 +527,12 @@ class NatsumiKBSManager {
 
         // Get intercepted shortcuts
         for (const nativeShortcutId in this.interceptions) {
-            allShortcutNames.push(nativeShortcutId);
+            if (!allShortcutNames.includes(nativeShortcutId)) {
+                allShortcutNames.push(nativeShortcutId);
+            }
         }
 
-        for (const shortcutName in allShortcutNames) {
+        for (const shortcutName of allShortcutNames) {
             // Update shortcut keybind in the native handler
             let shortcutObject = this.shortcuts[shortcutName];
             let keyElement = document.getElementById(shortcutName);
