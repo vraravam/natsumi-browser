@@ -842,7 +842,7 @@ class NatsumiShortcutsPrefPane {
             let conflictShortcut = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.checkConflicts(this.selected.id, keyCombi);
 
             if (conflictShortcut) {
-                let conflictName = this.selected.id;
+                let conflictName = conflictShortcut;
 
                 for (let categoryKey in shortcutsMap) {
                     const categoryShortcuts = shortcutsMap[categoryKey].shortcuts;

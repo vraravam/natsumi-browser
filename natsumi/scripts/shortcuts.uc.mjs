@@ -912,31 +912,26 @@ class NatsumiKBSManager {
     }
 
     checkConflicts(targetShortcut, keyCombination) {
-        let shouldCheckConflicts = [];
         let ignoreCheck = [];
 
         // Populate dictionary of shortcuts to check for conflicts
         for (const shortcutName in this.shortcuts) {
-            if (ignoreCheck.includes(shortcutName)) {
-                continue;
-            }
-
             const shortcut = this.shortcuts[shortcutName];
 
             if (shortcut.interceptedBy) {
                 ignoreCheck.push(shortcut.interceptedBy);
-
-                // Remove intercepted shortcut from conflict check if it's added
-                if (shouldCheckConflicts[shortcut.interceptedBy]) {
-                    delete shouldCheckConflicts[shortcut.interceptedBy];
-                }
-            } else {
-                shouldCheckConflicts.push(shortcutName);
+            }
+            if (shortcutName === targetShortcut || shortcut.interceptedBy === targetShortcut) {
+                ignoreCheck.push(shortcutName);
             }
         }
 
-        for (const shortcutName of shouldCheckConflicts) {
+        for (const shortcutName in this.shortcuts) {
             if (targetShortcut === shortcutName) {
+                continue;
+            }
+
+            if (ignoreCheck.includes(shortcutName)) {
                 continue;
             }
 
