@@ -272,6 +272,10 @@ SOFTWARE.
         display: none !important;
       }
 
+      body:not([natsumi-bookmarks-hover]) #PersonalToolbar {
+        -moz-window-dragging: no-drag !important;
+      }
+
       body[natsumi-bookmarks-hover] {
         #tabbrowser-tabbox, #sidebar-splitter, #sidebar-box, #panel-sidebar-box[data-floating="false"] {
           transition-delay: 0s !important;

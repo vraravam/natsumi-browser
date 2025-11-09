@@ -51,7 +51,11 @@ class NatsumiWorkspacesWrapper {
 
         // Get Floorp version
         let floorpVersion = AppConstants.MOZ_APP_VERSION_DISPLAY.split("@")[0];
-        if (floorpVersion.startsWith("12.4.")) {
+
+        // Get minor version
+        let minorVersion = parseInt(floorpVersion.split(".")[1]);
+
+        if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
         }
 
