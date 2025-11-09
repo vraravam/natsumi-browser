@@ -61,6 +61,10 @@ SOFTWARE.
       }
 
       #workspacesCreateNewWorkspaceButton {
+        .toolbarbutton-icon {
+          margin: 0 !important;
+        }
+
         .toolbarbutton-text {
           display: none !important;
         }
@@ -68,6 +72,11 @@ SOFTWARE.
 
       #workspacesManageworkspacesServicesButton {
         margin-right: 0 !important;
+        border-radius: 4px !important;
+
+        @media (-moz-mac-tahoe-theme) {
+          border-radius: 8px !important;
+        }
       }
 
       /*noinspection CssInvalidPropertyValue*/
@@ -85,7 +94,6 @@ SOFTWARE.
 
     .workspaceButton {
       padding: 2px !important;
-      padding-left: 6px !important;
       background-color: transparent !important;
       box-shadow: none !important;
       transition: background-color 0.2s ease;
@@ -99,6 +107,8 @@ SOFTWARE.
         height: 24px !important;
         padding: 4px !important;
         border: 1px solid var(--natsumi-colors-border) !important;
+        border-radius: 4px !important;
+        margin-right: 8px !important;
       }
 
       .toolbarbutton-text {
