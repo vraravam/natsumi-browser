@@ -17,5 +17,10 @@
     "chrome",
     "floorp"
   ],
-  "fork": ["floorp"]
+  "fork": [
+    "floorp",
+    "firefox",
+    "waterfox",
+    "librewolf"
+  ]
 }
