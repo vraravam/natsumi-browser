@@ -135,6 +135,11 @@ SOFTWARE.
       transition: background-color 0.2s ease, box-shadow 0.2s ease;
       border-radius: 4px !important;
 
+      /* Match Firefox's macOS 26 theme */
+      @media (-moz-mac-tahoe-theme) {
+        border-radius: 8px !important;
+      }
+
       &.searchmode-switcher-icon, &.searchmode-switcher-dropmarker {
         padding: 4px !important;
         border-radius: 50% !important;
