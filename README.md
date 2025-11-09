@@ -151,13 +151,18 @@ You will need to install Natsumi by copying its files to your profile's chrome f
 Every release of Natsumi from v5 comes with an installer binary. You can run it to install Natsumi
 Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of choice.
 
-> [!CAUTION]
-> Installing via Sine is possible but not supported. Icons and Natsumi Append WILL NOT work.
-
 > [!NOTE]
 > For macOS users, you will need to override the unsigned binary warning (also known as the "Apple could
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
+
+#### Installing via Sine
+> [!WARNING]
+> Installing via Sine is supported but not recommended. The following features will not work:
+> - Any features included in Natsumi Append
+> - Icon packs aside from Firefox default
+
+You can install the CSS-only version of Natsumi through [Sine](https://github.com/CosmoCreeper/Sine).
 
 ### Manual install
 Remember to take backups of your userChrome.css and userContent.css files before proceeding!
