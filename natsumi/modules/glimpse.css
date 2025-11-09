@@ -109,7 +109,7 @@
 
 :root:not([inDOMFullscreen="true"]) .browserSidebarContainer:has(browser[natsumi-is-glimpse]) {
   position: absolute !important;
-  left: 46px;
+  left: 46px !important;
   width: calc(100% - 92px);
   height: 100%;
   overflow: visible !important;
