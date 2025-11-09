@@ -877,7 +877,8 @@ class NatsumiShortcutsPrefPane {
                 "shortcutMode": shortcutObject.shortcutMode
             }
 
-            if (keyCombi.key === "backspace") {
+            // Unregister shortcut if backspace is pressed without modifiers
+            if (keyCombi.key === "backspace" && !modifierPressed) {
                 customizationData = {
                     "customKeybinds": false,
                     "unregistered": true,
@@ -911,7 +912,8 @@ class NatsumiShortcutsPrefPane {
         event.stopPropagation();
     }
 
-    updateShortcutKeybindsDisplay(shortcutElement, metaOverride, ctrlOverride, altOverride, shiftOverride, keyOverride) {
+    updateShortcutKeybindsDisplay(shortcutElement, metaOverride = null, ctrlOverride = null, altOverride = null,
+                                  shiftOverride = null, keyOverride = null) {
         // Get shortcut object
         let shortcutObject = browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.shortcuts[shortcutElement.id];
         if (!shortcutObject) {
@@ -929,8 +931,16 @@ class NatsumiShortcutsPrefPane {
         // Clear existing keybinds
         keybindDisplay.textContent = "";
 
-        // If the shortcut is unassigned, display that instead
-        if (shortcutObject.unregistered) {
+        // If the shortcut is unassigned, display that instead (unless there's an override)
+        let hasOverride = (
+            (metaOverride !== null) ||
+            (ctrlOverride !== null) ||
+            (altOverride !== null) ||
+            (shiftOverride !== null) ||
+            (keyOverride !== null && keyOverride !== "")
+        )
+
+        if (shortcutObject.unregistered && !hasOverride) {
             let unassignedDisplay = document.createElement("div");
             unassignedDisplay.classList.add("natsumi-shortcut-unassigned");
             unassignedDisplay.textContent = "Not assigned";
@@ -997,6 +1007,7 @@ class NatsumiShortcutsPrefPane {
                 "enter",
                 "escape",
                 "back",
+                "backspace",
                 "delete",
                 "space",
                 "left",
@@ -1020,6 +1031,7 @@ class NatsumiShortcutsPrefPane {
                     "enter": "Enter",
                     "escape": "Esc",
                     "back": "Backspace",
+                    "backspace": "Backspace",
                     "delete": "Del"
                 }
 

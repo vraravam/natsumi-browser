@@ -170,7 +170,7 @@ SOFTWARE.
           background-image: url("../icons/lucide/enter.svg");
         }
 
-        &[value="back"]::before {
+        &[value="back"]::before, &[value="backspace"]::before {
           background-image: url("../icons/lucide/backspace.svg");
         }
 
