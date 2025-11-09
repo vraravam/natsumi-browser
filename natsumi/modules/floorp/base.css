@@ -71,6 +71,7 @@ SOFTWARE.
     padding: 0 !important;
     margin: 6px 4px !important;
     border-radius: 4px !important;
+    border-left: none !important;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
     .toolbarbutton-icon {
