@@ -74,6 +74,10 @@ SOFTWARE.
     border-left: none !important;
     transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
+    @media (-moz-mac-tahoe-theme) {
+      border-radius: 8px !important;
+    }
+
     .toolbarbutton-icon {
       --natsumi-button-hover-color: transparent !important;
       --natsumi-button-active-color: transparent !important;
