@@ -657,7 +657,9 @@ SOFTWARE.
 
   #natsumiCompactStyleGroup {
     @media -moz-pref("natsumi.theme.single-toolbar") {
-      display: none !important;
+      #natsumiCompactStyleSettings {
+        display: none !important;
+      }
     }
 
     .natsumi-mc-choice-image-browser {
