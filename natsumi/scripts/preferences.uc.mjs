@@ -2169,6 +2169,13 @@ function addIconsPane() {
         iconSelection.registerOption(iconPack, icons[iconPack]);
     }
 
+    // Alt back forward icons
+    iconSelection.registerExtras("natsumiIconsAltBackForward", new CheckboxChoice(
+        "natsumi.theme.icons-alt-back-forward",
+        "natsumiIconsAltBackForward",
+        "Use alternative Back/Forward icons"
+    ));
+
     let iconNode = iconSelection.generateNode();
 
     // Set listeners for each button
@@ -2180,6 +2187,24 @@ function addIconsPane() {
             setStringPreference("natsumi.theme.icons", selectedValue);
             iconButtons.forEach(btn => btn.classList.remove("selected"));
             button.classList.add("selected");
+        });
+    });
+
+    // Set listeners for each checkbox
+    let checkboxes = iconNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
         });
     });
 
