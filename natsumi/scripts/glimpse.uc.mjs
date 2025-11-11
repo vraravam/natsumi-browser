@@ -81,8 +81,10 @@ class NatsumiGlimpse {
                 }
 
                 if (glimpseParentTab) {
-                    glimpseParentTab.linkedBrowser.browsingContext.isActive = true;
-                    glimpseParentTab.linkedBrowser.renderLayers = true;
+                    requestAnimationFrame(() => {
+                        glimpseParentTab.linkedBrowser.browsingContext.isActive = true;
+                        glimpseParentTab.linkedBrowser.renderLayers = true;
+                    })
                 }
             }
         });
@@ -92,8 +94,10 @@ class NatsumiGlimpse {
         this.glimpseInterval = setInterval(() => {
             if (this.currentGlimpseTab && this.currentGlimpseTab.linkedBrowser) {
                 if (!this.currentGlimpseTab.linkedBrowser.renderLayers) {
-                    this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
-                    this.currentGlimpseTab.linkedBrowser.renderLayers = true;
+                    requestAnimationFrame(() => {
+                        this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
+                        this.currentGlimpseTab.linkedBrowser.renderLayers = true;
+                    });
                 }
             }
         }, 50);
@@ -108,8 +112,10 @@ class NatsumiGlimpse {
 
     onMouseMove() {
         if (this.currentGlimpseTab && this.currentGlimpseTab.linkedBrowser) {
-            this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
-            this.currentGlimpseTab.linkedBrowser.renderLayers = true;
+            requestAnimationFrame(() => {
+                this.currentGlimpseTab.linkedBrowser.browsingContext.isActive = true;
+                this.currentGlimpseTab.linkedBrowser.renderLayers = true;
+            });
         }
     }
 
@@ -276,7 +282,9 @@ class NatsumiGlimpse {
             this.currentGlimpseTab = tabSelected;
             gBrowser.selectedTab = glimpseTab;
             tabSelected.setAttribute("natsumi-glimpse-selected", "");
-            tabSelected.linkedBrowser.renderLayers = true;
+            requestAnimationFrame(() => {
+                tabSelected.linkedBrowser.renderLayers = true;
+            });
             this.setGlimpseInterval();
         }
     }
@@ -386,8 +394,11 @@ class NatsumiGlimpse {
         this.currentGlimpseTab = currentTab;
 
         gBrowser.selectedTab = newTab;
-        currentBrowser.docShellIsActive = true;
-        currentBrowser.renderLayers = true;
+
+        requestAnimationFrame(() => {
+            currentBrowser.docShellIsActive = true;
+            currentBrowser.renderLayers = true;
+        })
 
         // Set natsumi-glimpse-selected attribute
         currentTab.setAttribute("natsumi-glimpse-selected", "");
