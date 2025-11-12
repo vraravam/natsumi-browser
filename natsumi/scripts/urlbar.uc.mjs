@@ -148,6 +148,11 @@ class natsumiURLBarController {
     }
 
     openAsNewTab(event) {
+        // Check if URL bar is open
+        if (this.urlBarNode.hasAttribute("open")) {
+            return;
+        }
+
         window.openLocation(event);
         this.urlBarNode.openLinkAsNewTab = true;
         this.urlBarObject.inputField.value = this.urlBarObject.inputField.defaultValue;
