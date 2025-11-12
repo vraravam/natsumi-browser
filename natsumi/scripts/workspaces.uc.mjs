@@ -208,6 +208,7 @@ class NatsumiWorkspaceIndicator {
             <div id="natsumi-workspace-indicator">
                 <div id="natsumi-workspace-indicator-icon"></div>
                 <div id="natsumi-workspace-indicator-name"></div>
+                <div id="natsumi-workspace-indicator-clear"></div>
             </div>
         `
         let indicatorFragment = convertToXUL(indicatorXULString);
@@ -220,10 +221,26 @@ class NatsumiWorkspaceIndicator {
         // Refetch indicator node
         this.indicatorNode = document.getElementById("natsumi-workspace-indicator");
 
+        // Ensure order
+        let tabsClearer = document.getElementById("natsumi-tabs-clearer");
+        if (tabsClearer) {
+            tabBrowserNode.insertBefore(this.indicatorNode, tabsClearer);
+        }
+
         // Set click event listener
         this.indicatorNode.addEventListener("click", () => {
             if (this.workspacesWrapper) {
                 this.workspacesWrapper.showWorkspacesModal();
+            }
+        });
+
+        let clearButton = this.indicatorNode.querySelector("#natsumi-workspace-indicator-clear");
+        clearButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            // Clear all tabs
+            if (document.body.natsumiUnpinnedTabsClearer) {
+                document.body.natsumiUnpinnedTabsClearer.clearTabs();
             }
         });
 

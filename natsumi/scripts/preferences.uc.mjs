@@ -2488,6 +2488,41 @@ function addSidebarButtonsPane() {
         }
     }
 
+    buttonsGroup.registerOption("natsumiSidebarHideClearTabs", new CheckboxChoice(
+        "natsumi.sidebar.hide-clear-tabs",
+        "natsumiSidebarHideClearTabs",
+        "Show clear unpinned tabs button",
+        "Clear your unpinned tabs all in one go.",
+        true
+    ));
+
+    let clearTabsSubgroup = new OptionsGroup(
+        "natsumiSidebarClearTabsOptions",
+        "",
+        ""
+    );
+
+    clearTabsSubgroup.registerOption("natsumiSidebarClearKeepSelected", new CheckboxChoice(
+        "natsumi.sidebar.clear-keep-selected",
+        "natsumiSidebarClearKeepSelected",
+        "Keep selected tabs on clear",
+        "Any selected tabs will be kept when using the clear unpinned tabs button."
+    ));
+
+    clearTabsSubgroup.registerOption("natsumiSidebarClearOpenTab", new CheckboxChoice(
+        "natsumi.sidebar.clear-open-newtab",
+        "natsumiSidebarClearOpenTab",
+        "Open new tab on clear"
+    ));
+
+    clearTabsSubgroup.registerOption("natsumiSidebarClearMergeWithWorkspaces", new CheckboxChoice(
+        "natsumi.sidebar.clear-merge-with-workspaces",
+        "natsumiSidebarClearMergeWithWorkspaces",
+        "Merge button with Workspaces indicator"
+    ));
+
+    buttonsGroup.registerOption("natsumiSidebarClearTabsOptions", clearTabsSubgroup);
+
     buttonsGroup.registerOption("natsumiSidebarReplaceNewTab", new CheckboxChoice(
         "natsumi.tabs.replace-new-tab",
         "natsumiSidebarReplaceNewTab",
@@ -2525,8 +2560,16 @@ function addSidebarButtonsPane() {
 
     let sidebarButtonsNode = buttonsGroup.generateNode();
 
+    let keepSelectedCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearKeepSelected");
+    let openNewTabCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearOpenTab");
+    let mergeWithWorkspacesCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearMergeWithWorkspaces");
     let newTabPositionCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarNewTabPosition");
 
+    if (ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").exists()) {
+        keepSelectedCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+        openNewTabCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+        mergeWithWorkspacesCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+    }
     if (ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").exists()) {
         newTabPositionCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").value}`);
     }
@@ -2542,7 +2585,11 @@ function addSidebarButtonsPane() {
                 isChecked = !isChecked;
             }
 
-            if (checkbox.id === "natsumiSidebarHideNewTab") {
+            if (checkbox.id === "natsumiSidebarHideClearTabs") {
+                keepSelectedCheckbox.setAttribute("disabled", `${isChecked}`);
+                openNewTabCheckbox.setAttribute("disabled", `${isChecked}`);
+                mergeWithWorkspacesCheckbox.setAttribute("disabled", `${isChecked}`);
+            } else if (checkbox.id === "natsumiSidebarHideNewTab") {
                 newTabPositionCheckbox.setAttribute("disabled", `${isChecked}`);
             }
 

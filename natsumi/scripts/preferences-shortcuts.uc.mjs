@@ -170,6 +170,9 @@ let shortcutsMap = {
             "key_close": {
                 "name": "Close Tab"
             },
+            "natsumiClearUnpinnedTabs": {
+                "name": "Close Unpinned Tabs"
+            },
             "key_closeWindow": {
                 "name": "Close Window"
             },

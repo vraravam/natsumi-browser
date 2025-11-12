@@ -166,4 +166,10 @@ export class NatsumiShortcutActions {
             keyElement.doCommand();
         }
     }
+
+    static clearUnpinnedTabs() {
+        if (document.body.natsumiUnpinnedTabsClearer) {
+            document.body.natsumiUnpinnedTabsClearer.clearTabs();
+        }
+    }
 }

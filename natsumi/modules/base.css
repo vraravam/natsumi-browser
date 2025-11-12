@@ -466,3 +466,61 @@ SOFTWARE.
     animation: dialog-popup 0.3s ease;
   }
 }
+
+/* Tabs clearer */
+#natsumi-tabs-clearer {
+  margin: 2px var(--tab-inner-inline-margin) !important;
+  gap: 8px;
+
+  #natsumi-tabs-clearer-separator {
+    flex: 1;
+    border-top: var(--tabstrip-inner-border) !important;
+    margin-block: auto;
+  }
+
+  #natsumi-tabs-clearer-button {
+    -moz-context-properties: stroke, fill;
+    stroke: light-dark(black, white);
+    color: light-dark(black, white);
+    transition: opacity 0.2s ease;
+    font-size: 11px;
+    padding-left: 15px;
+    background-image: url("../icons/lucide/clear-tabs.svg");
+    background-size: 11px;
+    background-repeat: no-repeat;
+    opacity: 0.4;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+#tabbrowser-tabs[expanded] #natsumi-tabs-clearer {
+  @media -moz-pref("natsumi.sidebar.clear-merge-with-workspaces") {
+    display: none !important;
+  }
+}
+
+#tabbrowser-tabs:not([expanded]) #natsumi-tabs-clearer {
+  #natsumi-tabs-clearer-separator {
+    display: none !important;
+  }
+
+  #natsumi-tabs-clearer-button {
+    width: 12px;
+    height: 12px;
+    font-size: 0;
+    padding-left: 0 !important;
+    background-size: 12px;
+
+    @media -moz-pref("sidebar.verticalTabs") {
+      margin-inline: auto;
+      margin-bottom: 4px;
+    }
+
+    @media not -moz-pref("sidebar.verticalTabs") {
+      margin-block: auto;
+    }
+  }
+}

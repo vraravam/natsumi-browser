@@ -115,11 +115,11 @@ SOFTWARE.
   }
 
   @media -moz-pref("natsumi.sidebar.legacy-workspace-indicator") and -moz-pref("floorp.workspaces.enabled") {
-    #sidebar-main[style*="--natsumi-workspace-name"] {
-      #natsumi-workspace-indicator {
-        display: none !important;
-      }
+    #natsumi-workspace-indicator {
+      display: none !important;
+    }
 
+    #sidebar-main[style*="--natsumi-workspace-name"] {
       #tabbrowser-arrowscrollbox {
         &::before {
           content: var(--natsumi-workspace-name);

@@ -179,13 +179,38 @@ SOFTWARE.
         color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
       }
 
-      &:hover {
-        background-color: var(--natsumi-button-hover-color) !important;
+      #natsumi-workspace-indicator-clear {
+        display: none; /* Hidden by default */
+        -moz-context-properties: stroke, fill;
+        stroke: light-dark(black, white);
+        min-width: 36px;
+        height: 100%;
+        background-image: url("../../icons/lucide/clear-tabs.svg");
+        background-size: 12px;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.4;
+        margin-right: calc(calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) * -1);
+        transition: opacity 0.2s ease;
+
+        @media -moz-pref("natsumi.sidebar.clear-merge-with-workspaces") {
+          display: flex;
+        }
+
+        &:hover {
+          opacity: 1;
+        }
       }
 
-      &:active {
-        background-color: var(--natsumi-button-active-color) !important;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      &:not(:has(#natsumi-workspace-indicator-clear:hover)) {
+        &:hover {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
+
+        &:active {
+          background-color: var(--natsumi-button-active-color) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
       }
     }
 
