@@ -32,6 +32,11 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
+function convertToXUL(node) {
+    // noinspection JSUnresolvedReference
+    return window.MozXULElement.parseXULToFragment(node);
+}
+
 class NatsumiWorkspacesWrapper {
     // A wrapper class for managing workspaces in Floorp directly from the window
     constructor() {
@@ -166,6 +171,105 @@ class NatsumiWorkspacesWrapper {
 
     getWorkspaceIconUrl(icon) {
         return this.iconManager.getWorkspaceIconUrl(icon);
+    }
+}
+
+class NatsumiWorkspaceIndicator {
+    // An indicator to show the current workspace in the tabs sidebar
+
+    constructor() {
+        this.workspacesWrapper = null;
+        this.indicatorNode = null;
+        this.tabsListNode = null;
+        this.verticalTabsMutationObserver = null;
+    }
+
+    init() {
+        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
+
+        // Set up observer
+        // This also runs the UI initialization so we can only run it once workspace data is available
+        if (this.workspacesWrapper.properInit) {
+            this.setVerticalTabsMutationObserver();
+        } else {
+            this.workspacesWrapper.dataRetrieveQueue.push(this.setVerticalTabsMutationObserver.bind(this));
+        }
+    }
+
+    addIndicator() {
+        // Remove existing indicator
+        let existingIndicator = document.getElementById("natsumi-workspace-indicator");
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Create workspace indicator
+        const indicatorXULString = `
+            <div id="natsumi-workspace-indicator">
+                <div id="natsumi-workspace-indicator-icon"></div>
+                <div id="natsumi-workspace-indicator-name"></div>
+            </div>
+        `
+        let indicatorFragment = convertToXUL(indicatorXULString);
+
+        // Append to sidebar then refetch indicator
+        let tabBrowserNode = document.getElementById("tabbrowser-tabs");
+        let tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
+        tabBrowserNode.insertBefore(indicatorFragment, tabsListNode); // We can't use appendChild otherwise Firefox will start breaking
+
+        // Refetch indicator node
+        this.indicatorNode = document.getElementById("natsumi-workspace-indicator");
+
+        // Set click event listener
+        this.indicatorNode.addEventListener("click", () => {
+            if (this.workspacesWrapper) {
+                this.workspacesWrapper.showWorkspacesModal();
+            }
+        });
+
+        // Refresh data
+        this.refreshIndicator();
+    }
+
+    setVerticalTabsMutationObserver() {
+        const verticalTabsElement = document.getElementById("vertical-tabs");
+
+        if (this.verticalTabsMutationObserver) {
+            this.verticalTabsMutationObserver.disconnect();
+        }
+
+        // Check if #tabbrowser-tabs exists
+        this.verticalTabsMutationObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                const tabsListNode = document.getElementById("tabbrowser-tabs");
+                if (tabsListNode) {
+                    const needsUIInit = this.tabsListNode === null;
+                    this.tabsListNode = tabsListNode;
+
+                    if (needsUIInit) {
+                        this.addIndicator();
+                    }
+                } else {
+                    this.tabsListNode = null;
+                }
+            });
+        });
+
+        this.verticalTabsMutationObserver.observe(verticalTabsElement, {childList: true, subtree: true});
+    }
+
+    refreshIndicator() {
+        if (!this.indicatorNode) {
+            return;
+        }
+
+        // Get current workspace data
+        let currentWorkspaceData = getCurrentWorkspaceData();
+
+        // Set icon and name
+        this.indicatorNode.style.setProperty("--natsumi-workspace-icon", currentWorkspaceData["icon"]);
+        let nameNode = this.indicatorNode.querySelector("#natsumi-workspace-indicator-name");
+        nameNode.textContent = currentWorkspaceData["name"];
     }
 }
 
@@ -340,6 +444,10 @@ if (isFloorp) {
         copyWorkspaceName();
         copyAllWorkspaces();
         copyAllWorkspaces();
+
+        if (document.body.natsumiWorkspaceIndicator) {
+            document.body.natsumiWorkspaceIndicator.refreshIndicator();
+        }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
@@ -349,6 +457,8 @@ if (isFloorp) {
         copyWorkspaceName();
     });
     document.body.natsumiWorkspacesWrapper.init().then(() => {
-        // We don't really need to do anything here, but it's good to keep this just in case
+        // Initialize workspace indicator
+        document.body.natsumiWorkspaceIndicator = new NatsumiWorkspaceIndicator();
+        document.body.natsumiWorkspaceIndicator.init();
     })
 }

@@ -2345,6 +2345,21 @@ function addSidebarWorkspacesPane() {
         true
     ));
 
+    let workspacesIndicatorSubgroup = new OptionsGroup(
+        "natsumiSidebarWorkspaceIndicatorOptions",
+        "",
+        ""
+    );
+
+    workspacesIndicatorSubgroup.registerOption("natsumiSidebarLegacyWorkspaceIndicator", new CheckboxChoice(
+        "natsumi.sidebar.legacy-workspace-indicator",
+        "natsumiSidebarLegacyWorkspaceIndicator",
+        "Use legacy Workspace indicator style",
+        "Use this if the new Workspaces indicator causes issues."
+    ));
+
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceIndicatorOptions", workspacesIndicatorSubgroup);
+
     workspacesGroup.registerOption("natsumiSidebarWorkspacesAsIcons", new CheckboxChoice(
         "natsumi.sidebar.workspaces-as-icons",
         "natsumiSidebarWorkspacesAsIcons",
@@ -2356,6 +2371,11 @@ function addSidebarWorkspacesPane() {
 
     // Set listeners for each checkbox
     let checkboxes = sidebarWorkspacesNode.querySelectorAll("checkbox");
+    let legacyIndicatorCheckbox = sidebarWorkspacesNode.getElementById("natsumiSidebarLegacyWorkspaceIndicator");
+    if (ucApi.Prefs.get("natsumi.sidebar.hide-workspace-indicator").exists()) {
+        legacyIndicatorCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-workspace-indicator").value}`);
+    }
+
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("command", () => {
             let prefName = checkbox.getAttribute("preference");
@@ -2363,6 +2383,10 @@ function addSidebarWorkspacesPane() {
 
             if (checkbox.getAttribute("opposite") === "true") {
                 isChecked = !isChecked;
+            }
+
+            if (checkbox.id === "natsumiSidebarHideWorkspaceIndicator") {
+                legacyIndicatorCheckbox.setAttribute("disabled", `${isChecked}`);
             }
 
             console.log(`Checkbox ${prefName} changed to ${isChecked}`);

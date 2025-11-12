@@ -114,14 +114,12 @@ SOFTWARE.
     }
   }
 
-  @media -moz-pref("natsumi.sidebar.hide-workspace-indicator") {
-    #natsumi-workspace-indicator {
-      display: none;
-    }
-  }
-
-  @media (not -moz-pref("natsumi.sidebar.hide-workspace-indicator")) and -moz-pref("floorp.workspaces.enabled") {
+  @media -moz-pref("natsumi.sidebar.legacy-workspace-indicator") and -moz-pref("floorp.workspaces.enabled") {
     #sidebar-main[style*="--natsumi-workspace-name"] {
+      #natsumi-workspace-indicator {
+        display: none !important;
+      }
+
       #tabbrowser-arrowscrollbox {
         &::before {
           content: var(--natsumi-workspace-name);
