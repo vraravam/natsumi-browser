@@ -225,6 +225,10 @@ SOFTWARE.
       #natsumi-workspace-indicator-name {
         display: none !important;
       }
+
+      #natsumi-workspace-indicator-clear {
+        display: none !important;
+      }
     }
   }
 }
