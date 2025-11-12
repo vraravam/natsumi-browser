@@ -2512,14 +2512,19 @@ function addSidebarButtonsPane() {
     clearTabsSubgroup.registerOption("natsumiSidebarClearOpenTab", new CheckboxChoice(
         "natsumi.sidebar.clear-open-newtab",
         "natsumiSidebarClearOpenTab",
-        "Open new tab on clear"
+        "Open new tab on clear",
+        "This will open a new tab if all tabs have been cleared."
     ));
 
-    clearTabsSubgroup.registerOption("natsumiSidebarClearMergeWithWorkspaces", new CheckboxChoice(
-        "natsumi.sidebar.clear-merge-with-workspaces",
-        "natsumiSidebarClearMergeWithWorkspaces",
-        "Merge button with Workspaces indicator"
-    ));
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+            clearTabsSubgroup.registerOption("natsumiSidebarClearMergeWithWorkspaces", new CheckboxChoice(
+                "natsumi.sidebar.clear-merge-with-workspaces",
+                "natsumiSidebarClearMergeWithWorkspaces",
+                "Merge button with Workspaces indicator"
+            ));
+        }
+    }
 
     buttonsGroup.registerOption("natsumiSidebarClearTabsOptions", clearTabsSubgroup);
 

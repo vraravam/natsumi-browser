@@ -76,6 +76,7 @@ class NatsumiUnpinnedTabsClearer {
         // Get tabs
         let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
         let tabs = tabsList.querySelectorAll("tab:not([hidden='true'])");
+        let allTabs = tabsList.querySelectorAll("tab:not([hidden='true'])");
 
         if (ucApi.Prefs.get("natsumi.sidebar.clear-keep-selected").exists()) {
             if (ucApi.Prefs.get("natsumi.sidebar.clear-keep-selected").value) {
@@ -91,11 +92,14 @@ class NatsumiUnpinnedTabsClearer {
 
         if (ucApi.Prefs.get("natsumi.sidebar.clear-open-newtab").exists()) {
             if (ucApi.Prefs.get("natsumi.sidebar.clear-open-newtab").value) {
-                gBrowser.addTab(BROWSER_NEW_TAB_URL, {
-                    skipAnimation: true,
-                    inBackground: true,
-                    triggeringPrincipal: gBrowser.contentPrincipal,
-                });
+                // Check if we'll have no tabs after clearing
+                if (tabs.length === allTabs.length) {
+                    gBrowser.addTab(BROWSER_NEW_TAB_URL, {
+                        skipAnimation: true,
+                        inBackground: true,
+                        triggeringPrincipal: gBrowser.contentPrincipal,
+                    });
+                }
             }
         }
 
