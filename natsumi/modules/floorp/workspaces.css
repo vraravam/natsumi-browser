@@ -197,6 +197,10 @@ SOFTWARE.
           display: flex;
         }
 
+        @media -moz-pref("natsumi.sidebar.hide-clear-tabs") {
+          display: none !important;
+        }
+
         &:hover {
           opacity: 1;
         }
