@@ -142,42 +142,63 @@ SOFTWARE.
   }
 
   @media (not -moz-pref("natsumi.sidebar.hide-workspace-indicator")) and -moz-pref("floorp.workspaces.enabled") {
-    #sidebar-main[style*="--natsumi-workspace-name"] {
-      #natsumi-workspace-indicator {
-        display: flex;
+    #natsumi-workspace-indicator {
+      display: flex;
+      border-radius: var(--natsumi-tab-border-radius);
+      align-items: center;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+      @media -moz-pref("sidebar.verticalTabs") {
+        margin: var(--tab-block-margin) var(--tab-inner-inline-margin) !important;
+        margin-bottom: calc(var(--tab-block-margin) - 2px) !important;
         width: calc(100% - calc(var(--tab-inner-inline-margin) * 2));
         height: 36px;
-        margin: var(--tab-block-margin) var(--tab-inner-inline-margin) !important;
-        border-radius: var(--natsumi-tab-border-radius);
         padding: 0 calc(var(--tab-inline-padding) - var(--tab-inner-inline-margin)) !important;
-        align-items: center;
-        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+      }
 
-        #natsumi-workspace-indicator-icon {
-          min-width: 16px;
-          height: 16px;
-          margin-right: var(--tab-icon-end-margin) !important;
-          background-image: var(--natsumi-workspace-icon);
-        }
+      @media not -moz-pref("sidebar.verticalTabs") {
+        order: -1 !important;
+        margin: var(--tab-block-margin) var(--tab-inline-padding) !important;
+        padding: 0 4px !important;
+      }
 
-        #natsumi-workspace-indicator-name {
-          display: inline-block;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          width: -moz-available;
-          font-weight: bold !important;
-          font-size: small !important;
-          color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
-        }
+      #natsumi-workspace-indicator-icon {
+        min-width: 16px;
+        height: 16px;
+        margin-right: var(--tab-icon-end-margin) !important;
+        background-image: var(--natsumi-workspace-icon);
+      }
 
-        &:hover {
-          background-color: var(--natsumi-button-hover-color) !important;
-        }
+      #natsumi-workspace-indicator-name {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: -moz-available;
+        font-weight: bold !important;
+        font-size: small !important;
+        color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
+      }
 
-        &:active {
-          background-color: var(--natsumi-button-active-color) !important;
-          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-        }
+      &:hover {
+        background-color: var(--natsumi-button-hover-color) !important;
+      }
+
+      &:active {
+        background-color: var(--natsumi-button-active-color) !important;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    #tabbrowser-tabs:not([expanded]) #natsumi-workspace-indicator {
+      margin-inline: auto !important;
+      width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
+
+      #natsumi-workspace-indicator-icon {
+        margin-inline: auto !important;
+      }
+
+      #natsumi-workspace-indicator-name {
+        display: none !important;
       }
     }
   }
