@@ -430,14 +430,23 @@ function updatePinnedTabs() {
 
 function updatePinnedTabsContainer() {
     let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+    let pinnedTabsSplitter = document.getElementById("vertical-pinned-tabs-splitter");
 
     // Get visible pinned tabs
     let visiblePinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
 
     if (visiblePinnedTabs.length === 0) {
         pinnedTabsContainer.setAttribute("hidden", "true");
+
+        if (pinnedTabsSplitter) {
+            pinnedTabsSplitter.setAttribute("hidden", "true");
+        }
     } else {
         pinnedTabsContainer.removeAttribute("hidden");
+
+        if (pinnedTabsSplitter) {
+            pinnedTabsSplitter.removeAttribute("hidden");
+        }
     }
 }
 
@@ -546,7 +555,19 @@ if (isFloorp) {
     });
     pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true});
 
-    Services.prefs.addObserver("natsumi.tabs.workspace-specific-pins", freePinnedTabs);
+    Services.prefs.addObserver("natsumi.tabs.workspace-specific-pins", () => {
+        let workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+
+        if (!workspaceSpecificPinsEnabled) {
+            // Free all pinned tabs
+            freePinnedTabs();
+        } else {
+            // Update pinned tabs to reflect current workspace
+            updatePinnedTabs();
+        }
+
+        updatePinnedTabsContainer();
+    });
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();

@@ -528,3 +528,7 @@ SOFTWARE.
     }
   }
 }
+
+#vertical-pinned-tabs-splitter[hidden="true"] {
+  display: none !important;
+}
