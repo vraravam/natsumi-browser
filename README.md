@@ -153,7 +153,10 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
 1. Install [fx-autoconfig](https://github.com/MrOtherGuy/fx-autoconfig) to your browser. You need to
    install the contents of both program and profile/chrome, follow the instructions in the fx-autoconfig
    repository.
-2. Copy the following to chrome/utils/chrome.manifest:
+
+   **Note**: The guide doesn't mention the module_loader.mjs file, but you'll need this for fx-autoconfig
+   to work. Otherwise, Natsumi's modules will show in your scripts but won't actually be loaded.
+3. Copy the following to chrome/utils/chrome.manifest:
    ```
    content userchromejs ./
    content userscripts ../natsumi/scripts/
@@ -162,10 +165,10 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
    content natsumi ../natsumi/
    content natsumi-icons ../natsumi/icons/
    ```
-3. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
+4. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
    can do this later. This config is needed for the preferences page to work.)
-4. Go to about:support and clear your startup cache and restart your browser.
-5. That's it - Natsumi Append is installed!
+5. Go to about:support and clear your startup cache and restart your browser.
+6. That's it - Natsumi Append is installed!
 
 #### Advanced setup: If you are a techie who wants to keep your files up-to-date with new changes over time
 After following either of the above steps, if you are interested in ensuring that you upgrade to the
