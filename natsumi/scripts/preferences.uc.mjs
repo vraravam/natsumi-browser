@@ -2367,6 +2367,12 @@ function addSidebarWorkspacesPane() {
         "This does not make each icon clickable to switch Workspaces (for now)."
     ));
 
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceSpecificPins", new CheckboxChoice(
+        "natsumi.tabs.workspace-specific-pins",
+        "natsumiSidebarWorkspaceSpecificPins",
+        "Enable Workspace-specific pinned tabs"
+    ));
+
     let sidebarWorkspacesNode = workspacesGroup.generateNode();
 
     // Set listeners for each checkbox
@@ -2573,7 +2579,10 @@ function addSidebarButtonsPane() {
     if (ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").exists()) {
         keepSelectedCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
         openNewTabCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
-        mergeWithWorkspacesCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+
+        if (mergeWithWorkspacesCheckbox) {
+            mergeWithWorkspacesCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+        }
     }
     if (ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").exists()) {
         newTabPositionCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").value}`);
@@ -2593,7 +2602,10 @@ function addSidebarButtonsPane() {
             if (checkbox.id === "natsumiSidebarHideClearTabs") {
                 keepSelectedCheckbox.setAttribute("disabled", `${isChecked}`);
                 openNewTabCheckbox.setAttribute("disabled", `${isChecked}`);
-                mergeWithWorkspacesCheckbox.setAttribute("disabled", `${isChecked}`);
+
+                if (mergeWithWorkspacesCheckbox) {
+                    mergeWithWorkspacesCheckbox.setAttribute("disabled", `${isChecked}`);
+                }
             } else if (checkbox.id === "natsumiSidebarHideNewTab") {
                 newTabPositionCheckbox.setAttribute("disabled", `${isChecked}`);
             }

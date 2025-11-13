@@ -472,6 +472,10 @@ SOFTWARE.
   margin: 2px var(--tab-inner-inline-margin) !important;
   gap: 8px;
 
+  @media -moz-pref("natsumi.sidebar.hide-clear-tabs") {
+    display: none !important;
+  }
+
   #natsumi-tabs-clearer-separator {
     flex: 1;
     border-top: var(--tabstrip-inner-border) !important;

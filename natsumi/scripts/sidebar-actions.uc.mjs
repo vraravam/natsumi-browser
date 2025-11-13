@@ -90,16 +90,30 @@ class NatsumiUnpinnedTabsClearer {
             return;
         }
 
+        let shouldOpen = false;
         if (ucApi.Prefs.get("natsumi.sidebar.clear-open-newtab").exists()) {
             if (ucApi.Prefs.get("natsumi.sidebar.clear-open-newtab").value) {
-                // Check if we'll have no tabs after clearing
-                if (tabs.length === allTabs.length) {
-                    gBrowser.addTab(BROWSER_NEW_TAB_URL, {
-                        skipAnimation: true,
-                        inBackground: true,
-                        triggeringPrincipal: gBrowser.contentPrincipal,
-                    });
-                }
+                shouldOpen = true;
+            }
+        }
+
+        // Check pinned tabs container
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+
+        // Only override shouldOpen if there are absolutely no tabs left
+        if (pinnedTabs.length === 0) {
+            ucApi.Prefs.get("browser.tabs.closeWindowWithLastTab").value;
+        }
+
+        if (shouldOpen) {
+            // Check if we'll have no tabs after clearing
+            if (tabs.length === allTabs.length) {
+                gBrowser.addTab(BROWSER_NEW_TAB_URL, {
+                    skipAnimation: true,
+                    inBackground: true,
+                    triggeringPrincipal: gBrowser.contentPrincipal,
+                });
             }
         }
 

@@ -120,6 +120,14 @@ class NatsumiWorkspacesWrapper {
         return this.workspacesContext.getSelectedWorkspaceID();
     }
 
+    getDefaultWorkspaceID() {
+        if (!this.initialized) {
+            return;
+        }
+
+        return this.workspacesContext.getDefaultWorkspaceID();
+    }
+
     getAllWorkspaceIDs() {
         if (ucApi.Prefs.get("floorp.workspaces.v4.store").exists()) {
             let workspacesData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
@@ -384,7 +392,71 @@ function copyAllWorkspaces() {
     }
 }
 
+function updatePinnedTabs() {
+    // Check if workspace-specific pinned tabs are enabled
+    let workspaceSpecificPinsEnabled = false;
+    if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
+        workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+    }
+
+    if (!workspaceSpecificPinsEnabled) {
+        return;
+    }
+
+    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+    let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
+
+    let defaultWorkspaceId = document.body.natsumiWorkspacesWrapper.getDefaultWorkspaceID();
+    let currentWorkspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+
+    let hiddenCount = 0;
+
+    for (let tab of pinnedTabs) {
+        let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") || defaultWorkspaceId;
+
+        if (tabWorkspaceId === currentWorkspaceId) {
+            tab.removeAttribute("hidden");
+            tab.removeAttribute("natsumi-workspace-hidden");
+        } else {
+            console.log("Hiding tab: ", tab);
+            tab.setAttribute("hidden", "true");
+            tab.setAttribute("natsumi-workspace-hidden", "");
+            hiddenCount++;
+        }
+    }
+
+    gBrowser.tabContainer._invalidateCachedVisibleTabs();
+}
+
+function updatePinnedTabsContainer() {
+    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+
+    // Get visible pinned tabs
+    let visiblePinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+
+    if (visiblePinnedTabs.length === 0) {
+        pinnedTabsContainer.setAttribute("hidden", "true");
+    } else {
+        pinnedTabsContainer.removeAttribute("hidden");
+    }
+}
+
+function freePinnedTabs(workspaceId = null) {
+    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+    let hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll("tab[natsumi-workspace-hidden]");
+
+    if (workspaceId) {
+        hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll(`tab[natsumi-workspace-hidden][floorpWorkspaceId='${workspaceId}']`);
+    }
+
+    for (let tab of hiddenPinnedTabs) {
+        tab.removeAttribute("hidden");
+        tab.removeAttribute("natsumi-workspace-hidden");
+    }
+}
+
 let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
+let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
 let isFloorp = false;
 
 if (ucApi.Prefs.get("natsumi.browser.type").exists) {
@@ -460,13 +532,21 @@ if (isFloorp) {
 
         copyWorkspaceName();
         copyAllWorkspaces();
-        copyAllWorkspaces();
+        updatePinnedTabs();
+        updatePinnedTabsContainer();
 
         if (document.body.natsumiWorkspaceIndicator) {
             document.body.natsumiWorkspaceIndicator.refreshIndicator();
         }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
+
+    let pinnedTabsObserver = new MutationObserver(function (mutations) {
+        updatePinnedTabsContainer();
+    });
+    pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true});
+
+    Services.prefs.addObserver("natsumi.tabs.workspace-specific-pins", freePinnedTabs);
 
     // Initialize workspaces wrapper
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();

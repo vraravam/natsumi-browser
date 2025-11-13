@@ -29,7 +29,7 @@ SOFTWARE.
 @-moz-document url-prefix(about:settings), url-prefix(about:preferences) {
   @media -moz-pref("natsumi.theme.icons", "lucide") {
     .category .category-icon, .sidebar-footer-icon {
-      -moz-context-properties: stroke, stroke-opacity !important;
+      -moz-context-properties: stroke, stroke-opacity, fill, fill-opacity !important;
       stroke: var(--toolbarbutton-icon-fill);
     }
 
