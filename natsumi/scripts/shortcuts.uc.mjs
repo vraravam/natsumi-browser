@@ -249,6 +249,16 @@ class NatsumiKBSManager {
                 "unregistered": false,
                 "shortcutMode": 3
             },
+            "key_dom": {
+                "customKeybinds": true,
+                "meta": Services.appinfo.OS.toLowerCase() === "darwin",
+                "ctrl": Services.appinfo.OS.toLowerCase() !== "darwin",
+                "alt": true,
+                "shift": true,
+                "key": "w",
+                "unregistered": false,
+                "shortcutMode": 3
+            },
             "key_screenshot": {
                 "customKeybinds": true,
                 "meta": Services.appinfo.OS.toLowerCase() === "darwin",
