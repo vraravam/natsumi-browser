@@ -1,5 +1,5 @@
 # Security Policy
-Please report all bugs through
+Please report all security-related issues through
 [here](https://github.com/greeeen-dev/natsumi-browser/security/advisories/new).
 
 ## Supported Versions
