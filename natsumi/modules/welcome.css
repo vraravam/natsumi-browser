@@ -781,7 +781,7 @@ body[natsumi-welcome-complete] {
     pointer-events: none !important;
   }
 
-  #sidebar-main, #TabsToolbar-customization-target {
+  #sidebar-main, #TabsToolbar-customization-target, #nav-bar-overflow-button {
     opacity: 0;
     transition: opacity 0.3s ease !important;
     pointer-events: none !important;
@@ -808,7 +808,7 @@ body[natsumi-welcome-drumroll-complete] {
     opacity: 0.5;
   }
 
-  #sidebar-main, #TabsToolbar-customization-target {
+  #sidebar-main, #TabsToolbar-customization-target, #nav-bar-overflow-button {
     opacity: 0.5;
   }
 
@@ -831,7 +831,7 @@ body[natsumi-welcome-complete-full] {
     opacity: 1;
   }
 
-  #sidebar-main, #TabsToolbar-customization-target {
+  #sidebar-main, #TabsToolbar-customization-target, #nav-bar-overflow-button {
     opacity: 1;
   }
 
@@ -850,7 +850,7 @@ body[natsumi-welcome] {
     }
   }
 
-  #sidebar-main, #TabsToolbar-customization-target {
+  #sidebar-main, #TabsToolbar-customization-target, #nav-bar-overflow-button {
     opacity: 0;
     pointer-events: none !important;
   }
