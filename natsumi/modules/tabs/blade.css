@@ -169,6 +169,7 @@ SOFTWARE.
 
     .tab-background {
       border-radius: var(--natsumi-tab-border-radius) !important;
+      transition: background-color 0.2s ease;
     }
 
     .tabbrowser-tab {
