@@ -620,7 +620,7 @@ class NatsumiGlimpseLauncher {
     }
 
     onSelectEvent(event) {
-        if (event.id === "tabbrowser-tabpanels") {
+        if (event.target.id === "tabbrowser-tabpanels") {
             this.resetLauncher();
         }
     }
