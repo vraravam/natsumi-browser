@@ -632,6 +632,10 @@ class NatsumiGlimpseLauncher {
 
         if (event.key.toLowerCase() === "enter") {
             // Open in Glimpse
+            if (this.launcherInputNode.value.trim() === "") {
+                return;
+            }
+
             let url = this.launcherInputNode.value.trim();
             if (this.searchEngine) {
                 url = this.getSearchUrl(this.searchEngine, url);
