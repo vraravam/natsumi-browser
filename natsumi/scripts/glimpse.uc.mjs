@@ -291,8 +291,6 @@ class NatsumiGlimpse {
 
     onKeyDown(event) {
         if (event.key.toLowerCase() === "escape") {
-            console.log(this.currentGlimpseTab);
-
             // Check if current tab is a glimpse tab
             if (this.currentGlimpseTab) {
                 // Get Glimpse tab ID
@@ -614,6 +612,12 @@ class NatsumiGlimpseLauncher {
         this.launcherInputNode = document.getElementById("natsumi-glimpse-launcher-input");
         this.launcherInputContainer = document.getElementById("natsumi-glimpse-launcher-input-container");
 
+        // Ensure notifications node shows on top of launcher
+        let notificationsContainer = document.getElementById("natsumi-notifications-container");
+        if (notificationsContainer) {
+            document.body.insertBefore(this.launcherNode, notificationsContainer);
+        }
+
         // Set event listeners
         this.launcherInputNode.addEventListener("keydown", this.onKeyDownEvent.bind(this));
         document.addEventListener("select", this.onSelectEvent.bind(this));
@@ -671,11 +675,11 @@ class NatsumiGlimpseLauncher {
         } else if (event.key.toLowerCase() === "escape") {
             this.resetLauncher();
         } else if (event.key.toLowerCase() === "tab") {
+            event.preventDefault();
+            event.stopPropagation();
             if (this.launcherInputContainer.hasAttribute("natsumi-glimpse-launcher-has-autocomplete")) {
                 this.autoCompleteSearch().then((searchEngine) => {
                     if (searchEngine) {
-                        event.preventDefault();
-                        event.stopPropagation();
                         autocompleteText.textContent = "";
                         this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
                     }
@@ -807,6 +811,10 @@ class NatsumiGlimpseLauncher {
         }
 
         if (returnAlias) {
+            if (!selectedAlias) {
+                return;
+            }
+
             selectedAlias = selectedAlias.slice(inputValue.length);
             selectedAlias = inputValue + selectedAlias;
 
@@ -892,7 +900,6 @@ if (!window.natsumiGlimpseLauncher) {
 try {
     let actorWrapper = new NatsumiActorWrapper();
     actorWrapper.addWindowActors(JSWindowActors);
-    console.log("done");
 } catch (e) {
     console.error("Failed to add Natsumi JS Window Actors:", e);
 }
