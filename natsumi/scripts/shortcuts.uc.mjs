@@ -212,7 +212,8 @@ class NatsumiKBSManager {
             "closeGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "w", 3, false),
             "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "f", 3, false),
             "natsumiNewTab": new NatsumiKeyboardShortcut(false, true, false, false, "t", 3, true),
-            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true)
+            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true),
+            "openGlimpseLauncher": new NatsumiKeyboardShortcut(false, true, true, false, "n", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -224,7 +225,8 @@ class NatsumiKBSManager {
             "closeGlimpse": NatsumiShortcutActions.closeGlimpse,
             "graduateGlimpse": NatsumiShortcutActions.graduateGlimpse,
             "natsumiNewTab": NatsumiShortcutActions.openNewTab,
-            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs
+            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs,
+            "openGlimpseLauncher": NatsumiShortcutActions.openGlimpseLauncher
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};

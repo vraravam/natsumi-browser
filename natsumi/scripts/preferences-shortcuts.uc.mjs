@@ -57,6 +57,9 @@ let shortcutsMap = {
             },
             "graduateGlimpse": {
                 "name": "Expand Glimpse Tab"
+            },
+            "openGlimpseLauncher": {
+                "name": "Open Glimpse Launcher"
             }
         }
     },

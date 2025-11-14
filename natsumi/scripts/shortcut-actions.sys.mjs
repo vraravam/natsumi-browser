@@ -172,4 +172,10 @@ export class NatsumiShortcutActions {
             document.body.natsumiUnpinnedTabsClearer.clearTabs();
         }
     }
+
+    static openGlimpseLauncher() {
+        if (document.body.natsumiGlimpseLauncher) {
+            document.body.natsumiGlimpseLauncher.activateLauncher();
+        }
+    }
 }

@@ -309,7 +309,16 @@ class NatsumiGlimpse {
         }
     }
 
-    activateGlimpse(link) {
+    canActivateGlimpse() {
+        // Get current tab
+        let currentTab = gBrowser.selectedTab;
+        let currentTabId = currentTab.linkedPanel; // We can treat the linked panel as the tab's "ID"
+
+        // If current tab is a Glimpse tab/parent, we cannot activate Glimpse
+        return !this.glimpseTabs.includes(currentTabId);
+    }
+
+    activateGlimpse(link, launcher = false) {
         // Get current tab and browser
         let currentTab = gBrowser.selectedTab;
         let currentTabId = currentTab.linkedPanel; // We can treat the linked panel as the tab's "ID"
@@ -318,6 +327,10 @@ class NatsumiGlimpse {
 
         // Do not activate if this is a Glimpse tab, but open tab anyways
         if (this.glimpseTabs.includes(currentTabId)) {
+            if (launcher) {
+                return;
+            }
+
             gBrowser.addTab(link, {
                 skipAnimation: true,
                 inBackground: true,
@@ -576,10 +589,255 @@ class NatsumiGlimpse {
 
 class NatsumiGlimpseLauncher {
     constructor() {
-        this.init();
+        this.launcherNode = null;
+        this.launcherInputNode = null;
+        this.searchEngine = null;
     }
 
     init() {
+        let glimpseLauncherXUL = `
+            <div id="natsumi-glimpse-launcher">
+                <div id="natsumi-glimpse-launcher-search"></div>
+                <div id="natsumi-glimpse-launcher-input-container">
+                    <div id="natsumi-glimpse-launcher-input-autocomplete"></div>
+                    <html:input id="natsumi-glimpse-launcher-input" type="text" placeholder="Open in Glimpse..."/>
+                </div>
+            </div>
+        `
+        let glimpseLauncherFragment = convertToXUL(glimpseLauncherXUL);
+
+        // Add to browser
+        document.body.appendChild(glimpseLauncherFragment);
+
+        // Fetch nodes
+        this.launcherNode = document.getElementById("natsumi-glimpse-launcher");
+        this.launcherInputNode = document.getElementById("natsumi-glimpse-launcher-input");
+        this.launcherInputContainer = document.getElementById("natsumi-glimpse-launcher-input-container");
+
+        // Set event listeners
+        this.launcherInputNode.addEventListener("keydown", this.onKeyDownEvent.bind(this));
+        document.addEventListener("select", this.onSelectEvent.bind(this));
+    }
+
+    onSelectEvent(event) {
+        if (event.id === "tabbrowser-tabpanels") {
+            this.resetLauncher();
+        }
+    }
+
+    onKeyDownEvent(event) {
+        // Check if text is selected
+        let textSelected = this.launcherInputNode.selectionStart !== this.launcherInputNode.selectionEnd;
+        let autocompleteText = document.getElementById("natsumi-glimpse-launcher-input-autocomplete")
+
+        if (event.key.toLowerCase() === "enter") {
+            // Open in Glimpse
+            let url = this.launcherInputNode.value.trim();
+            if (this.searchEngine) {
+                url = this.getSearchUrl(this.searchEngine, url);
+            } else {
+                // Check if input is a URL
+                let isUrl = this.isUrl(url, true);
+                if (!isUrl) {
+                    // Treat as search query with default search engine
+                    url = this.getDefaultSearchUrl(url);
+                }
+            }
+
+            window.natsumiGlimpse.activateGlimpse(url, true);
+            this.resetLauncher();
+        } else if (event.key.toLowerCase() === " ") {
+            if (this.launcherInputNode.value.startsWith("@") && !this.launcherInputNode.value.includes(" ")) {
+                this.autoCompleteSearch(true).then((searchEngine) => {
+                    if (searchEngine) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        autocompleteText.textContent = "";
+                        this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+
+                        requestAnimationFrame(() => {
+                            this.launcherInputNode.value = "";
+                        })
+                    } else {
+                        autocompleteText.textContent = "";
+                        this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+                    }
+                });
+            }
+        } else if (event.key.toLowerCase() === "escape") {
+            this.resetLauncher();
+        } else if (event.key.toLowerCase() === "tab") {
+            if (this.launcherInputContainer.hasAttribute("natsumi-glimpse-launcher-has-autocomplete")) {
+                this.autoCompleteSearch().then((searchEngine) => {
+                    if (searchEngine) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        autocompleteText.textContent = "";
+                        this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+                    }
+                });
+            }
+        } else if (event.key.toLowerCase() === "backspace" || event.key.toLowerCase() === "back") {
+            // Check if input is empty
+            if (this.launcherInputNode.value === "") {
+                // Reset any search engine selection
+                this.clearSearchEngine();
+            } else {
+                // Check if autocomplete is active
+                if (this.launcherInputContainer.hasAttribute("natsumi-glimpse-launcher-has-autocomplete")) {
+                    if (!textSelected) {
+                        event.preventDefault();
+                    }
+                    autocompleteText.textContent = "";
+                    this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+                }
+            }
+        } else {
+            if (!this.searchEngine && event.key.length === 1) {
+                // Check if autocomplete is possible
+                let currentValue = this.launcherInputNode.value + event.key;
+                if (currentValue.startsWith("@") && !currentValue.includes(" ") && currentValue.length > 1) {
+                    this.getAutoComplete(true, false, this.launcherInputNode.value + event.key).then((searchAlias) => {
+                        if (searchAlias) {
+                            autocompleteText.textContent = searchAlias;
+                            this.launcherInputContainer.setAttribute("natsumi-glimpse-launcher-has-autocomplete", "");
+                        } else {
+                            autocompleteText.textContent = "";
+                            this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+                        }
+                    });
+                } else {
+                    autocompleteText.textContent = "";
+                    this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
+                }
+            }
+        }
+    }
+
+    getDefaultSearchUrl(query) {
+        return Services.search.defaultEngine.getSubmission(query).uri.spec;
+    }
+
+    getSearchUrl(searchEngine, query) {
+        return searchEngine._urls[0].getSubmission(query, "UTF-8")._uri.spec;
+    }
+
+    isUrl(input, ignoreProtocol = false) {
+        if (input.startsWith("about:") && !input.includes(" ")) {
+            // This is a Firefox about: page
+            return true;
+        }
+
+        if (!input.startsWith("http://") && !input.startsWith("https://") && !input.includes("://") && ignoreProtocol) {
+            // Add https:// to the input to test if it's a valid URL
+            if (input.includes(".") && !input.endsWith(".")) {
+                input = "https://" + input;
+            }
+        }
+
+        try {
+            let url = new URL(input);
+            return (url.protocol === "http:" || url.protocol === "https:");
+        } catch (e) {
+            return false;
+        }
+    }
+
+    activateLauncher() {
+        if (!window.natsumiGlimpse.canActivateGlimpse()) {
+            return;
+        }
+
+        this.launcherNode.setAttribute("open", "");
+        this.launcherInputNode.focus();
+    }
+
+    resetLauncher() {
+        this.launcherInputNode.value = "";
+        this.searchEngine = null;
+        this.launcherNode.removeAttribute("search-engine-selected");
+        this.launcherNode.removeAttribute("open");
+        this.launcherInputNode.blur();
+    }
+
+    async getAutoComplete(returnAlias = false, strict = false, override = null) {
+        let inputValue = this.launcherInputNode.value.trim();
+
+        if (override) {
+            inputValue = override.trim();
+        }
+
+        // Check if spaces still exist
+        if (inputValue.includes(" ")) {
+            // This is either a search query or a URL
+            return;
+        }
+
+        const searchEngines = await Services.search.getVisibleEngines();
+        let selectedEngine = null;
+        let selectedAlias = null;
+
+        for (let engine of searchEngines) {
+            // Get aliases
+            let engineAliases = engine.aliases;
+            if (engine._metadata) {
+                if (engine._metadata.alias) {
+                    engineAliases.push(engine._metadata.alias);
+                }
+            }
+
+            for (let alias of engineAliases) {
+                let aliasMatches = false;
+                if (strict) {
+                    aliasMatches = (alias.toLowerCase() === inputValue.toLowerCase());
+                } else {
+                    aliasMatches = (alias.toLowerCase().startsWith(inputValue.toLowerCase()));
+                }
+                if (aliasMatches) {
+                    // Found matching search engine
+                    selectedEngine = engine;
+                    selectedAlias = alias;
+                    break;
+                }
+            }
+        }
+
+        if (returnAlias) {
+            selectedAlias = selectedAlias.slice(inputValue.length);
+            selectedAlias = inputValue + selectedAlias;
+
+            return selectedAlias;
+        }
+
+        return selectedEngine;
+    }
+
+    async autoCompleteSearch(strict = false) {
+        if (this.searchEngine) {
+            return;
+        }
+
+        let engine = await this.getAutoComplete(false, strict);
+        if (engine) {
+            this.setSearchEngine(engine);
+        }
+
+        return engine;
+    }
+
+    setSearchEngine(engine) {
+        this.searchEngine = engine;
+        this.launcherNode.setAttribute("search-engine-selected", `${engine._name}`);
+        this.launcherInputNode.value = "";
+
+        // Set value for search engine display
+        let searchEngineNode = document.getElementById("natsumi-glimpse-launcher-search");
+        searchEngineNode.textContent = `${engine._name}`;
+    }
+
+    clearSearchEngine() {
+        this.searchEngine = null;
+        this.launcherNode.removeAttribute("search-engine-selected");
     }
 }
 
@@ -614,8 +872,18 @@ let JSWindowActors = {
     }
 }
 
-window.natsumiGlimpse = new NatsumiGlimpse();
-window.natsumiGlimpse.init();
+if (!window.natsumiGlimpse) {
+    window.natsumiGlimpse = new NatsumiGlimpse();
+    window.natsumiGlimpse.init();
+}
+if (!window.natsumiGlimpseLauncher) {
+    try {
+        document.body.natsumiGlimpseLauncher = new NatsumiGlimpseLauncher();
+        document.body.natsumiGlimpseLauncher.init();
+    } catch (e) {
+        console.error(e);
+    }
+}
 
 try {
     let actorWrapper = new NatsumiActorWrapper();

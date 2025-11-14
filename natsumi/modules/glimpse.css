@@ -341,3 +341,146 @@
     display: none !important;
   }
 }
+
+/* Glimpse Launcher */
+#natsumi-glimpse-launcher {
+  --natsumi-urlbar-search-engine-text: black;
+  z-index: 999;
+  position: absolute;
+  background: var(--natsumi-mat-th-background);
+  backdrop-filter: var(--natsumi-mat-th-backdrop);
+  border: var(--natsumi-mat-th-border);
+  box-shadow: var(--natsumi-mat-th-shadow);
+  border-radius: 24px;
+  padding: 6px;
+  padding-left: 40px;
+  width: max(400px, 30vw);
+  height: 48px;
+  top: 50px;
+  right: calc(10px + var(--natsumi-browser-separation));
+  transition: top 0.2s ease, filter 0.2s ease, opacity 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    top: 14px;
+    left: 14px;
+    -moz-context-properties: stroke, fill;
+    background-size: 16px;
+    stroke: light-dark(black, white);
+    background-image: url("../icons/lucide/search.svg");
+  }
+
+  &:not([open]) {
+    top: 30px;
+    pointer-events: none;
+    opacity: 0;
+    filter: blur(5px);
+  }
+
+  &[open] {
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  &:not([search-engine-selected]) {
+    #natsumi-glimpse-launcher-search {
+      display: none;
+    }
+  }
+
+  &[search-engine-selected] {
+    /* Search engine colors */
+    --natsumi-urlbar-search-engine-color: var(--natsumi-primary-color);
+
+    &[search-engine-selected*="Google"] {
+      --natsumi-primary-color: #36aeff;
+      --natsumi-urlbar-search-engine-color: #36aeff;
+      --natsumi-urlbar-search-engine-text: white;
+    }
+
+    &[search-engine-selected*="DuckDuckGo"] {
+      --natsumi-primary-color: #ed8332;
+      --natsumi-urlbar-search-engine-color: #ed8332;
+      --natsumi-urlbar-search-engine-text: white;
+    }
+
+    &[search-engine-selected*="Bing"] {
+      --natsumi-primary-color: #10e0eb;
+      --natsumi-urlbar-search-engine-color: #10e0eb;
+      --natsumi-urlbar-search-engine-text: black;
+    }
+
+    &[search-engine-selected"Startpage"] {
+    --natsumi-primary-color: #7a21ff;
+    --natsumi-urlbar-search-engine-color: #7a21ff;
+    --natsumi-urlbar-search-engine-text: white;
+  }
+
+    &[search-engine-selected*="YouTube"] {
+      --natsumi-primary-color: #ff6e6e;
+      --natsumi-urlbar-search-engine-color: #ff6e6e;
+      --natsumi-urlbar-search-engine-text: black;
+    }
+
+    &[search-engine-selected*="Ecosia"] {
+      --natsumi-primary-color: #09870e;
+      --natsumi-urlbar-search-engine-color: #09870e;
+      --natsumi-urlbar-search-engine-text: white;
+    }
+
+    &[search-engine-selected*="GitHub"] {
+      --natsumi-primary-color: #878787;
+      --natsumi-urlbar-search-engine-color: #878787;
+      --natsumi-urlbar-search-engine-text: white;
+    }
+  }
+
+  #natsumi-glimpse-launcher-input-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 100% !important;
+
+    &[natsumi-glimpse-launcher-has-autocomplete] {
+      #natsumi-glimpse-launcher-input {
+        color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+      }
+    }
+  }
+
+  #natsumi-glimpse-launcher-input {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    border: none !important;
+    outline: none !important;
+    width: 100%;
+    font-size: 18px !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  #natsumi-glimpse-launcher-input-autocomplete {
+    grid-row-start: 1;
+    grid-column-start: 1;
+    margin-block: auto;
+    font-size: 18px;
+    width: fit-content;
+    height: fit-content;
+    background-color: color-mix(in srgb, var(--natsumi-primary-color) 50%, transparent);
+  }
+
+  #natsumi-glimpse-launcher-search {
+    background-color: var(--natsumi-urlbar-search-engine-color);
+    color: var(--natsumi-urlbar-search-engine-text);
+    font-size: small;
+    align-items: center;
+    height: 20px;
+    margin-block: auto;
+    border-radius: 10px;
+    padding-inline: 6px;
+    margin-right: 4px;
+  }
+}
