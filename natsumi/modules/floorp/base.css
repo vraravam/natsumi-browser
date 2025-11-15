@@ -340,4 +340,9 @@ SOFTWARE.
   .private-browsing-indicator-icon {
     list-style-image: url("chrome://branding/content/about-logo-private.png") !important;
   }
+
+  /* Fix: always respect Natsumi's navbar height on macOS */
+  :root[macOSNativeFullscreen] #nav-bar, :root[inFullscreen][macOSNativeFullscreen] #nav-bar {
+    max-height: unset !important;
+  }
 }
