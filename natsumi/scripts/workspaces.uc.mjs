@@ -298,6 +298,112 @@ class NatsumiWorkspaceIndicator {
     }
 }
 
+class NatsumiWorkspacePinsManager {
+    constructor() {
+        this.workspacesWrapper = null;
+    }
+
+    init() {
+        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
+        document.addEventListener("select", this.onSelectEvent.bind(this));
+    }
+
+    onSelectEvent(event) {
+        if (event.target.id !== "tabbrowser-tabpanels") {
+            return;
+        }
+
+        let workspaceSpecificPinsEnabled = false;
+        if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
+            workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+        }
+
+        if (!workspaceSpecificPinsEnabled) {
+            return;
+        }
+
+        let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
+        let currentTabWorkspaceId = gBrowser.selectedTab.getAttribute("floorpWorkspaceId");
+
+        if (currentTabWorkspaceId !== currentWorkspaceId) {
+            // Somehow we've ended up in a different workspace
+            this.workspacesWrapper.setCurrentWorkspaceID(currentTabWorkspaceId);
+        }
+    }
+
+    updatePinnedTabs() {
+        // Check if workspace-specific pinned tabs are enabled
+        let workspaceSpecificPinsEnabled = false;
+        if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
+            workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+        }
+
+        if (!workspaceSpecificPinsEnabled) {
+            return;
+        }
+
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
+
+        let defaultWorkspaceId = this.workspacesWrapper.getDefaultWorkspaceID();
+        let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
+
+        let hiddenCount = 0;
+
+        for (let tab of pinnedTabs) {
+            let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") || defaultWorkspaceId;
+
+            if (tabWorkspaceId === currentWorkspaceId) {
+                tab.removeAttribute("hidden");
+                tab.removeAttribute("natsumi-workspace-hidden");
+            } else {
+                console.log("Hiding tab: ", tab);
+                tab.setAttribute("hidden", "true");
+                tab.setAttribute("natsumi-workspace-hidden", "");
+                hiddenCount++;
+            }
+        }
+
+        gBrowser.tabContainer._invalidateCachedVisibleTabs();
+    }
+
+    updatePinnedTabsContainer() {
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let pinnedTabsSplitter = document.getElementById("vertical-pinned-tabs-splitter");
+
+        // Get visible pinned tabs
+        let visiblePinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+
+        if (visiblePinnedTabs.length === 0) {
+            pinnedTabsContainer.setAttribute("hidden", "true");
+
+            if (pinnedTabsSplitter) {
+                pinnedTabsSplitter.setAttribute("hidden", "true");
+            }
+        } else {
+            pinnedTabsContainer.removeAttribute("hidden");
+
+            if (pinnedTabsSplitter) {
+                pinnedTabsSplitter.removeAttribute("hidden");
+            }
+        }
+    }
+
+    freePinnedTabs(workspaceId = null) {
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll("tab[natsumi-workspace-hidden]");
+
+        if (workspaceId) {
+            hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll(`tab[natsumi-workspace-hidden][floorpWorkspaceId='${workspaceId}']`);
+        }
+
+        for (let tab of hiddenPinnedTabs) {
+            tab.removeAttribute("hidden");
+            tab.removeAttribute("natsumi-workspace-hidden");
+        }
+    }
+}
+
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
@@ -392,78 +498,6 @@ function copyAllWorkspaces() {
     }
 }
 
-function updatePinnedTabs() {
-    // Check if workspace-specific pinned tabs are enabled
-    let workspaceSpecificPinsEnabled = false;
-    if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
-        workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
-    }
-
-    if (!workspaceSpecificPinsEnabled) {
-        return;
-    }
-
-    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
-    let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
-
-    let defaultWorkspaceId = document.body.natsumiWorkspacesWrapper.getDefaultWorkspaceID();
-    let currentWorkspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
-
-    let hiddenCount = 0;
-
-    for (let tab of pinnedTabs) {
-        let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") || defaultWorkspaceId;
-
-        if (tabWorkspaceId === currentWorkspaceId) {
-            tab.removeAttribute("hidden");
-            tab.removeAttribute("natsumi-workspace-hidden");
-        } else {
-            console.log("Hiding tab: ", tab);
-            tab.setAttribute("hidden", "true");
-            tab.setAttribute("natsumi-workspace-hidden", "");
-            hiddenCount++;
-        }
-    }
-
-    gBrowser.tabContainer._invalidateCachedVisibleTabs();
-}
-
-function updatePinnedTabsContainer() {
-    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
-    let pinnedTabsSplitter = document.getElementById("vertical-pinned-tabs-splitter");
-
-    // Get visible pinned tabs
-    let visiblePinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
-
-    if (visiblePinnedTabs.length === 0) {
-        pinnedTabsContainer.setAttribute("hidden", "true");
-
-        if (pinnedTabsSplitter) {
-            pinnedTabsSplitter.setAttribute("hidden", "true");
-        }
-    } else {
-        pinnedTabsContainer.removeAttribute("hidden");
-
-        if (pinnedTabsSplitter) {
-            pinnedTabsSplitter.removeAttribute("hidden");
-        }
-    }
-}
-
-function freePinnedTabs(workspaceId = null) {
-    let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
-    let hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll("tab[natsumi-workspace-hidden]");
-
-    if (workspaceId) {
-        hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll(`tab[natsumi-workspace-hidden][floorpWorkspaceId='${workspaceId}']`);
-    }
-
-    for (let tab of hiddenPinnedTabs) {
-        tab.removeAttribute("hidden");
-        tab.removeAttribute("natsumi-workspace-hidden");
-    }
-}
-
 let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
 let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
 let isFloorp = false;
@@ -541,32 +575,39 @@ if (isFloorp) {
 
         copyWorkspaceName();
         copyAllWorkspaces();
-        updatePinnedTabs();
-        updatePinnedTabsContainer();
 
         if (document.body.natsumiWorkspaceIndicator) {
             document.body.natsumiWorkspaceIndicator.refreshIndicator();
+        }
+
+        if (document.body.natsumiWorkspacePinsManager) {
+            document.body.natsumiWorkspacePinsManager.updatePinnedTabs();
+            document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
         }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
     let pinnedTabsObserver = new MutationObserver(function (mutations) {
-        updatePinnedTabsContainer();
+        if (document.body.natsumiWorkspacePinsManager) {
+            document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
+        }
     });
     pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true});
 
     Services.prefs.addObserver("natsumi.tabs.workspace-specific-pins", () => {
         let workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
 
-        if (!workspaceSpecificPinsEnabled) {
-            // Free all pinned tabs
-            freePinnedTabs();
-        } else {
-            // Update pinned tabs to reflect current workspace
-            updatePinnedTabs();
-        }
+        if (document.body.natsumiWorkspacePinsManager) {
+            if (!workspaceSpecificPinsEnabled) {
+                // Free all pinned tabs
+                document.body.natsumiWorkspacePinsManager.freePinnedTabs();
+            } else {
+                // Update pinned tabs to reflect current workspace
+                document.body.natsumiWorkspacePinsManager.updatePinnedTabs();
+            }
 
-        updatePinnedTabsContainer();
+            document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
+        }
     });
 
     // Initialize workspaces wrapper
@@ -578,5 +619,9 @@ if (isFloorp) {
         // Initialize workspace indicator
         document.body.natsumiWorkspaceIndicator = new NatsumiWorkspaceIndicator();
         document.body.natsumiWorkspaceIndicator.init();
+
+        // Initialize workspace pins manager
+        document.body.natsumiWorkspacePinsManager = new NatsumiWorkspacePinsManager();
+        document.body.natsumiWorkspacePinsManager.init();
     })
 }
