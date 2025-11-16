@@ -58,6 +58,18 @@ let shortcutsMap = {
             "graduateGlimpse": {
                 "name": "Expand Glimpse Tab"
             },
+            "cycleGlimpse": {
+                "name": "Next Glimpse Tab"
+            },
+            "cycleGlimpseReverse": {
+                "name": "Previous Glimpse Tab"
+            },
+            "toggleGlimpseChain": {
+                "name": "Toggle Glimpse Chaining"
+            },
+            "initiateGlimpseChain": {
+                "name": "Initiate Glimpse Chain"
+            },
             "openGlimpseLauncher": {
                 "name": "Open Glimpse Launcher"
             }

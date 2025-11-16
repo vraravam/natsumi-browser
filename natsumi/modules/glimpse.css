@@ -134,7 +134,7 @@
   }
 
   @media -moz-pref("natsumi.glimpse.show-indicator") {
-    top: 46px;
+    top: 46px !important;
     height: calc(100% - 46px);
   }
 }
@@ -144,7 +144,7 @@
     width: 41px;
     position: absolute;
     margin-top: 20px !important;
-    height: 80px;
+    height: 124px;
     flex-direction: column;
     gap: 8px;
     z-index: -1;
@@ -160,7 +160,7 @@
       right: 0;
     }
 
-    .natsumi-glimpse-close-button, .natsumi-glimpse-expand-button {
+    .natsumi-glimpse-close-button, .natsumi-glimpse-multi-close-button, .natsumi-glimpse-expand-button {
       width: 36px;
       height: 36px;
       border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
@@ -195,11 +195,23 @@
       }
     }
 
+    .natsumi-glimpse-multi-close-button {
+      background-image: url("../icons/lucide/glimpse-multiclose.svg");
+      opacity: 0;
+      animation: natsumi-glimpse-controls-appear 0.4s ease;
+      animation-delay: 0.4s;
+      animation-fill-mode: forwards;
+
+      @media -moz-pref("natsumi.glimpse.controls-on-right") {
+        animation-name: natsumi-glimpse-controls-appear-right;
+      }
+    }
+
     .natsumi-glimpse-expand-button {
       background-image: url("../icons/lucide/fullscreen.svg");
       opacity: 0;
       animation: natsumi-glimpse-controls-appear 0.4s ease;
-      animation-delay: 0.4s;
+      animation-delay: 0.5s;
       animation-fill-mode: forwards;
 
       @media -moz-pref("natsumi.glimpse.controls-on-right") {
@@ -245,6 +257,46 @@
       margin-block: auto;
       margin-right: 10px;
       white-space: nowrap;
+    }
+  }
+
+  .natsumi-glimpse-multi-controls {
+    display: none;
+    position: absolute;
+    width: calc(100% + 82px);
+    left: -41px;
+    top: calc(50% - 36px);
+
+    .natsumi-glimpse-prev-button, .natsumi-glimpse-next-button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+      background-color: light-dark(white, #555);
+      border-radius: 18px;
+      -moz-context-properties: stroke, fill;
+      stroke: light-dark(black, white);
+      fill: transparent;
+      background-size: 20px;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: light-dark(#ddd, #777);
+      }
+
+      @media -moz-pref("natsumi.glimpse.controls-on-right") {
+        margin-left: auto;
+      }
+    }
+
+    .natsumi-glimpse-prev-button {
+      background-image: url("../icons/lucide/arrow-left.svg");
+    }
+
+    .natsumi-glimpse-next-button {
+      margin-left: auto !important;
+      background-image: url("../icons/lucide/arrow-right.svg");
     }
   }
 }
@@ -339,6 +391,51 @@
 
   .tab-label-container {
     display: none !important;
+  }
+}
+
+#tabbrowser-tabbox[natsumi-glimpse-multi-active] {
+  .browserSidebarContainer[natsumi-glimpse-hidden-above],
+  .browserSidebarContainer[natsumi-glimpse-hidden-below] {
+    transition: translate 0.2s ease, scale 0.2s ease !important;
+    visibility: visible !important;
+    opacity: 0.8;
+    scale: 98%;
+    pointer-events: none;
+    z-index: 0 !important;
+    -moz-subtree-hidden-only-visually: 0 !important;
+
+    .natsumi-glimpse-controls, .natsumi-glimpse-indicator {
+      opacity: 0 !important;
+      pointer-events: none !important;
+    }
+
+    browser {
+      opacity: 0 !important;
+    }
+  }
+
+  &:not([natsumi-glimpse-animate-disappear]) {
+    .browserSidebarContainer[natsumi-glimpse-hidden-above],
+    .browserSidebarContainer[natsumi-glimpse-hidden-below] {
+      animation: none !important;
+    }
+  }
+
+  .browserSidebarContainer[natsumi-glimpse-hidden-above] {
+    translate: -25px 0;
+  }
+
+  .browserSidebarContainer[natsumi-glimpse-hidden-below] {
+    translate: 25px 0;
+  }
+
+  .browserSidebarContainer.deck-selected:has(browser[natsumi-is-glimpse]) {
+    z-index: 1 !important;
+
+    .natsumi-glimpse-multi-controls {
+      display: flex;
+    }
   }
 }
 
@@ -482,5 +579,102 @@
     border-radius: 10px;
     padding-inline: 6px;
     margin-right: 4px;
+  }
+}
+
+/* Glimpse Chaining */
+#natsumi-glimpse-chainer-indicator {
+  position: absolute;
+  padding: 10px;
+  background-color: var(--natsumi-mat-th-background);
+  backdrop-filter: var(--natsumi-mat-th-backdrop);
+  border: var(--natsumi-mat-th-border);
+  box-shadow: var(--natsumi-mat-th-shadow);
+  right: calc(10px + var(--natsumi-browser-separation));
+  z-index: 999;
+  align-items: center;
+  border-radius: 10px;
+  gap: 4px;
+  transition: background-color 0.2s ease, bottom 0.2s ease, border 0.2s ease, filter 0.2s ease, opacity 0.2s ease, scale 0.2s ease, translate 0.2s ease;
+
+  &[chaining] {
+    bottom: calc(20px + var(--natsumi-browser-separation));
+  }
+
+  &:not([chaining]) {
+    opacity: 0;
+    pointer-events: none;
+    bottom: var(--natsumi-browser-separation);
+    filter: blur(5px);
+  }
+
+  &[goodlucktoyourbrowser] {
+    background-color: light-dark(rgba(255, 150, 0), rgba(150, 80, 0));
+
+    #natsumi-glimpse-chainer-icon {
+      background-image: url("../icons/lucide/panic.svg");
+    }
+  }
+
+  &[added] {
+    scale: 1.2;
+    translate: -10% -10%;
+  }
+
+  #natsumi-glimpse-chainer-icon {
+    width: 24px;
+    height: 24px;
+    margin-inline: 4px;
+    -moz-context-properties: stroke, fill;
+    background-size: 24px;
+    stroke: light-dark(black, white);
+    background-image: url("../icons/lucide/tabs-list.svg");
+  }
+
+  #natsumi-glimpse-chainer-indicator-container {
+    flex-direction: column;
+
+    #natsumi-glimpse-chainer-text {
+      font-size: small;
+    }
+
+    #natsumi-glimpse-chainer-tabs {
+      font-size: x-large;
+      font-weight: bold;
+    }
+  }
+
+  #natsumi-glimpse-chainer-indicator-buttons {
+    gap: 8px;
+    margin-inline: 4px;
+
+    #natsumi-glimpse-chainer-indicator-open, #natsumi-glimpse-chainer-indicator-abort {
+      width: 36px;
+      height: 36px;
+      -moz-context-properties: stroke, fill;
+      background-size: 24px;
+      background-repeat: no-repeat;
+      background-position: center;
+      stroke: light-dark(black, white);
+      border-radius: 8px;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+      &:hover {
+        background-color: var(--natsumi-button-hover-color);
+      }
+
+      &:active {
+        background-color: var(--natsumi-button-active-color);
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    #natsumi-glimpse-chainer-indicator-open {
+      background-image: url("../icons/lucide/plus.svg");
+    }
+
+    #natsumi-glimpse-chainer-indicator-abort {
+      background-image: url("../icons/lucide/close.svg");
+    }
   }
 }

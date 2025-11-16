@@ -211,9 +211,13 @@ class NatsumiKBSManager {
             "toggleCompactNavbar": new NatsumiKeyboardShortcut(false, true, true, true, "t", 0, true),
             "closeGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "w", 3, false),
             "graduateGlimpse": new NatsumiKeyboardShortcut(false, false, true, true, "f", 3, false),
+            "openGlimpseLauncher": new NatsumiKeyboardShortcut(false, true, true, false, "n", 0, true),
+            "cycleGlimpse": new NatsumiKeyboardShortcut(false, true, true, true, ".", 0, true),
+            "cycleGlimpseReverse": new NatsumiKeyboardShortcut(false, true, true, true, ",", 0, true),
+            "toggleGlimpseChain": new NatsumiKeyboardShortcut(false, true, true, false, "g", 0, true),
+            "initiateGlimpseChain": new NatsumiKeyboardShortcut(false, true, true, true, "g", 0, true),
             "natsumiNewTab": new NatsumiKeyboardShortcut(false, true, false, false, "t", 3, true),
-            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true),
-            "openGlimpseLauncher": new NatsumiKeyboardShortcut(false, true, true, false, "n", 0, true)
+            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -224,9 +228,13 @@ class NatsumiKBSManager {
             "toggleCompactNavbar": NatsumiShortcutActions.toggleCompactNavbar,
             "closeGlimpse": NatsumiShortcutActions.closeGlimpse,
             "graduateGlimpse": NatsumiShortcutActions.graduateGlimpse,
+            "openGlimpseLauncher": NatsumiShortcutActions.openGlimpseLauncher,
+            "cycleGlimpse": NatsumiShortcutActions.cycleGlimpse,
+            "cycleGlimpseReverse": () => {NatsumiShortcutActions.cycleGlimpse(false)},
+            "toggleGlimpseChain": NatsumiShortcutActions.toggleGlimpseChain,
+            "initiateGlimpseChain": NatsumiShortcutActions.releaseGlimpseChain,
             "natsumiNewTab": NatsumiShortcutActions.openNewTab,
-            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs,
-            "openGlimpseLauncher": NatsumiShortcutActions.openGlimpseLauncher
+            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};

@@ -43,13 +43,24 @@ class NatsumiGlimpse {
         this.glimpseTabs = []; // Array to quickly check if a tab is a glimpse tab
         this.currentGlimpseTab = null;
         this.glimpseInterval = null;
+        this.multiGlimpse = false;
+        this.chainingGlimpse = false;
     }
 
     init() {
-        // Ensure Glimpse enabled pref exists
+        // Ensure Glimpse prefs exist
         if (!ucApi.Prefs.get("natsumi.glimpse.enabled").exists()) {
-            ucApi.Prefs.get("natsumi.glimpse.enabled").value = true;
+            ucApi.Prefs.set("natsumi.glimpse.enabled", true);
         }
+        if (!ucApi.Prefs.get("natsumi.glimpse.multi").exists()) {
+            ucApi.Prefs.set("natsumi.glimpse.multi", true);
+        }
+
+        // Fetch multi glimpse pref
+        this.multiGlimpse = ucApi.Prefs.get("natsumi.glimpse.multi").value;
+        Services.prefs.addObserver("natsumi.glimpse.multi", () => {
+            this.multiGlimpse = ucApi.Prefs.get("natsumi.glimpse.multi").value;
+        });
 
         // Set event listener
         document.addEventListener("select", this.onSelect.bind(this));
@@ -82,8 +93,10 @@ class NatsumiGlimpse {
 
                 if (glimpseParentTab) {
                     requestAnimationFrame(() => {
-                        glimpseParentTab.linkedBrowser.browsingContext.isActive = true;
-                        glimpseParentTab.linkedBrowser.renderLayers = true;
+                        if (glimpseParentTab) {
+                            glimpseParentTab.linkedBrowser.browsingContext.isActive = true;
+                            glimpseParentTab.linkedBrowser.renderLayers = true;
+                        }
                     })
                 }
             }
@@ -143,11 +156,16 @@ class NatsumiGlimpse {
                 shouldSwitchToParent = true;
             }
 
+            // Ignore tabs set to be ignored
+            if (closedTab.hasAttribute("natsumi-glimpse-ignore")) {
+                return;
+            }
+
             // Find parent tab
             let parentTabId = null;
 
             for (let parentId in this.glimpse) {
-                if (this.glimpse[parentId].glimpseTabId === closedTabId) {
+                if (this.glimpse[parentId]["tabs"].includes(closedTabId)) {
                     parentTabId = parentId;
                     break;
                 }
@@ -157,8 +175,20 @@ class NatsumiGlimpse {
                 return;
             }
 
+            // Get Glimpse data
+            let glimpseData = this.glimpse[parentTabId];
+            if (glimpseData["tabs"].length > 1 && !shouldSwitchToParent) {
+                // Remove closed tab from glimpse data
+                this.removeFromGlimpse(parentTabId, closedTabId);
+                return;
+            }
+
             // Unregister glimpse
             this.unregisterGlimpse(parentTabId);
+            if (this.currentGlimpseTab) {
+                this.currentGlimpseTab.renderLayers = false;
+                this.currentGlimpseTab = null;
+            }
 
             // Switch to parent tab if needed
             let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
@@ -187,12 +217,43 @@ class NatsumiGlimpse {
                     gBrowser.removeTab(parentTab);
                 }
             }
+
+            if (glimpseData["tabs"].length > 1 && shouldSwitchToParent) {
+                // Indicates Esc was pressed (closes all Glimpse tabs)
+                let glimpseTabIds = glimpseData["tabs"];
+                for (let glimpseTabId of glimpseTabIds) {
+                    let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+                    if (glimpseTab) {
+                        // Check if we're already closing this tab
+                        if (glimpseTab.hasAttribute("natsumi-glimpse-closed")) {
+                            continue;
+                        }
+
+                        glimpseTab.setAttribute("natsumi-glimpse-ignore", "true");
+                        gBrowser.removeTab(glimpseTab);
+                    }
+                }
+
+                // Remove Glimpse attributes from tabbox
+                let tabbox = document.getElementById("tabbrowser-tabbox");
+                tabbox.removeAttribute("natsumi-glimpse-multi-active");
+                tabbox.removeAttribute("natsumi-glimpse-active");
+            }
         } else if (isGlimpseParent) {
             // Close glimpse tab too
-            let glimpseTabId = this.glimpse[closedTabId].glimpseTabId;
-            let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
-            if (glimpseTab) {
-                gBrowser.removeTab(glimpseTab);
+            let glimpseTabIds = this.glimpse[closedTabId]["tabs"];
+
+            for (let glimpseTabId of glimpseTabIds) {
+                let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+                if (glimpseTab) {
+                    // Check if we're already closing this tab
+                    if (glimpseTab.hasAttribute("natsumi-glimpse-closed")) {
+                        continue;
+                    }
+
+                    glimpseTab.setAttribute("natsumi-glimpse-ignore", "true");
+                    gBrowser.removeTab(glimpseTab);
+                }
             }
 
             // Unregister glimpse
@@ -217,31 +278,36 @@ class NatsumiGlimpse {
         // Remove attributes from previous glimpse tab
         if (this.currentGlimpseTab) {
             let currentGlimpseTabId = this.currentGlimpseTab.linkedPanel;
-            let glimpseTabId = this.glimpse[currentGlimpseTabId]?.glimpseTabId;
-
-            if (!glimpseTabId) {
-                return;
-            }
+            let glimpseTabIds = this.glimpse[currentGlimpseTabId]["tabs"];
 
             // Check if we're on the glimpse tab right now
-            if (tabSelectedId === glimpseTabId) {
+            if (glimpseTabIds.includes(tabSelectedId)) {
                 return;
             }
 
-            // Get glimpse tab
-            let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+            for (let glimpseTabId of glimpseTabIds) {
+                // Get glimpse tab
+                let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
 
-            if (!glimpseTab) {
-                // Unregister glimpse then return
-                this.unregisterGlimpse(tabSelectedId);
-                return;
+                if (!glimpseTab) {
+                    // Handle glimpse update accordingly
+                    if (this.glimpse[currentGlimpseTabId]["tabs"].length > 1) {
+                        this.removeFromGlimpse(currentGlimpseTabId, glimpseTabId);
+                        continue;
+                    } else {
+                        this.unregisterGlimpse(tabSelectedId);
+                        break;
+                    }
+                }
+
+                let glimpseBrowser = glimpseTab.linkedBrowser;
+
+                // Remove glimpse attributes
+                glimpseBrowser.removeAttribute("natsumi-is-glimpse");
             }
 
-            // Remove glimpse attributes
-            let glimpseBrowser = glimpseTab.linkedBrowser;
             this.currentGlimpseTab.removeAttribute("natsumi-glimpse-selected");
             this.currentGlimpseTab.linkedBrowser.removeAttribute("natsumi-has-glimpse");
-            glimpseBrowser.removeAttribute("natsumi-is-glimpse");
             tabbox.removeAttribute("natsumi-glimpse-active");
             this.currentGlimpseTab.renderLayers = false;
             this.currentGlimpseTab = null;
@@ -263,25 +329,60 @@ class NatsumiGlimpse {
         // Check if there's glimpse data available
         if (this.glimpse[tabSelectedId]) {
             let glimpseData = this.glimpse[tabSelectedId];
-            let glimpseTabId = glimpseData.glimpseTabId;
+            let glimpseTabIds = glimpseData["tabs"];
 
-            // Get glimpse tab
-            let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+            // Run sanity check
+            for (let glimpseTabId of glimpseTabIds) {
+                // Get glimpse tab
+                let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
 
-            if (!glimpseTab) {
-                // Unregister glimpse then return
-                this.unregisterGlimpse(tabSelectedId);
-                return;
+                if (!glimpseTab) {
+                    // Handle glimpse update accordingly
+                    if (this.glimpse[tabSelectedId]["tabs"].length > 1) {
+                        this.removeFromGlimpse(tabSelectedId, glimpseTabId);
+                    } else {
+                        this.unregisterGlimpse(tabSelectedId);
+                        return;
+                    }
+                }
             }
 
-            // Show glimpse tab
-            let glimpseBrowser = glimpseTab.linkedBrowser;
+            // Refresh Glimpse data
+            glimpseData = this.glimpse[tabSelectedId];
+
+            // Show Glimpse tabs
+            for (let glimpseTabId of this.glimpse[tabSelectedId]["tabs"]) {
+                // Get glimpse tab
+                let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+                let glimpseTabIndex = this.glimpse[tabSelectedId]["tabs"].indexOf(glimpseTabId);
+
+                // Show glimpse tab
+                let glimpseBrowser = glimpseTab.linkedBrowser;
+                let glimpseTabContainer = glimpseBrowser.parentElement.parentElement.parentElement;
+                glimpseBrowser.setAttribute("natsumi-is-glimpse", "true");
+                glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+                glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-below");
+
+                if (glimpseTabIndex < glimpseData["index"]) {
+                    glimpseTabContainer.setAttribute("natsumi-glimpse-hidden-above", "");
+                } else if (glimpseTabIndex > glimpseData["index"]) {
+                    glimpseTabContainer.setAttribute("natsumi-glimpse-hidden-below", "");
+                } else {
+                    gBrowser.selectedTab = glimpseTab;
+                }
+            }
+
+            // Check if we're on multi-Glimpse
+            if (glimpseTabIds.length > 1) {
+                tabbox.setAttribute("natsumi-glimpse-multi-active", "");
+            }
+
+            let currentGlimpseTab = document.querySelector(`tab[linkedpanel=${glimpseData["tabs"][glimpseData["index"]]}]`);
             tabSelectedBrowser.setAttribute("natsumi-has-glimpse", "true");
-            glimpseBrowser.setAttribute("natsumi-is-glimpse", "true");
             tabbox.setAttribute("natsumi-glimpse-active", "");
-            this.currentGlimpseTab = tabSelected;
-            gBrowser.selectedTab = glimpseTab;
             tabSelected.setAttribute("natsumi-glimpse-selected", "");
+            this.currentGlimpseTab = tabSelected;
+            gBrowser.selectedTab = currentGlimpseTab;
             requestAnimationFrame(() => {
                 tabSelected.linkedBrowser.renderLayers = true;
             });
@@ -299,7 +400,7 @@ class NatsumiGlimpse {
                     return;
                 }
 
-                let glimpseTabId = glimpseTab.glimpseTabId;
+                let glimpseTabId = glimpseTab["tabs"][glimpseTab["index"]];
 
                 // Deactivate Glimpse with animation
                 this.deactivateGlimpseWithAnim(glimpseTabId);
@@ -307,34 +408,67 @@ class NatsumiGlimpse {
         }
     }
 
+    activateChaining() {
+        this.chainingGlimpse = true;
+    }
+
+    releaseChain() {
+        this.chainingGlimpse = false;
+    }
+
     canActivateGlimpse() {
         // Get current tab
         let currentTab = gBrowser.selectedTab;
         let currentTabId = currentTab.linkedPanel; // We can treat the linked panel as the tab's "ID"
+
+        // If multi-glimpse is enabled, always return true
+        if (this.multiGlimpse) {
+            return true;
+        }
 
         // If current tab is a Glimpse tab/parent, we cannot activate Glimpse
         return !this.glimpseTabs.includes(currentTabId);
     }
 
     activateGlimpse(link, launcher = false) {
+        if (this.chainingGlimpse) {
+            document.body.natsumiGlimpseChainer.addToChain(link);
+            return;
+        }
+
         // Get current tab and browser
         let currentTab = gBrowser.selectedTab;
         let currentTabId = currentTab.linkedPanel; // We can treat the linked panel as the tab's "ID"
         let currentBrowser = currentTab.linkedBrowser;
         let tabbox = document.getElementById("tabbrowser-tabbox");
 
-        // Do not activate if this is a Glimpse tab, but open tab anyways
-        if (this.glimpseTabs.includes(currentTabId)) {
-            if (launcher) {
+        // Check if the tab is a Glimpse parent
+        let isGlimpseParent = currentTabId in this.glimpse;
+        let isGlimpseTab = this.glimpseTabs.includes(currentTabId);
+
+        if ((isGlimpseParent || isGlimpseTab) && !this.multiGlimpse) {
+            // Do not activate if multi-glimpse is disabled, but open tab anyways
+            if (!launcher) {
+                gBrowser.addTab(link, {
+                    skipAnimation: true,
+                    inBackground: true,
+                    triggeringPrincipal: gBrowser.contentPrincipal,
+                });
+            }
+
+            return;
+        }
+
+        if (isGlimpseTab) {
+            // Set current tab to parent
+            let parentTab = this.getGlimpseParent(currentTabId);
+            if (!parentTab) {
                 return;
             }
 
-            gBrowser.addTab(link, {
-                skipAnimation: true,
-                inBackground: true,
-                triggeringPrincipal: gBrowser.contentPrincipal,
-            });
-            return;
+            currentTab = document.querySelector(`tab[linkedpanel=${parentTab}]`);
+            currentTabId = currentTab.linkedPanel;
+            currentBrowser = currentTab.linkedBrowser;
         }
 
         // Get tab container ID (if it exists)
@@ -369,11 +503,19 @@ class NatsumiGlimpse {
         let glimpseControlsFragment = convertToXUL(`
             <div class="natsumi-glimpse-controls">
                 <div class="natsumi-glimpse-close-button"></div>
+                <div class="natsumi-glimpse-multi-close-button"></div>
                 <div class="natsumi-glimpse-expand-button"></div>
+            </div>
+        `);
+        let glimpseMultiControlsFragment = convertToXUL(`
+            <div class="natsumi-glimpse-multi-controls">
+                <div class="natsumi-glimpse-prev-button"></div>
+                <div class="natsumi-glimpse-next-button"></div>
             </div>
         `);
         let newBrowserContainer = newBrowser.parentElement.parentElement.parentElement;
         newBrowserContainer.appendChild(glimpseControlsFragment);
+        newBrowserContainer.appendChild(glimpseMultiControlsFragment);
 
         // Create Glimpse indicator
         let glimpseIndicatorFragment = convertToXUL(`
@@ -388,21 +530,73 @@ class NatsumiGlimpse {
 
         // Set event listeners for Glimpse controls
         let glimpseCloseButton = newBrowserContainer.querySelector(".natsumi-glimpse-close-button");
+        let glimpseMultiCloseButton = newBrowserContainer.querySelector(".natsumi-glimpse-multi-close-button");
         let glimpseExpandButton = newBrowserContainer.querySelector(".natsumi-glimpse-expand-button");
+        let glimpseMultiPrevButton = newBrowserContainer.querySelector(".natsumi-glimpse-prev-button");
+        let glimpseMultiNextButton = newBrowserContainer.querySelector(".natsumi-glimpse-next-button");
 
         glimpseCloseButton.addEventListener("click", () => {
             this.deactivateGlimpseWithAnim(newTabId);
         });
+        glimpseMultiCloseButton.addEventListener("click", () => {
+            // Check tab count
+            let glimpseData = this.glimpse[currentTabId];
+            if (glimpseData["tabs"].length <= 1) {
+                this.deactivateGlimpseWithAnim(newTabId);
+            } else {
+                this.deactivateGlimpse(newTabId, true);
+            }
+        });
         glimpseExpandButton.addEventListener("click", () => {
             this.graduateGlimpseWithAnim(newTabId);
         });
+        glimpseMultiPrevButton.addEventListener("click", () => {
+            this.cycleGlimpseTabs(currentTabId, false);
+        });
+        glimpseMultiNextButton.addEventListener("click", () => {
+            this.cycleGlimpseTabs(currentTabId, true);
+        });
 
         // Register glimpse
-        this.glimpse[currentTabId] = {
-            glimpseTabId: newTabId
+        if (!this.glimpse[currentTabId]) {
+            this.glimpse[currentTabId] = {"index": 0, "tabs": []};
         }
+        this.glimpse[currentTabId]["tabs"].push(newTabId);
+        this.glimpse[currentTabId]["index"] = this.glimpse[currentTabId]["tabs"].length - 1;
         this.glimpseTabs.push(newTabId);
         this.currentGlimpseTab = currentTab;
+
+        let parentTabContent = currentTab.querySelector(".tab-content");
+        if (!currentTab.pinned) {
+            parentTabContent.setAttribute("natsumi-glimpse-indicator", "");
+            parentTabContent.style.setProperty("--natsumi-glimpse-tabs", `"${this.glimpse[currentTabId]["tabs"].length}"`);
+        }
+
+        if (this.glimpse[currentTabId]["tabs"].length > 1) {
+            tabbox.setAttribute("natsumi-glimpse-multi-active", "");
+
+            // Assume we're in multi-Glimpse
+            for (let glimpseTabId of this.glimpse[currentTabId]["tabs"]) {
+                let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+                let glimpseBrowser = glimpseTab.linkedBrowser;
+                let glimpseTabContainer = glimpseBrowser.parentElement.parentElement.parentElement;
+                glimpseTabContainer.setAttribute("natsumi-glimpse-multiglimpse", "");
+                if (glimpseTabId !== newTabId) {
+                    glimpseTabContainer.setAttribute("natsumi-glimpse-hidden-above", "");
+                } else {
+                    glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+                }
+            }
+        } else {
+            // Single Glimpse
+            let glimpseTabId = this.glimpse[currentTabId]["tabs"][0];
+            let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+            let glimpseBrowser = glimpseTab.linkedBrowser;
+            let glimpseTabContainer = glimpseBrowser.parentElement.parentElement.parentElement;
+            glimpseTabContainer.removeAttribute("natsumi-glimpse-multiglimpse");
+            glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+            glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-below");
+        }
 
         gBrowser.selectedTab = newTab;
 
@@ -428,7 +622,7 @@ class NatsumiGlimpse {
         let parentTabId = null;
 
         for (let parentId in this.glimpse) {
-            if (this.glimpse[parentId].glimpseTabId === glimpseTabId) {
+            if (this.glimpse[parentId]["tabs"].includes(glimpseTabId)) {
                 parentTabId = parentId;
                 break;
             }
@@ -458,7 +652,7 @@ class NatsumiGlimpse {
         }, 300);
     }
 
-    deactivateGlimpse(glimpseTabId) {
+    deactivateGlimpse(glimpseTabId, multiGlimpseRemove = false) {
         // Get glimpse tab
         let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
         if (!glimpseTab) {
@@ -477,10 +671,101 @@ class NatsumiGlimpse {
         }
 
         // Add attribute to indicate closure
-        glimpseTab.setAttribute("natsumi-glimpse-closed", "true");
+        if (multiGlimpseRemove) {
+            glimpseTab.setAttribute("natsumi-glimpse-ignore", "true");
+            this.removeFromGlimpse(parentTabId, glimpseTabId);
+
+            let glimpseData = this.glimpse[parentTabId];
+            if (glimpseData["tabs"].length === 1) {
+                // Remove multi-glimpse attributes
+                let tabbox = document.getElementById("tabbrowser-tabbox");
+                tabbox.removeAttribute("natsumi-glimpse-multi-active");
+
+                // Set remaining tab as current tab
+                let remainingGlimpseTabId = glimpseData["tabs"][0];
+                let remainingGlimpseTab = document.querySelector(`tab[linkedpanel=${remainingGlimpseTabId}]`);
+                let remainingGlimpseBrowser = remainingGlimpseTab.linkedBrowser;
+                let remainingGlimpseTabContainer = remainingGlimpseBrowser.parentElement.parentElement.parentElement;
+                remainingGlimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+                remainingGlimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-below");
+                gBrowser.selectedTab = remainingGlimpseTab;
+            } else {
+                for (let remainingGlimpseTabId of glimpseData["tabs"]) {
+                    let remainingGlimpseTab = document.querySelector(`tab[linkedpanel=${remainingGlimpseTabId}]`);
+                    let glimpseIndex = glimpseData["tabs"].indexOf(remainingGlimpseTabId);
+
+                    if (!remainingGlimpseTab) {
+                        continue;
+                    }
+
+                    let remainingGlimpseBrowser = remainingGlimpseTab.linkedBrowser;
+                    let remainingGlimpseTabContainer = remainingGlimpseBrowser.parentElement.parentElement.parentElement;
+                    remainingGlimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+                    remainingGlimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-below");
+
+                    if (glimpseIndex === glimpseData["index"]) {
+                        gBrowser.selectedTab = remainingGlimpseTab;
+                    } else if (glimpseIndex < glimpseData["index"]) {
+                        remainingGlimpseTabContainer.setAttribute("natsumi-glimpse-hidden-above", "");
+                    } else {
+                        remainingGlimpseTabContainer.setAttribute("natsumi-glimpse-hidden-below", "");
+                    }
+                }
+            }
+        } else {
+            glimpseTab.setAttribute("natsumi-glimpse-closed", "true");
+        }
 
         // Close Glimpse tab
         gBrowser.removeTab(glimpseTab);
+    }
+
+    cycleGlimpseTabs(parentTabId, forward = true) {
+        // Get glimpse data
+        let glimpseData = this.glimpse[parentTabId];
+        if (!glimpseData) {
+            return;
+        }
+
+        if (glimpseData["tabs"].length <= 1) {
+            return;
+        }
+
+        // Get current index
+        let currentIndex = glimpseData["index"];
+        if (forward) {
+            currentIndex += 1;
+            if (currentIndex >= glimpseData["tabs"].length) {
+                currentIndex = 0;
+            }
+        } else {
+            currentIndex -= 1;
+            if (currentIndex < 0) {
+                currentIndex = glimpseData["tabs"].length - 1;
+            }
+        }
+
+        // Update index
+        this.glimpse[parentTabId]["index"] = currentIndex;
+
+        // Update tabs
+        for (let glimpseTabId of glimpseData["tabs"]) {
+            let glimpseTab = document.querySelector(`tab[linkedpanel=${glimpseTabId}]`);
+            let glimpseTabIndex = glimpseData["tabs"].indexOf(glimpseTabId);
+            let glimpseBrowser = glimpseTab.linkedBrowser;
+            let glimpseTabContainer = glimpseBrowser.parentElement.parentElement.parentElement;
+
+            glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-above");
+            glimpseTabContainer.removeAttribute("natsumi-glimpse-hidden-below");
+
+            if (glimpseTabIndex === currentIndex) {
+                gBrowser.selectedTab = glimpseTab;
+            } else if (glimpseTabIndex < currentIndex) {
+                glimpseTabContainer.setAttribute("natsumi-glimpse-hidden-above", "");
+            } else if (glimpseTabIndex > currentIndex) {
+                glimpseTabContainer.setAttribute("natsumi-glimpse-hidden-below", "");
+            }
+        }
     }
 
     graduateGlimpseWithAnim(glimpseTabId) {
@@ -520,6 +805,14 @@ class NatsumiGlimpse {
         let parentTabId = this.getGlimpseParent(glimpseTabId);
         if (!parentTabId) {
             return;
+        }
+
+        // Get Glimpse data
+        let glimpseData = this.glimpse[parentTabId];
+        let stillHasGlimpse = false;
+        if (glimpseData["tabs"].length > 1) {
+            // We're on multi-Glimpse, so we shouldn't remove parent status
+            stillHasGlimpse = true;
         }
 
         // Graduate Glimpse tab
@@ -569,19 +862,74 @@ class NatsumiGlimpse {
         }
 
         // Unregister glimpse
-        this.unregisterGlimpse(parentTabId);
+        if (!stillHasGlimpse) {
+            this.unregisterGlimpse(parentTabId);
+        } else {
+            // Remove graduated tab from glimpse data
+            this.removeFromGlimpse(parentTabId, glimpseTabId);
+        }
     }
 
     unregisterGlimpse(parentTabId) {
         // Remove from glimpse tabs array
-        let glimpseTabId = this.glimpse[parentTabId].glimpseTabId;
-        let index = this.glimpseTabs.indexOf(glimpseTabId);
-        if (index > -1) {
-            this.glimpseTabs.splice(index, 1);
+        let glimpseTabIds = this.glimpse[parentTabId]["tabs"];
+        for (let glimpseTabId of glimpseTabIds) {
+            let index = this.glimpseTabs.indexOf(glimpseTabId);
+            if (index > -1) {
+                this.glimpseTabs.splice(index, 1);
+            }
+        }
+
+        let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
+        let parentTabContent = parentTab.querySelector(".tab-content");
+        if (!parentTab.pinned) {
+            parentTabContent.removeAttribute("natsumi-glimpse-indicator");
+            parentTabContent.style.removeProperty("--natsumi-glimpse-tabs");
         }
 
         // Unregister glimpse
         delete this.glimpse[parentTabId];
+    }
+
+    removeFromGlimpse(parentTabId, glimpseTabId) {
+        // Remove glimpse tab from glimpse data
+        let glimpseData = this.glimpse[parentTabId];
+
+        if (!glimpseData) {
+            return;
+        }
+
+        if (glimpseData["tabs"].length <= 1) {
+            // Unregister Glimpse
+            this.unregisterGlimpse(parentTabId);
+            return;
+        }
+
+        let parentTab = document.querySelector(`tab[linkedpanel=${parentTabId}]`);
+
+        let glimpseTabIndex = glimpseData["tabs"].indexOf(glimpseTabId);
+        if (glimpseTabIndex > -1) {
+            glimpseData["tabs"].splice(glimpseTabIndex, 1);
+        }
+
+        let glimpseTabsArrayIndex = this.glimpseTabs.indexOf(glimpseTabId);
+        if (glimpseTabsArrayIndex > -1) {
+            this.glimpseTabs.splice(glimpseTabsArrayIndex, 1);
+        }
+
+        let parentTabContent = parentTab.querySelector(".tab-content");
+        if (!parentTab.pinned) {
+            parentTabContent.setAttribute("natsumi-glimpse-indicator", "");
+            parentTabContent.style.setProperty("--natsumi-glimpse-tabs", `"${this.glimpse[parentTabId]["tabs"].length}"`);
+        }
+
+        // Change index
+        let newTabIndex = glimpseTabIndex;
+        if (newTabIndex >= glimpseData["tabs"].length) {
+            newTabIndex = glimpseData["tabs"].length - 1;
+        }
+
+        glimpseData["index"] = newTabIndex;
     }
 }
 
@@ -853,6 +1201,121 @@ class NatsumiGlimpseLauncher {
     }
 }
 
+class NatsumiGlimpseChainer {
+    constructor() {
+        this.chainingGlimpse = false;
+        this.glimpseChain = [];
+        this.chainAnimationTimeout = null;
+    }
+
+    init() {
+        const chainerXUL = `
+            <div id="natsumi-glimpse-chainer-indicator">
+                <div id="natsumi-glimpse-chainer-icon"></div>
+                <div id="natsumi-glimpse-chainer-indicator-container">
+                    <div id="natsumi-glimpse-chainer-text">
+                        Glimpse Chain!
+                    </div>
+                    <div id="natsumi-glimpse-chainer-tabs">
+                        0
+                    </div>
+                </div>
+                <div id="natsumi-glimpse-chainer-indicator-buttons">
+                    <div id="natsumi-glimpse-chainer-indicator-open"></div>
+                    <div id="natsumi-glimpse-chainer-indicator-abort"></div>
+                </div>
+            </div>
+        `
+        const chainerFragment = convertToXUL(chainerXUL);
+
+        // Add to browser
+        document.body.appendChild(chainerFragment);
+
+        // Fetch nodes
+        this.chainerIndicatorNode = document.getElementById("natsumi-glimpse-chainer-indicator");
+        this.chainerTabsNode = document.getElementById("natsumi-glimpse-chainer-tabs");
+        this.chainerOpenButton = document.getElementById("natsumi-glimpse-chainer-indicator-open");
+        this.chainerAbortButton = document.getElementById("natsumi-glimpse-chainer-indicator-abort");
+
+        // Set event listeners
+        this.chainerOpenButton.addEventListener("click", () => {
+            this.releaseChain();
+        });
+        this.chainerAbortButton.addEventListener("click", () => {
+            this.cancelChain();
+        });
+    }
+
+    activateChaining() {
+        if (!window.natsumiGlimpse.multiGlimpse) {
+            return;
+        }
+
+        this.chainingGlimpse = true;
+        window.natsumiGlimpse.activateChaining();
+        this.chainerTabsNode.textContent = "0";
+        this.chainerIndicatorNode.setAttribute("chaining", "");
+    }
+
+    _resetChain() {
+        this.glimpseChain = [];
+        this.chainerIndicatorNode.removeAttribute("goodlucktoyourbrowser");
+        this.chainerIndicatorNode.removeAttribute("chaining");
+    }
+
+    releaseChain() {
+        if (this.glimpseChain.length === 0) {
+            this.cancelChain();
+        }
+
+        if (!window.natsumiGlimpse.multiGlimpse) {
+            // Abort chaining
+            this.cancelChain();
+        }
+
+        this.chainingGlimpse = false;
+        window.natsumiGlimpse.releaseChain();
+
+        for (let link of this.glimpseChain) {
+            window.natsumiGlimpse.activateGlimpse(link);
+        }
+
+        this._resetChain();
+    }
+
+    cancelChain() {
+        this.chainingGlimpse = false;
+        window.natsumiGlimpse.releaseChain();
+        this._resetChain();
+    }
+
+    addToChain(link) {
+        if (!this.chainingGlimpse) {
+            return;
+        }
+
+        if (link && !this.glimpseChain.includes(link)) {
+            this.glimpseChain.push(link);
+
+            if (this.chainAnimationTimeout) {
+                clearTimeout(this.chainAnimationTimeout);
+                this.chainAnimationTimeout = null;
+            }
+
+            this.chainerIndicatorNode.setAttribute("added", "");
+            this.chainAnimationTimeout = setTimeout(() => {
+                this.chainerIndicatorNode.removeAttribute("added");
+            }, 1000);
+        }
+
+        if (this.glimpseChain.length >= 10) {
+            this.chainerIndicatorNode.setAttribute("goodlucktoyourbrowser", "");
+        }
+
+        this.chainerTabsNode.textContent = `${this.glimpseChain.length}`;
+    }
+}
+
 let JSWindowActors = {
     NatsumiGlimpse: {
         parent: {
@@ -895,6 +1358,10 @@ if (!window.natsumiGlimpseLauncher) {
     } catch (e) {
         console.error(e);
     }
+}
+if (!window.natsumiGlimpseChainer) {
+    document.body.natsumiGlimpseChainer = new NatsumiGlimpseChainer();
+    document.body.natsumiGlimpseChainer.init();
 }
 
 try {

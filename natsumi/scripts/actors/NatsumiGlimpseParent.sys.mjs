@@ -10,12 +10,12 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
         })
         this.registerMessageListener("Natsumi:Glimpse", (message) => {
             console.log("[Glimpse] Got Glimpse link from child:", message.data["content"]);
-            this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
+            this.activateGlimpse(message.data["content"]);
         })
         this.registerMessageListener("Natsumi:GlimpseHold", (message) => {
             console.log("[Glimpse] Got Glimpse hold link from child:", message.data["content"]);
             this.glimpseHoldTimeout = this.browsingContext.topChromeWindow.setTimeout(() => {
-                this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(message.data["content"]);
+                this.activateGlimpse(message.data["content"]);
                 this.sendAsyncMessage("Natsumi:GlimpseHoldActivate", {});
             }, 500);
         });
@@ -60,5 +60,9 @@ export class NatsumiGlimpseParent extends JSWindowActorParent {
         }
 
         this.natsumiMessageListeners[message.name](message);
+    }
+
+    activateGlimpse(link) {
+        this.browsingContext.topChromeWindow.natsumiGlimpse.activateGlimpse(link);
     }
 }

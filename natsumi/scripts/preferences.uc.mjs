@@ -2736,6 +2736,13 @@ function addGlimpseBehaviorPane() {
         "Enable Glimpse"
     ));
 
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseMulti", new CheckboxChoice(
+        "natsumi.glimpse.multi",
+        "natsumiGlimpseMulti",
+        "Allow Multi Glimpse",
+        "This will let you open multiple Glimpse tabs at once for one tab."
+    ));
+
     glimpseBehaviorGroup.registerOption("natsumiGlimpseRightControls", new CheckboxChoice(
         "natsumi.glimpse.controls-on-right",
         "natsumiGlimpseRightControls",
