@@ -256,7 +256,7 @@ SOFTWARE.
         }
       }
 
-      .verticalToolbarSeparator, .horizontalToolbarSeparator {
+      .splitToolbarButtonSeparator, .verticalToolbarSeparator, .horizontalToolbarSeparator {
         border-color: light-dark(rgba(20, 20, 20, 0.1), rgba(235, 235, 235, 0.1)) !important;
       }
 
