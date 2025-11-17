@@ -349,15 +349,17 @@ class NatsumiWorkspacePinsManager {
         let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
 
         let hiddenCount = 0;
+        let shownCount = 0;
 
         for (let tab of pinnedTabs) {
-            let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") || defaultWorkspaceId;
+            let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") ?? defaultWorkspaceId;
 
             if (tabWorkspaceId === currentWorkspaceId) {
                 tab.removeAttribute("hidden");
                 tab.removeAttribute("natsumi-workspace-hidden");
+                gBrowser.moveTabTo(tab, {elementIndex: shownCount});
+                shownCount++;
             } else {
-                console.log("Hiding tab: ", tab);
                 tab.setAttribute("hidden", "true");
                 tab.setAttribute("natsumi-workspace-hidden", "");
                 hiddenCount++;
