@@ -516,3 +516,23 @@ SOFTWARE.
 #vertical-pinned-tabs-splitter[hidden="true"] {
   display: none !important;
 }
+
+/* Downloads button */
+#downloads-button {
+  --natsumi-downloads-color-light: color-mix(in srgb, var(--natsumi-primary-color) 70%, black);
+
+  #downloads-indicator-progress-inner {
+    --toolbarbutton-icon-fill-attention: light-dark(var(--natsumi-downloads-color-light), var(--natsumi-primary-color)) !important;
+  }
+
+  #downloads-indicator-finish-image {
+    fill: light-dark(var(--natsumi-downloads-color-light), var(--natsumi-primary-color)) !important;
+    stroke: light-dark(var(--natsumi-downloads-color-light), var(--natsumi-primary-color)) !important;
+  }
+
+  &[attention="success"] {
+    #downloads-indicator-icon {
+      fill: light-dark(var(--natsumi-downloads-color-light), var(--natsumi-primary-color)) !important;
+    }
+  }
+}
