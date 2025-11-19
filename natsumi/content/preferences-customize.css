@@ -65,7 +65,7 @@ SOFTWARE.
     .natsumi-mc-choice-image-container {
       flex: 1;
 
-      .natsumi-mc-choice-image-browser, .natsumi-mc-choice-image-browser-additional {
+      .natsumi-mc-choice-image-browser {
         &::before {
           content: "";
           width: calc(100% - 10px);
@@ -156,16 +156,9 @@ SOFTWARE.
         }
 
         &#gradient-complementary {
-          background: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
-
-          .natsumi-mc-choice-image-browser-additional {
-            background: linear-gradient(135deg, transparent, light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white)));
-            filter: invert(1);
-
-            &::before {
-              filter: invert(1);
-            }
-          }
+          --color-left: light-dark(var(--natsumi-primary-color), color-mix(in srgb, var(--natsumi-colors-primary) 95%, white));
+          --color-right: hsl(from var(--color-left) calc(h + 180) s l) !important;
+          background: linear-gradient(135deg, var(--color-left), var(--color-right));
         }
 
         &#colorful {

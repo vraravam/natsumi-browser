@@ -1332,7 +1332,7 @@ const themes = {
         "gradient-complementary",
         "Complementary Gradient",
         "A gradient of the accent color and its opposite color.",
-        "<div id='gradient-complementary' class='natsumi-mc-choice-image-browser'><div class='natsumi-mc-choice-image-browser-additional'></div></div>"
+        "<div id='gradient-complementary' class='natsumi-mc-choice-image-browser'></div>"
     ),
     "colorful": new MCChoice(
         "colorful",
