@@ -46,8 +46,8 @@ have to mess around with advanced preferences.
 #### Highlights the current URL and adapts to the scene.
 ![](./images/urlbar.png)
 
-Natsumi URLbar is a new take on your browser's address bar, which highlights the current URL and
-changes appearance based on the context.
+Natsumi applies a fresh new coat of paint to your browser's URL bar, making the current URL stand out
+more and changing colors dynamically based on context.
 
 ### 🖥️ Reimagined Picture-in-picture.
 #### Modern and streamlined.
@@ -58,11 +58,11 @@ Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it
 the rest of the browser. You can even scroll to reposition the PiP window, too!
 
 ### 🎛️ Meet your Miniplayer.
-#### Keep your media in control with the Miniplayer.
+#### Keep your media in control.
 ![](./images/miniplayer.png)
 
 Natsumi lets you control your media through the Miniplayer located on the sidebar. And with support
-for multiple websites at a time, you don't have to make your tabs fight for a spot on the Miniplayer.
+for multiple websites at a time, you don't have to make your tabs fight for a spot.
 
 ### 📄 PDF viewer, modernized.
 #### View your documents in the 21st century.
@@ -74,7 +74,7 @@ giving it the modern look it really deserves. And with compact view, you can foc
 hand when you don't need the extra tools.
 
 ### 🧘 Featuring Single Toolbar.
-#### Go minimal with Single Toolbar or go utility-first with Multiple Toolbars.
+#### Go minimal or go utility-first, it's your choice.
 ![](./images/single-toolbar.png)
 
 Not a fan of multiple toolbars? Craving more horizontal space? Natsumi adds it to your browser of
