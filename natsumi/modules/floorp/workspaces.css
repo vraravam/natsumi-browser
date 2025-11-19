@@ -222,6 +222,10 @@ SOFTWARE.
       margin-inline: auto !important;
       width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
 
+      @media not -moz-pref("sidebar.verticalTabs") {
+        width: 36px !important;
+      }
+
       #natsumi-workspace-indicator-icon {
         margin-inline: auto !important;
       }

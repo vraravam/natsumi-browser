@@ -114,6 +114,10 @@ SOFTWARE.
           @media -moz-pref("sidebar.verticalTabs") {
             left: 0;
           }
+
+          @media not -moz-pref("sidebar.verticalTabs") {
+            height: max(calc(var(--natsumi-tab-height) - 12px), 32px) !important;
+          }
         }
       }
 
