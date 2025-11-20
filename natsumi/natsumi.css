@@ -63,3 +63,4 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "modules/floorp/compact-mode.css";
 @import "modules/waterfox/base.css";
 @import "modules/waterfox/miniplayer.css";
+@import "modules/postload.css";

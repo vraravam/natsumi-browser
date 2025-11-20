@@ -45,7 +45,7 @@ import {
     applyCustomColor,
     applyCustomTheme
 } from "./custom-theme.sys.mjs";
-import {resetTabStyleIfNeeded} from "./reset-tab-style.sys.mjs";
+import { resetTabStyleIfNeeded } from "./reset-tab-style.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
