@@ -12,6 +12,7 @@
     "chrome": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/userChrome.css",
     "content": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/userContent.css"
   },
+  "chromeManifest": "sine-chrome.manifest",
   "tags": [
     "content",
     "chrome",
@@ -22,5 +23,138 @@
     "firefox",
     "waterfox",
     "librewolf"
-  ]
+  ],
+  "scripts": {
+    "natsumi/scripts/": {
+      "compact-mode.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "custom-theme.sys.mjs": {},
+      "detect-fork.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "floorp-tab-style.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "glimpse.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "meow.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "miniplayer.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "natsumi-welcome.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "notifications-parent.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "notifications.sys.mjs": {},
+      "panel-sidebar.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "patches.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "pinned-tabs-icon.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "pip.uc.mjs": {
+        "include": [
+          "chrome://global/content/pictureinpicture/player.xhtml*"
+        ]
+      },
+      "preferences-about.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "about:preferences*",
+          "about:settings*"
+        ]
+      },
+      "preferences-shortcuts.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "about:preferences*",
+          "about:settings*"
+        ]
+      },
+      "preferences.uc.mjs": {
+        "loadOrder": 10,
+        "include": [
+          "about:preferences*",
+          "about:settings*"
+        ]
+      },
+      "reset-tab-style.sys.mjs": {},
+      "shortcut-actions.sys.mjs": {},
+      "shortcuts.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "sidebar-actions.uc.mjs": {
+        "loadOrder": 12,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "single-toolbar-customization.sys.mjs": {},
+      "single-toolbar.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "split-view.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "statusbar-in-sidebar.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "urlbar.uc.mjs": {
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      },
+      "workspaces.uc.mjs": {
+        "loadOrder": 11,
+        "include": [
+          "chrome://browser/content/browser.xhtml"
+        ]
+      }
+    }
+  }
 }
