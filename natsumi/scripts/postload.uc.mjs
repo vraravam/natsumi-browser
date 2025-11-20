@@ -45,6 +45,15 @@ class NatsumiPostloadManager {
             }
         }
 
+        let isReallyCatastrophic = false;
+        if (isCatastrophic && ucApi.Prefs.get("toolkit.legacyUserProfileCustomizations.stylesheets").exists()) {
+            isReallyCatastrophic = ucApi.Prefs.get("toolkit.legacyUserProfileCustomizations.stylesheets").value;
+        }
+
+        if (!isReallyCatastrophic) {
+            ucApi.Prefs.set("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+        }
+
         const natsumiWarningCss = `
             #PersonalToolbar, #nav-bar-customization-target, #PanelUI-button, #tabbrowser-tabpanels,
             #nora-statusbar, #status-bar, #urlbar, #panel-sidebar-select-box, #notifications-toolbar,
@@ -73,6 +82,10 @@ class NatsumiPostloadManager {
                         -moz-context-properties: stroke, stroke-opacity !important;
                         stroke: light-dark(black, white);
                         background-image: url("chrome://natsumi/content/icons/lucide/caution.svg");
+                        
+                        &[restart] {
+                            background-image: url("chrome://natsumi/content/icons/lucide/rotate-right.svg");
+                        }
                     }
                 
                     #natsumi-css-warning-header {
@@ -86,7 +99,11 @@ class NatsumiPostloadManager {
                     }
                     
                     #natsumi-css-warning-hide {
-                        margin-top: 20px;
+                        margin-top: 20px !important;
+                    }
+                    
+                    #natsumi-css-warning-hide, #natsumi-css-warning-restart {
+                        margin-top: 10px;
                         font-size: small;
                         padding: 5px;
                         border-radius: 5px;
@@ -117,23 +134,34 @@ class NatsumiPostloadManager {
                     <div id="natsumi-css-warning-hide">
                         Accept the risks and continue
                     </div>
+                    <div id="natsumi-css-warning-restart">
+                        Restart and clear startup cache
+                    </div>
                 </div>
             </div>
         `);
 
         document.body.appendChild(warningNode);
 
+        let warningIcon = document.getElementById("natsumi-css-warning-icon");
+        let warningHeader = document.getElementById("natsumi-css-warning-header");
         let warningBody = document.getElementById("natsumi-css-warning-body-1");
         let warningBody2 = document.getElementById("natsumi-css-warning-body-2");
-        if (isCatastrophic) {
+
+        if (isCatastrophic && isReallyCatastrophic) {
             warningBody.textContent = "Your browser could not load Natsumi's CSS properly. A lot of things (possibly everything) may not work as expected.";
             warningBody2.textContent = "Please check if Natsumi has been installed correctly.";
+        } else if (isCatastrophic && !isReallyCatastrophic) {
+            warningIcon.setAttribute("restart", "");
+            warningHeader.textContent = "Restart to use Natsumi";
+            warningBody.textContent = "Your browser had custom CSS disabled, so Natsumi enabled it automatically.";
+            warningBody2.textContent = "Please restart your browser to use Natsumi.";
         } else {
             warningBody.textContent = "Natsumi's CSS seems to have loaded but doesn't seem to have completed loading. You can ignore this warning, but some things may not work as expected.";
             warningBody2.textContent = "Please check if Natsumi has been installed correctly.";
         }
 
-        // Set up button
+        // Set up buttons
         let hideButton = document.getElementById("natsumi-css-warning-hide");
         hideButton.addEventListener("click", () => {
             let warningElement = document.getElementById("natsumi-css-warning");
@@ -144,6 +172,13 @@ class NatsumiPostloadManager {
 
             ucApi.Prefs.set("natsumi.theme.ignore-css-issues", true);
         })
+        let restartButton = document.getElementById("natsumi-css-warning-restart");
+        restartButton.addEventListener("click", () => {
+            Services.appinfo.invalidateCachesOnRestart();
+            Services.startup.quit(
+                Ci.nsIAppStartup.eRestart | Ci.nsIAppStartup.eAttemptQuit
+            );
+        });
     }
 
     checkPostLoad() {
