@@ -455,6 +455,7 @@ SOFTWARE.
 #natsumi-tabs-clearer {
   margin: 2px var(--tab-inner-inline-margin) !important;
   gap: 8px;
+  -moz-window-dragging: no-drag;
 
   @media -moz-pref("natsumi.sidebar.hide-clear-tabs") {
     display: none !important;
