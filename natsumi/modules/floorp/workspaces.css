@@ -27,6 +27,124 @@ SOFTWARE.
 /* ==== Floorp Workspaces ==== */
 
 @media -moz-pref("natsumi.browser.type", "floorp") {
+  /* Workspaces toolbar button */
+  #workspaces-toolbar-button {
+    height: 28px !important;
+    padding: 0 !important;
+    margin: 6px 4px !important;
+    border-radius: 4px !important;
+    border-left: none !important;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+    @media (-moz-mac-tahoe-theme) {
+      border-radius: 8px !important;
+    }
+
+    .toolbarbutton-icon {
+      --natsumi-button-hover-color: transparent !important;
+      --natsumi-button-active-color: transparent !important;
+    }
+
+    .toolbarbutton-text {
+      padding-left: 0 !important;
+    }
+
+    &:hover {
+      background-color: var(--natsumi-button-hover-color) !important;
+    }
+
+    &:active, &[open], &[checked] {
+      background-color: var(--natsumi-button-active-color) !important;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+      .toolbarbutton-icon {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  @media -moz-pref("natsumi.sidebar.workspaces-as-icons") {
+    #workspaces-toolbar-button {
+      overflow: visible !important;
+
+      .toolbarbutton-text {
+        display: none !important;
+      }
+
+      &:not([natsumi-no-workspaces]):not([open]) {
+        background-color: transparent !important;
+        box-shadow: none !important;
+      }
+
+      &:not([natsumi-no-workspaces]) {
+        .toolbarbutton-icon {
+          position: absolute;
+          opacity: 0;
+          pointer-events: none;
+        }
+      }
+
+      .natsumi-workspace-icon {
+        display: inline-flex !important;
+        position: relative;
+        width: 16px;
+        height: 16px;
+        padding: 6px !important;
+        background-image: var(--natsumi-workspace-icon) !important;
+        background-size: 16px !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        border-radius: 4px;
+        transition: background-color 0.2s ease, box-shadow 0.2s ease;
+
+        @media (-moz-mac-tahoe-theme) {
+          border-radius: 8px !important;
+        }
+
+        &:hover {
+          background-color: var(--natsumi-button-hover-color) !important;
+        }
+
+        &:active {
+          background-color: var(--natsumi-button-active-color) !important;
+          box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+        }
+
+        &::before {
+          content: "";
+          width: 4px;
+          height: 4px;
+          position: absolute;
+          background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+          border-radius: 50%;
+          left: 50%;
+          translate: -50% 0;
+          bottom: 0;
+          opacity: 0;
+        }
+
+        &.natsumi-workspace-active::before {
+          opacity: 1;
+        }
+      }
+
+      &[open] {
+        .natsumi-workspace-icon {
+          background-color: transparent !important;
+          box-shadow: none !important;
+        }
+      }
+    }
+  }
+
+  @media not -moz-pref("natsumi.sidebar.workspaces-as-icons") {
+    #workspaces-toolbar-button {
+      .natsumi-workspace-icon {
+        display: none;
+      }
+    }
+  }
+
   #workspacesToolbarButtonPanel {
     #workspacesPopupContent {
       padding: 0 !important;

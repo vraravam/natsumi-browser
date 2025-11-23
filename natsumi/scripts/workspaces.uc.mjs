@@ -459,11 +459,14 @@ function copyWorkspaceName() {
 
 function copyAllWorkspaces() {
     let workspacesButton = document.getElementById("workspaces-toolbar-button");
+    workspacesButton.setAttribute("natsumi-no-workspaces", "");
 
     if (!workspacesButton) {
         // Mutation observer will take care of this for us
         return;
     }
+
+    let workspacesButtonIcon = workspacesButton.querySelector(".toolbarbutton-icon");
 
     const workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value)
     const currentWorkspaceData = getCurrentWorkspaceData();
@@ -477,6 +480,7 @@ function copyAllWorkspaces() {
         }
     });
 
+    let buttonAdded = false;
     for (let index in workspaceData["data"]) {
         let workspace = workspaceData["data"][index];
         let workspaceId = workspace[0];
@@ -496,7 +500,20 @@ function copyAllWorkspaces() {
             newButtonNode.classList.add("natsumi-workspace-active");
         }
 
+        newButtonNode.addEventListener("click", (event) => {
+            if (!event.shiftKey) {
+                event.stopPropagation();
+                event.preventDefault();
+                document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(workspaceId);
+            }
+        })
+
         workspacesButton.appendChild(newButtonNode);
+        buttonAdded = true;
+    }
+
+    if (buttonAdded) {
+        workspacesButton.removeAttribute("natsumi-no-workspaces");
     }
 }
 
