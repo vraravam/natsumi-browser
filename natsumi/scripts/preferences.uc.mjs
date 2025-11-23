@@ -2363,9 +2363,23 @@ function addSidebarWorkspacesPane() {
     workspacesGroup.registerOption("natsumiSidebarWorkspacesAsIcons", new CheckboxChoice(
         "natsumi.sidebar.workspaces-as-icons",
         "natsumiSidebarWorkspacesAsIcons",
-        "Display Workspaces as an icon strip",
-        "This does not make each icon clickable to switch Workspaces (for now)."
+        "Display Workspaces as an icon strip"
     ));
+
+    let workspacesIconStripSubgroup = new OptionsGroup(
+        "natsumiSidebarWorkspaceIconStripOptions",
+        "",
+        ""
+    );
+
+    workspacesIconStripSubgroup.registerOption("natsumiSidebarDisableWorkspaceIconClick", new CheckboxChoice(
+        "natsumi.sidebar.disable-clickable-workspace-icons",
+        "natsumiSidebarDisableWorkspaceIconClick",
+        "Disable clickable Workspace icons",
+        "This will restore the old behavior for when a Workspace icon is clicked."
+    ));
+
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceIconStripOptions", workspacesIconStripSubgroup);
 
     workspacesGroup.registerOption("natsumiSidebarWorkspaceSpecificPins", new CheckboxChoice(
         "natsumi.tabs.workspace-specific-pins",

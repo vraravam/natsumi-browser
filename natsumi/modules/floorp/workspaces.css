@@ -78,8 +78,10 @@ SOFTWARE.
       }
 
       &:not([open]) {
-        background-color: transparent !important;
-        box-shadow: none !important;
+        @media not -moz-pref("natsumi.sidebar.disable-clickable-workspace-icons") {
+          background-color: transparent !important;
+          box-shadow: none !important;
+        }
       }
 
       .natsumi-workspace-icon {
@@ -130,6 +132,14 @@ SOFTWARE.
         .natsumi-workspace-icon {
           background-color: transparent !important;
           box-shadow: none !important;
+        }
+      }
+
+      @media -moz-pref("natsumi.sidebar.disable-clickable-workspace-icons") {
+        .natsumi-workspace-icon {
+          background-color: transparent !important;
+          box-shadow: none !important;
+          pointer-events: none !important;
         }
       }
     }
