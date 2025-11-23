@@ -459,14 +459,11 @@ function copyWorkspaceName() {
 
 function copyAllWorkspaces() {
     let workspacesButton = document.getElementById("workspaces-toolbar-button");
-    workspacesButton.setAttribute("natsumi-no-workspaces", "");
 
     if (!workspacesButton) {
         // Mutation observer will take care of this for us
         return;
     }
-
-    let workspacesButtonIcon = workspacesButton.querySelector(".toolbarbutton-icon");
 
     const workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value)
     const currentWorkspaceData = getCurrentWorkspaceData();
@@ -513,7 +510,9 @@ function copyAllWorkspaces() {
     }
 
     if (buttonAdded) {
-        workspacesButton.removeAttribute("natsumi-no-workspaces");
+        workspacesButton.setAttribute("natsumi-has-workspaces", "");
+    } else {
+        workspacesButton.removeAttribute("natsumi-has-workspaces");
     }
 }
 

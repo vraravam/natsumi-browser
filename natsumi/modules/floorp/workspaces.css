@@ -64,24 +64,22 @@ SOFTWARE.
   }
 
   @media -moz-pref("natsumi.sidebar.workspaces-as-icons") {
-    #workspaces-toolbar-button {
+    #workspaces-toolbar-button[natsumi-has-workspaces] {
       overflow: visible !important;
+
+      .toolbarbutton-icon {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
 
       .toolbarbutton-text {
         display: none !important;
       }
 
-      &:not([natsumi-no-workspaces]):not([open]) {
+      &:not([open]) {
         background-color: transparent !important;
         box-shadow: none !important;
-      }
-
-      &:not([natsumi-no-workspaces]) {
-        .toolbarbutton-icon {
-          position: absolute;
-          opacity: 0;
-          pointer-events: none;
-        }
       }
 
       .natsumi-workspace-icon {
