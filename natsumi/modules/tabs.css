@@ -109,3 +109,12 @@ SOFTWARE.
     order: 2;
   }
 }
+
+/* Split view indicator */
+tab-split-view-wrapper {
+  border-radius: calc(var(--natsumi-tab-border-radius) + 2px) !important;
+
+  .tabbrowser-tab {
+    border: none !important;
+  }
+}

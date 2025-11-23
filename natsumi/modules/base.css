@@ -61,6 +61,7 @@ SOFTWARE.
       --natsumi-browser-border-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
       border: var(--natsumi-border-width) solid var(--natsumi-browser-border-color) !important;
       border-radius: var(--natsumi-browser-border-radius) !important;
+      margin: 0 !important;
       overflow: hidden;
 
       &:has(.devtools-toolbox-side-iframe) {
@@ -113,6 +114,10 @@ SOFTWARE.
       margin-right: var(--natsumi-browser-separation) !important;
     }
   }
+}
+
+.split-view-splitter {
+  min-width: var(--natsumi-browser-separation) !important;
 }
 
 #sidebar {
