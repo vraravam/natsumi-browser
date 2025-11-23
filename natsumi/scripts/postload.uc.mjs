@@ -26,7 +26,8 @@ class NatsumiPostloadManager {
         console.error("Natsumi CSS loading doesn't seem to have completed. Expect absolutely everything to go south from here, good luck.");
 
         const natsumiWarningPermanentCss = `
-            #natsumi-glimpse-launcher, #natsumi-glimpse-chainer-indicator, #natsumi-workspace-indicator, #natsumi-tabs-clearer {
+            #natsumi-glimpse-launcher, #natsumi-glimpse-chainer-indicator, #natsumi-workspace-indicator, #natsumi-tabs-clearer,
+            #natsumi-welcome {
                 display: none !important;
             }
         `
