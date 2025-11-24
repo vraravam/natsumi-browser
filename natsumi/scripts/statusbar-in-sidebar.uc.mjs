@@ -86,6 +86,11 @@ class NatsumiStatusBarHandler {
             });
 
             this.statusBarObserver.observe(this.statusBarNode, {attributes: true, childList: true, subtree: true});
+
+            // Also initialize status bar in compact mode manager
+            if (document.body.natsumiCompactModeManager) {
+                document.body.natsumiCompactModeManager.initStatusbar();
+            }
         }
     }
 

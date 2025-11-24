@@ -70,7 +70,7 @@ SOFTWARE.
     background: transparent !important;
     border: none !important;
 
-    &:not(.hidden), &:not([style*="display:none"]) {
+    &:not(.hidden), &:not([style*="display:none"]), &:not([style*="display: none"]) {
       min-height: 28px !important;
     }
 
@@ -158,7 +158,7 @@ SOFTWARE.
 
   @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
     &:not([customizing]) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
         display: flex !important;
         justify-content: space-between !important;
         flex-wrap: wrap;
@@ -186,27 +186,27 @@ SOFTWARE.
     }
 
     &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
         left: 7px;
       }
     }
 
     @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
       &:has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) {
-        #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+        #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
           left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
         }
       }
     }
 
     &:has(#sidebar-main[hidden]) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display:none"] {
         display: none !important;
       }
     }
 
     &:not([customizing]):has(sidebar-main:not([expanded])) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display:none"] {
         flex-direction: column !important;
         bottom: calc(var(--natsumi-sidebar-options-height) + var(--space-small) + var(--natsumi-browser-separation));
         width: 36px !important;
@@ -247,7 +247,7 @@ SOFTWARE.
       }
     }
     
-    &:has(#nora-statusbar.hidden), &:has(#nora-statusbar[style*="display:none"]) {
+    &:has(#nora-statusbar.hidden), &:has(#nora-statusbar[style*="display:none"]), &:has(#nora-statusbar[style*="display: none"]) {
       #vertical-tabs {
         padding-bottom: calc(var(--natsumi-statusbar-height, 28px) + 3px + var(--natsumi-browser-separation)) !important;
       }
