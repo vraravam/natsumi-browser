@@ -3133,6 +3133,13 @@ function addPipBehaviorPane() {
         true
     ));
 
+    pipBehaviorGroup.registerOption("natsumiPipLegacyStyle", new CheckboxChoice(
+        "natsumi.pip.legacy-style",
+        "natsumiPipLegacyStyle",
+        "Use legacy design for PiP controls",
+        "This will merge controls into one 'island' rather than having separate 'islands'."
+    ));
+
     let pipBehaviorNode = pipBehaviorGroup.generateNode();
 
     // Set listeners for each checkbox

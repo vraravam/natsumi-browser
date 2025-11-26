@@ -309,6 +309,42 @@ SOFTWARE.
         .controls-bottom-lower {
           margin: 0 !important;
         }
+
+        @media -moz-pref("natsumi.pip.legacy-style") {
+          border-radius: 18px !important;
+          background-color: var(--natsumi-material-background) !important;
+          border: var(--natsumi-material-border) !important;
+          backdrop-filter: var(--natsumi-material-backdrop) !important;
+          box-shadow: var(--natsumi-material-shadow) !important;
+
+          .start-controls, .center-controls, .end-controls {
+            border-color: transparent !important;
+            background-color: transparent !important;
+            backdrop-filter: none !important;
+            box-shadow: none !important;
+            border-radius: 0 !important;
+          }
+
+          #seekBackward, #audio, #fullscreen {
+            border-radius: 4px !important;
+          }
+
+          #timestamp {
+            padding: 0 !important;
+          }
+
+          #scrubber {
+            border: none !important;
+            background-color: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
+            backdrop-filter: none !important;
+            box-shadow: none !important;
+
+            &::-moz-range-thumb {
+              border: none !important;
+              backdrop-filter: none !important;
+            }
+          }
+        }
       }
 
       #settings {
