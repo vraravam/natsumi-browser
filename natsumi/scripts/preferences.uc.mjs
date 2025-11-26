@@ -563,9 +563,10 @@ class CustomThemePicker {
 
         this.data["version"] = this.version;
 
-        let themePath = `${PathUtils.profileDir}/natsumi-themes/master.json`;
+        let themeDirectoryPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
+        let themePath = PathUtils.join(themeDirectoryPath, "master.json");
         if (this.workspace) {
-            themePath = `${PathUtils.profileDir}/natsumi-themes/${this.workspace}.json`;
+            themePath = PathUtils.join(themeDirectoryPath, `${this.workspace}.json`);
         }
 
         if (usedColors === 0) {
