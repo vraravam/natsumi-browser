@@ -844,7 +844,13 @@ class CustomThemePicker {
         }
 
         let gridNode = this.node.querySelector(".natsumi-custom-theme-grid");
-        gridNode.innerHTML = "";
+        let newColors = this.colors.length;
+        let currentColors = gridNode.querySelectorAll(".natsumi-custom-theme-color");
+        const replaceColors = (newColors !== currentColors.length);
+
+        if (replaceColors) {
+            gridNode.innerHTML = "";
+        }
 
         if (this.preset) {
             this.ensurePreset();
@@ -880,13 +886,22 @@ class CustomThemePicker {
 
         for (let colorIndex in this.colors) {
             let colorData = this.colors[colorIndex];
-            let colorNode = document.createElement("div");
-            colorNode.classList.add("natsumi-custom-theme-color");
+            let colorNode;
+
+            if (replaceColors) {
+                colorNode = document.createElement("div");
+                colorNode.classList.add("natsumi-custom-theme-color");
+            } else {
+                colorNode = currentColors[colorIndex];
+            }
+
             colorNode.style.setProperty("--natsumi-selected-color", `${colorData.code}`);
 
-            let colorDisplayNode = document.createElement("div");
-            colorDisplayNode.classList.add("natsumi-custom-theme-color-display");
-            colorNode.appendChild(colorDisplayNode);
+            if (replaceColors) {
+                let colorDisplayNode = document.createElement("div");
+                colorDisplayNode.classList.add("natsumi-custom-theme-color-display");
+                colorNode.appendChild(colorDisplayNode);
+            }
 
             if (colorIndex === "0") {
                 colorNode.classList.add("natsumi-custom-theme-primary-color");
@@ -910,34 +925,36 @@ class CustomThemePicker {
                 colorNode.style.setProperty("--natsumi-color-index-color", "white");
             }
 
-            gridNode.appendChild(colorNode);
-            colorNode.addEventListener("mousedown", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
+            if (replaceColors) {
+                gridNode.appendChild(colorNode);
+                colorNode.addEventListener("mousedown", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
 
-                document.onmouseup = this.resetListeners;
-                document.onmousemove = (event => {
-                    let observeColorIndex = colorIndex;
+                    document.onmouseup = this.resetListeners;
+                    document.onmousemove = (event => {
+                        let observeColorIndex = colorIndex;
 
-                    if (this.preset) {
-                        observeColorIndex = "0";
-                    }
+                        if (this.preset) {
+                            observeColorIndex = "0";
+                        }
 
-                    let relativeX = event.clientX - gridNode.getBoundingClientRect().left;
-                    let relativeY = event.clientY - gridNode.getBoundingClientRect().top;
-                    this.moveColor(observeColorIndex, relativeX, relativeY);
+                        let relativeX = event.clientX - gridNode.getBoundingClientRect().left;
+                        let relativeY = event.clientY - gridNode.getBoundingClientRect().top;
+                        this.moveColor(observeColorIndex, relativeX, relativeY);
+                    });
                 });
-            });
-            colorNode.addEventListener("contextmenu", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                this.removeColor(colorIndex);
-            });
-            colorNode.addEventListener("click", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                this.setLastSelected(colorIndex);
-            });
+                colorNode.addEventListener("contextmenu", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.removeColor(colorIndex);
+                });
+                colorNode.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.setLastSelected(colorIndex);
+                });
+            }
         }
     }
 
