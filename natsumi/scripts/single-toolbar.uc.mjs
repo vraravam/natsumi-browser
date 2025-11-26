@@ -112,14 +112,14 @@ class NatsumiSingleToolbarManager {
         }
 
         if (isWindowButton) {
-            let isMac = Services.appinfo.OS.toLowerCase() !== "darwin";
+            let isNotMac = Services.appinfo.OS.toLowerCase() !== "darwin";
             let forcedLeft = false;
 
             if (ucApi.Prefs.get("natsumi.theme.force-window-controls-to-left").exists()) {
                 forcedLeft = ucApi.Prefs.get("natsumi.theme.force-window-controls-to-left").value;
             }
 
-            if ((isMac || forcedLeft) && isWindowButton) {
+            if ((isNotMac || forcedLeft) && isWindowButton) {
                 return;
             }
         }
