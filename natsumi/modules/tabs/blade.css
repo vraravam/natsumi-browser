@@ -48,6 +48,10 @@ SOFTWARE.
 
       @media (prefers-color-scheme: dark) {
         --natsumi-tab-highlight-color: color-mix(in srgb, var(--natsumi-primary-color) 70%, black);
+
+        @media -moz-pref("natsumi.tabs.blade-legacy-color") {
+          --natsumi-tab-highlight-color: var(--natsumi-colors-primary);
+        }
       }
 
       &[usercontextid] {

@@ -31,6 +31,7 @@ SOFTWARE.
 */
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import { applyCustomTheme } from "./custom-theme.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -406,6 +407,8 @@ class NatsumiWorkspacePinsManager {
     }
 }
 
+let currentWorkspaceId = null;
+
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
@@ -602,6 +605,15 @@ if (isFloorp) {
             document.body.natsumiWorkspacePinsManager.updatePinnedTabs();
             document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
         }
+
+        // Get current workspace ID
+        if (document.body.natsumiWorkspacesWrapper) {
+            let newWorkspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+            if (currentWorkspaceId !== newWorkspaceId) {
+                currentWorkspaceId = newWorkspaceId;
+                applyCustomTheme();
+            }
+        }
     });
     tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
 
@@ -632,6 +644,7 @@ if (isFloorp) {
     document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
     document.body.natsumiWorkspacesWrapper.dataRetrieveQueue.push(() => {
         copyWorkspaceName();
+        applyCustomTheme();
     });
     document.body.natsumiWorkspacesWrapper.init().then(() => {
         // Initialize workspace indicator

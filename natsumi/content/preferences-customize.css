@@ -563,6 +563,12 @@ SOFTWARE.
     }
   }
 
+  @media -moz-pref("natsumi.tabs.use-custom-type") {
+    #natsumiTabBladeLegacyColor {
+      display: none !important;
+    }
+  }
+
   @media (not -moz-pref("natsumi.tabs.use-custom-type")) or (not -moz-pref("natsumi.tabs.type", "fusion")) {
     #natsumiTabFusionHighlight {
       display: none !important;
@@ -925,6 +931,15 @@ SOFTWARE.
 
       &[natsumi-is-empty] .natsumi-custom-theme-empty {
         opacity: 1;
+      }
+    }
+
+    .natsumi-custom-theme-target-workspace {
+      margin-bottom: 10px;
+
+      .natsumi-custom-theme-workspace-selector {
+        margin: 0 !important;
+        width: 100% !important;
       }
     }
 

@@ -42,6 +42,7 @@ import {
     availablePresets,
     gradientTypes,
     gradientTypeNames,
+    getTheme,
     applyCustomColor,
     applyCustomTheme
 } from "./custom-theme.sys.mjs";
@@ -62,11 +63,11 @@ function setStringPreference(preference, value) {
 }
 
 class CustomThemePicker {
-    constructor(id, loaderMethod, applyMethod, targetPref, singleColor = false, allowOpacity = true) {
+    constructor(id, loaderMethod, applyMethod, legacyTargetPref, singleColor = false, allowOpacity = true) {
         this.id = id;
         this.loaderMethod = loaderMethod;
         this.applyMethod = applyMethod;
-        this.targetPref = targetPref;
+        this.legacyTargetPref = legacyTargetPref;
         this.singleColor = singleColor;
         this.allowOpacity = allowOpacity;
         this.preset = null;
@@ -79,6 +80,7 @@ class CustomThemePicker {
         this.theme = "light";
         this.data = {"light": {"0": {}, "1": {}}, "dark": {"0": {}, "1": {}}}
         this.node = null;
+        this.workspace = null;
 
         // Configs
         this.availableLayers = 2;
@@ -92,8 +94,33 @@ class CustomThemePicker {
         this.shiftPressed = false;
     }
 
-    init() {
+    getWorkspaces() {
+        let preliminaryBrowserWindow;
+        let workspaces = [];
+
+        // Try to get any window with workspaces wrapper
+        for (let win of ucApi.Windows.getAll(true)) {
+            if (win.document.body.natsumiWorkspacesWrapper) {
+                preliminaryBrowserWindow = win;
+                break;
+            }
+        }
+
+        if (preliminaryBrowserWindow) {
+            workspaces = preliminaryBrowserWindow.document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        }
+
+        return workspaces;
+    }
+
+    async init() {
         let node = document.getElementById(this.id);
+        let isFloorp = false;
+        if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+            if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+                isFloorp = true;
+            }
+        }
 
         if (!node) {
             throw new Error("Could not find theme picker node.");
@@ -114,23 +141,8 @@ class CustomThemePicker {
             node.setAttribute("natsumi-no-opacity", "");
         }
 
-        // Load custom theme data from preferences
-        let customThemeData = ucApi.Prefs.get(this.targetPref);
-        if (customThemeData.exists()) {
-            try {
-                let toLoad = JSON.parse(customThemeData.value);
-
-                if (!toLoad["version"]) {
-                    toLoad["version"] = 1;
-                }
-
-                this.data = this.loaderMethod(toLoad);
-            } catch (e) {
-                console.error("Failed to parse custom theme data:", e);
-            }
-        }
-
-        this.loadLayer(0);
+        // Load theme data
+        await this.changeWorkspace(this.workspace);
 
         if (this.colors.length > 0) {
             this.setLastSelected("0");
@@ -310,6 +322,60 @@ class CustomThemePicker {
         document.addEventListener("keyup", (event) => {
             this.shiftPressed = event.shiftKey;
         });
+
+        if (isFloorp) {
+            // Set up workspace selector
+            let workspaceSelectorContainerNode = this.node.querySelector(".natsumi-custom-theme-target-workspace");
+
+            // Create workspace selector
+            let workspaceSelectorNode = document.createElement("select");
+            workspaceSelectorNode.classList.add("natsumi-custom-theme-workspace-selector");
+
+            // Add options
+            let defaultOptionNode = document.createElement("option");
+            defaultOptionNode.setAttribute("value", "default");
+            defaultOptionNode.setAttribute("selected", "selected");
+            defaultOptionNode.textContent = "All Workspaces";
+            workspaceSelectorNode.appendChild(defaultOptionNode);
+
+            let workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
+            if (workspaceData && workspaceData["data"]) {
+                for (let workspaceEntry of workspaceData["data"]) {
+                    const workspaceId = workspaceEntry[0];
+                    const workspaceName = workspaceEntry[1]["name"];
+
+                    let workspaceOptionNode = document.createElement("option");
+                    workspaceOptionNode.setAttribute("value", workspaceId);
+                    workspaceOptionNode.textContent = workspaceName;
+                    workspaceSelectorNode.appendChild(workspaceOptionNode);
+                }
+            }
+
+            workspaceSelectorNode.addEventListener("change", async (event) => {
+                let selectedWorkspaceId = event.target.value ?? null;
+
+                if (selectedWorkspaceId === "default") {
+                    selectedWorkspaceId = null;
+                }
+
+                await this.changeWorkspace(selectedWorkspaceId);
+            });
+
+            workspaceSelectorContainerNode.appendChild(workspaceSelectorNode);
+        }
+    }
+
+    async changeWorkspace(workspaceId = null) {
+        this.workspace = workspaceId;
+        let fetchedWorkspaceData = await getTheme(workspaceId, true);
+
+        if (fetchedWorkspaceData) {
+            this.data = fetchedWorkspaceData;
+        } else {
+            this.data = {"light": {"0": {}, "1": {}}, "dark": {"0": {}, "1": {}}};
+        }
+
+        this.loadLayer(this.layer);
     }
 
     async import() {
@@ -454,8 +520,11 @@ class CustomThemePicker {
         this.renderAngle();
     }
 
-    saveLayer() {
+    async saveLayer() {
+        let usedColors = 0;
+
         if (this.singleColor) {
+            usedColors = 1;
             this.data["color"] = this.colors[0];
         } else {
             this.data[this.theme][`${this.layer}`] = {
@@ -466,11 +535,55 @@ class CustomThemePicker {
                     "colors": this.colors
                 }
             };
+
+            for (let theme of ["light", "dark"]) {
+                let themeData = this.data[theme];
+
+                if (!themeData) {
+                    continue;
+                }
+
+                for (let themeLayer of Object.keys(themeData)) {
+                    let layerData = themeData[themeLayer];
+
+                    if (!layerData) {
+                        continue;
+                    }
+
+                    if (!layerData["background"]) {
+                        continue;
+                    }
+
+                    if (layerData["background"]["colors"]) {
+                        usedColors += layerData["background"]["colors"].length;
+                    }
+                }
+            }
         }
 
         this.data["version"] = this.version;
 
-        ucApi.Prefs.set(this.targetPref, JSON.stringify(this.data));
+        let themePath = `${PathUtils.profileDir}/natsumi-themes/master.json`;
+        if (this.workspace) {
+            themePath = `${PathUtils.profileDir}/natsumi-themes/${this.workspace}.json`;
+        }
+
+        if (usedColors === 0) {
+            // Delete file
+            try {
+                await IOUtils.remove(themePath);
+            } catch (e) {
+                // Ignore error
+            }
+        } else {
+            try {
+                await IOUtils.writeJSON(themePath, this.data);
+            } catch (e) {
+                console.error("Failed to save customization data:", e);
+                return;
+            }
+        }
+
         this.applyMethod();
     }
 
@@ -478,6 +591,8 @@ class CustomThemePicker {
         let nodeString = `
             <div id="${this.id}" class="natsumi-custom-theme-container">
                 <div class="natsumi-custom-theme-picker">
+                    <div class="natsumi-custom-theme-target-workspace">
+                    </div>
                     <div class="natsumi-custom-theme-top-controls">
                         <div class="natsumi-custom-theme-top-button natsumi-custom-layer-1" selected=""></div>
                         <div class="natsumi-custom-theme-top-button natsumi-custom-layer-2"></div>
@@ -2235,6 +2350,13 @@ function addSidebarTabsPane() {
     for (let style in tabDesigns) {
         tabDesignSelection.registerOption(style, tabDesigns[style]);
     }
+
+    // Blade options
+    tabDesignSelection.registerExtras("natsumiTabBladeLegacyColor", new CheckboxChoice(
+        "natsumi.tabs.blade-legacy-color",
+        "natsumiTabBladeLegacyColor",
+        "Use legacy Blade highlight color"
+    ));
 
     // Fusion options
     tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(

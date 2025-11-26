@@ -26,6 +26,8 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
+const themesPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
+
 export const colorPresetNames = {
     null: "Floating",
     "complementary": "Complementary",
@@ -233,6 +235,79 @@ function parseFilters(data) {
     return filters.join(" ");
 }
 
+export async function getTheme(workspaceId = null, strict = false) {
+    await IOUtils.makeDirectory(themesPath, {
+        createAncestors: false,
+    });
+
+    let themePath = PathUtils.join(themesPath, "master.json");
+    if (workspaceId) {
+        themePath = PathUtils.join(themesPath, `${workspaceId}.json`);
+    }
+
+    const masterThemePath = PathUtils.join(themesPath, "master.json");
+
+    // Attempt 1: Read from file
+    try {
+        return await IOUtils.readJSON(themePath);
+    } catch (e) {
+        // Raising a warning here would cause too much spam, so we omit it
+    }
+
+    if (strict) {
+        return null;
+    }
+
+    // Attempt 2: Return master file
+    if (workspaceId) {
+        try {
+            return await IOUtils.readJSON(masterThemePath);
+        } catch (e) {
+            console.warn("Failed to read master customization data:", e);
+        }
+    }
+
+    // Attempt 3: Return from prefs
+    let customThemeData = {};
+
+    try {
+        customThemeData = JSON.parse(ucApi.Prefs.get("natsumi.theme.custom-theme-data").value);
+        await migrateCustomTheme();
+        return customThemeData;
+    } catch (e) {
+        console.warn("Failed to read master customization data (legacy):", e);
+    }
+
+    console.error("Could not load any customization data.");
+}
+
+async function migrateCustomTheme() {
+    let customThemeData = {};
+
+    if (!ucApi.Prefs.get("natsumi.theme.custom-theme-data").exists()) {
+        console.info("Skipping migration, nothing to migrate.");
+        return;
+    }
+
+    try {
+        customThemeData = JSON.parse(ucApi.Prefs.get("natsumi.theme.custom-theme-data").value);
+    } catch (e) {
+        console.error("Failed to read master customization data (legacy):", e);
+        return;
+    }
+
+    const masterThemePath = PathUtils.join(themesPath, "master.json");
+
+    try {
+        await IOUtils.writeJSON(masterThemePath, customThemeData);
+    } catch (e) {
+        console.error("Failed to save customization data:", e);
+    }
+
+    // Delete old pref
+    ucApi.Prefs.get("natsumi.theme.custom-theme-data").reset();
+}
+
 // This function is not enabled because it does not work on other windows yet
 export function applyCustomColor() {
     let customColorData = {};
@@ -271,12 +346,7 @@ export function applyCustomColor() {
     }, false);
 }
 
-export function applyCustomTheme() {
-    let isCustomTheme = false;
-    if (ucApi.Prefs.get("natsumi.theme.type").exists()) {
-        isCustomTheme = ucApi.Prefs.get("natsumi.theme.type").value === "custom";
-    }
-
+export async function applyCustomTheme() {
     let customThemeData = {};
 
     // Example theme data
@@ -288,17 +358,56 @@ export function applyCustomTheme() {
     // }}}
 
     try {
-        customThemeData = JSON.parse(ucApi.Prefs.get("natsumi.theme.custom-theme-data").value);
+        customThemeData = await getTheme();
     } catch (e) {
         console.error("Invalid theme data:", e);
         return;
     }
 
+    let perWorkspaceData = {};
+    let preliminaryBrowserWindow;
+    let workspaces = [];
+
+    // Try to get any window with workspaces wrapper
+    for (let win of ucApi.Windows.getAll(true)) {
+        if (win.document.body.natsumiWorkspacesWrapper) {
+            preliminaryBrowserWindow = win;
+            break;
+        }
+    }
+
+    if (preliminaryBrowserWindow) {
+        workspaces = preliminaryBrowserWindow.document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+    }
+
+    if (workspaces) {
+        // Load data for each workspace
+        for (const workspaceId of workspaces) {
+            try {
+                perWorkspaceData[workspaceId] = await getTheme(workspaceId);
+            } catch (e) {
+                console.warn(`Could not fetch theme for workspace ${workspaceId}:`, e);
+            }
+        }
+    }
+
     ucApi.Windows.forEach((browserDocument, browserWindow) => {
         let body = browserDocument.body;
+        let workspaceId = body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+        let toApplyData = customThemeData;
 
-        for (let index in customThemeData["light"]) {
-            let layerData = customThemeData["light"][index];
+        if (perWorkspaceData[workspaceId]) {
+            toApplyData = perWorkspaceData[workspaceId];
+        }
+
+        // Remove existing properties
+        body.style.removeProperty("--natsumi-theme-layer-0-background");
+        body.style.removeProperty("--natsumi-theme-layer-0-background-dark");
+        body.style.removeProperty("--natsumi-theme-layer-1-background");
+        body.style.removeProperty("--natsumi-theme-layer-1-background-dark");
+
+        for (let index in toApplyData["light"]) {
+            let layerData = toApplyData["light"][index];
 
             if (layerData["background"]) {
                 const backgroundValue = parseBackground(layerData["background"]);
@@ -306,12 +415,12 @@ export function applyCustomTheme() {
                     body.style.removeProperty(`--natsumi-theme-layer-${index}-background`);
                 } else {
                     body.style.setProperty(`--natsumi-theme-layer-${index}-background`, backgroundValue);
-                    }
+                }
             }
         }
 
-        for (let index in customThemeData["dark"]) {
-            let layerData = customThemeData["dark"][index];
+        for (let index in toApplyData["dark"]) {
+            let layerData = toApplyData["dark"][index];
 
             if (layerData["background"]) {
                 const backgroundValue = parseBackground(layerData["background"]);

@@ -59,6 +59,11 @@ if (disableAutoFork) {
     if (forkName) {
         console.log(`Detected browser fork: ${forkName}`);
         ucApi.Prefs.set("natsumi.browser.type", forkName);
+
+        Services.prefs.addObserver("natsumi.browser.type", () => {
+            console.warn("Browser fork changed externally, resetting.");
+            ucApi.Prefs.set("natsumi.browser.type", forkName);
+        })
     } else {
         console.warn("Could not detect browser fork.");
     }
