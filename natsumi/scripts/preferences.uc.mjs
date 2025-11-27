@@ -1511,6 +1511,42 @@ const themes = {
     )
 }
 
+const windowMaterialsMac = {
+    "sidebar": new RadioChoice(
+        false,
+        "Sidebar",
+        ""
+    ),
+    "titlebar": new RadioChoice(
+        true,
+        "Titlebar",
+        ""
+    )
+}
+
+const windowMaterialsWindows = {
+    "auto": new RadioChoice(
+        0,
+        "Automatic",
+        ""
+    ),
+    "mica": new RadioChoice(
+        1,
+        "Mica",
+        ""
+    ),
+    "acrylic": new RadioChoice(
+        2,
+        "Acrylic",
+        ""
+    ),
+    "micaalt": new RadioChoice(
+        3,
+        "Mica Alt",
+        ""
+    )
+}
+
 const materials = {
     "haze": new MCChoice(
         "default",
@@ -2157,18 +2193,6 @@ function addThemesPane() {
         true
     )
 
-    let windowsAppend = "";
-    if (osName === "winnt") {
-        windowsAppend = " Windows users: please use this if translucency is broken and let me know of the issue."
-    }
-
-    let translucencyLegacyCheckbox = new CheckboxChoice(
-        "natsumi.theme.use-legacy-translucency",
-        "natsumiTranslucencyLegacyToggle",
-        "Use legacy translucency",
-        `This will inherit the material from the 'titlebar' rather than the 'sidebar'.${windowsAppend}`
-    )
-
     let grayOutCheckbox = new CheckboxChoice(
         "natsumi.theme.gray-out-when-inactive",
         "natsumiGrayOutWhenInactive",
@@ -2179,7 +2203,6 @@ function addThemesPane() {
 
     themeSelection.registerExtras("natsumiCustomThemePickerBox", customThemePickerUi);
     themeSelection.registerExtras("natsumiTranslucencyBox", translucencyCheckbox);
-    themeSelection.registerExtras("natsumiTranslucencyLegacyBox", translucencyLegacyCheckbox);
     themeSelection.registerExtras("natsumiInactiveBox", grayOutCheckbox);
 
     for (let theme in themes) {
@@ -2220,6 +2243,86 @@ function addThemesPane() {
 
     prefsView.insertBefore(themeNode, homePane);
     customThemePickerUi.init();
+}
+
+function addWindowMaterialPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create theme selection
+    let windowMaterialSelectionMac = new RadioPreference(
+        "natsumiWindowMaterialMac",
+        "natsumi.theme.use-legacy-translucency",
+        "Window material",
+        "Choose which material to use for the window background.",
+    );
+    let windowMaterialSelectionWindows = new RadioPreference(
+        "natsumiWindowMaterialWindows",
+        "widget.windows.mica.toplevel-backdrop",
+        "Window material",
+        "Choose which material to use for the window background.",
+    );
+
+    for (let windowMaterial in windowMaterialsMac) {
+        windowMaterialSelectionMac.registerOption(windowMaterial, windowMaterialsMac[windowMaterial]);
+    }
+    for (let windowMaterial in windowMaterialsWindows) {
+        windowMaterialSelectionWindows.registerOption(windowMaterial, windowMaterialsWindows[windowMaterial]);
+    }
+
+    let windowMaterialsNode;
+
+    // Set listeners for each button
+    let windowMaterialButtons = [];
+    let targetPref = "natsumi.theme.use-legacy-translucency";
+
+    if (Services.appinfo.OS.toLowerCase() === "darwin") {
+        windowMaterialsNode = windowMaterialSelectionMac.generateNode();
+        windowMaterialButtons = windowMaterialsNode.querySelectorAll(".natsumi-radio-choice");
+    } else if (Services.appinfo.OS.toLowerCase() === "winnt") {
+        windowMaterialsNode = windowMaterialSelectionWindows.generateNode();
+        windowMaterialButtons = windowMaterialsNode.querySelectorAll(".natsumi-radio-choice");
+        targetPref = "widget.windows.mica.toplevel-backdrop";
+
+        // Add DWMBlurGlass/MicaForEveryone warning
+        let windowsExternalMaterialNotice = convertToXUL(`
+            <div id="natsumiWindowsExternalMaterialWarning" class="natsumi-settings-info warning">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    If you use something like DWMBlurGlass or MicaForEveryone to enable translucency, you may need to
+                    manage window materials for your browser there.
+                </div>
+            </div>
+        `)
+        let firstCheckbox = windowMaterialsNode.querySelector("checkbox");
+        firstCheckbox.parentNode.insertBefore(windowsExternalMaterialNotice, firstCheckbox);
+    } else {
+        // We're not on Windows or macOS
+        return;
+    }
+
+    windowMaterialButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing key:", selectedValue === "true");
+
+            if (targetPref === "natsumi.theme.use-legacy-translucency") {
+                ucApi.Prefs.set(targetPref, selectedValue === "true");
+            } else {
+                setStringPreference(targetPref, selectedValue);
+            }
+            windowMaterialButtons.forEach((btn) => {
+                btn.removeAttribute("selected")
+                let radioCheck = btn.querySelector(".radio-check");
+                radioCheck.removeAttribute("selected");
+            });
+            button.setAttribute("selected", "true");
+            let radioCheck = button.querySelector(".radio-check");
+            radioCheck.setAttribute("selected", "true");
+        });
+    });
+
+    prefsView.insertBefore(windowMaterialsNode, homePane);
 }
 
 function addColorsPane() {
@@ -3447,6 +3550,7 @@ function addPreferencesPanes() {
     prefsView.insertBefore(appearanceNode, homePane);
     addLayoutPane();
     addThemesPane();
+    addWindowMaterialPane();
     addColorsPane();
     addIconsPane();
 
