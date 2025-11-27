@@ -191,7 +191,7 @@ and delay, change the variables in the config.css file.
 If you have Natsumi Append installed, most of these can be tweaked through the preferences page.
 
 <details>
-<summary>View configs</summary>
+<summary><strong>View configs</strong></summary>
 
 ### 🎨 Theming/General
 - `natsumi.theme.type` (string): Sets the browser theme type.
