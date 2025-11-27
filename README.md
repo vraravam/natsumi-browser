@@ -129,6 +129,15 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
+#### Installing via installer (Windows only)
+Download and run `windows-installer.bat` as Admin and follow the on-screen prompts. 
+
+You can get this file from the `Installers` folder in this repo.
+
+> [!NOTE]
+> The Windows installer needs to run as Admin so it can copy the needed files to the correct system locations.
+> To update Natsumi on Windows, run the `windows-installer.bat` again with your browser closed.
+
 #### Installing via Sine
 > [!WARNING]
 > Installing via Sine is supported but not recommended. The following features will not work:
