@@ -94,8 +94,8 @@ and websites. No more being forced to show mercy to websites when shortcuts conf
 #### Get extra features custom-made for specific browsers.
 ![](./images/floorp-features.png)
 
-Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi Append
-adds extra features to your browser for a more complete experience.
+Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi adds
+extra features to your browser for a more complete experience.
 
 ## Full-fledged vs. CSS-only
 Some Natsumi features require JavaScript to work. You can still use Natsumi without JS support at the
@@ -190,7 +190,7 @@ and delay, change the variables in the config.css file.
 
 If you have Natsumi Append installed, most of these can be tweaked through the preferences page.
 
-### 🎨 Theming
+### 🎨 Theming/General
 - `natsumi.theme.type` (string): Sets the browser theme type.
   - Enter a theme ID from the themes list in the [Features](#features) section.
 - `natsumi.theme.accent-color` (string): Sets the browser theme color from a given accent color.
@@ -213,27 +213,82 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 - `natsumi.theme.max-custom-colors` (integer): The maximum number of custom colors you can choose. Minimum
   and default is 6.
 - `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
+- `natsumi.theme.use-legacy-translucency` (boolean): Uses legacy translucency on macOS or Windows.
 - `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
-- `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout. **Natsumi Append required.**
-- `natsumi.theme.single-toolbar-show-menu-button`: Shows the menu button instead of the extensions button
-  in the Single Toolbar layout. **Natsumi Append required.**
-- `natsumi.theme.force-window-controls-to-left`: Forces window controls to the sidebar rather than the
-  bookmarks bar.
+- `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout.
+- `natsumi.theme.single-toolbar-show-menu-button` (boolean): Shows the menu button when in Single Toolbar.
+- `natsumi.theme.single-toolbar-hide-extensions-button` (boolean): Hides the extensions button when in
+  Single Toolbar.
+- `natsumi.theme.show-bookmarks-on-hover` (boolean): Shows the bookmarks bar on hover when in Single
+  Toolbar.
+- `natsumi.theme.customizable-single-toolbar` (boolean): Moves toolbar buttons to the overflow menu when
+  in Single Toolbar.
+- `natsumi.theme.force-customizable-single-toolbar` (boolean): Force shows the overflow button if it
+  doesn't show for some reason.
+- `natsumi.theme.compact-marginless` (boolean): Removes the frame around the website content when in 
+  compact mode.
+- `natsumi.theme.compact-on-new-window` (boolean): Enables Compact Mode by default for new windows.
+- `natsumi.theme.compact-style` (string): Sets the Compact Mode style.
+  - `default` (Hide both): Hides both the toolbar and sidebar.
+  - `toolbar` (Hide toolbar): Hides only the toolbar.
+  - `sidebar` (Hide sidebar): Hides only the sidebar.
+- `natsumi.theme.force-window-controls-to-left` (boolean): Forces window controls to the sidebar rather
+  than the bookmarks bar.
+- `natsumi.theme.classic-preferences` (boolean): Disables Natsumi's preference page theming.
+- `natsumi.theme.floorp-hide-preferences-warnings` (boolean): Hides Floorp Hub warnings on the preferences
+  page. **Floorp exclusive.**
+- `natsumi.theme.icons` (string): Sets the icon pack used in Natsumi.
+  - `default` (Firefox default): Default Firefox icons.
+  - `lucide`: Lucide icons.
+  - `fluent`: Fluent UI Icons.
+- `natsumi.theme.icons-alt-back-forward` (boolean): Uses alternative back/forward icons.
+- `natsumi.theme.ignore-css-issues`: Ignores CSS issues and prevents the CSS warning from showing up.
 
 ### 🗂️ Tabs & Sidebar
 - `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
-- `natsumi.tabs.type` (string): Sets a custom tab type.
+- `natsumi.tabs.type` (string): Sets a custom tab type. `natsumi.tabs.use-custom-type`
+  - `default` (Blade): A modern and sleek, yet dynamic tab design.
+  - `origin`: A box-like design inspired by Natsumi v1.
+  - `curve`: A curve-like design inspired by Natsumi v2.
+  - `fusion`: A Lepton-like design that 'combines' tab and web content.
   - `material`: A material-like design inspired by Zen Browser's alpha UI.
+  - `hexagonal`: A tab design inspired by Floorp's hexagonal branding.
+  - `classic`: Just the standard Firefox look.
+- `natsumi.tabs.blade-legacy-color` (boolean): Uses the legacy Blade tab highlight color like in v5 and
+  older.
+- `natsumi.tabs.fusion-highlight` (boolean): Adds a Photon (Firefox Quantum)-like highlight to the active
+  tab for Fusion tab design.
+- `natsumi.tabs.material-alt-design` (boolean): Uses an alternative design for Material tab design, similar
+  to the toolbar buttons design in Natsumi.
+- `natsumi.tabs.new-tab-on-top` (boolean): Moves the new tab button to the top of the tabs list.
+- `natsumi.tabs.replace-new-tab` (boolean): Removes the New Tab entirely and opens the URL bar instead.
+- `natsumi.tabs.workspace-specific-pins` (boolean): Makes pinned tabs specific to each workspace. **Floorp 
+  exclusive.**
+- `natsumi.sidebar.hide-clear-tabs` (boolean): Disables the clear unpinned tabs button.
+- `natsumi.sidebar.clear-keep-selected` (boolean): Keeps selected tabs when clearing unpinned tabs.
+- `natsumi.sidebar.clear-merge-with-workspaces` (boolean): Merges the clear unpinned tabs button with the
+  Workspace indicator. **Floorp exclusive.**
+- `natsumi.sidebar.clear-open-newtab` (boolean): Opens a new tab after clearing unpinned tabs.
+- `natsumi.sidebar.disable-clickable-workspace-icons` (boolean): Disables clickable workspace icons when
+  the workspaces toolbar button is set to display as an icons strip. **Floorp exclusive.**
+- `natsumi.sidebar.floorp-floating-panel`: Floats the Panel Sidebar similar to Compact Mode. **Floorp
+  exclusive.**
 - `natsumi.sidebar.hide-sidebar-controls` (boolean): Hides sidebar controls.
-- `natsumi.sidebar.use-floorp-statusbar-in-sidebar` (boolean): Uses Floorp's Status Bar as a toolbar for
-  the sidebar when the Status Bar is "hidden". **Floorp exclusive, Natsumi Append required.**
+- `natsumi.sidebar.use-statusbar-in-sidebar` (boolean): Uses Floorp or Waterfox's Status Bar as a toolbar
+  for the sidebar when the Status Bar is "hidden". **Floorp and Waterfox exclusive.**
 - `natsumi.sidebar.hide-workspace-indicator` (boolean): Hides the Floorp Workspace indicator added by
-  Natsumi Append. **Floorp exclusive.**
+  Natsumi. **Floorp exclusive.**
+- `natsumi.sidebar.legacy-workspace-indicator` (boolean): Uses the legacy Workspace indicator. Use this if
+  the indicator is misbehaving. **Floorp exclusive.**
+- `natsumi.sidebar.workspaces-as-icons` (boolean): Displays the Floorp Workspaces toolbar button as an icons
+  strip. **Floorp exclusive.**
 
 ### ⌨️ URL bar
 - `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
 - `natsumi.urlbar.do-not-float` (boolean): Disables the floating URL bar.
 - `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
+- `natsumi.urlbar.single-toolbar-display-actions` (boolean): Displays URL bar actions when in Single
+  Toolbar.
 
 ### 🔎 Findbar
 - `natsumi.findbar.disabled` (boolean): Disables Natsumi Findbar and reverts the findbar style back.
@@ -241,17 +296,39 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
   results.
 - `natsumi.findbar.wider-findbar` (boolean): Increases maximum Findbar width back to 720px.
 
+### 🎛️ Miniplayer
+- `natsumi.miniplayer.disable-artwork` (boolean): Disables the artwork from showing in the Miniplayer.
+- `natsumi.miniplayer.scroll-view` (boolean): Sets the Miniplayer list to be scrollable.
+
+### 👀 Glimpse
+- `natsumi.glimpse.enabled` (boolean): Enables Natsumi Glimpse.
+- `natsumi.glimpse.multi` (boolean): Enables Multi Glimpse. Required for Glimpse Chaining.
+- `natsumi.glimpse.key` (string): Sets the activation method for Glimpse.
+  - `alt`: Alt key
+  - `ctrl`: Ctrl key
+  - `meta`: Meta (Command/Super) key
+  - `shift`: Shift key
+  - `hold`: Hold (click and hold)
+- `natsumi.glimpse.controls-on-right` (boolean): Moves Glimpse controls to the right.
+- `natsumi.glimpse.alt-border` (boolean): Uses an alternative border color to highlight Glimpse tabs more.
+- `natsumi.glimpse.show-indicator` (boolean): Shows a Glimpse indicator right above the Glimpse tab.
+
 ### 🖥️ Picture-in-Picture
 - `natsumi.pip.disabled` (boolean): Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.disable-scroll-to-move` (boolean): Disables the ability to scroll to move the PiP window.
+- `natsumi.pip.legacy-style`: Merges PiP controls into one "island" like in Natsumi v3.
+- `natsumi.pdfjs.material` (string): Sets the material used in the PiP elements. Haze is used when this is
+  unset.
+    - `haze`: Haze
+    - `tinted-haze`: Tinted Haze
 - `natsumi.pip.rounded` (boolean): Makes the PiP window round, like in macOS. Only supports Windows.
-- `natsumi.pip.tinted-haze` (boolean): Uses Tinted Haze material instead of Haze.
 
 ### 📄 PDF Viewer
 - `natsumi.pdfjs.disabled` (boolean): Disables Natsumi PDF Viewer and reverts the PDF viewer back.
-- `natsumi.pdfjs.compact` (boolean): Enables compact mode for Natsumi PDF Viewer.
-- `natsumi.pdfjs.compact-dynamic` (boolean): Disables compact mode when the PDF Viewer's sidebar is
+- `natsumi.pdfjs.compact` (boolean): Enables toolbar autohide for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic` (boolean): Disables toolbar autohide when the PDF Viewer's sidebar is
   expanded.
-- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Glass is used when
+- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Haze is used when
   this is unset.
   - `haze`: Haze
   - `tinted-haze`: Tinted Haze
@@ -263,9 +340,13 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 
 ### 🔧 Compatibility
 - `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
-  This is needed for some features such as PiP where automatic detection isn't possible.
+  **If you use Natsumi Append, this preference will be automatically set.**
   - `firefox`: Mozilla Firefox
   - `floorp`: Floorp Browser
+  - `waterfox`: Waterfox
+  - `librewolf`: Librewolf
+- `natsumi.browser.disable-auto-detect` (boolean): Disables automatic browser detection. Use this if you
+  need to manually set the browser type. **Requires restart to take effect.**
 
 ## Browser support
 All browsers must be based on Firefox 137 or above.
