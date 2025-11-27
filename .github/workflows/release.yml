@@ -115,7 +115,8 @@ jobs:
           artifactErrorsFailBuild: true
           artifacts: 'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64,
             natsumi-installer-macos-x64/natsumi-installer-macos-intel,
-            natsumi-installer-linux/natsumi-installer-linux'
+            natsumi-installer-linux/natsumi-installer-linux,
+            natsumi-installer-windows/natsumi-installer-windows.bat'
 
 
 
