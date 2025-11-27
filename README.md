@@ -176,7 +176,8 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
    ```
 3. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
    can do this later. This config is needed for the preferences page to work.)
-4. Go to about:support and clear your startup cache and restart your browser.
+4. Go to about:support and clear your startup cache and restart your browser (this may not be required but
+   it is still recommended).
 5. That's it - Natsumi Append is installed!
 
 #### Advanced setup: If you are a techie who wants to keep your files up-to-date with new changes over time
