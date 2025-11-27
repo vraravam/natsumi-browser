@@ -190,6 +190,9 @@ and delay, change the variables in the config.css file.
 
 If you have Natsumi Append installed, most of these can be tweaked through the preferences page.
 
+<details>
+<summary>View configs</summary>
+
 ### 🎨 Theming/General
 - `natsumi.theme.type` (string): Sets the browser theme type.
   - Enter a theme ID from the themes list in the [Features](#features) section.
@@ -347,6 +350,7 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
   - `librewolf`: Librewolf
 - `natsumi.browser.disable-auto-detect` (boolean): Disables automatic browser detection. Use this if you
   need to manually set the browser type. **Requires restart to take effect.**
+</details>
 
 ## Browser support
 All browsers must be based on Firefox 137 or above.
