@@ -2294,8 +2294,8 @@ function addWindowMaterialPane() {
                 </div>
             </div>
         `)
-        let firstCheckbox = windowMaterialsNode.querySelector("checkbox");
-        firstCheckbox.parentNode.insertBefore(windowsExternalMaterialNotice, firstCheckbox);
+        let firstRadio = windowMaterialsNode.querySelector(".natsumi-radio-choice");
+        firstRadio.parentNode.insertBefore(windowsExternalMaterialNotice, firstRadio);
     } else {
         // We're not on Windows or macOS
         return;
