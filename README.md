@@ -192,6 +192,9 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
 
    **Note**: The guide doesn't mention the module_loader.mjs file, but you'll need this for fx-autoconfig
    to work. Otherwise, Natsumi's modules will show in your scripts but won't actually be loaded.
+
+   **Flatpak users**: You may need to follow the steps
+   [here](https://github.com/MrOtherGuy/fx-autoconfig/issues/48#issuecomment-3315929253).
 3. Copy the following to chrome/utils/chrome.manifest:
    ```
    content userchromejs ./
