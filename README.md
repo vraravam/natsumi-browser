@@ -367,8 +367,8 @@ All browsers must be based on Firefox 137 or above.
 | Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                        |
 | Librewolf   | :white_check_mark: Supported  | 137+     |                                                        |
 | Firedragon  | :warning: Partially supported | 12+      | Theoretically supported, but not yet tested.           |
+| Mullvad/Tor | :warning: Partially supported | 15.0+    | Theoretically supported, but not yet tested.           |
 | Midori      | :x: Unsupported               | -        | Incompatible (based on ESR128)                         |
-| Mullvad/Tor | :x: Unsupported               | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha) |
 | Zen         | :x: Unsupported               | -        | Incompatible since Natsumi v4 (see FAQ)                |
 
 ## FAQs
