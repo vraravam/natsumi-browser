@@ -460,7 +460,7 @@ SOFTWARE.
       }
 
       /* Popups */
-      .toolbarButtonWithContainer .doorHangerRight {
+      .toolbarButtonWithContainer .doorHangerRight, #editorCommentParamsToolbar {
         background: var(--natsumi-material-background) !important;
         backdrop-filter: var(--natsumi-material-backdrop);
         box-shadow: var(--natsumi-material-shadow) !important;
@@ -486,6 +486,12 @@ SOFTWARE.
         .menuContainer {
           overflow: visible !important;
         }
+      }
+
+      #editorCommentsSidebar {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
       }
 
       /* Compact Mode */
