@@ -368,7 +368,7 @@ All browsers must be based on Firefox 137 or above.
 | Librewolf   | :white_check_mark: Supported | 137+     |                                                                                           |
 | Mullvad/Tor | :white_check_mark: Supported | 15.0+    | **Tor does not recommend installing plugins onto Tor Browser.** Proceed at your own risk. |
 | FireDragon  | :white_check_mark: Supported | 12+      | Default Sweet-Dark theme may cause contrast issues with Natsumi.                          |
-| Midori      | :x: Unsupported              | -        | Incompatible (based on ESR128)                                                            |
+| Midori      | :x: Unsupported              | -        | Incompatible (see FAQ)                                                                    |
 | Zen         | :x: Unsupported              | -        | Incompatible since Natsumi v4 (see FAQ)                                                   |
 
 ## FAQs
@@ -400,6 +400,13 @@ compatibility unintentionally.
 
 **Please do not try to port Natsumi to Zen.** I have my reasons why I left it, and I would
 really appreciate it if you respected my decision.
+
+### "Is Natsumi compatible with Midori?"
+Natsumi does not support Midori and will not do so for the foreseeable future due to ethical
+concerns. Please note that this is in no way related to Zen Browser being unsupported.
+
+For more information, refer to this [blog
+article](https://www.greeeen.dev/natsumi-midori-support.html).
 
 ### "When does Natsumi update?"
 There is no fixed schedule for updates, it all happens randomly.
