@@ -33,11 +33,16 @@ SOFTWARE.
 @import url("tabs/fusion.css");
 @import url("tabs/material.css");
 @import url("tabs/hexagonal.css");
+@import url("tabs/bubble.css");
 @import url("tabs/classic.css");
 
 /* Global tweaks for tabs */
 .tabbrowser-tab {
   --attention-dot-color: transparent !important;
+
+  .tab-close-button {
+    padding: var(--natsumi-tab-close-button-padding) !important;
+  }
 }
 
 #tabbrowser-arrowscrollbox .tabbrowser-tab {

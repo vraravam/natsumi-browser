@@ -377,7 +377,7 @@ SOFTWARE.
   /* Tab close button */
   #tabbrowser-tabs[expanded] #tabbrowser-arrowscrollbox {
     .tabbrowser-tab .tab-close-button {
-      padding: 4px !important;
+      --natsumi-tab-close-button-padding: 4px;
       list-style-image: url("../../../icons/lucide/close.svg") !important;
       -moz-context-properties: stroke, stroke-opacity !important;
       stroke: currentColor !important;

@@ -1825,6 +1825,19 @@ const tabDesigns = {
             </div>
         `
     ),
+    "bubble": new MCChoice(
+        "bubble",
+        "Bubble",
+        "A tab bringing the Natsumi SDL2 design to tabs.",
+        `
+            <div id='tab-bubble' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
     "classic": new MCChoice(
         "classic",
         "Classic",

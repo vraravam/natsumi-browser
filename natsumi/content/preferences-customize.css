@@ -554,6 +554,28 @@ SOFTWARE.
       }
     }
 
+    #tab-bubble {
+      .natsumi-mc-tab {
+        background-color: var(--natsumi-mat-hz-background);
+        border: var(--natsumi-mat-hz-border-thin);
+        backdrop-filter: var(--natsumi-mat-hz-backdrop);
+        border-radius: 8px;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          margin: 2px;
+          border-radius: 6px;
+          background-color: var(--natsumi-sdl2-haze-button-idle-color);
+          box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+          z-index: -1;
+        }
+      }
+    }
+
     #tab-classic {
       .natsumi-mc-tab {
         background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
