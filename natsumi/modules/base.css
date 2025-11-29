@@ -469,7 +469,7 @@ SOFTWARE.
   #natsumi-tabs-clearer-separator {
     flex: 1;
     border-top: var(--tabstrip-inner-border) !important;
-    margin-block: auto;
+    margin-block: auto !important;
   }
 
   #natsumi-tabs-clearer-button {
@@ -478,7 +478,7 @@ SOFTWARE.
     color: light-dark(black, white);
     transition: opacity 0.2s ease;
     font-size: 11px;
-    padding-left: 15px;
+    padding-left: 15px !important;
     background-image: url("../icons/lucide/clear-tabs.svg");
     background-size: 11px;
     background-repeat: no-repeat;
@@ -514,7 +514,7 @@ SOFTWARE.
     }
 
     @media not -moz-pref("sidebar.verticalTabs") {
-      margin-block: auto;
+      margin-block: auto !important;
     }
   }
 }

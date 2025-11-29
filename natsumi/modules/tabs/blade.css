@@ -119,6 +119,10 @@ SOFTWARE.
           border-radius: calc(var(--natsumi-tab-border-radius) - 1px);
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+
+          @media -moz-pref("natsumi.browser.type-firedragon") {
+            height: 100%;
+          }
         }
       }
 
@@ -147,6 +151,10 @@ SOFTWARE.
           &::after {
             width: calc(100% - 4px);
             opacity: 1;
+
+            @media -moz-pref("natsumi.browser.type-firedragon") {
+              width: 100%;
+            }
           }
         }
       }

@@ -42,6 +42,7 @@ SOFTWARE.
 
   .tab-close-button {
     padding: var(--natsumi-tab-close-button-padding, 6px) !important;
+    width: 24px !important;
   }
 }
 

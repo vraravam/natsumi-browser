@@ -43,6 +43,9 @@ function detectFork() {
 
     if (browserName === "floorp") {
         forkName = "floorp";
+    } else if (browserName === "firedragon") {
+        forkName = "floorp";
+        ucApi.Prefs.set("natsumi.browser.type-firedragon", true);
     } else if (browserName === "waterfox") {
         forkName = "waterfox";
     } else if (browserName === "librewolf") {

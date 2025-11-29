@@ -86,6 +86,7 @@ SOFTWARE.
     @media -moz-pref("natsumi.theme.single-toolbar") {
       @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
         margin-right: var(--natsumi-browser-separation) !important;
+        -moz-window-dragging: no-drag !important;
       }
     }
   }

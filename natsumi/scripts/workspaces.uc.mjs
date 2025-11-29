@@ -61,12 +61,25 @@ class NatsumiWorkspacesWrapper {
         // Get minor version
         let minorVersion = parseInt(floorpVersion.split(".")[1]);
 
+        // Get Firedragon status
+        let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
+
         if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
         }
 
+        if (isFiredragon) {
+            workspacesModulePath = "chrome://noraneko/content/assets/js/modules/workspaces.js";
+        }
+
         this.workspacesModule = await import(workspacesModulePath);
-        let workspacesContext = this.workspacesModule._.getCtx();
+        let workspacesContext;
+
+        if (isFiredragon) {
+            workspacesContext = this.workspacesModule.default.getCtx();
+        } else {
+            workspacesContext = this.workspacesModule._.getCtx();
+        }
 
         if (workspacesContext) {
             this.setManagers(workspacesContext);
@@ -84,8 +97,18 @@ class NatsumiWorkspacesWrapper {
             return;
         }
 
+        // Get Firedragon status
+        let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
+
         this.initInterval = setInterval(() => {
-            let workspacesContext = this.workspacesModule._.getCtx();
+            let workspacesContext;
+
+            if (isFiredragon) {
+                workspacesContext = this.workspacesModule.default.getCtx();
+            } else {
+                workspacesContext = this.workspacesModule._.getCtx();
+            }
+
             if (workspacesContext) {
                 console.log("Workspaces context retrieved, initializing now.");
 
