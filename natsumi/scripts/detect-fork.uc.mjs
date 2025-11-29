@@ -46,6 +46,10 @@ function detectFork() {
     } else if (browserName === "firedragon") {
         forkName = "floorp";
         ucApi.Prefs.set("natsumi.browser.type-firedragon", true);
+
+        // For FireDragon, disable Firefox custom theme color
+        // This is because the default Sweet-Dark theme causes some issues with contrast with Natsumi
+        ucApi.Prefs.set("natsumi.theme.force-natsumi-color", true);
     } else if (browserName === "waterfox") {
         forkName = "waterfox";
     } else if (browserName === "librewolf") {
