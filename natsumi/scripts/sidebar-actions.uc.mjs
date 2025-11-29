@@ -99,11 +99,17 @@ class NatsumiUnpinnedTabsClearer {
 
         // Check pinned tabs container
         let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
-        let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+        let pinnedTabs = [];
+        if (pinnedTabsContainer) {
+            pinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+        }
 
         // Only override shouldOpen if there are absolutely no tabs left
         if (pinnedTabs.length === 0) {
-            ucApi.Prefs.get("browser.tabs.closeWindowWithLastTab").value;
+            let closeWithLastTab = ucApi.Prefs.get("browser.tabs.closeWindowWithLastTab").value;
+            if (closeWithLastTab) {
+                shouldOpen = true;
+            }
         }
 
         if (shouldOpen) {

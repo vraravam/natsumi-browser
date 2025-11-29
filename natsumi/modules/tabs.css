@@ -41,7 +41,7 @@ SOFTWARE.
   --attention-dot-color: transparent !important;
 
   .tab-close-button {
-    padding: var(--natsumi-tab-close-button-padding) !important;
+    padding: var(--natsumi-tab-close-button-padding, 6px) !important;
   }
 }
 

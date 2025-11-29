@@ -44,14 +44,19 @@ function addAboutPane() {
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
 
     const isStable = branch === "stable";
-    const browserName = AppConstants.MOZ_APP_BASENAME;
+    let browserName = AppConstants.MOZ_APP_BASENAME;
     const forkedFox = browserName.toLowerCase() !== "firefox";
     let browserVersion = Services.appinfo.version;
     let forkedVersion = AppConstants.MOZ_APP_VERSION_DISPLAY;
+    let isTor = false;
 
     if (browserName.toLowerCase() === "floorp") {
         // Browser version format: [Floorp version]@[Firefox version] (e.g. 12.3.0@144.0)
         forkedVersion = forkedVersion.split("@")[0];
+    } else if (browserName.toLowerCase() === "mullvadbrowser") {
+        browserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
+        forkedVersion = AppConstants.BASE_BROWSER_VERSION;
+        isTor = true;
     }
 
     let nodeString = `
@@ -63,6 +68,21 @@ function addAboutPane() {
                 <div class="natsumi-settings-info-icon"></div>
                 <div class="natsumi-settings-info-text">
                     You're on an experimental version of Natsumi. Don't panic, and stay safe!
+                </div>
+            </div>
+        </groupbox>
+        <groupbox id="natsumiTorWarning" data-category="paneNatsumiAbout" hidden="true">
+            <div class="natsumi-settings-info caution">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    <html:strong>The Tor Project recommends against installing plugins onto Tor Browser, which your
+                    browser is based on.</html:strong> You can continue to use Natsumi with this browser, but you
+                    acknowledge the risks of doing so.<html:br/>
+                    <html:br/>
+                    Natsumi is provided "as is" without warranty of any kind. We will not assume any responsibility for
+                    privacy or security issues caused by using Natsumi with Tor Browser, if any.<html:br/>
+                    <html:br/>
+                    The Natsumi Browser project is not affiliated with Tor Project in any way.
                 </div>
             </div>
         </groupbox>
@@ -109,6 +129,11 @@ function addAboutPane() {
     if (isStable) {
         stabilityBadge.setAttribute("hidden", "true");
         experimentalWarning.style.display = "none";
+    }
+
+    let torWarning = document.getElementById("natsumiTorWarning");
+    if (!isTor) {
+        torWarning.style.display = "none";
     }
 }
 

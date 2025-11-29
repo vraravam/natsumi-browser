@@ -125,6 +125,7 @@ class NatsumiWelcome {
         this.panes = []
         this.step = -1;
         this.node = null;
+        this.hasCompletedOnboarding = false;
 
         document.body.setAttribute("natsumi-welcome", "");
         document.body.appendChild(this.welcomeNode);
@@ -190,72 +191,14 @@ class NatsumiWelcome {
         if (this.step === this.panes.length) {
             // Let the drumroll commence
             ucApi.Prefs.set("natsumi.welcome.viewed", true);
+
             this.drumrollAudio.play().catch((error) => {
                 console.warn("Failed to play audio:", error);
+                this.completeOnboarding();
             });
 
             waitForAudioLoad(this.drumrollAudio).then(() => {
-                document.body.setAttribute("natsumi-welcome-complete", "");
-
-                setTimeout(() => {
-                    // Show welcome complete drumroll
-                    document.body.setAttribute("natsumi-welcome-drumroll-complete", "");
-                }, 2800);
-
-                setTimeout(() => {
-                    // Remove drumrolls
-                    document.body.setAttribute("natsumi-welcome-complete-full", "");
-                }, 4300);
-
-                setTimeout(() => {
-                    // We're finally through with the welcome
-                    document.body.removeAttribute("natsumi-welcome");
-                    document.body.removeAttribute("natsumi-welcome-complete");
-                    document.body.removeAttribute("natsumi-welcome-drumroll-complete");
-                    document.body.removeAttribute("natsumi-welcome-complete-full");
-
-                    // Also set userChromeJS.persistent_domcontent_callback to true
-                    let shouldNotify = false;
-                    if (ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").exists()) {
-                        if (!ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").value) {
-                            ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
-                            shouldNotify = true;
-                        }
-                    } else {
-                        ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
-                        shouldNotify = true;
-                    }
-
-                    // Add to notifications
-                    let notificationObject = new NatsumiNotification(
-                        "Welcome to Natsumi!",
-                        "You can always customize Natsumi to your likings in the preferences page.",
-                        "chrome://natsumi/content/icons/lucide/party.svg",
-                        10000
-                    )
-                    notificationObject.addToContainer();
-
-                    if (shouldNotify) {
-                        let restartNotificationObject = new NatsumiNotification(
-                            "Restart required",
-                            "You may need to restart your browser for some features to work.",
-                            "chrome://natsumi/content/icons/lucide/warning.svg",
-                            10000,
-                            "warning"
-                        )
-                        restartNotificationObject.addToContainer();
-                    }
-
-                    if (tabStyleReset) {
-                        let tabStyleResetObject = new NatsumiNotification(
-                            "Heads up: your tab style was reset to Proton.",
-                            "If you want to use other tab styles, simply enable the Classic tab design in settings.",
-                            "chrome://natsumi/content/icons/lucide/info.svg",
-                            10000
-                        )
-                        tabStyleResetObject.addToContainer();
-                    }
-                }, 4800);
+                this.completeOnboarding();
             });
             return;
         }
@@ -308,6 +251,75 @@ class NatsumiWelcome {
                 });
             });
         }
+    }
+
+    completeOnboarding() {
+        if (this.hasCompletedOnboarding) {
+            return;
+        }
+
+        this.hasCompletedOnboarding = true;
+        document.body.setAttribute("natsumi-welcome-complete", "");
+
+        setTimeout(() => {
+            // Show welcome complete drumroll
+            document.body.setAttribute("natsumi-welcome-drumroll-complete", "");
+        }, 2800);
+
+        setTimeout(() => {
+            // Remove drumrolls
+            document.body.setAttribute("natsumi-welcome-complete-full", "");
+        }, 4300);
+
+        setTimeout(() => {
+            // We're finally through with the welcome
+            document.body.removeAttribute("natsumi-welcome");
+            document.body.removeAttribute("natsumi-welcome-complete");
+            document.body.removeAttribute("natsumi-welcome-drumroll-complete");
+            document.body.removeAttribute("natsumi-welcome-complete-full");
+
+            // Also set userChromeJS.persistent_domcontent_callback to true
+            let shouldNotify = false;
+            if (ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").exists()) {
+                if (!ucApi.Prefs.get("userChromeJS.persistent_domcontent_callback").value) {
+                    ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                    shouldNotify = true;
+                }
+            } else {
+                ucApi.Prefs.set("userChromeJS.persistent_domcontent_callback", true);
+                shouldNotify = true;
+            }
+
+            // Add to notifications
+            let notificationObject = new NatsumiNotification(
+                "Welcome to Natsumi!",
+                "You can always customize Natsumi to your likings in the preferences page.",
+                "chrome://natsumi/content/icons/lucide/party.svg",
+                10000
+            )
+            notificationObject.addToContainer();
+
+            if (shouldNotify) {
+                let restartNotificationObject = new NatsumiNotification(
+                    "Restart required",
+                    "You may need to restart your browser for some features to work.",
+                    "chrome://natsumi/content/icons/lucide/warning.svg",
+                    10000,
+                    "warning"
+                )
+                restartNotificationObject.addToContainer();
+            }
+
+            if (tabStyleReset) {
+                let tabStyleResetObject = new NatsumiNotification(
+                    "Heads up: your tab style was reset to Proton.",
+                    "If you want to use other tab styles, simply enable the Classic tab design in settings.",
+                    "chrome://natsumi/content/icons/lucide/info.svg",
+                    10000
+                )
+                tabStyleResetObject.addToContainer();
+            }
+        }, 4800);
     }
 }
 
@@ -546,7 +558,38 @@ function createURLbarPane() {
 }
 
 function createCompatibilityWarning() {
-    // This function is only to be used if the browser is INTENTIONALLY made incompatible
+    // This function is only to be used if the browser is INTENTIONALLY made incompatible or has security issues
+
+    const unsupportedBrowsers = [
+        "zen"
+    ]
+    const torSecurityBrowsers = ["torbrowser", "mullvadbrowser"];
+
+    let mainBrowserName = AppConstants.MOZ_APP_NAME.toLowerCase();
+    let displayBrowserName = AppConstants.MOZ_APP_NAME;
+    const altBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE.toLowerCase();
+
+    if (altBrowserName === "tor browser") {
+        mainBrowserName = "torbrowser";
+        displayBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
+    } else if (mainBrowserName === "mullvadbrowser") {
+        displayBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
+    }
+
+    const isUnsupported = unsupportedBrowsers.includes(mainBrowserName);
+    let isTorSecurityIssue = torSecurityBrowsers.includes(mainBrowserName);
+
+    if (isTorSecurityIssue) {
+        // Check if security notice has been acknowledged
+        let securityNoticeAcknowledged = false;
+        if (ucApi.Prefs.get("natsumi.browser.ignore-security-notice").exists()) {
+            securityNoticeAcknowledged = ucApi.Prefs.get("natsumi.browser.ignore-security-notice").value;
+        }
+
+        if (securityNoticeAcknowledged) {
+            return;
+        }
+    }
 
     document.body.setAttribute("natsumi-welcome", "");
 
@@ -562,6 +605,9 @@ function createCompatibilityWarning() {
                 </div>
                 <div id="natsumi-compat-warning-body-1"></div>
                 <div id="natsumi-compat-warning-body-2"></div>
+                <div id="natsumi-compat-warning-restart">
+                    Acknowledge and restart browser
+                </div>
             </div>
         </div>
     `);
@@ -570,10 +616,29 @@ function createCompatibilityWarning() {
 
     // Set up text content
     try {
-        let warningBodyNode = document.getElementById("natsumi-compat-warning-body-1");
-        warningBodyNode.textContent = `Natsumi is incompatible with ${browserName}. This can be due to compatibility issues or severe concerns such as security/privacy or ethics.`;
-        let warningBodyNode2 = document.getElementById("natsumi-compat-warning-body-2");
-        warningBodyNode2.textContent = `Please use a supported browser or uninstall Natsumi.`;
+        if (isUnsupported) {
+            let warningBodyNode = document.getElementById("natsumi-compat-warning-body-1");
+            warningBodyNode.textContent = `Natsumi is incompatible with ${displayBrowserName}. This can be due to compatibility issues or severe concerns such as security/privacy or ethics.`;
+            let warningBodyNode2 = document.getElementById("natsumi-compat-warning-body-2");
+            warningBodyNode2.textContent = `Please use a supported browser or uninstall Natsumi.`;
+            let warningRestartNode = document.getElementById("natsumi-compat-warning-restart");
+            warningRestartNode.style.display = "none";
+        } else if (isTorSecurityIssue) {
+            let warningHeaderNode = document.getElementById("natsumi-compat-warning-header");
+            warningHeaderNode.textContent = `Using Natsumi on ${displayBrowserName} is not recommended`;
+            let warningBodyNode = document.getElementById("natsumi-compat-warning-body-1");
+            warningBodyNode.textContent = `The Tor Project recommends against installing plugins onto Tor Browser, which ${displayBrowserName} is based on. You can continue to use Natsumi with this browser, but you acknowledge the risks of doing so.`;
+            let warningBodyNode2 = document.getElementById("natsumi-compat-warning-body-2");
+            warningBodyNode2.textContent = "Natsumi is provided \"as is\" without warranty of any kind. You assume all responsibility for issues caused by using Natsumi with this browser. The Natsumi Browser project is not affiliated with Tor Project in any way.";
+            let warningRestartNode = document.getElementById("natsumi-compat-warning-restart");
+            warningRestartNode.addEventListener("click", () => {
+                ucApi.Prefs.set("natsumi.browser.ignore-security-notice", true);
+                // Restart browser
+                Services.startup.quit(
+                    Ci.nsIAppStartup.eRestart | Ci.nsIAppStartup.eAttemptQuit
+                );
+            });
+        }
     } catch (e) {
         console.error("Failed to set compatibility warning text:", e);
     }
@@ -587,7 +652,32 @@ if (ucApi.Prefs.get("natsumi.welcome.viewed").exists()) {
     welcomeViewed = ucApi.Prefs.get("natsumi.welcome.viewed").value;
 }
 
-if (!welcomeViewed) {
+// Errors (blocks onboarding)
+let browserName = AppConstants.MOZ_APP_NAME.toLowerCase();
+const altBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE.toLowerCase();
+
+if (altBrowserName === "tor browser") {
+    browserName = "torbrowser";
+}
+
+let blockOnboarding = false;
+const torBrowsers = ["torbrowser", "mullvadbrowser"];
+
+if (ucApi.Prefs.get("toolkit.legacyUserProfileCustomizations.stylesheets").exists()) {
+    blockOnboarding = !ucApi.Prefs.get("toolkit.legacyUserProfileCustomizations.stylesheets").value;
+}
+if (torBrowsers.includes(browserName)) {
+    let ignoreTorWarning = false;
+    if (ucApi.Prefs.get("natsumi.browser.ignore-security-notice").exists()) {
+        ignoreTorWarning = ucApi.Prefs.get("natsumi.browser.ignore-security-notice").value;
+    }
+
+    if (!ignoreTorWarning) {
+        blockOnboarding = true;
+    }
+}
+
+if (!welcomeViewed && !blockOnboarding) {
     // Set up welcomer
     setupWelcome();
     createLayoutPane();
@@ -628,12 +718,14 @@ if (!welcomeViewed) {
 }
 
 // Show compatibility warning on unsupported browsers
-const unsupportedBrowsers = [
-    "zen" // Zen Browser, reason: see README FAQ
+const potentialIssueBrowsers = [
+    "zen", // Zen Browser (unsupported), reason: see README FAQ
+    "torbrowser", // Tor Browser (supported), reason: project recommends against installing plugins
+    "mullvadbrowser" // Mullvad Browser (supported), reason: based on Tor Browser, see above
 ]
 
 try {
-    if (unsupportedBrowsers.includes(AppConstants.MOZ_APP_NAME.toLowerCase())) {
+    if (potentialIssueBrowsers.includes(browserName)) {
         createCompatibilityWarning();
     }
 } catch (e) {

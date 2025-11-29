@@ -917,5 +917,17 @@ body:not([natsumi-welcome]) {
     #natsumi-compat-warning-body-1, #natsumi-compat-warning-body-2 {
       font-size: small;
     }
+
+    #natsumi-compat-warning-restart {
+      margin-top: 10px;
+      font-size: small;
+      padding: 5px;
+      border-radius: 5px;
+      background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
+
+      &:hover {
+        background-color: light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2));
+      }
+    }
   }
 }

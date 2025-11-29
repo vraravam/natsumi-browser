@@ -32,14 +32,25 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 function detectFork() {
-    const browserName = AppConstants.MOZ_APP_BASENAME.toLowerCase();
+    let browserName = AppConstants.MOZ_APP_BASENAME.toLowerCase();
+    const altBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE.toLowerCase();
+
+    if (altBrowserName === "tor browser") {
+        browserName = "torbrowser";
+    }
 
     let forkName = "firefox";
 
     if (browserName === "floorp") {
         forkName = "floorp";
-    } else if (browserTitle === "waterfox") {
+    } else if (browserName === "waterfox") {
         forkName = "waterfox";
+    } else if (browserName === "librewolf") {
+        forkName = "librewolf";
+    } else if (browserName === "mullvadbrowser") {
+        forkName = "mullvad";
+    } else if (browserName === "torbrowser") {
+        forkName = "tor";
     }
 
     return forkName;

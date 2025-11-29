@@ -194,6 +194,10 @@ SOFTWARE.
     list-style-image: url("../../../icons/fluent/fullscreen.svg") !important;
   }
 
+  #new-identity-button {
+    list-style-image: url("../../../icons/fluent/identity.svg") !important;
+  }
+
   /* URLbar icons */
   #identity-icon, .urlbar-icon, #tracking-protection-icon {
     -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;

@@ -57,6 +57,10 @@ SOFTWARE.
     top: 20px;
   }
 
+  @media not -moz-pref("sidebar.verticalTabs") {
+    top: 90px;
+  }
+
   &[style*="--natsumi-notifications-overflow"] {
     &::after {
       content: var(--natsumi-notifications-overflow);
