@@ -272,11 +272,13 @@ SOFTWARE.
       }
 
       @media -moz-pref("natsumi.theme.enable-sdl2") {
-        #toolbarViewerMiddle > .toolbarHorizontalGroup {
-          gap: 1px !important;
+        #toolbarViewerLeft, #toolbarViewerMiddle {
+          & > .toolbarHorizontalGroup {
+            gap: 1px !important;
 
-          .splitToolbarButtonSeparator {
-            margin-inline: 2px !important;
+            .splitToolbarButtonSeparator {
+              margin-inline: 2px !important;
+            }
           }
         }
       }
