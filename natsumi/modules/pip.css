@@ -393,8 +393,10 @@ SOFTWARE.
             border-radius: 0 !important;
           }
 
-          #seekBackward, #audio, #fullscreen {
-            border-radius: 4px !important;
+          @media not -moz-pref("natsumi.theme.enable-sdl2") {
+            #seekBackward, #audio, #fullscreen {
+              border-radius: 4px !important;
+            }
           }
 
           #timestamp {
