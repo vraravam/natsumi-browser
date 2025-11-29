@@ -2447,6 +2447,48 @@ function addIconsPane() {
     prefsView.insertBefore(iconNode, homePane);
 }
 
+function addSDL2Pane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let sdl2Group = new OptionsGroup(
+        "natsumiSDL2",
+        "Starlight Design 2",
+        "Starlight Design 2 is an experimental design language for Natsumi aimed at enhancing visuals and contrast."
+    );
+
+    sdl2Group.registerOption("natsumiEnableSDL2", new CheckboxChoice(
+        "natsumi.theme.enable-sdl2",
+        "natsumiEnableSDL2",
+        "Enable Starlight Design 2 (SDL2)",
+        "Please note that SDL2 is still experimental and things may break. If you have any feedback for SDL2, please share them through GitHub or Discord!"
+    ));
+
+    let sdl2Node = sdl2Group.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = sdl2Node.querySelectorAll("checkbox");
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(sdl2Node, homePane);
+}
+
 function addSidebarTabsPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -3553,6 +3595,7 @@ function addPreferencesPanes() {
     addWindowMaterialPane();
     addColorsPane();
     addIconsPane();
+    addSDL2Pane();
 
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarTabsPane();

@@ -93,9 +93,7 @@ SOFTWARE.
         #sidebarToggleButton {
           appearance: none !important;
           position: absolute !important;
-          border-radius: 50px !important;
-          width: 36px !important;
-          height: 36px !important;
+          border-radius: 50% !important;
           left: -46px !important;
           background: var(--natsumi-material-background) !important;
           backdrop-filter: var(--natsumi-material-backdrop);
@@ -116,48 +114,149 @@ SOFTWARE.
             transition: background-color 0.2s ease, box-shadow 0.2s ease;
           }
 
-          &:hover {
-            &::after {
-              background-color: var(--natsumi-button-hover-color);
+          @media not -moz-pref("natsumi.theme.enable-sdl2") {
+            width: 36px !important;
+            height: 36px !important;
+
+            &:hover {
+              &::after {
+                background-color: var(--natsumi-button-hover-color);
+              }
+            }
+
+            &:active, &[aria-expanded="true"] {
+              &::after {
+                background-color: var(--natsumi-button-active-color) !important;
+                box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+              }
             }
           }
 
-          &:active, &[aria-expanded="true"] {
+          @media -moz-pref("natsumi.theme.enable-sdl2") {
+            width: 40px !important;
+            height: 40px !important;
+
             &::after {
-              background-color: var(--natsumi-button-active-color) !important;
-              box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+              box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+              background-color: var(--natsumi-sdl2-haze-button-idle-color);
+            }
+
+            &:hover {
+              &::after {
+                background-color: var(--natsumi-sdl2-haze-button-hover-color);
+              }
+            }
+
+            &:active, &[aria-expanded="true"] {
+              &::after {
+                background-color: var(--natsumi-sdl2-haze-button-active-color) !important;
+              }
             }
           }
         }
       }
 
       #toolbarViewerLeft, #toolbarViewerMiddle, #toolbarViewerRight {
-        border-radius: 18px;
-        border: 2px solid transparent;
-
-        &::before {
-          content: "";
-          width: 100%;
-          height: 32px;
-          background: red;
-          position: absolute;
+        @media not -moz-pref("natsumi.theme.enable-sdl2") {
           border-radius: 18px;
-          margin-left: -2px;
-          background: var(--natsumi-material-background) !important;
-          box-shadow: var(--natsumi-material-shadow) !important;
-          border: var(--natsumi-material-border) !important;
-          backdrop-filter: var(--natsumi-material-backdrop);
-          z-index: -1;
+          border: 2px solid transparent;
+
+          &::before {
+            content: "";
+            width: 100%;
+            height: 32px;
+            background: red;
+            position: absolute;
+            border-radius: 18px;
+            margin-left: -2px;
+            background: var(--natsumi-material-background) !important;
+            box-shadow: var(--natsumi-material-shadow) !important;
+            border: var(--natsumi-material-border) !important;
+            backdrop-filter: var(--natsumi-material-backdrop);
+            z-index: -1;
+          }
+
+          .toolbarButtonWithContainer:first-of-type button, #zoomOutButton, #viewFindButton, &:has(#viewFindButton.hidden) #previous {
+            border-start-start-radius: 50% !important;
+            border-end-start-radius: 50% !important;
+          }
+
+          #scaleSelect {
+            background: transparent !important;
+            border-radius: 4px !important;
+            border-start-end-radius: 16px !important;
+            border-end-end-radius: 16px !important;
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: var(--natsumi-button-hover-color) !important;
+            }
+          }
+
+          #secondaryToolbar .toolbarButtonWithContainer:last-of-type button {
+            border-start-end-radius: 4px !important;
+            border-end-end-radius: 4px !important;
+          }
         }
 
-        .toolbarButtonWithContainer:first-of-type button, #zoomOutButton, #viewFindButton, &:has(#viewFindButton.hidden) #previous {
-          border-start-start-radius: 50% !important;
-          border-end-start-radius: 50% !important;
-        }
+        @media -moz-pref("natsumi.theme.enable-sdl2") {
+          padding: 2px !important;
+          box-sizing: border-box !important;
 
-        #secondaryToolbar .toolbarButtonWithContainer:last-of-type button {
-          border-start-end-radius: 4px !important;
-          border-end-end-radius: 4px !important;
+          &::before {
+            content: "";
+            width: 100%;
+            height: 36px;
+            background: red;
+            position: absolute;
+            border-radius: 22px;
+            margin-left: -4px;
+            background: var(--natsumi-material-background) !important;
+            box-shadow: var(--natsumi-material-shadow) !important;
+            border: var(--natsumi-material-border) !important;
+            backdrop-filter: var(--natsumi-material-backdrop);
+            z-index: -1;
+          }
+
+          .toolbarHorizontalGroup {
+            gap: 4px !important;
+          }
+
+          & > button, .toolbarHorizontalGroup > button, .toolbarButtonWithContainer > button {
+            border-radius: 50% !important;
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+          }
+
+          @media (max-width: 800px) {
+            #scaleSelectContainer {
+              display: none !important;
+            }
+          }
+
+          #scaleSelectContainer, #pageNumber {
+            margin-left: 4px !important;
+          }
+
+          #scaleSelect {
+            background: var(--natsumi-sdl2-haze-button-idle-color) !important;
+            border-radius: 16px !important;
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: var(--natsumi-sdl2-haze-button-hover-color) !important;
+            }
+          }
+
+          #pageNumber {
+            border-color: transparent !important;
+            background-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1)) !important;
+            border-radius: 6px !important;
+
+            &:focus {
+              border-color: var(--natsumi-primary-color) !important;
+            }
+          }
         }
       }
 
@@ -169,6 +268,16 @@ SOFTWARE.
         .toolbarButtonWithContainer:last-of-type button {
           border-start-end-radius: 50% !important;
           border-end-end-radius: 50% !important;
+        }
+      }
+
+      @media -moz-pref("natsumi.theme.enable-sdl2") {
+        #toolbarViewerMiddle > .toolbarHorizontalGroup {
+          gap: 1px !important;
+
+          .splitToolbarButtonSeparator {
+            margin-inline: 2px !important;
+          }
         }
       }
 
@@ -186,22 +295,12 @@ SOFTWARE.
         margin-right: 0 !important;
 
         #scaleSelectContainer, #scaleSelect {
-          background: transparent !important;
           height: 32px !important;
         }
 
-        #scaleSelect {
-          border-radius: 4px !important;
-          border-start-end-radius: 16px !important;
-          border-end-end-radius: 16px !important;
-          transition: background-color 0.2s ease;
-
-          &:hover {
-            background-color: var(--natsumi-button-hover-color) !important;
-          }
-        }
-
         #scaleSelectContainer {
+          background: transparent !important;
+
           &::after {
             right: 8px !important;
           }
@@ -235,13 +334,25 @@ SOFTWARE.
         border-radius: 6px !important;
         transition: background-color 0.2s ease, box-shadow 0.2s ease;
 
-        &:hover {
-          background-color: var(--natsumi-button-hover-color) !important;
+        @media -moz-pref("natsumi.theme.enable-sdl2") {
+          background-color: var(--natsumi-sdl2-haze-button-idle-color) !important;
         }
 
-        &.toggled {
+        &:hover {
+          background-color: var(--natsumi-button-hover-color) !important;
+
+          @media -moz-pref("natsumi.theme.enable-sdl2") {
+            background-color: var(--natsumi-sdl2-haze-button-hover-color) !important;
+          }
+        }
+
+        &.toggled, &:active {
           background-color: var(--natsumi-button-active-color) !important;
           box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+
+          @media -moz-pref("natsumi.theme.enable-sdl2") {
+            background-color: var(--natsumi-sdl2-haze-button-active-color) !important;
+          }
         }
 
         &::before {
@@ -253,6 +364,12 @@ SOFTWARE.
           @media (prefers-color-scheme: dark) {
             stroke: white;
           }
+        }
+      }
+
+      @media -moz-pref("natsumi.theme.enable-sdl2") {
+        #secondaryToolbarButtonContainer .toolbarButton {
+          --natsumi-sdl2-haze-button-idle-color: transparent;
         }
       }
 

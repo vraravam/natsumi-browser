@@ -398,6 +398,10 @@ SOFTWARE.
     #close, #unpip {
       -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
       stroke: light-dark(black, white) !important;
+
+      &::before {
+        background-size: 18px !important;
+      }
     }
 
     #playpause {

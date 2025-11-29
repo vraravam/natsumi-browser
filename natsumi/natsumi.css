@@ -34,7 +34,7 @@ Removing or modifying parts of this file may break some parts of Natsumi.
 @import "../natsumi-config.css";
 @import "modules/preload.css";
 @import "global/colors.css";
-@import "global/materials.css";
+@import "global/starlight.css";
 @import "modules/themer.css";
 @import "modules/base.css";
 @import "modules/backdrop-blur.css";

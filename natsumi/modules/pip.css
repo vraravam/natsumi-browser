@@ -120,12 +120,46 @@ SOFTWARE.
         background-size: 16px !important;
         border: var(--natsumi-material-border) !important;
 
+        @media not -moz-pref("natsumi.theme.enable-sdl2") {
         &:hover {
           background-color: color-mix(in srgb, var(--natsumi-material-background) 70%, white) !important;
         }
 
         &:active {
           background-color: var(--natsumi-button-active-color) !important;
+        }
+      }
+
+        @media -moz-pref("natsumi.theme.enable-sdl2") {
+          min-width: 40px !important;
+          height: 40px !important;
+          padding: 2px !important;
+          background-size: 0 !important;
+
+          &::before {
+            content: "";
+            width: 32px;
+            height: 32px;
+            position: absolute;
+            border-radius: 50%;
+            left: 2px;
+            top: 2px;
+            background-image: inherit;
+            background-size: 16px;
+            background-repeat: no-repeat;
+            background-position: center;
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+            background-color: var(--natsumi-sdl2-haze-button-idle-color);
+            transition: background-color 0.2s ease;
+          }
+
+          &:hover::before {
+            background-color: var(--natsumi-sdl2-haze-button-hover-color);
+          }
+
+          &:active::before {
+            background-color: var(--natsumi-sdl2-haze-button-active-color);
+          }
         }
       }
 
@@ -154,6 +188,12 @@ SOFTWARE.
           backdrop-filter: var(--natsumi-material-backdrop) !important;
           gap: 0 !important;
           box-shadow: var(--natsumi-material-shadow) !important;
+
+          @media -moz-pref("natsumi.theme.enable-sdl2") {
+            padding: 2px !important;
+            border-radius: 20px !important;
+            gap: 4px !important;
+          }
         }
 
         #timestamp {
@@ -162,6 +202,7 @@ SOFTWARE.
           padding-inline: 12px !important;
         }
 
+        @media not -moz-pref("natsumi.theme.enable-sdl2") {
         #seekBackward, #audio {
           border-radius: 16px 4px 4px 16px !important;
         }
@@ -173,6 +214,7 @@ SOFTWARE.
         #seekForward, #fullscreen {
           border-radius: 4px 16px 16px 4px !important;
         }
+      }
 
         #playpause::after, #seekBackward::after, #seekForward::after, #audio::after, #closed-caption::after {
           left: 50% !important;
@@ -278,14 +320,32 @@ SOFTWARE.
             }
           }
 
-          &:not([disabled]) {
-            &:hover {
-              background-color: var(--natsumi-button-hover-color) !important;
-            }
+          @media not -moz-pref("natsumi.theme.enable-sdl2") {
+            &:not([disabled]) {
+              &:hover {
+                background-color: var(--natsumi-button-hover-color) !important;
+              }
 
-            &:active, &[aria-expanded="true"] {
-              background-color: var(--natsumi-button-active-color) !important;
-              box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+              &:active, &[aria-expanded="true"] {
+                background-color: var(--natsumi-button-active-color) !important;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+              }
+            }
+          }
+
+          @media -moz-pref("natsumi.theme.enable-sdl2") {
+            border-radius: 50% !important;
+            background-color: var(--natsumi-sdl2-haze-button-idle-color) !important;
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+
+            &:not([disabled]) {
+              &:hover {
+                background-color: var(--natsumi-sdl2-haze-button-hover-color) !important;
+              }
+
+              &:active, &[aria-expanded="true"] {
+                background-color: var(--natsumi-sdl2-haze-button-active-color) !important;
+              }
             }
           }
         }
