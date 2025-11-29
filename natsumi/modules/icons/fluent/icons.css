@@ -463,9 +463,11 @@ SOFTWARE.
   
     #closed-caption {
       background-image: url("../../../icons/fluent/captions.svg") !important;
-  
-      &[disabled="true"] {
-        fill: light-dark(#999, #777) !important;
+
+      @media not -moz-pref("natsumi.theme.enable-sdl2") {
+        &[disabled="true"] {
+          fill: light-dark(#999, #777) !important;
+        }
       }
     }
   
