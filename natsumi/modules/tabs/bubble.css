@@ -230,4 +230,9 @@ SOFTWARE.
       margin-bottom: 1px !important;
     }
   }
+
+  /* Ensure backdrop filters work */
+  #vertical-tabs {
+    will-change: unset !important;
+  }
 }
