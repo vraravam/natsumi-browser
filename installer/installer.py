@@ -139,7 +139,8 @@ browsers = [
     BrowserEntry('Firefox', 'mozilla', 'Firefox', 'org.mozilla.firefox', 'Mozilla/Firefox', 'Mozilla Firefox'),
     BrowserEntry('Floorp', 'floorp', 'Floorp', None, 'Floorp', 'Floorp'),
     BrowserEntry('Waterfox', 'waterfox', 'Waterfox', None, 'Waterfox/Waterfox', 'Waterfox'),
-    BrowserEntry('Librewolf', 'librewolf', 'LibreWolf', 'io.gitlab.librewolf-community', 'librewolf', 'librewolf')
+    BrowserEntry('Librewolf', 'librewolf', 'LibreWolf', 'io.gitlab.librewolf-community', 'librewolf', 'librewolf'),
+    BrowserEntry('Glide', 'glide-browser', 'Glide', None, None, None)
 ]
 
 def get_profiles(path):

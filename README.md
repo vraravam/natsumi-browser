@@ -295,6 +295,7 @@ All browsers must be based on Firefox 137 or above.
 | Firefox     | :white_check_mark: Supported  | 137+     |                                                                    |
 | Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                                    |
 | Librewolf   | :white_check_mark: Supported  | 137+     | May have performance issues, but other than that fully compatible. |
+| Glide       | :white_check_mark: Supported  | 0.1.54a+ | Not tested very thoroughly yet.                                    |
 | Firedragon  | :warning: Partially supported | 12+      | Theoretically supported, but not yet tested.                       |
 | Midori      | :x: Unsupported               | -        | Incompatible (based on ESR128)                                     |
 | Mullvad/Tor | :x: Unsupported               | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
