@@ -57,6 +57,9 @@ function addAboutPane() {
         browserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
         forkedVersion = AppConstants.BASE_BROWSER_VERSION;
         isTor = true;
+    } else if (browserName.toLowerCase() === "glide") {
+        browserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
+        browserVersion = AppConstants.GLIDE_FIREFOX_VERSION;
     }
 
     let nodeString = `

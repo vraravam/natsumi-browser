@@ -58,6 +58,8 @@ function detectFork() {
         forkName = "mullvad";
     } else if (browserName === "torbrowser") {
         forkName = "tor";
+    } else if (browserName === "glide") {
+        forkName = "glide";
     }
 
     return forkName;
