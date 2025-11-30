@@ -371,7 +371,7 @@ All browsers must be based on Firefox 137 or above.
 | Librewolf   | :white_check_mark: Supported | 137+     |                                                                                           |
 | Mullvad/Tor | :white_check_mark: Supported | 15.0+    | **Tor does not recommend installing plugins onto Tor Browser.** Proceed at your own risk. |
 | FireDragon  | :white_check_mark: Supported | 12+      | Default Sweet-Dark theme may cause contrast issues with Natsumi.                          |
-| Glide       | :white_check_mark: Supported | 0.1.42a+ |                                                                                           |
+| Glide       | :white_check_mark: Supported | 0.1.54a+ |                                                                                           |
 | Midori      | :x: Unsupported              | -        | Incompatible (see FAQ)                                                                    |
 | Zen         | :x: Unsupported              | -        | Incompatible since Natsumi v4 (see FAQ)                                                   |
 
