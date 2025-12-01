@@ -346,6 +346,11 @@ SOFTWARE.
     }
   }
 
+  #natsumi-welcome-content-body {
+    overflow-y: scroll;
+    height: calc(100% - 48px) !important;
+  }
+
   &.natsumi-welcome-ready {
     #natsumi-icon {
       display: none !important;
@@ -569,6 +574,226 @@ SOFTWARE.
           @media (prefers-color-scheme: dark) {
             background: linear-gradient(180deg, #316a80, #745259, #aaa, #745259, #316a80);
           }
+        }
+      }
+    }
+
+    /* Tabs pane */
+    #natsumi-welcome-tabs {
+      .natsumi-welcome-selection-preview {
+        display: grid;
+        grid-template-columns: 1fr;
+        overflow: hidden;
+        width: 140px;
+        height: 80px;
+        border-radius: 4px;
+        border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3)) !important;
+        background: linear-gradient(135deg, #ff9393, #ffb78b, #ffe88c, #5ce4a2, #97a6ff, #be9dff);
+
+        @media (prefers-color-scheme: dark) {
+          background: linear-gradient(135deg, #994444, #895f46, #8d804b, #3e8663, #3e456d, #625084) !important;
+        }
+
+        &::before {
+          content: "";
+          grid-row-start: 1;
+          grid-column-start: 1;
+          margin-left: auto;
+          margin-top: auto;
+          margin-right: 0;
+          margin-bottom: 0;
+          height: calc(100% - 10px);
+          width: 10px;
+          border-radius: 5px 0 0 0;
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.3), rgba(255, 255, 255, 0.3));
+          background: light-dark(var(--natsumi-colors-secondary), var(--natsumi-colors-primary));
+          border-right: none;
+          border-bottom: none;
+        }
+
+        .natsumi-welcome-tab {
+          width: calc(100% - 18px);
+          margin-left: 4px;
+          margin-top: 16px;
+          height: 16px;
+          grid-row-start: 1;
+          grid-column-start: 1;
+
+          .natsumi-welcome-tab-icon {
+            background-color: light-dark(black, white);
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            margin: auto 6px;
+          }
+
+          .natsumi-welcome-tab-text {
+            background-color: light-dark(black, white);
+            width: 50%;
+            height: 4px;
+            border-radius: 2px;
+            margin: auto 0;
+          }
+        }
+      }
+
+      #natsumi-welcome-tabs-blade {
+        .natsumi-welcome-tab {
+          background: var(--natsumi-mat-hz-background);
+          backdrop-filter: var(--natsumi-mat-hz-backdrop);
+          border-radius: 5px;
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+
+          &::after {
+            --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+            border: 2px solid var(--natsumi-tab-highlight-color) !important;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            border-radius: 5px;
+            mask-image: linear-gradient(to right, black, transparent 30%);
+          }
+        }
+      }
+
+      #natsumi-welcome-tabs-origin {
+        .natsumi-welcome-tab {
+          background-color: light-dark(white, rgba(255, 255, 255, 0.17));
+          border-top: 1px solid light-dark(#8888882d, #ffffff2d);
+          border-bottom: 1px solid #0000002d;
+          border-radius: 5px;
+        }
+      }
+
+      #natsumi-welcome-tabs-curve {
+        .natsumi-welcome-tab {
+          background-color: light-dark(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.12));
+          backdrop-filter: saturate(1); /* Just so we don't lose our pseudoelements */
+          border-radius: 5px;
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+          overflow: hidden;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, rgba(0, 0, 0, 0.1));
+          }
+
+          &::after {
+            --natsumi-tab-highlight-color: var(--natsumi-primary-color);
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+            width: 50%;
+            height: 100%;
+            border-radius: 5px;
+            mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.5), transparent);
+          }
+        }
+      }
+
+      #natsumi-welcome-tabs-fusion {
+        &::before {
+          outline: 2px solid light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+        }
+
+        .natsumi-welcome-tab {
+          background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3));
+          width: calc(100% - 17px);
+          border-radius: 2px 0 0 2px;
+        }
+      }
+
+      #natsumi-welcome-tabs-material {
+        .natsumi-welcome-tab {
+          background-color: color-mix(in srgb, var(--natsumi-primary-color), light-dark(white, black)) !important;
+          border: 1px solid light-dark(rgba(0, 0, 0, 0.2), rgba(255, 255, 255, 0.2)) !important;
+          border-radius: 3px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
+        }
+      }
+
+      #natsumi-welcome-tabs-hexagonal {
+        .natsumi-welcome-tab {
+          --natsumi-tab-height: 16px;
+          --horizontal-dist: calc(calc(var(--natsumi-tab-height) / 2) * tan(30deg));
+          --hexagon-side-length: calc(calc(var(--natsumi-tab-height) / 2) / sin(60deg));
+          --icon-container-width: calc(var(--horizontal-dist) * 2 + var(--hexagon-side-length));
+          background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
+          clip-path: polygon(
+                  0 50%,
+                  var(--horizontal-dist) 0,
+                  calc(100% - var(--horizontal-dist)) 0,
+                  100% 50%,
+                  calc(100% - var(--horizontal-dist)) 100%,
+                  var(--horizontal-dist) 100%
+          );
+
+          .natsumi-welcome-tab-icon {
+            display: grid;
+            grid-template-columns: 1fr;
+
+            &::before {
+              --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+              content: "";
+              grid-row-start: 1;
+              grid-column-start: 1;
+              z-index: -1;
+              background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
+              min-width: var(--icon-container-width);
+              height: 16px;
+              margin-top: -5px;
+              margin-left: -6px;
+              clip-path: polygon(
+                      0 50%,
+                      var(--horizontal-dist) 0,
+                      calc(100% - var(--horizontal-dist)) 0,
+                      100% 50%,
+                      calc(100% - var(--horizontal-dist)) 100%,
+                      var(--horizontal-dist) 100%
+              );
+            }
+          }
+
+          .natsumi-welcome-tab-text {
+            margin-left: 2px;
+          }
+        }
+      }
+
+      #natsumi-welcome-tabs-bubble {
+        .natsumi-welcome-tab {
+          background-color: var(--natsumi-mat-hz-background);
+          border: var(--natsumi-mat-hz-border-thin);
+          backdrop-filter: var(--natsumi-mat-hz-backdrop);
+          border-radius: 8px;
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+
+          &::before {
+            content: "";
+            position: absolute;
+            width: calc(100% - 4px);
+            height: calc(100% - 4px);
+            margin: 2px;
+            border-radius: 6px;
+            background-color: var(--natsumi-sdl2-haze-button-idle-color);
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+            z-index: -1;
+          }
+        }
+      }
+
+      #natsumi-welcome-tabs-classic {
+        .natsumi-welcome-tab {
+          background-color: light-dark(rgb(255, 255, 255), rgba(106, 106, 120, 0.7));
+          border-radius: 3px;
+          box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 1px 0px, rgba(0, 0, 0, 0.4) 0px 1px 2px 0px;
         }
       }
     }

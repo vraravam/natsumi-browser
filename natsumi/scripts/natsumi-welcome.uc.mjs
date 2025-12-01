@@ -58,15 +58,21 @@ function waitForAudioLoad(audio) {
 }
 
 class NatsumiWelcomePane {
-    constructor(id, title, body) {
+    constructor(id, title, body, nonDefaultDependency = null) {
         this.id = id;
         this.title = title;
         this.body = body;
+        this.nonDefaultDependency = nonDefaultDependency;
     }
 
     generateNode() {
+        let dependencyAttribute = "";
+        if (this.nonDefaultDependency) {
+            dependencyAttribute = ` dependency="${this.nonDefaultDependency}"`;
+        }
+
         return convertToXUL(`
-            <div id="${this.id}" class="natsumi-welcome-pane">
+            <div id="${this.id}" class="natsumi-welcome-pane"${dependencyAttribute}>
                 <div id="natsumi-welcome-title">${this.title}</div>
                 <div class="natsumi-welcome-pane-body">${this.body}</div>
             </div>
@@ -159,7 +165,7 @@ class NatsumiWelcome {
         this.panes.push(pane);
     }
 
-    handleSelection(selectionObject) {
+    handleSelection(selectionObject, nonDefaultDependency) {
         let selectionPref = selectionObject.getAttribute("pref");
         let selectionType = selectionObject.getAttribute("type");
         let selectionValue = selectionObject.getAttribute("value");
@@ -177,6 +183,10 @@ class NatsumiWelcome {
                 selectionObject.classList.remove("selected")
             }
         });
+
+        if (selectionType === "string" && nonDefaultDependency) {
+            ucApi.Prefs.set(nonDefaultDependency, selectionValue !== "default");
+        }
 
         ucApi.Prefs.set(selectionPref, selectionValue);
         selectionObject.classList.add("selected");
@@ -221,6 +231,12 @@ class NatsumiWelcome {
 
         bodyContainer.appendChild(paneNode);
 
+        // Check if there's any dependencies for non-default values
+        let nonDefaultDependency = null;
+        if (this.panes[this.step].nonDefaultDependency) {
+            nonDefaultDependency = this.panes[this.step].nonDefaultDependency;
+        }
+
         // Check if there's selection objects
         let selectionObjects = this.node.querySelectorAll(".natsumi-welcome-selection");
 
@@ -247,7 +263,7 @@ class NatsumiWelcome {
 
                 // Add event listener for selection
                 selectionObject.addEventListener("click", () => {
-                    this.handleSelection(selectionObject);
+                    this.handleSelection(selectionObject, nonDefaultDependency);
                 });
             });
         }
@@ -524,6 +540,116 @@ function createIconsPane() {
     natsumiWelcomeObject.addPane(layoutPane);
 }
 
+function createTabsPane() {
+    // noinspection HtmlUnknownAttribute
+    let tabsSelection = `
+        <div class="natsumi-welcome-selection selected" pref="natsumi.tabs.type" type="string" value="default">
+            <div id="natsumi-welcome-tabs-blade" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Blade
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="origin">
+            <div id="natsumi-welcome-tabs-origin" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Origin
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="curve">
+            <div id="natsumi-welcome-tabs-curve" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Curve
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="fusion">
+            <div id="natsumi-welcome-tabs-fusion" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Fusion
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="material">
+            <div id="natsumi-welcome-tabs-material" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Material
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="hexagonal">
+            <div id="natsumi-welcome-tabs-hexagonal" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Hexagonal
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="bubble">
+            <div id="natsumi-welcome-tabs-bubble" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Bubble
+            </div>
+        </div>
+        <div class="natsumi-welcome-selection" pref="natsumi.tabs.type" type="string" value="classic">
+            <div id="natsumi-welcome-tabs-classic" class="natsumi-welcome-selection-preview">
+                <div class='natsumi-welcome-tab'>
+                    <div class='natsumi-welcome-tab-icon'></div>
+                    <div class='natsumi-welcome-tab-text'></div>
+                </div>
+            </div>
+            <div class="natsumi-welcome-selection-label">
+                Classic
+            </div>
+        </div>
+    `
+
+    let themesPane = new NatsumiWelcomePane(
+        "natsumi-welcome-tabs",
+        "Choose your tab design",
+        `
+            <div class="natsumi-welcome-paragraph">
+                You can choose from a variety of tab designs to suit your style.
+            </div>
+            <div class="natsumi-welcome-selection-container">
+                ${tabsSelection}
+            </div>
+        `,
+        "natsumi.tabs.use-custom-type"
+    );
+
+    natsumiWelcomeObject.addPane(themesPane);
+}
+
 function createURLbarPane() {
     // noinspection HtmlUnknownAttribute
     let themesSelection = `
@@ -683,6 +809,7 @@ if (!welcomeViewed && !blockOnboarding) {
     createLayoutPane();
     createColorsPane();
     createThemesPane();
+    createTabsPane();
     createIconsPane();
     createURLbarPane();
 
