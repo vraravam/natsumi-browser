@@ -57,9 +57,13 @@ SOFTWARE.
   #natsumi-about-icon {
     width: 128px;
     height: 128px;
-    background-image: url("../icons/natsumi.png") !important;
+    background-image: url("../icons/natsumi-glass.png") !important;
     background-size: 128px;
     margin-block: auto;
+  }
+
+  #natsumi-about-container[stardust="true"] #natsumi-about-icon {
+    background-image: url("../icons/natsumi-stardust.png") !important;
   }
 
   #natsumi-about-name {

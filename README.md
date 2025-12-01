@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="120" height="120" src="./images/icon.png">
+  <img width="120" height="120" src="./images/icon-glass.png">
   <br>
   Natsumi Browser
 </h1>
@@ -496,6 +496,7 @@ Thank you to:
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I used in Natsumi
   v2 and v3
+- [InterstellarOne](https://github.com/InterstellarOne) for the Liquid Glass style Natsumi icons
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT

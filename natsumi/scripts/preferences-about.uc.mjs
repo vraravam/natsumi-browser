@@ -44,6 +44,7 @@ function addAboutPane() {
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
 
     const isStable = branch === "stable";
+    const isStardust = branch === "alpha" || branch === "beta";
     let browserName = AppConstants.MOZ_APP_BASENAME;
     const forkedFox = browserName.toLowerCase() !== "firefox";
     let browserVersion = Services.appinfo.version;
@@ -60,6 +61,11 @@ function addAboutPane() {
     } else if (browserName.toLowerCase() === "glide") {
         browserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE;
         browserVersion = AppConstants.GLIDE_FIREFOX_VERSION;
+    }
+
+    let natsumiName = "Natsumi Browser";
+    if (isStardust) {
+        natsumiName = "Natsumi Stardust";
     }
 
     let nodeString = `
@@ -90,11 +96,11 @@ function addAboutPane() {
             </div>
         </groupbox>
         <groupbox id="natsumiAboutGroup" class="subcategory" data-category="paneNatsumiAbout" hidden="true">
-            <div id="natsumi-about-container">
+            <div id="natsumi-about-container" stardust="${isStardust}">
                 <div id="natsumi-about-box">
                     <div id="natsumi-about-icon"></div>
                     <div id="natsumi-about-info-container">
-                        <div id="natsumi-about-name">Natsumi Browser</div>
+                        <div id="natsumi-about-name">${natsumiName}</div>
                         <div id="natsumi-about-version-container">
                             <div id="natsumi-about-version"></div>
                             <div id="natsumi-about-stability-badge"></div>
