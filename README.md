@@ -156,6 +156,15 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
+#### Installing via installer (Windows only)
+Download and run `windows-installer.bat` as Admin and follow the on-screen prompts. 
+
+You can get this file from the `Installers` folder in this repo.
+
+> [!NOTE]
+> The Windows installer needs to run as Admin so it can copy the needed files to the correct system locations.
+> To update Natsumi on Windows, run the `windows-installer.bat` again with your browser closed.
+
 #### Installing via Sine
 > [!WARNING]
 > Installing via Sine is supported but not recommended. The following features will not work:
@@ -183,6 +192,10 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
 
    **Note**: The guide doesn't mention the module_loader.mjs file, but you'll need this for fx-autoconfig
    to work. Otherwise, Natsumi's modules will show in your scripts but won't actually be loaded.
+
+   **Flatpak users**: You may need to follow steps 1 and 2 on
+   [here](https://github.com/MrOtherGuy/fx-autoconfig/issues/48#issuecomment-3315929253), but replace
+   `app.zen_browser.zen` with the package identifier of your browser (e.g. `one.ablaze.floorp`).
 3. Copy the following to chrome/utils/chrome.manifest:
    ```
    content userchromejs ./
@@ -282,6 +295,7 @@ All browsers must be based on Firefox 137 or above.
 | Firefox     | :white_check_mark: Supported  | 137+     |                                                                    |
 | Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                                    |
 | Librewolf   | :white_check_mark: Supported  | 137+     | May have performance issues, but other than that fully compatible. |
+| Glide       | :white_check_mark: Supported  | 0.1.54a+ | Not tested very thoroughly yet.                                    |
 | Firedragon  | :warning: Partially supported | 12+      | Theoretically supported, but not yet tested.                       |
 | Midori      | :x: Unsupported               | -        | Incompatible (based on ESR128)                                     |
 | Mullvad/Tor | :x: Unsupported               | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
