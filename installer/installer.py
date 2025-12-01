@@ -296,22 +296,6 @@ def main():
         # Check install location
         needs_sudo = True
 
-    # Get browser install path
-    if sys.platform == 'darwin':
-        install_path = f'/Applications/{browser.name_macos}.app/Contents/Resources'
-    elif sys.platform == 'win32':
-        install_path = f'C:/Program Files/{browser.name_windows_binary}'
-    elif sys.platform.startswith('linux'):
-        if browser.name_flatpak and '.var/app' in profile:
-            if needs_sudo:
-                install_path = f'/var/lib/flatpak/app/{browser.name_flatpak}'
-            else:
-                install_path = f'.local/share/flatpak/app/{browser.name_flatpak}.current'
-        else:
-            install_path = f'/usr/lib/{browser.name_universal}'
-    else:
-        raise NotImplementedError('Unsupported platform')
-
     # Create temporary directory
     current_dir = os.getcwd()
     if not os.path.exists(f'{current_dir}/.natsumi-installer'):
