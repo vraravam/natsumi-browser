@@ -26,6 +26,26 @@ SOFTWARE.
 
 /* ==== Floorp Workspaces ==== */
 
+@keyframes workspace-switch {
+  from {
+    opacity: 0;
+    translate: 50px 0;
+  } to {
+      opacity: 1;
+      translate: 0;
+    }
+}
+
+@keyframes workspace-switch-left {
+  from {
+    opacity: 0;
+    translate: -50px 0;
+  } to {
+      opacity: 1;
+      translate: 0;
+    }
+}
+
 @media -moz-pref("natsumi.browser.type", "floorp") {
   /* Workspaces toolbar button */
   #workspaces-toolbar-button {
@@ -364,6 +384,15 @@ SOFTWARE.
       #natsumi-workspace-indicator-clear {
         display: none !important;
       }
+    }
+  }
+
+  /* Workspaces switching animation */
+  #tabbrowser-tabs[natsumi-workspace-animation] {
+    animation: workspace-switch 0.3s ease;
+
+    &[natsumi-workspace-animation-left] {
+      animation-name: workspace-switch-left;
     }
   }
 }

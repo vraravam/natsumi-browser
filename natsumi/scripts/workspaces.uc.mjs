@@ -431,6 +431,8 @@ class NatsumiWorkspacePinsManager {
 }
 
 let currentWorkspaceId = null;
+let currentWorkspaceIndex = 0;
+let currentWorkspaceAnimationTimeout = null;
 
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
@@ -452,6 +454,20 @@ function getCurrentWorkspaceData() {
         }
     }
 
+    const newWorkspaceIndex = workspaceData["order"].indexOf(workspaceId);
+    let shouldAnimate = false;
+    let shouldAnimateLeft = false;
+    if (newWorkspaceIndex !== -1) {
+        if (currentWorkspaceIndex !== newWorkspaceIndex) {
+            shouldAnimate = true;
+            if (newWorkspaceIndex < currentWorkspaceIndex) {
+                shouldAnimateLeft = true;
+            }
+        }
+
+        currentWorkspaceIndex = newWorkspaceIndex;
+    }
+
     for (let workspaceIndex in workspaceData["data"]) {
         let workspace = workspaceData["data"][workspaceIndex];
         if (workspace[0] === workspaceId) {
@@ -471,6 +487,23 @@ function getCurrentWorkspaceData() {
 
             break;
         }
+    }
+
+    if (shouldAnimate) {
+        if (currentWorkspaceAnimationTimeout) {
+            clearTimeout(currentWorkspaceAnimationTimeout);
+        }
+
+        let tabsList = document.getElementById("tabbrowser-tabs");
+        if (shouldAnimateLeft) {
+            tabsList.setAttribute("natsumi-workspace-animation-left", "");
+        }
+
+        tabsList.setAttribute("natsumi-workspace-animation", "");
+        currentWorkspaceAnimationTimeout = setTimeout(() => {
+            tabsList.removeAttribute("natsumi-workspace-animation");
+            tabsList.removeAttribute("natsumi-workspace-animation-left");
+        }, 300);
     }
 
     return {"id": workspaceId, "name": workspaceName, "icon": workspaceIcon};

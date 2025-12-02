@@ -33,6 +33,7 @@ SOFTWARE.
 
 let version;
 let branch;
+let codename;
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -100,7 +101,7 @@ function addAboutPane() {
                 <div id="natsumi-about-box">
                     <div id="natsumi-about-icon"></div>
                     <div id="natsumi-about-info-container">
-                        <div id="natsumi-about-name">${natsumiName}</div>
+                        <div id="natsumi-about-name"></div>
                         <div id="natsumi-about-version-container">
                             <div id="natsumi-about-version"></div>
                             <div id="natsumi-about-stability-badge"></div>
@@ -123,8 +124,11 @@ function addAboutPane() {
     prefsView.insertBefore(convertToXUL(nodeString), homePane);
 
     // Set metadata
+    let nameNode = document.getElementById("natsumi-about-name");
+    nameNode.textContent = natsumiName;
+
     let versionNode = document.getElementById("natsumi-about-version");
-    versionNode.textContent = `Version ${version}`;
+    versionNode.textContent = `Version ${version} (${codename})`;
 
     let browserVersionNode = document.getElementById("natsumi-about-browser-version");
     if (forkedFox) {
@@ -159,12 +163,14 @@ let versionPath = "chrome://natsumi/content/version.json";
 fetch(versionPath).then(response => response.json()).then(data => {
     version = data.version;
     branch = data.branch;
+    codename = data.codename;
     addToSidebar();
     addAboutPane();
 }).catch(error => {
     console.error("Failed to fetch Natsumi version:", error);
     version = "Unknown";
     branch = "stable";
+    codename = "Unknown";
     addToSidebar();
     addAboutPane();
 });
