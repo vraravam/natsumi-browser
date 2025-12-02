@@ -323,7 +323,7 @@ SOFTWARE.
         width: -moz-available;
         font-weight: bold !important;
         font-size: small !important;
-        color: color-mix(in srgb, light-dark(black, white) 50%, transparent);
+        color: color-mix(in srgb, currentColor 50%, transparent);
       }
 
       #natsumi-workspace-indicator-clear {
