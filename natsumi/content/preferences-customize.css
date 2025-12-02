@@ -1093,7 +1093,7 @@ SOFTWARE.
           margin-left: 0 !important;
         }
 
-        &.natsumi-hex-button {
+        &.natsumi-grain-button {
           margin-right: 0 !important;
         }
 
@@ -1120,6 +1120,10 @@ SOFTWARE.
 
         &.natsumi-hex-button .natsumi-custom-theme-controls-icon {
           background-image: url("../icons/lucide/type.svg");
+        }
+
+        &.natsumi-grain-button .natsumi-custom-theme-controls-icon {
+          background-image: url("../icons/lucide/grain-0.svg");
         }
 
         &.natsumi-remove-color {
@@ -1185,6 +1189,10 @@ SOFTWARE.
       }
     }
 
+    .natsumi-custom-theme-grain {
+      margin-bottom: 10px;
+    }
+
     .natsumi-custom-theme-bottom-controls {
       display: flex;
       flex-direction: row;
@@ -1203,92 +1211,107 @@ SOFTWARE.
     .natsumi-custom-theme-luminosity, .natsumi-custom-theme-opacity {
       flex-direction: column;
       margin-top: 10px;
+    }
 
-      .natsumi-custom-theme-slider {
-        margin: 5px 0;
+    .natsumi-custom-theme-slider {
+      margin: 5px 0;
+      width: 100%;
+      height: 30px;
+      display: grid;
+      grid-template-columns: 1fr;
+      border-radius: 5px;
+
+      .natsumi-custom-theme-slider-icon-1, .natsumi-custom-theme-slider-icon-0 {
+        grid-row-start: 1;
+        grid-column-start: 1;
+        width: 20px;
+        height: 20px;
+        background-size: 20px;
+        -moz-context-properties: stroke, stroke-opacity !important;
+        stroke: light-dark(black, white);
+      }
+
+      .natsumi-custom-theme-slider-icon-1 {
+        margin: auto 0 auto 10px;
+      }
+
+      .natsumi-custom-theme-slider-icon-0 {
+        margin: auto 10px auto auto;
+      }
+
+      &::before {
+        content: "";
+        grid-row-start: 1;
+        grid-column-start: 1;
         width: 100%;
         height: 30px;
-        display: grid;
-        grid-template-columns: 1fr;
+        background: linear-gradient(90deg, var(--natsumi-last-selected-color, red), transparent);
         border-radius: 5px;
+      }
 
-        .natsumi-custom-theme-slider-icon-1, .natsumi-custom-theme-slider-icon-0 {
-          grid-row-start: 1;
-          grid-column-start: 1;
-          width: 20px;
-          height: 20px;
-          background-size: 20px;
-          -moz-context-properties: stroke, stroke-opacity !important;
-          stroke: light-dark(black, white);
-        }
+      &::after {
+        content: "";
+        width: 2px;
+        height: 100%;
+        border: 5px solid light-dark(white, #555);
+        border-radius: 6px;
+        background: light-dark(#ddd, #777);
+        grid-row-start: 1;
+        grid-column-start: 1;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        margin-top: -5px;
+        margin-left: -5px;
+        translate: var(--natsumi-slider-position) 0;
+        transition: scale 0.2s ease;
+      }
+
+      &:hover::after {
+        scale: 1.1;
+      }
+
+      &.natsumi-color-slider-luminosity {
+        background-color: black;
 
         .natsumi-custom-theme-slider-icon-1 {
-          margin: auto 0 auto 10px;
+          stroke: var(--natsumi-slider-custom-stroke, white);
+          background-image: url("../icons/lucide/luminosity-1.svg");
         }
 
         .natsumi-custom-theme-slider-icon-0 {
-          margin: auto 10px auto auto;
+          stroke: white;
+          background-image: url("../icons/lucide/luminosity-0.svg");
+        }
+      }
+
+      &.natsumi-color-slider-opacity {
+        background-image: url("../icons/custom/transparent.png");
+        background-size: 20px;
+        background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
+        background-blend-mode: color;
+
+        .natsumi-custom-theme-slider-icon-1 {
+          stroke: var(--natsumi-slider-custom-stroke, white);
+          background-image: url("../icons/lucide/opacity-1.svg");
         }
 
-        &::before {
-          content: "";
-          grid-row-start: 1;
-          grid-column-start: 1;
-          width: 100%;
-          height: 30px;
-          background: linear-gradient(90deg, var(--natsumi-last-selected-color, red), transparent);
-          border-radius: 5px;
+        .natsumi-custom-theme-slider-icon-0 {
+          stroke: light-dark(black, white);
+          background-image: url("../icons/lucide/opacity-0.svg");
+        }
+      }
+
+      &.natsumi-color-slider-grain {
+        background: url("../icons/custom/grain.png");
+        background-color: var(--natsumi-last-selected-color, red);
+
+        .natsumi-custom-theme-slider-icon-1 {
+          stroke: var(--natsumi-slider-custom-stroke, white);
+          background-image: url("../icons/lucide/grain-1.svg");
         }
 
-        &::after {
-          content: "";
-          width: 2px;
-          height: 100%;
-          border: 5px solid light-dark(white, #555);
-          border-radius: 6px;
-          background: light-dark(#ddd, #777);
-          grid-row-start: 1;
-          grid-column-start: 1;
-          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-          margin-top: -5px;
-          margin-left: -5px;
-          translate: var(--natsumi-slider-position) 0;
-          transition: scale 0.2s ease;
-        }
-
-        &:hover::after {
-          scale: 1.1;
-        }
-
-        &.natsumi-color-slider-luminosity {
-          background-color: black;
-
-          .natsumi-custom-theme-slider-icon-1 {
-            stroke: var(--natsumi-slider-custom-stroke, white);
-            background-image: url("../icons/lucide/luminosity-1.svg");
-          }
-
-          .natsumi-custom-theme-slider-icon-0 {
-            stroke: white;
-            background-image: url("../icons/lucide/luminosity-0.svg");
-          }
-        }
-
-        &.natsumi-color-slider-opacity {
-          background-image: url("../icons/custom/transparent.png");
-          background-size: 20px;
-          background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5));
-          background-blend-mode: color;
-
-          .natsumi-custom-theme-slider-icon-1 {
-            stroke: var(--natsumi-slider-custom-stroke, white);
-            background-image: url("../icons/lucide/opacity-1.svg");
-          }
-
-          .natsumi-custom-theme-slider-icon-0 {
-            stroke: light-dark(black, white);
-            background-image: url("../icons/lucide/opacity-0.svg");
-          }
+        .natsumi-custom-theme-slider-icon-0 {
+          stroke: var(--natsumi-slider-custom-stroke, white);
+          background-image: url("../icons/lucide/grain-0.svg");
         }
       }
     }

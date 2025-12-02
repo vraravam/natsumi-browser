@@ -431,5 +431,17 @@ export async function applyCustomTheme() {
                 }
             }
         }
+
+        // Set grain opacity
+        let grainOpacity = 0;
+        let grainOpacityDark = 0;
+        if (toApplyData["light"]["grain"]) {
+            grainOpacity = toApplyData["light"]["grain"];
+        }
+        if (toApplyData["dark"]["grain"]) {
+            grainOpacityDark = toApplyData["dark"]["grain"];
+        }
+        body.style.setProperty(`--natsumi-theme-grain-opacity`, `${grainOpacity}`);
+        body.style.setProperty(`--natsumi-theme-grain-opacity-dark`, `${grainOpacityDark}`);
     }, true);
 }

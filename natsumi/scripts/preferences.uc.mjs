@@ -74,6 +74,7 @@ class CustomThemePicker {
         this.gradientType = "linear";
         this.angle = 0;
         this.colors = [];
+        this.grain = 0;
         this.newColorAllowed = true;
         this.lastSelected = null;
         this.layer = 0;
@@ -222,6 +223,7 @@ class CustomThemePicker {
         let resetButton = this.node.querySelector(".natsumi-reset-button");
         let hexInput = this.node.querySelector(".natsumi-hex-input");
         let hexButton = this.node.querySelector(".natsumi-hex-button");
+        let grainButton = this.node.querySelector(".natsumi-grain-button");
 
         if (!this.singleColor) {
             presetButton.addEventListener("click", () => {
@@ -246,6 +248,15 @@ class CustomThemePicker {
                 this.node.querySelector(".natsumi-hex-input").value = "";
             }
         });
+
+        grainButton.addEventListener("click", () => {
+            let grainSliderContainer = this.node.querySelector(".natsumi-custom-theme-grain");
+            if (grainSliderContainer.attributes["hidden"]) {
+                grainSliderContainer.removeAttribute("hidden");
+            } else {
+                grainSliderContainer.setAttribute("hidden", "");
+            }
+        })
 
         // Add listener for HEX input field
         hexInput.addEventListener("keydown", (event) => {
@@ -289,6 +300,7 @@ class CustomThemePicker {
         // Add listeners for sliders
         let luminositySliderNode = this.node.querySelector(".natsumi-color-slider-luminosity");
         let opacitySliderNode = this.node.querySelector(".natsumi-color-slider-opacity");
+        let grainSliderNode = this.node.querySelector(".natsumi-color-slider-grain");
         luminositySliderNode.addEventListener("mousedown", (event) => {
             event.stopPropagation();
             event.preventDefault();
@@ -302,6 +314,12 @@ class CustomThemePicker {
                 this.sliderEvent("opacity", event);
             });
         }
+
+        grainSliderNode.addEventListener("mousedown", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            this.sliderEvent("grain", event);
+        });
 
         // Add listener for gradient angle
         let gradientAngleNode = this.node.querySelector(".natsumi-gradient-angle");
@@ -514,6 +532,10 @@ class CustomThemePicker {
             this.lastSelected = "0";
         }
 
+        if (this.data[this.theme]["grain"]) {
+            this.grain = this.data[this.theme]["grain"];
+        }
+
         this.renderGrid();
         this.renderSliders();
         this.renderButtons();
@@ -562,6 +584,7 @@ class CustomThemePicker {
         }
 
         this.data["version"] = this.version;
+        this.data[this.theme]["grain"] = this.grain;
 
         let themeDirectoryPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
         let themePath = PathUtils.join(themeDirectoryPath, "master.json");
@@ -630,10 +653,19 @@ class CustomThemePicker {
                         <div class="natsumi-custom-theme-controls-button natsumi-hex-button">
                             <div class="natsumi-custom-theme-controls-icon"></div>
                         </div>
+                        <div class="natsumi-custom-theme-controls-button natsumi-grain-button">
+                            <div class="natsumi-custom-theme-controls-icon"></div>
+                        </div>
                     </div>
                     <div class="natsumi-custom-theme-hex-input" hidden="">
                         <html:input class="natsumi-hex-input" type="text" placeholder="HEX code (e.g. #ff0000)" maxlength="8"/>
                         <div class="natsumi-hex-submit"></div>
+                    </div>
+                    <div class="natsumi-custom-theme-grain" hidden="">
+                        <div class="natsumi-custom-theme-slider natsumi-color-slider-grain">
+                            <div class="natsumi-custom-theme-slider-icon-1"></div>
+                            <div class="natsumi-custom-theme-slider-icon-0"></div>
+                        </div>
                     </div>
                     <div class="natsumi-custom-theme-bottom-controls">
                         <div class="natsumi-custom-theme-sliders">
@@ -1126,6 +1158,9 @@ class CustomThemePicker {
             this.setColorProperties(this.lastSelected, sliderValue);
         } else if (slider === "opacity") {
             this.setColorProperties(this.lastSelected, null, sliderValue);
+        } else if (slider === "grain") {
+            sliderValue = 1 - sliderValue;
+            this.setGrain(sliderValue);
         }
 
         sliderNode.style.setProperty("--natsumi-slider-position", `${relativeX}px`);
@@ -1137,6 +1172,7 @@ class CustomThemePicker {
     renderSliders() {
         let luminositySliderNode = this.node.querySelector(".natsumi-color-slider-luminosity");
         let opacitySliderNode = this.node.querySelector(".natsumi-color-slider-opacity");
+        let grainSliderNode = this.node.querySelector(".natsumi-color-slider-grain");
 
         let colorData = null;
         if (this.lastSelected !== null && this.lastSelected in this.colors) {
@@ -1156,6 +1192,10 @@ class CustomThemePicker {
             luminositySliderNode.style.setProperty("--natsumi-slider-position", "0px");
             opacitySliderNode.style.setProperty("--natsumi-slider-position", "0px");
         }
+
+        const grainSliderWidth = Math.max(grainSliderNode.getBoundingClientRect().width, 380);
+        const grainPosition = grainSliderWidth * this.grain;
+        grainSliderNode.style.setProperty("--natsumi-slider-position", `${grainPosition}px`);
     }
 
     renderButtons() {
@@ -1229,6 +1269,10 @@ class CustomThemePicker {
         this.saveLayer();
     }
 
+    setGrain(opacity) {
+        this.grain = opacity;
+    }
+
     removeColor(index) {
         if (index < 0 || index >= this.colors.length) {
             console.error("Invalid color index:", index);
@@ -1253,6 +1297,7 @@ class CustomThemePicker {
 
     removeAllColors() {
         this.colors = [];
+        this.grain = 0;
         this.preset = null;
         this.angle = 0;
         this.gradientType = "linear";
