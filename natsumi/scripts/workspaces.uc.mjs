@@ -495,6 +495,9 @@ function getCurrentWorkspaceData() {
         }
 
         let tabsList = document.getElementById("tabbrowser-tabs");
+        tabsList.removeAttribute("natsumi-workspace-animation");
+        tabsList.removeAttribute("natsumi-workspace-animation-left");
+
         if (shouldAnimateLeft) {
             tabsList.setAttribute("natsumi-workspace-animation-left", "");
         }
