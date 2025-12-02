@@ -130,7 +130,7 @@
   }
 
   .browserStack {
-    background-color: light-dark(#fff, #444);
+    background-color: light-dark(#fff, #444) !important;
   }
 
   @media -moz-pref("natsumi.glimpse.show-indicator") {

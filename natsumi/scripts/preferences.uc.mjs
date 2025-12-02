@@ -529,11 +529,15 @@ class CustomThemePicker {
                 this.colors = layerData["background"]["colors"];
             }
 
-            this.lastSelected = "0";
+            if (this.colors.length > 0) {
+                this.lastSelected = "0";
+            }
         }
 
         if (this.data[this.theme]["grain"]) {
             this.grain = this.data[this.theme]["grain"];
+        } else {
+            this.grain = 0;
         }
 
         this.renderGrid();
@@ -1149,7 +1153,7 @@ class CustomThemePicker {
             relativeX = Math.round(sliderWidth * (1 - sliderValue));
         }
 
-        if (this.lastSelected === null) {
+        if (slider !== "grain" && this.lastSelected === null) {
             // No color selected here, so we can't modify its properties
             return;
         }

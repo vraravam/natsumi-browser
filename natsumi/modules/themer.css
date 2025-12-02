@@ -86,11 +86,7 @@ SOFTWARE.
     z-index: -996;
     bottom: 0;
     background-size: 384px;
-    opacity: var(--natsumi-theme-grain-opacity, 0);
-
-    @media (prefers-color-scheme: dark) {
-      opacity: var(--natsumi-theme-grain-opacity-dark, var(--natsumi-theme-grain-opacity, 0));
-    }
+    opacity: 0; /* Disabled by default */
   }
 
   /* Better translucency for Linux (also acts as a background for no translucency mode) */
