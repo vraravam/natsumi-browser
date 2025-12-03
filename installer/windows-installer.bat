@@ -137,7 +137,7 @@ echo.
 echo [STEP 3] Select Natsumi Version
 echo.
 echo 1. Stable (Main branch, recommended)
-echo 1. Alpha/Beta/RC (Dev branch, experimental)
+echo 2. Alpha/Beta/RC (Dev branch, experimental)
 echo.
 set /p "VER_CHOICE=Enter choice (1 or 2): "
 
