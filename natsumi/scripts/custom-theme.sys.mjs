@@ -27,6 +27,11 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 const themesPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
+let isFloorp = false;
+
+if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+    isFloorp = ucApi.Prefs.get("natsumi.browser.type").value === "floorp";
+}
 
 export const colorPresetNames = {
     null: "Floating",
@@ -368,36 +373,42 @@ export async function applyCustomTheme() {
     let preliminaryBrowserWindow;
     let workspaces = [];
 
-    // Try to get any window with workspaces wrapper
-    for (let win of ucApi.Windows.getAll(true)) {
-        if (win.document.body.natsumiWorkspacesWrapper) {
-            preliminaryBrowserWindow = win;
-            break;
+    // Try to get any window with workspaces wrapper if we're on Floorp
+    if (isFloorp) {
+        for (let win of ucApi.Windows.getAll(true)) {
+            if (win.document.body.natsumiWorkspacesWrapper) {
+                preliminaryBrowserWindow = win;
+                break;
+            }
         }
-    }
 
-    if (preliminaryBrowserWindow) {
-        workspaces = preliminaryBrowserWindow.document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
-    }
+        if (preliminaryBrowserWindow) {
+            workspaces = preliminaryBrowserWindow.document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        }
 
-    if (workspaces) {
-        // Load data for each workspace
-        for (const workspaceId of workspaces) {
-            try {
-                perWorkspaceData[workspaceId] = await getTheme(workspaceId);
-            } catch (e) {
-                console.warn(`Could not fetch theme for workspace ${workspaceId}:`, e);
+        if (workspaces) {
+            // Load data for each workspace
+            for (const workspaceId of workspaces) {
+                try {
+                    perWorkspaceData[workspaceId] = await getTheme(workspaceId);
+                } catch (e) {
+                    console.warn(`Could not fetch theme for workspace ${workspaceId}:`, e);
+                }
             }
         }
     }
 
     ucApi.Windows.forEach((browserDocument, browserWindow) => {
         let body = browserDocument.body;
-        let workspaceId = body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+        let workspaceId;
         let toApplyData = customThemeData;
 
-        if (perWorkspaceData[workspaceId]) {
-            toApplyData = perWorkspaceData[workspaceId];
+        if (isFloorp) {
+            workspaceId = body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+
+            if (perWorkspaceData[workspaceId]) {
+                toApplyData = perWorkspaceData[workspaceId];
+            }
         }
 
         // Remove existing properties
