@@ -64,7 +64,9 @@ class NatsumiWorkspacesWrapper {
         // Get Firedragon status
         let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
 
-        if (minorVersion >= 4) {
+        if (minorVersion >= 8) {
+            workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
+        } else if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
         }
 
