@@ -125,11 +125,27 @@ SOFTWARE.
   }
 }
 
-/* Split view indicator */
+/* Split view wrapper */
 tab-split-view-wrapper {
-  border-radius: calc(var(--natsumi-tab-border-radius) + 2px) !important;
+  --natsumi-split-view-border-radius: calc(var(--natsumi-tab-border-radius) + 2px);
+  border-radius: var(--natsumi-split-view-border-radius) !important;
+  padding-block: 0 !important;
 
   .tabbrowser-tab {
     border: none !important;
+
+    .tab-background {
+      margin-block: var(--tab-block-margin) !important;
+    }
+  }
+}
+
+#tabbrowser-tabs:not([expanded]) {
+  tab-split-view-wrapper {
+    --natsumi-split-view-margin-left: calc(50% - 22px);
+    --natsumi-split-view-margin-right: calc(50% - 22px);
+    margin-left: var(--natsumi-split-view-margin-left) !important;
+    margin-right: var(--natsumi-split-view-margin-right) !important;
+    padding-inline: 2px !important;
   }
 }

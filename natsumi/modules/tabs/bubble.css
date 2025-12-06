@@ -201,6 +201,20 @@ SOFTWARE.
           }
         }
       }
+
+      tab-split-view-wrapper {
+        .tabbrowser-tab {
+          & > .tab-stack > .tab-content {
+            padding-left: calc(var(--tab-inner-inline-margin) + 4px) !important;
+            padding-right: calc(var(--tab-inner-inline-margin) - 5px) !important;
+
+            &::before {
+              left: 6px !important;
+              width: calc(100% - 45px) !important;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -214,8 +228,23 @@ SOFTWARE.
 
         & > .tab-stack > .tab-content {
           &::before {
+            --natsumi-bubble-collapsed-padding: calc(var(--tab-inline-padding) - 8px);
             width: 32px !important;
-            left: calc(var(--tab-inline-padding) - 8px) !important;
+            left: var(--natsumi-bubble-collapsed-padding) !important;
+          }
+        }
+      }
+    }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          .tab-icon-stack {
+            margin-inline: auto !important;
+          }
+
+          &::before {
+            --natsumi-bubble-collapsed-padding: 4px !important;
           }
         }
       }

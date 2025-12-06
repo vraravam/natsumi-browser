@@ -59,4 +59,28 @@ SOFTWARE.
       }
     }
   }
+
+  tab-split-view-wrapper {
+    .tabbrowser-tab {
+      padding-block: 3px 2px !important;
+    }
+  }
+
+  #tabbrowser-tabs:not([expanded]) {
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        min-width: 36px !important;
+        max-width: 36px !important;
+        margin-inline: 2px !important;
+
+        & > .tab-stack > .tab-content {
+          padding-inline: 10px !important;
+        }
+
+        & > .tab-stack > .tab-background {
+          margin-inline: auto !important;
+        }
+      }
+    }
+  }
 }

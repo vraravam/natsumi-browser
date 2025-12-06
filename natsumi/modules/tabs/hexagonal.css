@@ -109,6 +109,14 @@ SOFTWARE.
         }
       }
     }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          padding-left: 0 !important;
+        }
+      }
+    }
   }
 
   #pinned-tabs-container {

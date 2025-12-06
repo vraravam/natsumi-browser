@@ -283,10 +283,50 @@ SOFTWARE.
     }
   }
 
+  #sidebar-main[sidebar-launcher-expanded] {
+    tab-split-view-wrapper {
+      margin-right: 0 !important;
+      border-radius: 4px 0 0 4px !important;
+
+      &[hasactivetab] {
+        background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+      }
+
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-background {
+          &::before {
+            left: 0 !important;
+          }
+        }
+      }
+    }
+  }
+
   #sidebar-main:not([sidebar-launcher-expanded]) {
     #tabbrowser-arrowscrollbox {
       .tabbrowser-tab > .tab-stack > .tab-background {
         width: calc(var(--tab-collapsed-background-width) + var(--tab-inner-inline-margin)) !important;
+      }
+    }
+
+    tab-split-view-wrapper {
+      --natsumi-split-view-margin-right: 0 !important;
+      border-radius: 4px 0 0 4px !important;
+
+      &[hasactivetab] {
+        background-color: light-dark(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.3)) !important;
+      }
+
+      .tabbrowser-tab {
+        margin-left: 4px !important;
+        & > .tab-stack > .tab-background {
+          --tab-collapsed-background-width: calc(32px - var(--tab-inner-inline-margin)) !important;
+          margin-inline: 0 !important;
+
+          &::before {
+            left: 0 !important;
+          }
+        }
       }
     }
   }

@@ -284,6 +284,16 @@ SOFTWARE.
         }
       }
     }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          .tab-icon-stack {
+            margin-inline: auto !important;
+          }
+        }
+      }
+    }
   }
 
   #tabs-newtab-button, #vertical-tabs-newtab-button {
