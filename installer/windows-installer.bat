@@ -54,13 +54,8 @@ call :DetectBrowser "Mozilla Firefox" "firefox.exe" "Mozilla\Firefox" "Mozilla F
 call :DetectBrowser "Floorp" "floorp.exe" "Floorp" "Floorp"
 :: 3. WATERFOX
 call :DetectBrowser "Waterfox" "waterfox.exe" "Waterfox" "Waterfox"
-call :DetectBrowser "Waterfox (G6/Current)" "waterfox.exe" "Waterfox" "Waterfox G6"
 :: 4. LIBREWOLF
 call :DetectBrowser "LibreWolf" "librewolf.exe" "LibreWolf" "LibreWolf"
-:: 5. MERCURY
-call :DetectBrowser "Mercury" "mercury.exe" "Mercury" "Mercury"
-:: 6. ZEN BROWSER
-call :DetectBrowser "Zen Browser" "zen.exe" "Zen" "Zen Browser"
 
 if %COUNT%==0 (
     echo [WARN] No browsers detected via Registry or Standard Paths.
