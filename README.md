@@ -413,9 +413,8 @@ Thank you to:
 - [asev](https://github.com/lunar-os) for ZenCss, which served as the base for Natsumi Browser's base
   CSS for v1
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
-- [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I use in Natsumi
-- [Lucide](https://lucide.dev/) for the icons used in Natsumi for Floorp ([view
-  license](./natsumi/icons/lucide/LICENSE))
+- [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I used in Natsumi
+  v2 and v3
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
