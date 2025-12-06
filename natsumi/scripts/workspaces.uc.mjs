@@ -55,7 +55,9 @@ class NatsumiWorkspacesWrapper {
         // Get minor version
         let minorVersion = parseInt(floorpVersion.split(".")[1]);
 
-        if (minorVersion >= 4) {
+        if (minorVersion >= 8) {
+            workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
+        } else if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
         }
 
