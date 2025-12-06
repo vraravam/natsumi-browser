@@ -329,7 +329,7 @@ SOFTWARE.
       #natsumi-workspace-indicator-clear {
         display: none; /* Hidden by default */
         -moz-context-properties: stroke, fill;
-        stroke: light-dark(black, white);
+        stroke: currentColor;
         min-width: 36px;
         height: 100%;
         background-image: url("../../icons/lucide/clear-tabs.svg");

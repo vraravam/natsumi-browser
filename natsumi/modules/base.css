@@ -480,8 +480,8 @@ SOFTWARE.
 
   #natsumi-tabs-clearer-button {
     -moz-context-properties: stroke, fill;
-    stroke: light-dark(black, white);
-    color: light-dark(black, white);
+    stroke: currentColor;
+    color: currentColor;
     transition: opacity 0.2s ease;
     font-size: 11px;
     padding-left: 15px !important;
