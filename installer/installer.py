@@ -153,7 +153,7 @@ def get_profiles(path):
 
 def prompt_for_path(message):
     while True:
-        user_input = input(f"{message}\nEnter the full path to the profiles directory or type 'exit' to quit: ").strip()
+        user_input = input(f"{message}\nFile path (type 'exit' to quit): ").strip()
         if user_input.lower() == 'exit':
             sys.exit(0)
         if os.path.exists(user_input):
@@ -206,7 +206,14 @@ def detect_install_and_profiles(browser):
     print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root) if profile_root else 'N/A'}")
 
     if not install_path or not os.path.isdir(install_path):
-        install_path = prompt_for_path(f"Could not detect install location for {browser.name}.")
+        if sys.platform == 'darwin':
+            os_specific_instructions = "On macOS, this would be /path/to/Browser.app/Contents/Resources."
+        else:
+            os_specific_instructions = "On Linux, this would be the folder the browser's binary is located in."
+
+        install_path = prompt_for_path(
+            f"Could not detect install location for {browser.name}. Please enter the browser's install location.\n{os_specific_instructions}"
+        )
         print(f"[DEBUG] User provided install_path: {install_path}")
         print(f"[DEBUG] os.path.isdir(install_path): {os.path.isdir(install_path)}")
 
@@ -219,7 +226,15 @@ def detect_install_and_profiles(browser):
     profile_paths = get_profiles(profile_root)
     if not profile_paths:
         print(f"No profiles found in {profile_root}.")
-        profile_root = prompt_for_path(f"Please enter a valid profile directory for {browser.name}.")
+
+        if sys.platform == 'darwin':
+            os_specific_instructions = "On macOS, this would usually be /Users/user/Library/Application Support/Browser/Profiles."
+        else:
+            os_specific_instructions = "On Linux, this would be the parent folder to your profile folders (e.g. /home/user/.browser)."
+
+        profile_root = prompt_for_path(
+            f"Please enter a valid profile directory for {browser.name}.\n{os_specific_instructions}"
+        )
         print(f"[DEBUG] User provided profile_root (no profiles): {profile_root}")
         print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root)}")
         profile_paths = get_profiles(profile_root)
