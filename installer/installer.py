@@ -50,10 +50,7 @@ chrome_manifest = [
 ]
 
 def get_admin():
-    if sys.platform == 'win32':
-        return ctypes.windll.shell32.IsUserAnAdmin() != 0
-    else:
-        return os.geteuid() == 0
+    return os.geteuid() == 0
 
 def download_from_git(repository, branch, destination, is_tag=False):
     heads_string = 'heads'
@@ -186,9 +183,6 @@ def detect_install_and_profiles(browser):
         if sys.platform == 'darwin':
             install_path = f'/Applications/{browser.name_macos}.app/Contents/Resources'
             profile_root = _get_macos_path(browser)
-        elif sys.platform == 'win32':
-            install_path = f'C:/Program Files/{browser.name_windows_binary}'
-            profile_root = _get_windows_path(browser)
         elif sys.platform.startswith('linux'):
             install_path = f'/usr/lib/{browser.name_universal}'
             try:
@@ -316,12 +310,7 @@ def main():
     fx_autoconfig_downloaded = False
     sine_support = False
 
-    if sys.platform == 'win32':
-        print('Due to permissions issues, fx-autoconfig cannot be installed on Windows through the Natsumi Installer.')
-        print('We will install the fx-autoconfig files for your profile, but you will have to install the browser files (program folder) manually.')
-        print('More info: https://github.com/MrOtherGuy/fx-autoconfig?tab=readme-ov-file#setting-up-configjs-from-program-folder')
-
-    if not fx_autoconfig_installed and not sys.platform == 'win32':
+    if not fx_autoconfig_installed:
         if needs_sudo and not get_admin():
             print('Sudo/administrator is required to install Natsumi to this browser.')
             sys.exit(1)
@@ -391,21 +380,34 @@ def main():
         with open(f'{profile}/chrome/utils/chrome.manifest', 'w+') as file:
             file.write('\n'.join(chrome_manifest))
 
-    if not sys.platform == 'win32' and get_admin():
+    if get_admin():
         print('Fixing permissions...')
         os.system(f'chown -R {os.environ["SUDO_USER"]} "{profile}/chrome"')
 
     print('Natsumi installed successfully! ^w^')
 
 if __name__ == '__main__':
-    try:
-        main()
-        if os.path.exists('.natsumi-installer'):
-            shutil.rmtree('.natsumi-installer')
-    except:
-        if os.path.exists('.natsumi-installer'):
-            shutil.rmtree('.natsumi-installer')
-        traceback.print_exc()
+    should_prompt_exit = True
+    if sys.platform == 'win32':
+        print('This installer only works for macOS and Linux. Please use the Windows installer instead.')
+    else:
+        try:
+            main()
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+        except KeyboardInterrupt:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            should_prompt_exit = False
+        except SystemExit:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            should_prompt_exit = False
+        except:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            traceback.print_exc()
 
-    print('Press enter to exit:')
-    input()
+    if should_prompt_exit:
+        print('Press enter to exit:')
+        input()
