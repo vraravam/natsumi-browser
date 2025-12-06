@@ -65,7 +65,9 @@ SOFTWARE.
       overflow: hidden;
 
       .browserStack {
-        background-color: light-dark(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+        @media -moz-pref("natsumi.theme.enable-sdl2") {
+          background-color: light-dark(rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.2));
+        }
       }
 
       &:has(.devtools-toolbox-side-iframe) {
