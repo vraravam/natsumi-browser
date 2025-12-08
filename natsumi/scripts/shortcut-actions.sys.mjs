@@ -98,7 +98,7 @@ export class NatsumiShortcutActions {
             return;
         }
 
-        const workspaceIds = document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        const workspaceIds = document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs(true);
         const currentWorkspace = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
         let currentWorkspaceIndex = workspaceIds.indexOf(currentWorkspace);
 

@@ -83,6 +83,7 @@ class NatsumiWorkspacesWrapper {
             workspacesContext = this.workspacesModule._.getCtx();
         }
 
+        // This can be lazy, so we can always initialize this later
         if (workspacesContext) {
             this.setManagers(workspacesContext);
         } else {
@@ -154,10 +155,14 @@ class NatsumiWorkspacesWrapper {
         return this.workspacesContext.getDefaultWorkspaceID();
     }
 
-    getAllWorkspaceIDs() {
+    getAllWorkspaceIDs(ordered = false) {
         if (ucApi.Prefs.get("floorp.workspaces.v4.store").exists()) {
             let workspacesData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
             let workspaceIDs = [];
+
+            if (ordered && workspacesData["order"]) {
+                return workspacesData["order"];
+            }
 
             for (let index in workspacesData["data"]) {
                 workspaceIDs.push(workspacesData["data"][index][0]);
@@ -548,10 +553,15 @@ function copyAllWorkspaces() {
     });
 
     let buttonAdded = false;
+    let perWorkspaceData = {};
     for (let index in workspaceData["data"]) {
         let workspace = workspaceData["data"][index];
-        let workspaceId = workspace[0];
-        let workspaceIcon = workspace[1]["icon"];
+        perWorkspaceData[workspace[0]] = workspace[1];
+    }
+
+    for (let workspaceId of workspaceData["order"]) {
+        let workspace = perWorkspaceData[workspaceId];
+        let workspaceIcon = workspace["icon"];
 
         if (!workspaceIcon) {
             workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
@@ -706,6 +716,10 @@ if (isFloorp) {
 
                 document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
             }
+        });
+        Services.prefs.addObserver("floorp.workspaces.v4.store", () => {
+            copyWorkspaceName();
+            copyAllWorkspaces();
         });
 
         // Initialize workspaces wrapper

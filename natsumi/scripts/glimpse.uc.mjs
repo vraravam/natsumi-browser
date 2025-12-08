@@ -850,7 +850,7 @@ class NatsumiGlimpse {
                 gBrowser.moveTabToStart(glimpseTab);
             }
         } else if (glimpseTab.previousSibling !== parentTab) {
-            let allNonpinned = nonPinnedTabs.querySelectorAll("& > .tabbrowser-tab");
+            let allNonpinned = nonPinnedTabs.querySelectorAll("& > .tabbrowser-tab:not([hidden])");
             let parentTabIndex = Array.from(allNonpinned).indexOf(parentTab);
 
             // Check if parent tab is the last tab
