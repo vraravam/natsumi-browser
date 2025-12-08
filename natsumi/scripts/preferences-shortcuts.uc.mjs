@@ -700,11 +700,19 @@ class NatsumiShortcutsPrefPane {
             }, 120000);
         });
 
+        let toLoad;
+
         try {
             const content = await filePromise;
             uploadNode.remove();
             const text = await content.text();
-            let toLoad = JSON.parse(text);
+            toLoad = JSON.parse(text);
+        } catch(e) {
+            console.error("Could not retrieve shortcuts file:", e);
+            return;
+        }
+
+        try {
             const importSuccess = await browserWindow.gBrowser.ownerDocument.body.natsumiKBSManager.replaceShortcuts(toLoad);
 
             if (!importSuccess) {
