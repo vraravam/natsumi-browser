@@ -40,13 +40,14 @@ SOFTWARE.
 @import "themes/transgender.css";
 @import "themes/custom.css";
 
-/*noinspection CssInvalidPropertyValue*/
+/* Translucency */
 :root:not([windowtype*="ssb-window"]) body {
-  /* Make window translucent (except on PWAs) */
-  appearance: -moz-sidebar;
+  @media not -moz-pref("natsumi.theme.disable-translucency") {
+    appearance: -moz-sidebar;
 
-  @media -moz-pref("natsumi.theme.use-legacy-translucency") {
-    appearance: -moz-window-titlebar;
+    @media -moz-pref("natsumi.theme.use-legacy-translucency") {
+      appearance: -moz-window-titlebar;
+    }
   }
 }
 
