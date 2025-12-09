@@ -229,6 +229,10 @@ SOFTWARE.
 
     .natsumi-welcome-pane {
       flex-direction: column;
+
+      &#natsumi-welcome-initial {
+        justify-content: center;
+      }
     }
   }
 
@@ -347,6 +351,7 @@ SOFTWARE.
   }
 
   #natsumi-welcome-content-body {
+    overflow-x: hidden;
     overflow-y: scroll;
     height: calc(100% - 48px) !important;
   }

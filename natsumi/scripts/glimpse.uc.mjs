@@ -309,6 +309,7 @@ class NatsumiGlimpse {
             this.currentGlimpseTab.removeAttribute("natsumi-glimpse-selected");
             this.currentGlimpseTab.linkedBrowser.removeAttribute("natsumi-has-glimpse");
             tabbox.removeAttribute("natsumi-glimpse-active");
+            tabbox.removeAttribute("natsumi-glimpse-multi-active");
             this.currentGlimpseTab.renderLayers = false;
             this.currentGlimpseTab = null;
         }
