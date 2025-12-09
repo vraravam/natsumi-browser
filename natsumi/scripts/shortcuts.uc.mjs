@@ -214,10 +214,12 @@ class NatsumiKBSManager {
             "openGlimpseLauncher": new NatsumiKeyboardShortcut(false, true, true, false, "n", 0, true),
             "cycleGlimpse": new NatsumiKeyboardShortcut(false, true, false, true, ".", 0, true),
             "cycleGlimpseReverse": new NatsumiKeyboardShortcut(false, true, false, true, ",", 0, true),
-            "toggleGlimpseChain": new NatsumiKeyboardShortcut(false, true, true, false, "g", 0, true),
+            "toggleGlimpseChain": new NatsumiKeyboardShortcut(false, true, true, false, "c", 0, true),
             "initiateGlimpseChain": new NatsumiKeyboardShortcut(false, true, true, true, "g", 0, true),
             "natsumiNewTab": new NatsumiKeyboardShortcut(false, true, false, false, "t", 3, true),
-            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true)
+            "natsumiClearUnpinnedTabs": new NatsumiKeyboardShortcut(false, true, true, false, "w", 0, true),
+            "natsumiSplitTabs": new NatsumiKeyboardShortcut(false, true, true, false, "g", 0, true),
+            "natsumiUnsplitTabs": new NatsumiKeyboardShortcut(false, true, true, false, "u", 0, true)
         };
         this.shortcutActions = {
             "copyCurrentUrl": NatsumiShortcutActions.copyCurrentUrl,
@@ -234,7 +236,9 @@ class NatsumiKBSManager {
             "toggleGlimpseChain": NatsumiShortcutActions.toggleGlimpseChain,
             "initiateGlimpseChain": NatsumiShortcutActions.releaseGlimpseChain,
             "natsumiNewTab": NatsumiShortcutActions.openNewTab,
-            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs
+            "natsumiClearUnpinnedTabs": NatsumiShortcutActions.clearUnpinnedTabs,
+            "natsumiSplitTabs": NatsumiShortcutActions.splitTabs,
+            "natsumiUnsplitTabs": NatsumiShortcutActions.unsplitTabs
         };
         this.shortcutsPending = {};
         this.shortcutCustomizationData = {};
@@ -276,6 +280,16 @@ class NatsumiKBSManager {
                 "alt": true,
                 "shift": true,
                 "key": "c",
+                "unregistered": false,
+                "shortcutMode": 3
+            },
+            "key_viewSourceSafari": {
+                "customKeybinds": true,
+                "meta": Services.appinfo.OS.toLowerCase() === "darwin",
+                "ctrl": Services.appinfo.OS.toLowerCase() !== "darwin",
+                "alt": true,
+                "shift": true,
+                "key": "u",
                 "unregistered": false,
                 "shortcutMode": 3
             }

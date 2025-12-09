@@ -225,4 +225,50 @@ export class NatsumiShortcutActions {
             document.body.natsumiGlimpseLauncher.activateLauncher();
         }
     }
+
+    static splitTabs() {
+        // Firefox can't split more than 2 tabs yet
+        if (gBrowser.multiSelectedTabsCount > 2) {
+            return;
+        }
+
+        let selectedTabs = gBrowser.selectedTabs;
+        let unpinnedTabsNode = document.getElementById("tabbrowser-arrowscrollbox");
+        let unpinnedTabs = Array.from(unpinnedTabsNode.querySelectorAll(".tabbrowser-tab:not([hidden])"));
+        let firstTab = selectedTabs[0];
+        let secondTab;
+
+        if (selectedTabs.length === 1) {
+            // Get tab index
+            let tabIndex = unpinnedTabs.indexOf(firstTab);
+
+            if (tabIndex === unpinnedTabs.length - 1) {
+                // Split with previous tab
+                secondTab = unpinnedTabs[tabIndex - 1];
+            } else {
+                // Split with next tab
+                secondTab = unpinnedTabs[tabIndex + 1];
+            }
+        } else {
+            secondTab = selectedTabs[1];
+        }
+
+        // Check that tabs are not pinned and not in split view
+        for (let tab of [firstTab, secondTab]) {
+            if (tab.pinned || tab.splitview) {
+                return;
+            }
+        }
+
+        gBrowser.addTabSplitView([firstTab, secondTab], {});
+    }
+
+    static unsplitTabs() {
+        // Use current selected tab
+        let selectedTab = gBrowser.selectedTab;
+
+        if (selectedTab.splitview) {
+            gBrowser.unsplitTabs(selectedTab.splitview);
+        }
+    }
 }

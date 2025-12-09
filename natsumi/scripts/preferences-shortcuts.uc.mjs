@@ -75,6 +75,17 @@ let shortcutsMap = {
             }
         }
     },
+    "splitView": {
+        "name": "Split View",
+        "shortcuts": {
+            "natsumiSplitTabs": {
+                "name": "Split Tabs"
+            },
+            "natsumiUnsplitTabs": {
+                "name": "Unsplit Tabs"
+            }
+        }
+    },
     "navigation": {
         "name": "Navigation",
         "shortcuts": {
