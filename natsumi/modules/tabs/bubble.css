@@ -169,7 +169,7 @@ SOFTWARE.
     }
   }
 
-  #tabbrowser-tabs[expanded] {
+  #tabbrowser-tabs[expanded], #tabbrowser-tabs[orient="horizontal"] {
     #pinned-tabs-container, #vertical-pinned-tabs-container {
       --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
     }
@@ -177,9 +177,6 @@ SOFTWARE.
     #tabbrowser-arrowscrollbox {
       .tabbrowser-tab {
         & > .tab-stack > .tab-content {
-          padding-left: calc(var(--tab-inner-inline-margin) + 12px) !important;
-          padding-right: calc(var(--tab-inner-inline-margin) + 4px) !important;
-
           & > .tab-close-button {
             --natsumi-tab-close-button-padding: 8px !important;
             width: 32px !important;
@@ -218,7 +215,52 @@ SOFTWARE.
     }
   }
 
-  #tabbrowser-tabs:not([expanded]) {
+  #tabbrowser-tabs[expanded] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          padding-left: calc(var(--tab-inner-inline-margin) + 12px) !important;
+          padding-right: calc(var(--tab-inner-inline-margin) + 4px) !important;
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs[orient="horizontal"] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        min-width: 80px !important;
+
+        & > .tab-stack > .tab-background {
+          margin-inline: 2px !important;
+        }
+
+        & > .tab-stack > .tab-content {
+          padding-left: 14px !important;
+          padding-right: 6px !important;
+
+          &::before {
+            left: 6px !important;
+            width: calc(100% - 48px) !important;
+          }
+        }
+      }
+    }
+
+    &[closebuttons="activetab"] {
+      #tabbrowser-arrowscrollbox {
+        .tabbrowser-tab {
+          &:hover:not([selected]) {
+            & > .tab-stack > .tab-content::before {
+              width: calc(100% - 12px) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs:not([expanded]):not([orient="horizontal"]) {
     #tabbrowser-arrowscrollbox {
       .tabbrowser-tab {
         & > .tab-stack > .tab-background {

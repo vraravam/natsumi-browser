@@ -119,6 +119,14 @@ SOFTWARE.
     }
   }
 
+  #tabbrowser-tabs[orient="horizontal"] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        min-width: 90px !important;
+      }
+    }
+  }
+
   #pinned-tabs-container {
     .tabbrowser-tab {
       &[natsumi-glimpse-selected] {
