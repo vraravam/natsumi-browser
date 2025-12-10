@@ -1,5 +1,5 @@
 {
-  "branch": "beta",
-  "version": "6.0.0-b.4",
+  "branch": "stable",
+  "version": "6.0.0-rc.1",
   "codename": "Moonlight"
 }
