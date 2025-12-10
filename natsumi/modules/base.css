@@ -548,3 +548,10 @@ SOFTWARE.
     }
   }
 }
+
+/* Fix: ensure split view width is only applied when split view is active */
+@media not -moz-pref("natsumi.browser.disable-splitview-patches") {
+  .browserSidebarContainer:not(.split-view-panel):not(:has(browser[natsumi-is-glimpse])) {
+    width: unset !important;
+  }
+}

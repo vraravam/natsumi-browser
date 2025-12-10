@@ -2517,14 +2517,14 @@ function addSDL2Pane() {
     let sdl2Group = new OptionsGroup(
         "natsumiSDL2",
         "Starlight Design 2",
-        "Starlight Design 2 is an experimental design language for Natsumi aimed at enhancing visuals and contrast."
+        "Starlight Design 2 is an extension to Starlight Design aimed at enhancing visuals and contrast."
     );
 
     sdl2Group.registerOption("natsumiEnableSDL2", new CheckboxChoice(
         "natsumi.theme.enable-sdl2",
         "natsumiEnableSDL2",
         "Enable Starlight Design 2 (SDL2)",
-        "Please note that SDL2 is still experimental and things may break. If you have any feedback for SDL2, please share them through GitHub or Discord!"
+        "Please note that this feature will be enabled by default in a future release."
     ));
 
     let sdl2Node = sdl2Group.generateNode();

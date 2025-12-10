@@ -237,6 +237,7 @@ export class NatsumiShortcutActions {
         let unpinnedTabs = Array.from(unpinnedTabsNode.querySelectorAll(".tabbrowser-tab:not([hidden])"));
         let firstTab = selectedTabs[0];
         let secondTab;
+        let insertBefore = gBrowser.selectedTab;
 
         if (selectedTabs.length === 1) {
             // Get tab index
@@ -260,7 +261,12 @@ export class NatsumiShortcutActions {
             }
         }
 
-        gBrowser.addTabSplitView([firstTab, secondTab], {});
+        let additionalData = {};
+        if (insertBefore) {
+            additionalData = {insertBefore};
+        }
+
+        gBrowser.addTabSplitView([firstTab, secondTab], additionalData);
     }
 
     static unsplitTabs() {
