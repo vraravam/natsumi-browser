@@ -370,4 +370,10 @@ SOFTWARE.
       padding-top: 0 !important;
     }
   }
+
+  body[natsumi-compact-sidebar-hover], body[natsumi-compact-sidebar-extend] {
+    #PersonalToolbar {
+      pointer-events: none;
+    }
+  }
 }
