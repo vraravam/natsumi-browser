@@ -93,6 +93,11 @@ SOFTWARE.
         }
       }
     }
+
+    tab-group[collapsed] .tabbrowser-tab {
+      min-height: 0 !important;
+      margin-block: 0 !important;
+    }
   }
 
   /* Pinned tabs */
