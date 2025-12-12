@@ -94,7 +94,7 @@ SOFTWARE.
       }
     }
 
-    tab-group[collapsed] .tabbrowser-tab {
+    tab-group[collapsed] .tabbrowser-tab:not([selected]) {
       min-height: 0 !important;
       margin-block: 0 !important;
     }
