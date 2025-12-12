@@ -75,8 +75,8 @@ class NatsumiUnpinnedTabsClearer {
     clearTabs() {
         // Get tabs
         let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
-        let tabs = tabsList.querySelectorAll("tab:not([hidden='true'])");
-        let allTabs = tabsList.querySelectorAll("tab:not([hidden='true'])");
+        let tabs = Array.from(tabsList.querySelectorAll("tab:not([hidden='true'])"));
+        let allTabs = Array.from(tabsList.querySelectorAll("tab:not([hidden='true'])"));
 
         if (ucApi.Prefs.get("natsumi.sidebar.clear-keep-selected").exists()) {
             if (ucApi.Prefs.get("natsumi.sidebar.clear-keep-selected").value) {
@@ -122,6 +122,8 @@ class NatsumiUnpinnedTabsClearer {
                 });
             }
         }
+
+        console.log(tabs);
 
         gBrowser.removeTabs(tabs);
     }
