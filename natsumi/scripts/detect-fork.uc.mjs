@@ -32,14 +32,34 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 function detectFork() {
-    const browserName = AppConstants.MOZ_APP_BASENAME.toLowerCase();
+    let browserName = AppConstants.MOZ_APP_BASENAME.toLowerCase();
+    const altBrowserName = AppConstants.MOZ_APP_DISPLAYNAME_DO_NOT_USE.toLowerCase();
+
+    if (altBrowserName === "tor browser") {
+        browserName = "torbrowser";
+    }
 
     let forkName = "firefox";
 
     if (browserName === "floorp") {
         forkName = "floorp";
-    } else if (browserTitle === "waterfox") {
+    } else if (browserName === "firedragon") {
+        forkName = "floorp";
+        ucApi.Prefs.set("natsumi.browser.type-firedragon", true);
+
+        // For FireDragon, disable Firefox custom theme color
+        // This is because the default Sweet-Dark theme causes some issues with contrast with Natsumi
+        ucApi.Prefs.set("natsumi.theme.force-natsumi-color", true);
+    } else if (browserName === "waterfox") {
         forkName = "waterfox";
+    } else if (browserName === "librewolf") {
+        forkName = "librewolf";
+    } else if (browserName === "mullvadbrowser") {
+        forkName = "mullvad";
+    } else if (browserName === "torbrowser") {
+        forkName = "tor";
+    } else if (browserName === "glide") {
+        forkName = "glide";
     }
 
     return forkName;
@@ -59,6 +79,11 @@ if (disableAutoFork) {
     if (forkName) {
         console.log(`Detected browser fork: ${forkName}`);
         ucApi.Prefs.set("natsumi.browser.type", forkName);
+
+        Services.prefs.addObserver("natsumi.browser.type", () => {
+            console.warn("Browser fork changed externally, resetting.");
+            ucApi.Prefs.set("natsumi.browser.type", forkName);
+        })
     } else {
         console.warn("Could not detect browser fork.");
     }

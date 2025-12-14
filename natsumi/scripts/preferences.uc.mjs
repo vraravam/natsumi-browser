@@ -42,10 +42,11 @@ import {
     availablePresets,
     gradientTypes,
     gradientTypeNames,
+    getTheme,
     applyCustomColor,
     applyCustomTheme
 } from "./custom-theme.sys.mjs";
-import {resetTabStyleIfNeeded} from "./reset-tab-style.sys.mjs";
+import { resetTabStyleIfNeeded } from "./reset-tab-style.sys.mjs";
 
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
@@ -62,23 +63,25 @@ function setStringPreference(preference, value) {
 }
 
 class CustomThemePicker {
-    constructor(id, loaderMethod, applyMethod, targetPref, singleColor = false, allowOpacity = true) {
+    constructor(id, loaderMethod, applyMethod, legacyTargetPref, singleColor = false, allowOpacity = true) {
         this.id = id;
         this.loaderMethod = loaderMethod;
         this.applyMethod = applyMethod;
-        this.targetPref = targetPref;
+        this.legacyTargetPref = legacyTargetPref;
         this.singleColor = singleColor;
         this.allowOpacity = allowOpacity;
         this.preset = null;
         this.gradientType = "linear";
         this.angle = 0;
         this.colors = [];
+        this.grain = 0;
         this.newColorAllowed = true;
         this.lastSelected = null;
         this.layer = 0;
         this.theme = "light";
         this.data = {"light": {"0": {}, "1": {}}, "dark": {"0": {}, "1": {}}}
         this.node = null;
+        this.workspace = null;
 
         // Configs
         this.availableLayers = 2;
@@ -92,8 +95,33 @@ class CustomThemePicker {
         this.shiftPressed = false;
     }
 
-    init() {
+    getWorkspaces() {
+        let preliminaryBrowserWindow;
+        let workspaces = [];
+
+        // Try to get any window with workspaces wrapper
+        for (let win of ucApi.Windows.getAll(true)) {
+            if (win.document.body.natsumiWorkspacesWrapper) {
+                preliminaryBrowserWindow = win;
+                break;
+            }
+        }
+
+        if (preliminaryBrowserWindow) {
+            workspaces = preliminaryBrowserWindow.document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        }
+
+        return workspaces;
+    }
+
+    async init() {
         let node = document.getElementById(this.id);
+        let isFloorp = false;
+        if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+            if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+                isFloorp = true;
+            }
+        }
 
         if (!node) {
             throw new Error("Could not find theme picker node.");
@@ -114,23 +142,8 @@ class CustomThemePicker {
             node.setAttribute("natsumi-no-opacity", "");
         }
 
-        // Load custom theme data from preferences
-        let customThemeData = ucApi.Prefs.get(this.targetPref);
-        if (customThemeData.exists()) {
-            try {
-                let toLoad = JSON.parse(customThemeData.value);
-
-                if (!toLoad["version"]) {
-                    toLoad["version"] = 1;
-                }
-
-                this.data = this.loaderMethod(toLoad);
-            } catch (e) {
-                console.error("Failed to parse custom theme data:", e);
-            }
-        }
-
-        this.loadLayer(0);
+        // Load theme data
+        await this.changeWorkspace(this.workspace);
 
         if (this.colors.length > 0) {
             this.setLastSelected("0");
@@ -210,6 +223,7 @@ class CustomThemePicker {
         let resetButton = this.node.querySelector(".natsumi-reset-button");
         let hexInput = this.node.querySelector(".natsumi-hex-input");
         let hexButton = this.node.querySelector(".natsumi-hex-button");
+        let grainButton = this.node.querySelector(".natsumi-grain-button");
 
         if (!this.singleColor) {
             presetButton.addEventListener("click", () => {
@@ -234,6 +248,15 @@ class CustomThemePicker {
                 this.node.querySelector(".natsumi-hex-input").value = "";
             }
         });
+
+        grainButton.addEventListener("click", () => {
+            let grainSliderContainer = this.node.querySelector(".natsumi-custom-theme-grain");
+            if (grainSliderContainer.attributes["hidden"]) {
+                grainSliderContainer.removeAttribute("hidden");
+            } else {
+                grainSliderContainer.setAttribute("hidden", "");
+            }
+        })
 
         // Add listener for HEX input field
         hexInput.addEventListener("keydown", (event) => {
@@ -277,6 +300,7 @@ class CustomThemePicker {
         // Add listeners for sliders
         let luminositySliderNode = this.node.querySelector(".natsumi-color-slider-luminosity");
         let opacitySliderNode = this.node.querySelector(".natsumi-color-slider-opacity");
+        let grainSliderNode = this.node.querySelector(".natsumi-color-slider-grain");
         luminositySliderNode.addEventListener("mousedown", (event) => {
             event.stopPropagation();
             event.preventDefault();
@@ -290,6 +314,12 @@ class CustomThemePicker {
                 this.sliderEvent("opacity", event);
             });
         }
+
+        grainSliderNode.addEventListener("mousedown", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+            this.sliderEvent("grain", event);
+        });
 
         // Add listener for gradient angle
         let gradientAngleNode = this.node.querySelector(".natsumi-gradient-angle");
@@ -310,6 +340,60 @@ class CustomThemePicker {
         document.addEventListener("keyup", (event) => {
             this.shiftPressed = event.shiftKey;
         });
+
+        if (isFloorp) {
+            // Set up workspace selector
+            let workspaceSelectorContainerNode = this.node.querySelector(".natsumi-custom-theme-target-workspace");
+
+            // Create workspace selector
+            let workspaceSelectorNode = document.createElement("select");
+            workspaceSelectorNode.classList.add("natsumi-custom-theme-workspace-selector");
+
+            // Add options
+            let defaultOptionNode = document.createElement("option");
+            defaultOptionNode.setAttribute("value", "default");
+            defaultOptionNode.setAttribute("selected", "selected");
+            defaultOptionNode.textContent = "All Workspaces";
+            workspaceSelectorNode.appendChild(defaultOptionNode);
+
+            let workspaceData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
+            if (workspaceData && workspaceData["data"]) {
+                for (let workspaceEntry of workspaceData["data"]) {
+                    const workspaceId = workspaceEntry[0];
+                    const workspaceName = workspaceEntry[1]["name"];
+
+                    let workspaceOptionNode = document.createElement("option");
+                    workspaceOptionNode.setAttribute("value", workspaceId);
+                    workspaceOptionNode.textContent = workspaceName;
+                    workspaceSelectorNode.appendChild(workspaceOptionNode);
+                }
+            }
+
+            workspaceSelectorNode.addEventListener("change", async (event) => {
+                let selectedWorkspaceId = event.target.value ?? null;
+
+                if (selectedWorkspaceId === "default") {
+                    selectedWorkspaceId = null;
+                }
+
+                await this.changeWorkspace(selectedWorkspaceId);
+            });
+
+            workspaceSelectorContainerNode.appendChild(workspaceSelectorNode);
+        }
+    }
+
+    async changeWorkspace(workspaceId = null) {
+        this.workspace = workspaceId;
+        let fetchedWorkspaceData = await getTheme(workspaceId, true);
+
+        if (fetchedWorkspaceData) {
+            this.data = fetchedWorkspaceData;
+        } else {
+            this.data = {"light": {"0": {}, "1": {}}, "dark": {"0": {}, "1": {}}};
+        }
+
+        this.loadLayer(this.layer);
     }
 
     async import() {
@@ -445,7 +529,15 @@ class CustomThemePicker {
                 this.colors = layerData["background"]["colors"];
             }
 
-            this.lastSelected = "0";
+            if (this.colors.length > 0) {
+                this.lastSelected = "0";
+            }
+        }
+
+        if (this.data[this.theme]["grain"]) {
+            this.grain = this.data[this.theme]["grain"];
+        } else {
+            this.grain = 0;
         }
 
         this.renderGrid();
@@ -454,8 +546,11 @@ class CustomThemePicker {
         this.renderAngle();
     }
 
-    saveLayer() {
+    async saveLayer() {
+        let usedColors = 0;
+
         if (this.singleColor) {
+            usedColors = 1;
             this.data["color"] = this.colors[0];
         } else {
             this.data[this.theme][`${this.layer}`] = {
@@ -466,11 +561,57 @@ class CustomThemePicker {
                     "colors": this.colors
                 }
             };
+
+            for (let theme of ["light", "dark"]) {
+                let themeData = this.data[theme];
+
+                if (!themeData) {
+                    continue;
+                }
+
+                for (let themeLayer of Object.keys(themeData)) {
+                    let layerData = themeData[themeLayer];
+
+                    if (!layerData) {
+                        continue;
+                    }
+
+                    if (!layerData["background"]) {
+                        continue;
+                    }
+
+                    if (layerData["background"]["colors"]) {
+                        usedColors += layerData["background"]["colors"].length;
+                    }
+                }
+            }
         }
 
         this.data["version"] = this.version;
+        this.data[this.theme]["grain"] = this.grain;
 
-        ucApi.Prefs.set(this.targetPref, JSON.stringify(this.data));
+        let themeDirectoryPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
+        let themePath = PathUtils.join(themeDirectoryPath, "master.json");
+        if (this.workspace) {
+            themePath = PathUtils.join(themeDirectoryPath, `${this.workspace}.json`);
+        }
+
+        if (usedColors === 0) {
+            // Delete file
+            try {
+                await IOUtils.remove(themePath);
+            } catch (e) {
+                // Ignore error
+            }
+        } else {
+            try {
+                await IOUtils.writeJSON(themePath, this.data);
+            } catch (e) {
+                console.error("Failed to save customization data:", e);
+                return;
+            }
+        }
+
         this.applyMethod();
     }
 
@@ -478,6 +619,8 @@ class CustomThemePicker {
         let nodeString = `
             <div id="${this.id}" class="natsumi-custom-theme-container">
                 <div class="natsumi-custom-theme-picker">
+                    <div class="natsumi-custom-theme-target-workspace">
+                    </div>
                     <div class="natsumi-custom-theme-top-controls">
                         <div class="natsumi-custom-theme-top-button natsumi-custom-layer-1" selected=""></div>
                         <div class="natsumi-custom-theme-top-button natsumi-custom-layer-2"></div>
@@ -514,10 +657,19 @@ class CustomThemePicker {
                         <div class="natsumi-custom-theme-controls-button natsumi-hex-button">
                             <div class="natsumi-custom-theme-controls-icon"></div>
                         </div>
+                        <div class="natsumi-custom-theme-controls-button natsumi-grain-button">
+                            <div class="natsumi-custom-theme-controls-icon"></div>
+                        </div>
                     </div>
                     <div class="natsumi-custom-theme-hex-input" hidden="">
                         <html:input class="natsumi-hex-input" type="text" placeholder="HEX code (e.g. #ff0000)" maxlength="8"/>
                         <div class="natsumi-hex-submit"></div>
+                    </div>
+                    <div class="natsumi-custom-theme-grain" hidden="">
+                        <div class="natsumi-custom-theme-slider natsumi-color-slider-grain">
+                            <div class="natsumi-custom-theme-slider-icon-1"></div>
+                            <div class="natsumi-custom-theme-slider-icon-0"></div>
+                        </div>
                     </div>
                     <div class="natsumi-custom-theme-bottom-controls">
                         <div class="natsumi-custom-theme-sliders">
@@ -729,7 +881,13 @@ class CustomThemePicker {
         }
 
         let gridNode = this.node.querySelector(".natsumi-custom-theme-grid");
-        gridNode.innerHTML = "";
+        let newColors = this.colors.length;
+        let currentColors = gridNode.querySelectorAll(".natsumi-custom-theme-color");
+        const replaceColors = (newColors !== currentColors.length);
+
+        if (replaceColors) {
+            gridNode.innerHTML = "";
+        }
 
         if (this.preset) {
             this.ensurePreset();
@@ -765,13 +923,22 @@ class CustomThemePicker {
 
         for (let colorIndex in this.colors) {
             let colorData = this.colors[colorIndex];
-            let colorNode = document.createElement("div");
-            colorNode.classList.add("natsumi-custom-theme-color");
+            let colorNode;
+
+            if (replaceColors) {
+                colorNode = document.createElement("div");
+                colorNode.classList.add("natsumi-custom-theme-color");
+            } else {
+                colorNode = currentColors[colorIndex];
+            }
+
             colorNode.style.setProperty("--natsumi-selected-color", `${colorData.code}`);
 
-            let colorDisplayNode = document.createElement("div");
-            colorDisplayNode.classList.add("natsumi-custom-theme-color-display");
-            colorNode.appendChild(colorDisplayNode);
+            if (replaceColors) {
+                let colorDisplayNode = document.createElement("div");
+                colorDisplayNode.classList.add("natsumi-custom-theme-color-display");
+                colorNode.appendChild(colorDisplayNode);
+            }
 
             if (colorIndex === "0") {
                 colorNode.classList.add("natsumi-custom-theme-primary-color");
@@ -795,34 +962,36 @@ class CustomThemePicker {
                 colorNode.style.setProperty("--natsumi-color-index-color", "white");
             }
 
-            gridNode.appendChild(colorNode);
-            colorNode.addEventListener("mousedown", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
+            if (replaceColors) {
+                gridNode.appendChild(colorNode);
+                colorNode.addEventListener("mousedown", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
 
-                document.onmouseup = this.resetListeners;
-                document.onmousemove = (event => {
-                    let observeColorIndex = colorIndex;
+                    document.onmouseup = this.resetListeners;
+                    document.onmousemove = (event => {
+                        let observeColorIndex = colorIndex;
 
-                    if (this.preset) {
-                        observeColorIndex = "0";
-                    }
+                        if (this.preset) {
+                            observeColorIndex = "0";
+                        }
 
-                    let relativeX = event.clientX - gridNode.getBoundingClientRect().left;
-                    let relativeY = event.clientY - gridNode.getBoundingClientRect().top;
-                    this.moveColor(observeColorIndex, relativeX, relativeY);
+                        let relativeX = event.clientX - gridNode.getBoundingClientRect().left;
+                        let relativeY = event.clientY - gridNode.getBoundingClientRect().top;
+                        this.moveColor(observeColorIndex, relativeX, relativeY);
+                    });
                 });
-            });
-            colorNode.addEventListener("contextmenu", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                this.removeColor(colorIndex);
-            });
-            colorNode.addEventListener("click", (event) => {
-                event.stopPropagation();
-                event.preventDefault();
-                this.setLastSelected(colorIndex);
-            });
+                colorNode.addEventListener("contextmenu", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.removeColor(colorIndex);
+                });
+                colorNode.addEventListener("click", (event) => {
+                    event.stopPropagation();
+                    event.preventDefault();
+                    this.setLastSelected(colorIndex);
+                });
+            }
         }
     }
 
@@ -984,7 +1153,7 @@ class CustomThemePicker {
             relativeX = Math.round(sliderWidth * (1 - sliderValue));
         }
 
-        if (this.lastSelected === null) {
+        if (slider !== "grain" && this.lastSelected === null) {
             // No color selected here, so we can't modify its properties
             return;
         }
@@ -993,6 +1162,9 @@ class CustomThemePicker {
             this.setColorProperties(this.lastSelected, sliderValue);
         } else if (slider === "opacity") {
             this.setColorProperties(this.lastSelected, null, sliderValue);
+        } else if (slider === "grain") {
+            sliderValue = 1 - sliderValue;
+            this.setGrain(sliderValue);
         }
 
         sliderNode.style.setProperty("--natsumi-slider-position", `${relativeX}px`);
@@ -1004,6 +1176,7 @@ class CustomThemePicker {
     renderSliders() {
         let luminositySliderNode = this.node.querySelector(".natsumi-color-slider-luminosity");
         let opacitySliderNode = this.node.querySelector(".natsumi-color-slider-opacity");
+        let grainSliderNode = this.node.querySelector(".natsumi-color-slider-grain");
 
         let colorData = null;
         if (this.lastSelected !== null && this.lastSelected in this.colors) {
@@ -1023,6 +1196,10 @@ class CustomThemePicker {
             luminositySliderNode.style.setProperty("--natsumi-slider-position", "0px");
             opacitySliderNode.style.setProperty("--natsumi-slider-position", "0px");
         }
+
+        const grainSliderWidth = Math.max(grainSliderNode.getBoundingClientRect().width, 380);
+        const grainPosition = grainSliderWidth * this.grain;
+        grainSliderNode.style.setProperty("--natsumi-slider-position", `${grainPosition}px`);
     }
 
     renderButtons() {
@@ -1096,6 +1273,10 @@ class CustomThemePicker {
         this.saveLayer();
     }
 
+    setGrain(opacity) {
+        this.grain = opacity;
+    }
+
     removeColor(index) {
         if (index < 0 || index >= this.colors.length) {
             console.error("Invalid color index:", index);
@@ -1120,6 +1301,7 @@ class CustomThemePicker {
 
     removeAllColors() {
         this.colors = [];
+        this.grain = 0;
         this.preset = null;
         this.angle = 0;
         this.gradientType = "linear";
@@ -1272,6 +1454,34 @@ class MCChoice {
     }
 }
 
+class RadioChoice extends MCChoice {
+    constructor(value, label, description) {
+        super(value, label, description, "", "");
+    }
+
+    generateNode(selected = false, color = false) {
+        let nodeString = `
+            <radio class="natsumi-radio-choice" title="${this.description}" value="${this.value}">
+                <image class="radio-check"></image>
+                <hbox class="radio-label-box" align="center" flex="1">
+                    <image class="radio-icon"></image>
+                    <label class="radio-label" flex="1">${this.label}</label>
+                </hbox>
+            </radio>
+        `;
+        let node = convertToXUL(nodeString);
+        let choiceButton = node.querySelector(".natsumi-radio-choice");
+
+        if (selected) {
+            choiceButton.setAttribute("selected", "true");
+            let checkNode = choiceButton.querySelector(".radio-check");
+            checkNode.setAttribute("selected", "true");
+        }
+
+        return node;
+    }
+}
+
 const layouts = {
     "default": new MCChoice(
         false,
@@ -1304,7 +1514,7 @@ const themes = {
         "gradient-complementary",
         "Complementary Gradient",
         "A gradient of the accent color and its opposite color.",
-        "<div id='gradient-complementary' class='natsumi-mc-choice-image-browser'><div class='natsumi-mc-choice-image-browser-additional'></div></div>"
+        "<div id='gradient-complementary' class='natsumi-mc-choice-image-browser'></div>"
     ),
     "colorful": new MCChoice(
         "colorful",
@@ -1347,6 +1557,42 @@ const themes = {
         "Custom",
         "Make your own theme!",
         "<div id='custom' class='natsumi-mc-choice-image-browser'></div>"
+    )
+}
+
+const windowMaterialsMac = {
+    "sidebar": new RadioChoice(
+        false,
+        "Sidebar",
+        ""
+    ),
+    "titlebar": new RadioChoice(
+        true,
+        "Titlebar",
+        ""
+    )
+}
+
+const windowMaterialsWindows = {
+    "auto": new RadioChoice(
+        0,
+        "Automatic",
+        ""
+    ),
+    "mica": new RadioChoice(
+        1,
+        "Mica",
+        ""
+    ),
+    "acrylic": new RadioChoice(
+        2,
+        "Acrylic",
+        ""
+    ),
+    "micaalt": new RadioChoice(
+        3,
+        "Mica Alt",
+        ""
     )
 }
 
@@ -1521,6 +1767,34 @@ const compactStyles = {
     )
 }
 
+const glimpseKeys = {
+    "alt": new RadioChoice(
+        "alt",
+        "Alt (Option)",
+        ""
+    ),
+    "ctrl": new RadioChoice(
+        "ctrl",
+        "Control",
+        ""
+    ),
+    "meta": new RadioChoice(
+        "meta",
+        "Meta (Super/Command)",
+        ""
+    ),
+    "shift": new RadioChoice(
+        "shift",
+        "Shift",
+        ""
+    ),
+    "hold": new RadioChoice(
+        "hold",
+        "Hold click",
+        ""
+    )
+}
+
 const tabDesigns = {
     "default": new MCChoice(
         "default",
@@ -1528,6 +1802,32 @@ const tabDesigns = {
         "A modern and sleek, yet dynamic tab design.",
         `
             <div id='tab-blade' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "origin": new MCChoice(
+        "origin",
+        "Origin",
+        "A box-like design inspired by Natsumi v1.",
+        `
+            <div id='tab-origin' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "curve": new MCChoice(
+        "curve",
+        "Curve",
+        "A curve-like design inspired by Natsumi v2.",
+        `
+            <div id='tab-curve' class='natsumi-mc-choice-image-browser'>
                 <div class='natsumi-mc-tab'>
                     <div class='natsumi-mc-tab-icon'></div>
                     <div class='natsumi-mc-tab-text'></div>
@@ -1567,6 +1867,19 @@ const tabDesigns = {
         "A tab design inspired by Floorp's hexagonal branding.",
         `
             <div id='tab-hexagonal' class='natsumi-mc-choice-image-browser'>
+                <div class='natsumi-mc-tab'>
+                    <div class='natsumi-mc-tab-icon'></div>
+                    <div class='natsumi-mc-tab-text'></div>
+                </div>
+            </div>
+        `
+    ),
+    "bubble": new MCChoice(
+        "bubble",
+        "Bubble",
+        "A tab bringing the Natsumi SDL2 design to tabs.",
+        `
+            <div id='tab-bubble' class='natsumi-mc-choice-image-browser'>
                 <div class='natsumi-mc-tab'>
                     <div class='natsumi-mc-tab-icon'></div>
                     <div class='natsumi-mc-tab-text'></div>
@@ -1726,6 +2039,45 @@ class MultipleChoicePreference {
         }
 
         let form = node.querySelector(".natsumi-mc-chooser");
+        for (let option in this.options) {
+            let choice = this.options[option];
+            const selected = (this.getSelected() === choice.value);
+            let choiceNode = choice.generateNode(selected, color);
+            form.appendChild(choiceNode);
+        }
+        return node;
+    }
+}
+
+class RadioPreference extends MultipleChoicePreference {
+    constructor(id, preference, label, description, overrideDefault = null) {
+        super(id, preference, label, description, overrideDefault);
+    }
+
+    generateNode(color = false) {
+        let nodeString = `
+            <groupbox id="${this.id}Group" data-category="paneNatsumiSettings" hidden="true">
+                <html:h2>${this.label}</html:h2>
+                <html:div id="${this.id}Settings">
+                    <description class="description-deemphasized">
+                        ${this.description}
+                    </description>
+                    <radiogroup class="natsumi-radio-chooser">
+                    </radiogroup>
+                </html:div>
+            </groupbox>
+        `
+        let node = convertToXUL(nodeString);
+        let groupNode = node.querySelector(`#${this.id}Group`);
+
+        for (let extra in this.extras) {
+            let extraNode = convertToXUL(`<vbox id="${extra}"></vbox>`)
+            let extraBox = extraNode.querySelector(`#${extra}`);
+            extraBox.appendChild(this.extras[extra].generateNode());
+            groupNode.appendChild(extraNode);
+        }
+
+        let form = node.querySelector(".natsumi-radio-chooser");
         for (let option in this.options) {
             let choice = this.options[option];
             const selected = (this.getSelected() === choice.value);
@@ -1903,18 +2255,6 @@ function addThemesPane() {
         true
     )
 
-    let windowsAppend = "";
-    if (osName === "winnt") {
-        windowsAppend = " Windows users: please use this if translucency is broken and let me know of the issue."
-    }
-
-    let translucencyLegacyCheckbox = new CheckboxChoice(
-        "natsumi.theme.use-legacy-translucency",
-        "natsumiTranslucencyLegacyToggle",
-        "Use legacy translucency",
-        `This will inherit the material from the 'titlebar' rather than the 'sidebar'.${windowsAppend}`
-    )
-
     let grayOutCheckbox = new CheckboxChoice(
         "natsumi.theme.gray-out-when-inactive",
         "natsumiGrayOutWhenInactive",
@@ -1925,7 +2265,6 @@ function addThemesPane() {
 
     themeSelection.registerExtras("natsumiCustomThemePickerBox", customThemePickerUi);
     themeSelection.registerExtras("natsumiTranslucencyBox", translucencyCheckbox);
-    themeSelection.registerExtras("natsumiTranslucencyLegacyBox", translucencyLegacyCheckbox);
     themeSelection.registerExtras("natsumiInactiveBox", grayOutCheckbox);
 
     for (let theme in themes) {
@@ -1966,6 +2305,86 @@ function addThemesPane() {
 
     prefsView.insertBefore(themeNode, homePane);
     customThemePickerUi.init();
+}
+
+function addWindowMaterialPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create theme selection
+    let windowMaterialSelectionMac = new RadioPreference(
+        "natsumiWindowMaterialMac",
+        "natsumi.theme.use-legacy-translucency",
+        "Window material",
+        "Choose which material to use for the window background.",
+    );
+    let windowMaterialSelectionWindows = new RadioPreference(
+        "natsumiWindowMaterialWindows",
+        "widget.windows.mica.toplevel-backdrop",
+        "Window material",
+        "Choose which material to use for the window background.",
+    );
+
+    for (let windowMaterial in windowMaterialsMac) {
+        windowMaterialSelectionMac.registerOption(windowMaterial, windowMaterialsMac[windowMaterial]);
+    }
+    for (let windowMaterial in windowMaterialsWindows) {
+        windowMaterialSelectionWindows.registerOption(windowMaterial, windowMaterialsWindows[windowMaterial]);
+    }
+
+    let windowMaterialsNode;
+
+    // Set listeners for each button
+    let windowMaterialButtons = [];
+    let targetPref = "natsumi.theme.use-legacy-translucency";
+
+    if (Services.appinfo.OS.toLowerCase() === "darwin") {
+        windowMaterialsNode = windowMaterialSelectionMac.generateNode();
+        windowMaterialButtons = windowMaterialsNode.querySelectorAll(".natsumi-radio-choice");
+    } else if (Services.appinfo.OS.toLowerCase() === "winnt") {
+        windowMaterialsNode = windowMaterialSelectionWindows.generateNode();
+        windowMaterialButtons = windowMaterialsNode.querySelectorAll(".natsumi-radio-choice");
+        targetPref = "widget.windows.mica.toplevel-backdrop";
+
+        // Add DWMBlurGlass/MicaForEveryone warning
+        let windowsExternalMaterialNotice = convertToXUL(`
+            <div id="natsumiWindowsExternalMaterialWarning" class="natsumi-settings-info warning">
+                <div class="natsumi-settings-info-icon"></div>
+                <div class="natsumi-settings-info-text">
+                    If you use something like DWMBlurGlass or MicaForEveryone to enable translucency, you may need to
+                    manage window materials for your browser there.
+                </div>
+            </div>
+        `)
+        let firstRadio = windowMaterialsNode.querySelector(".natsumi-radio-choice");
+        firstRadio.parentNode.insertBefore(windowsExternalMaterialNotice, firstRadio);
+    } else {
+        // We're not on Windows or macOS
+        return;
+    }
+
+    windowMaterialButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing key:", selectedValue === "true");
+
+            if (targetPref === "natsumi.theme.use-legacy-translucency") {
+                ucApi.Prefs.set(targetPref, selectedValue === "true");
+            } else {
+                setStringPreference(targetPref, selectedValue);
+            }
+            windowMaterialButtons.forEach((btn) => {
+                btn.removeAttribute("selected")
+                let radioCheck = btn.querySelector(".radio-check");
+                radioCheck.removeAttribute("selected");
+            });
+            button.setAttribute("selected", "true");
+            let radioCheck = button.querySelector(".radio-check");
+            radioCheck.setAttribute("selected", "true");
+        });
+    });
+
+    prefsView.insertBefore(windowMaterialsNode, homePane);
 }
 
 function addColorsPane() {
@@ -2048,6 +2467,13 @@ function addIconsPane() {
         iconSelection.registerOption(iconPack, icons[iconPack]);
     }
 
+    // Alt back forward icons
+    iconSelection.registerExtras("natsumiIconsAltBackForward", new CheckboxChoice(
+        "natsumi.theme.icons-alt-back-forward",
+        "natsumiIconsAltBackForward",
+        "Use alternative Back/Forward icons"
+    ));
+
     let iconNode = iconSelection.generateNode();
 
     // Set listeners for each button
@@ -2062,7 +2488,67 @@ function addIconsPane() {
         });
     });
 
+    // Set listeners for each checkbox
+    let checkboxes = iconNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
     prefsView.insertBefore(iconNode, homePane);
+}
+
+function addSDL2Pane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let sdl2Group = new OptionsGroup(
+        "natsumiSDL2",
+        "Starlight Design 2",
+        "Starlight Design 2 is an extension to Starlight Design aimed at enhancing visuals and contrast."
+    );
+
+    sdl2Group.registerOption("natsumiEnableSDL2", new CheckboxChoice(
+        "natsumi.theme.enable-sdl2",
+        "natsumiEnableSDL2",
+        "Enable Starlight Design 2 (SDL2)",
+        "Please note that this feature will be enabled by default in a future release."
+    ));
+
+    let sdl2Node = sdl2Group.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = sdl2Node.querySelectorAll("checkbox");
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(sdl2Node, homePane);
 }
 
 function addSidebarTabsPane() {
@@ -2089,6 +2575,13 @@ function addSidebarTabsPane() {
     for (let style in tabDesigns) {
         tabDesignSelection.registerOption(style, tabDesigns[style]);
     }
+
+    // Blade options
+    tabDesignSelection.registerExtras("natsumiTabBladeLegacyColor", new CheckboxChoice(
+        "natsumi.tabs.blade-legacy-color",
+        "natsumiTabBladeLegacyColor",
+        "Use legacy Blade highlight color"
+    ));
 
     // Fusion options
     tabDesignSelection.registerExtras("natsumiTabFusionHighlight", new CheckboxChoice(
@@ -2199,17 +2692,57 @@ function addSidebarWorkspacesPane() {
         true
     ));
 
+    let workspacesIndicatorSubgroup = new OptionsGroup(
+        "natsumiSidebarWorkspaceIndicatorOptions",
+        "",
+        ""
+    );
+
+    workspacesIndicatorSubgroup.registerOption("natsumiSidebarLegacyWorkspaceIndicator", new CheckboxChoice(
+        "natsumi.sidebar.legacy-workspace-indicator",
+        "natsumiSidebarLegacyWorkspaceIndicator",
+        "Use legacy Workspace indicator style",
+        "Use this if the new Workspaces indicator causes issues."
+    ));
+
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceIndicatorOptions", workspacesIndicatorSubgroup);
+
     workspacesGroup.registerOption("natsumiSidebarWorkspacesAsIcons", new CheckboxChoice(
         "natsumi.sidebar.workspaces-as-icons",
         "natsumiSidebarWorkspacesAsIcons",
-        "Display Workspaces as an icon strip",
-        "This does not make each icon clickable to switch Workspaces (for now)."
+        "Display Workspaces as an icon strip"
+    ));
+
+    let workspacesIconStripSubgroup = new OptionsGroup(
+        "natsumiSidebarWorkspaceIconStripOptions",
+        "",
+        ""
+    );
+
+    workspacesIconStripSubgroup.registerOption("natsumiSidebarDisableWorkspaceIconClick", new CheckboxChoice(
+        "natsumi.sidebar.disable-clickable-workspace-icons",
+        "natsumiSidebarDisableWorkspaceIconClick",
+        "Disable clickable Workspace icons",
+        "This will restore the old behavior for when a Workspace icon is clicked."
+    ));
+
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceIconStripOptions", workspacesIconStripSubgroup);
+
+    workspacesGroup.registerOption("natsumiSidebarWorkspaceSpecificPins", new CheckboxChoice(
+        "natsumi.tabs.workspace-specific-pins",
+        "natsumiSidebarWorkspaceSpecificPins",
+        "Enable Workspace-specific pinned tabs"
     ));
 
     let sidebarWorkspacesNode = workspacesGroup.generateNode();
 
     // Set listeners for each checkbox
     let checkboxes = sidebarWorkspacesNode.querySelectorAll("checkbox");
+    let legacyIndicatorCheckbox = sidebarWorkspacesNode.getElementById("natsumiSidebarLegacyWorkspaceIndicator");
+    if (ucApi.Prefs.get("natsumi.sidebar.hide-workspace-indicator").exists()) {
+        legacyIndicatorCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-workspace-indicator").value}`);
+    }
+
     checkboxes.forEach(checkbox => {
         checkbox.addEventListener("command", () => {
             let prefName = checkbox.getAttribute("preference");
@@ -2217,6 +2750,10 @@ function addSidebarWorkspacesPane() {
 
             if (checkbox.getAttribute("opposite") === "true") {
                 isChecked = !isChecked;
+            }
+
+            if (checkbox.id === "natsumiSidebarHideWorkspaceIndicator") {
+                legacyIndicatorCheckbox.setAttribute("disabled", `${isChecked}`);
             }
 
             console.log(`Checkbox ${prefName} changed to ${isChecked}`);
@@ -2318,6 +2855,53 @@ function addSidebarButtonsPane() {
         }
     }
 
+    buttonsGroup.registerOption("natsumiSidebarHideClearTabs", new CheckboxChoice(
+        "natsumi.sidebar.hide-clear-tabs",
+        "natsumiSidebarHideClearTabs",
+        "Show clear unpinned tabs button",
+        "Clear your unpinned tabs all in one go.",
+        true
+    ));
+
+    let clearTabsSubgroup = new OptionsGroup(
+        "natsumiSidebarClearTabsOptions",
+        "",
+        ""
+    );
+
+    clearTabsSubgroup.registerOption("natsumiSidebarClearKeepSelected", new CheckboxChoice(
+        "natsumi.sidebar.clear-keep-selected",
+        "natsumiSidebarClearKeepSelected",
+        "Keep selected tabs on clear",
+        "Any selected tabs will be kept when using the clear unpinned tabs button."
+    ));
+
+    clearTabsSubgroup.registerOption("natsumiSidebarClearOpenTab", new CheckboxChoice(
+        "natsumi.sidebar.clear-open-newtab",
+        "natsumiSidebarClearOpenTab",
+        "Open new tab on clear",
+        "This will open a new tab if all tabs have been cleared."
+    ));
+
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+            clearTabsSubgroup.registerOption("natsumiSidebarClearMergeWithWorkspaces", new CheckboxChoice(
+                "natsumi.sidebar.clear-merge-with-workspaces",
+                "natsumiSidebarClearMergeWithWorkspaces",
+                "Merge button with Workspaces indicator"
+            ));
+        }
+    }
+
+    buttonsGroup.registerOption("natsumiSidebarClearTabsOptions", clearTabsSubgroup);
+
+    buttonsGroup.registerOption("natsumiSidebarReplaceNewTab", new CheckboxChoice(
+        "natsumi.tabs.replace-new-tab",
+        "natsumiSidebarReplaceNewTab",
+        "Replace New Tab",
+        "This will let you open new tabs through the URL bar instead. Warning: This will override browser.urlbar.openintab."
+    ));
+
     buttonsGroup.registerOption("natsumiSidebarHideControls", new CheckboxChoice(
         "natsumi.sidebar.hide-sidebar-controls",
         "natsumiSidebarHideControls",
@@ -2348,8 +2932,19 @@ function addSidebarButtonsPane() {
 
     let sidebarButtonsNode = buttonsGroup.generateNode();
 
+    let keepSelectedCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearKeepSelected");
+    let openNewTabCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearOpenTab");
+    let mergeWithWorkspacesCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarClearMergeWithWorkspaces");
     let newTabPositionCheckbox = sidebarButtonsNode.querySelector("#natsumiSidebarNewTabPosition");
 
+    if (ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").exists()) {
+        keepSelectedCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+        openNewTabCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+
+        if (mergeWithWorkspacesCheckbox) {
+            mergeWithWorkspacesCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.sidebar.hide-clear-tabs").value}`);
+        }
+    }
     if (ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").exists()) {
         newTabPositionCheckbox.setAttribute("disabled", `${ucApi.Prefs.get("natsumi.tabs.hide-new-tab-button").value}`);
     }
@@ -2365,7 +2960,14 @@ function addSidebarButtonsPane() {
                 isChecked = !isChecked;
             }
 
-            if (checkbox.id === "natsumiSidebarHideNewTab") {
+            if (checkbox.id === "natsumiSidebarHideClearTabs") {
+                keepSelectedCheckbox.setAttribute("disabled", `${isChecked}`);
+                openNewTabCheckbox.setAttribute("disabled", `${isChecked}`);
+
+                if (mergeWithWorkspacesCheckbox) {
+                    mergeWithWorkspacesCheckbox.setAttribute("disabled", `${isChecked}`);
+                }
+            } else if (checkbox.id === "natsumiSidebarHideNewTab") {
                 newTabPositionCheckbox.setAttribute("disabled", `${isChecked}`);
             }
 
@@ -2443,7 +3045,7 @@ function addCompactBehaviorPane() {
 
     // Create choices group
     let compactBehaviorGroup = new OptionsGroup(
-        "natsumiCOmpactBehavior",
+        "natsumiCompactBehavior",
         "Behavior",
         "Tweak how you want Compact Mode to behave."
     );
@@ -2476,6 +3078,152 @@ function addCompactBehaviorPane() {
     });
 
     prefsView.insertBefore(compactBehaviorNode, homePane);
+}
+
+function addGlimpseBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let glimpseBehaviorGroup = new OptionsGroup(
+        "natsumiGlimpseBehavior",
+        "Behavior",
+        "Tweak how you want Glimpse to behave."
+    );
+
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseEnabled", new CheckboxChoice(
+        "natsumi.glimpse.enabled",
+        "natsumiGlimpseEnabled",
+        "Enable Glimpse"
+    ));
+
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseMulti", new CheckboxChoice(
+        "natsumi.glimpse.multi",
+        "natsumiGlimpseMulti",
+        "Allow Multi Glimpse",
+        "This will let you open multiple Glimpse tabs at once for one tab."
+    ));
+
+    glimpseBehaviorGroup.registerOption("natsumiGlimpseRightControls", new CheckboxChoice(
+        "natsumi.glimpse.controls-on-right",
+        "natsumiGlimpseRightControls",
+        "Move Glimpse controls to the right"
+    ));
+
+    let glimpseBehaviorNode = glimpseBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = glimpseBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(glimpseBehaviorNode, homePane);
+}
+
+function addGlimpseKeyPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Check if glimpse key exists
+    let defaultOverride = null;
+    if (ucApi.Prefs.get("natsumi.glimpse.key").exists()) {
+        defaultOverride = ucApi.Prefs.get("natsumi.glimpse.key").value;
+    }
+
+    // Create theme selection
+    let glimpseKeySelection = new RadioPreference(
+        "natsumiGlimpseKey",
+        "natsumi.glimpse.key",
+        "Activation method",
+        "Choose how Glimpse should be activated.",
+        defaultOverride
+    );
+
+    for (let activationKey in glimpseKeys) {
+        glimpseKeySelection.registerOption(activationKey, glimpseKeys[activationKey]);
+    }
+
+    let glimpseKeyNode = glimpseKeySelection.generateNode();
+
+    // Set listeners for each button
+    let glimpseKeyButtons = glimpseKeyNode.querySelectorAll(".natsumi-radio-choice");
+    glimpseKeyButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            let selectedValue = button.getAttribute("value");
+            console.log("Changing key:", selectedValue);
+            setStringPreference("natsumi.glimpse.key", selectedValue);
+            glimpseKeyButtons.forEach((btn) => {
+                btn.removeAttribute("selected")
+                let radioCheck = btn.querySelector(".radio-check");
+                radioCheck.removeAttribute("selected");
+            });
+            button.setAttribute("selected", "true");
+            let radioCheck = button.querySelector(".radio-check");
+            radioCheck.setAttribute("selected", "true");
+        });
+    });
+
+    prefsView.insertBefore(glimpseKeyNode, homePane);
+}
+
+function addGlimpseAccessibilityPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let glimpseAccessibilityGroup = new OptionsGroup(
+        "natsumiGlimpseAccessibility",
+        "Accessibility",
+        "Tweak Glimpse to make it easier to use."
+    );
+
+    glimpseAccessibilityGroup.registerOption("natsumiGlimpseIndicator", new CheckboxChoice(
+        "natsumi.glimpse.show-indicator",
+        "natsumiGlimpseIndicator",
+        "Show Glimpse indicator above content"
+    ));
+
+    glimpseAccessibilityGroup.registerOption("natsumiGlimpseBorder", new CheckboxChoice(
+        "natsumi.glimpse.alt-border",
+        "natsumiGlimpseBorder",
+        "Use an alternate border color for Glimpse",
+        "This may help as a quick way to identify Glimpse tabs."
+    ));
+
+    let glimpseAccessibilityNode = glimpseAccessibilityGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = glimpseAccessibilityNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(glimpseAccessibilityNode, homePane);
 }
 
 function addSidebarMiniplayerPane() {
@@ -2593,6 +3341,13 @@ function addPipBehaviorPane() {
         true
     ));
 
+    pipBehaviorGroup.registerOption("natsumiPipLegacyStyle", new CheckboxChoice(
+        "natsumi.pip.legacy-style",
+        "natsumiPipLegacyStyle",
+        "Use legacy design for Picture-in-Picture controls",
+        "This will merge Picture-in-Picture controls into one 'island' rather than having separate 'islands'."
+    ));
+
     let pipBehaviorNode = pipBehaviorGroup.generateNode();
 
     // Set listeners for each checkbox
@@ -2656,14 +3411,14 @@ function addPDFCompactPane() {
     // Create choices group
     let compactGroup = new OptionsGroup(
         "natsumiPDFCompact",
-        "Compact Mode",
-        "Compact Mode lets you focus on the document at hand by hiding the sidebar and toolbar when you don't need it."
+        "Toolbar autohide",
+        "Toolbar autohide lets you focus on the document at hand by hiding the sidebar and toolbar when you don't need it."
     );
 
     compactGroup.registerOption("natsumiPDFEnableCompact", new CheckboxChoice(
         "natsumi.pdfjs.compact",
         "natsumiPDFEnableCompact",
-        "Enable Compact Mode"
+        "Enable Toolbar autohide"
     ));
 
     let compactSubgroup = new OptionsGroup(
@@ -2675,8 +3430,8 @@ function addPDFCompactPane() {
     compactSubgroup.registerOption("natsumiPDFDynamicCompact", new CheckboxChoice(
         "natsumi.pdfjs.compact-dynamic",
         "natsumiPDFDynamicCompact",
-        "Dynamic Compact Mode",
-        "Compact Mode will automatically disable if the sidebar is open."
+        "Dynamic autohide",
+        "Toolbar autohide will automatically disable if the sidebar is open."
     ));
 
     compactGroup.registerOption("natsumiPDFCompactOptions", compactSubgroup);
@@ -2797,6 +3552,47 @@ function addURLbarBehaviorPane() {
     prefsView.insertBefore(behaviorNode, homePane);
 }
 
+function addMiscPreferencesPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let miscPreferencesGroup = new OptionsGroup(
+        "natsumiMiscPreferences",
+        "Preferences",
+        "Tweak how you want the preferences page to look."
+    );
+
+    miscPreferencesGroup.registerOption("natsumiMiscPreferencesRevert", new CheckboxChoice(
+        "natsumi.theme.classic-preferences",
+        "natsumiMiscPreferencesRevert",
+        "Revert to classic preferences look",
+        "If you don't like Natsumi's custom preferences design, you can enable this to disable it."
+    ));
+
+    let miscPreferencesNode = miscPreferencesGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = miscPreferencesNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(miscPreferencesNode, homePane);
+}
+
 function addPreferencesPanes() {
     // Category nodes
     let appearanceNode = convertToXUL(`
@@ -2822,6 +3618,11 @@ function addPreferencesPanes() {
             </div>
         </groupbox>
     `);
+    let glimpseNode = convertToXUL(`
+        <hbox id="natsumiGlimpseCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Glimpse</html:h1>
+        </hbox>
+    `);
     let miniPlayerNode = convertToXUL(`
         <hbox id="natsumiMiniplayerCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
             <html:h1>Miniplayer</html:h1>
@@ -2842,14 +3643,21 @@ function addPreferencesPanes() {
             <html:h1>URL Bar</html:h1>
         </hbox>
     `);
+    let miscNode = convertToXUL(`
+        <hbox id="natsumiMiscCategory" class="subcategory" data-category="paneNatsumiSettings" hidden="true">
+            <html:h1>Miscellaneous</html:h1>
+        </hbox>
+    `);
 
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
     prefsView.insertBefore(appearanceNode, homePane);
     addLayoutPane();
     addThemesPane();
+    addWindowMaterialPane();
     addColorsPane();
     addIconsPane();
+    addSDL2Pane();
 
     prefsView.insertBefore(sidebarNode, homePane);
     addSidebarTabsPane();
@@ -2860,6 +3668,11 @@ function addPreferencesPanes() {
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
     addCompactBehaviorPane();
+
+    prefsView.insertBefore(glimpseNode, homePane);
+    addGlimpseBehaviorPane();
+    addGlimpseKeyPane();
+    addGlimpseAccessibilityPane();
 
     prefsView.insertBefore(miniPlayerNode, homePane);
     addSidebarMiniplayerPane();
@@ -2893,8 +3706,43 @@ function addPreferencesPanes() {
         addURLbarLayoutPane();
         addURLbarBehaviorPane();
     }
+
+    prefsView.insertBefore(miscNode, homePane);
+    addMiscPreferencesPane();
+}
+
+function addHideFloorpWarnings() {
+    let isFloorp = false;
+    if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
+        if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
+            isFloorp = true;
+        }
+    }
+
+    if (!isFloorp) {
+        return;
+    }
+
+    let mainPrefPane = document.getElementById("mainPrefPane");
+
+    // Create "hide warning"
+    let hideWarnings = `
+        <div id="natsumi-hide-floorp-warnings">Hide these warnings</div>
+    `
+
+    let hideWarningsFragment = convertToXUL(hideWarnings);
+    mainPrefPane.parentElement.insertBefore(hideWarningsFragment, mainPrefPane);
+
+    // Get node
+    let hideWarningsNode = document.getElementById("natsumi-hide-floorp-warnings");
+
+    // Set event listener
+    hideWarningsNode.addEventListener("click", () => {
+        ucApi.Prefs.set("natsumi.theme.floorp-hide-preferences-warnings", true);
+    });
 }
 
 console.log("Loading prefs panes...");
 addToSidebar();
 addPreferencesPanes();
+addHideFloorpWarnings();

@@ -49,6 +49,16 @@ SOFTWARE.
     list-style-image: url("../../../icons/lucide/arrow-right.svg") !important;
   }
 
+  @media -moz-pref("natsumi.theme.icons-alt-back-forward") {
+    #back-button {
+      list-style-image: url("../../../icons/lucide/arrow-left-alt.svg") !important;
+    }
+
+    #forward-button {
+      list-style-image: url("../../../icons/lucide/arrow-right-alt.svg") !important;
+    }
+  }
+
   #reload-button {
     list-style-image: url("../../../icons/lucide/rotate-right.svg") !important;
   }
@@ -171,6 +181,10 @@ SOFTWARE.
 
   #fullscreen-button {
     list-style-image: url("../../../icons/lucide/fullscreen.svg") !important;
+  }
+
+  #new-identity-button {
+    list-style-image: url("../../../icons/lucide/identity.svg") !important;
   }
 
   /* URLbar icons */
@@ -367,7 +381,7 @@ SOFTWARE.
   /* Tab close button */
   #tabbrowser-tabs[expanded] #tabbrowser-arrowscrollbox {
     .tabbrowser-tab .tab-close-button {
-      padding: 4px !important;
+      --natsumi-tab-close-button-padding: 4px;
       list-style-image: url("../../../icons/lucide/close.svg") !important;
       -moz-context-properties: stroke, stroke-opacity !important;
       stroke: currentColor !important;
@@ -388,6 +402,10 @@ SOFTWARE.
     #close, #unpip {
       -moz-context-properties: stroke, fill, fill-opacity, stroke-opacity !important;
       stroke: light-dark(black, white) !important;
+
+      &::before {
+        background-size: 18px !important;
+      }
     }
 
     #playpause {
@@ -439,8 +457,10 @@ SOFTWARE.
     #closed-caption {
       background-image: url("../../../icons/lucide/captions.svg") !important;
 
-      &[disabled="true"] {
-        stroke: light-dark(#999, #777) !important;
+      @media not -moz-pref("natsumi.theme.enable-sdl2") {
+        &[disabled="true"] {
+          stroke: light-dark(#999, #777) !important;
+        }
       }
     }
 

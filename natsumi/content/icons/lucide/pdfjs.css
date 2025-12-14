@@ -50,6 +50,10 @@ SOFTWARE.
           mask-image: url('../../../icons/lucide/sidebar.svg') !important;
         }
 
+        #editorCommentButton::before {
+          mask-image: url('../../../icons/lucide/comment.svg') !important;
+        }
+
         #editorSignatureButton::before {
           mask-image: url('../../../icons/lucide/sign.svg') !important;
         }

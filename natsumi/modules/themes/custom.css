@@ -41,6 +41,14 @@ SOFTWARE.
       filter: var(--natsumi-theme-layer-1-filter, none) !important;
     }
 
+    #browser::after {
+      opacity: var(--natsumi-theme-grain-opacity, 0) !important;
+
+      @media (prefers-color-scheme: dark) {
+        opacity: var(--natsumi-theme-grain-opacity-dark, 0) !important;
+      }
+    }
+
     /* Dark mode specific theme */
     @media (prefers-color-scheme: dark) {
       body::after {

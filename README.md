@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img width="120" height="120" src="./images/icon.png">
+  <img width="120" height="120" src="./images/icon-glass.png">
   <br>
   Natsumi Browser
 </h1>
@@ -14,6 +14,8 @@
 ![](./images/main-backgroundless.png)
 
 ## Meet Natsumi! 🦋
+Meet Natsumi Browser (or Natsumi, for short) - a browser mod that truly puts you in control.
+
 Natsumi Browser (or Natsumi, for short) is a skin made for Firefox and its forks that adds lots of
 polish to the design and adds new features to further enhance the browsing experience, while retaining
 customization options to allow you to fully make things yours.
@@ -27,18 +29,25 @@ be hostile towards user personalization.
 > from attacking people when you make suggestions. Thanks!
 
 ## Features
-### ✨ Your browser, reimagined.
-#### The classic Firefox design but with a modern spin.
-![](./images/main.png)
+Natsumi has lots of features to enhance your browser - so many that I can't list them all here!
 
-Natsumi keeps your browser's design familiar while adding a modern touch to it.
+### ✨ Reimagined design. Fully customizable.
+#### The classic Firefox design but with a modern yet customizable spin.
+![](./images/custom-themes.png)
+
+Natsumi keeps your browser's design familiar while adding a modern touch to it. Not only that, it's
+also **extremely customizable**, so you can make it truly yours. No "best practices" or authoritarian
+design ideologies to stop you, just a browser that works with you and not against you.
+
+Almost all customization options are accessible through a dedicated preferences pane, so you don't
+have to mess around with advanced preferences.
 
 ### ⌨️ URL bar, made intuitive.
 #### Highlights the current URL and adapts to the scene.
 ![](./images/urlbar.png)
 
-Natsumi URLbar is a new take on your browser's address bar, which highlights the current URL and
-changes appearance based on the context.
+Natsumi applies a fresh new coat of paint to your browser's URL bar, making the current URL stand out
+more and changing colors dynamically based on context.
 
 ### 🖥️ Reimagined Picture-in-picture.
 #### Modern and streamlined.
@@ -49,11 +58,11 @@ Natsumi's Picture-in-picture adds a more modern look to Firefox's PiP to make it
 the rest of the browser. You can even scroll to reposition the PiP window, too!
 
 ### 🎛️ Meet your Miniplayer.
-#### Keep your media in control with the Miniplayer.
+#### Keep your media in control.
 ![](./images/miniplayer.png)
 
 Natsumi lets you control your media through the Miniplayer located on the sidebar. And with support
-for multiple websites at a time, you don't have to make your tabs fight for a spot on the Miniplayer.
+for multiple websites at a time, you don't have to make your tabs fight for a spot.
 
 ### 📄 PDF viewer, modernized.
 #### View your documents in the 21st century.
@@ -64,50 +73,14 @@ Give Firefox's PDF viewer a fresh coat of paint! Natsumi includes tweaks for the
 giving it the modern look it really deserves. And with compact view, you can focus on the file at
 hand when you don't need the extra tools.
 
-### 🔧 Customization made easier.
-#### Customize Natsumi in the preferences page without touching advanced configs.
-![](./images/customization.png)
-
-Natsumi adds its own Customize Natsumi pane to the preferences page, so you can easily customize
-your installation of Natsumi graphically. No more figuring out which config does what.
-
-### 🖼️ Express yourself with themes.
-#### A theming engine that lets your browser vibe with you.
-![](./images/custom-themes.png)
-
-Let your browser be yours! Choose from nine theme varieties to get the look that resonates with you.
-
-Or, take full control of Natsumi's theming engine and create your very own gradient, all without
-being forced to stick to a specific color palette.
-
-### 🎨 Color it all your way.
-#### Also with Firefox themes support!
-![](./images/custom-colors.png)
-
-Don't like the default colors? Install a Firefox theme and Natsumi will adjust its colors for you.
-
-Or, choose from one of the preset colors.
-
-- $${\color{#a0d490}■}$$ **Light green** (default) - #a0d490
-- $${\color{#aac7ff}■}$$ **Sky blue** (`sky-blue`) - #aac7ff
-- $${\color{#74d7cb}■}$$ **Turquoise** (`turquoise`) - #74d7cb
-- $${\color{#dec663}■}$$ **Yellow** (`yellow`) - #dec663
-- $${\color{#ffb787}■}$$ **Peach Orange** (`peach-orange`) - #ffb787
-- $${\color{#ff9eb3}■}$$ **Warmer Pink** (`warmer-pink`) - #ff9eb3
-- $${\color{#dec1b1}■}$$ **Beige** (`beige`) - #dec1b1
-- $${\color{#ffb1c0}■}$$ **Light Red** (`light-red`) - #ffb1c0
-- $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
-- $${\color{#f6b0ea}■}$$ **Pink** (`pink`) - #f6b0ea
-- $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
-- $${\color{#ffffff}■}$$ **System Accent** (`system`) - follow your system's accent color (works on
-  macOS and Linux)!
-
-### 🧘 Introducing Single Toolbar.
-#### Move everything to the sidebar for a cleaner look.
+### 🧘 Featuring Single Toolbar.
+#### Go minimal or go utility-first, it's your choice.
 ![](./images/single-toolbar.png)
 
-Craving the Single Toolbar look you can get in a certain other browser? Natsumi adds it to your
-browser of choice.
+Not a fan of multiple toolbars? Craving more horizontal space? Natsumi adds it to your browser of
+choice.
+
+And of course, you can always use the Multiple Toolbars layout. Natsumi doesn't force things on you.
 
 ### ⌨️ Customize your shortcuts.
 #### Featuring keyboard shortcut conflict controls.
@@ -121,8 +94,8 @@ and websites. No more being forced to show mercy to websites when shortcuts conf
 #### Get extra features custom-made for specific browsers.
 ![](./images/floorp-features.png)
 
-Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi Append
-adds extra features to your browser for a more complete experience.
+Does your browser have Workspaces? Or another toolbar that can be used in the sidebar? Natsumi adds
+extra features to your browser for a more complete experience.
 
 ## Full-fledged vs. CSS-only
 Some Natsumi features require JavaScript to work. You can still use Natsumi without JS support at the
@@ -196,7 +169,7 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
    **Flatpak users**: You may need to follow steps 1 and 2 on
    [here](https://github.com/MrOtherGuy/fx-autoconfig/issues/48#issuecomment-3315929253), but replace
    `app.zen_browser.zen` with the package identifier of your browser (e.g. `one.ablaze.floorp`).
-3. Copy the following to chrome/utils/chrome.manifest:
+2. Copy the following to chrome/utils/chrome.manifest:
    ```
    content userchromejs ./
    content userscripts ../natsumi/scripts/
@@ -205,10 +178,11 @@ Natsumi Browser needs to be installed before you can install Natsumi Append.
    content natsumi ../natsumi/
    content natsumi-icons ../natsumi/icons/
    ```
-4. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
+3. Create and enable `userChromeJS.persistent_domcontent_callback` before restarting (don't worry, you
    can do this later. This config is needed for the preferences page to work.)
-5. Go to about:support and clear your startup cache and restart your browser.
-6. That's it - Natsumi Append is installed!
+4. Go to about:support and clear your startup cache and restart your browser (this may not be required but
+   it is still recommended).
+5. That's it - Natsumi Append is installed!
 
 #### Advanced setup: If you are a techie who wants to keep your files up-to-date with new changes over time
 After following either of the above steps, if you are interested in ensuring that you upgrade to the
@@ -221,11 +195,25 @@ and delay, change the variables in the config.css file.
 
 If you have Natsumi Append installed, most of these can be tweaked through the preferences page.
 
-### 🎨 Theming
+<details>
+<summary><strong>View configs</strong></summary>
+
+### 🎨 Theming/General
 - `natsumi.theme.type` (string): Sets the browser theme type.
   - Enter a theme ID from the themes list in the [Features](#features) section.
 - `natsumi.theme.accent-color` (string): Sets the browser theme color from a given accent color.
-  - Enter a color ID from the colors list in the [Features](#features) section.
+  - $${\color{#a0d490}■}$$ **Light green** (default) - #a0d490
+  - $${\color{#aac7ff}■}$$ **Sky blue** (`sky-blue`) - #aac7ff
+  - $${\color{#74d7cb}■}$$ **Turquoise** (`turquoise`) - #74d7cb
+  - $${\color{#dec663}■}$$ **Yellow** (`yellow`) - #dec663
+  - $${\color{#ffb787}■}$$ **Peach Orange** (`peach-orange`) - #ffb787
+  - $${\color{#ff9eb3}■}$$ **Warmer Pink** (`warmer-pink`) - #ff9eb3
+  - $${\color{#dec1b1}■}$$ **Beige** (`beige`) - #dec1b1
+  - $${\color{#ffb1c0}■}$$ **Light Red** (`light-red`) - #ffb1c0
+  - $${\color{#ddbcf3}■}$$ **Muted Pink** (`muted-pink`) - #ddbcf3
+  - $${\color{#f6b0ea}■}$$ **Pink** (`pink`) - #f6b0ea
+  - $${\color{#d4bbff}■}$$ **Lavender Purple** (`lavender-purple`) - #d4bbff
+  - $${\color{#ffffff}■}$$ **System Accent** (`system`) - uses your system's accent color
 - `natsumi.theme.force-natsumi-color` (boolean): Forces Natsumi's accent color set in natsumi-config.css
   to be used instead of the current Firefox theme's colors.
 - `natsumi.theme.use-tab-theme-color` (boolean): Uses the tab border color as the accent color for Blade.
@@ -233,26 +221,82 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 - `natsumi.theme.max-custom-colors` (integer): The maximum number of custom colors you can choose. Minimum
   and default is 6.
 - `natsumi.theme.disable-translucency` (boolean): Disables the translucency effect.
+- `natsumi.theme.use-legacy-translucency` (boolean): Uses legacy translucency on macOS or Windows.
 - `natsumi.theme.gray-out-when-inactive` (boolean): Grays out the browser when inactive.
-- `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout. **Natsumi Append required.**
-- `natsumi.theme.single-toolbar-show-menu-button`: Shows the menu button instead of the extensions button
-  in the Single Toolbar layout. **Natsumi Append required.**
-- `natsumi.theme.force-window-controls-to-left`: Forces window controls to the sidebar rather than the
-  bookmarks bar.
+- `natsumi.theme.single-toolbar` (boolean): Enables Single Toolbar layout.
+- `natsumi.theme.single-toolbar-show-menu-button` (boolean): Shows the menu button when in Single Toolbar.
+- `natsumi.theme.single-toolbar-hide-extensions-button` (boolean): Hides the extensions button when in
+  Single Toolbar.
+- `natsumi.theme.show-bookmarks-on-hover` (boolean): Shows the bookmarks bar on hover when in Single
+  Toolbar.
+- `natsumi.theme.customizable-single-toolbar` (boolean): Moves toolbar buttons to the overflow menu when
+  in Single Toolbar.
+- `natsumi.theme.force-customizable-single-toolbar` (boolean): Force shows the overflow button if it
+  doesn't show for some reason.
+- `natsumi.theme.compact-marginless` (boolean): Removes the frame around the website content when in 
+  compact mode.
+- `natsumi.theme.compact-on-new-window` (boolean): Enables Compact Mode by default for new windows.
+- `natsumi.theme.compact-style` (string): Sets the Compact Mode style.
+  - `default` (Hide both): Hides both the toolbar and sidebar.
+  - `toolbar` (Hide toolbar): Hides only the toolbar.
+  - `sidebar` (Hide sidebar): Hides only the sidebar.
+- `natsumi.theme.force-window-controls-to-left` (boolean): Forces window controls to the sidebar rather
+  than the bookmarks bar.
+- `natsumi.theme.classic-preferences` (boolean): Disables Natsumi's preference page theming.
+- `natsumi.theme.floorp-hide-preferences-warnings` (boolean): Hides Floorp Hub warnings on the preferences
+  page. **Floorp exclusive.**
+- `natsumi.theme.icons` (string): Sets the icon pack used in Natsumi.
+  - `default` (Firefox default): Default Firefox icons.
+  - `lucide`: Lucide icons.
+  - `fluent`: Fluent UI Icons.
+- `natsumi.theme.icons-alt-back-forward` (boolean): Uses alternative back/forward icons.
+- `natsumi.theme.ignore-css-issues`: Ignores CSS issues and prevents the CSS warning from showing up.
+
 ### 🗂️ Tabs & Sidebar
 - `natsumi.tabs.use-custom-type` (boolean): Enables custom tab types. Blade is used when this is disabled.
-- `natsumi.tabs.type` (string): Sets a custom tab type.
+- `natsumi.tabs.type` (string): Sets a custom tab type. `natsumi.tabs.use-custom-type`
+  - `default` (Blade): A modern and sleek, yet dynamic tab design.
+  - `origin`: A box-like design inspired by Natsumi v1.
+  - `curve`: A curve-like design inspired by Natsumi v2.
+  - `fusion`: A Lepton-like design that 'combines' tab and web content.
   - `material`: A material-like design inspired by Zen Browser's alpha UI.
+  - `hexagonal`: A tab design inspired by Floorp's hexagonal branding.
+  - `classic`: Just the standard Firefox look.
+- `natsumi.tabs.blade-legacy-color` (boolean): Uses the legacy Blade tab highlight color like in v5 and
+  older.
+- `natsumi.tabs.fusion-highlight` (boolean): Adds a Photon (Firefox Quantum)-like highlight to the active
+  tab for Fusion tab design.
+- `natsumi.tabs.material-alt-design` (boolean): Uses an alternative design for Material tab design, similar
+  to the toolbar buttons design in Natsumi.
+- `natsumi.tabs.new-tab-on-top` (boolean): Moves the new tab button to the top of the tabs list.
+- `natsumi.tabs.replace-new-tab` (boolean): Removes the New Tab entirely and opens the URL bar instead.
+- `natsumi.tabs.workspace-specific-pins` (boolean): Makes pinned tabs specific to each workspace. **Floorp 
+  exclusive.**
+- `natsumi.sidebar.hide-clear-tabs` (boolean): Disables the clear unpinned tabs button.
+- `natsumi.sidebar.clear-keep-selected` (boolean): Keeps selected tabs when clearing unpinned tabs.
+- `natsumi.sidebar.clear-merge-with-workspaces` (boolean): Merges the clear unpinned tabs button with the
+  Workspace indicator. **Floorp exclusive.**
+- `natsumi.sidebar.clear-open-newtab` (boolean): Opens a new tab after clearing unpinned tabs.
+- `natsumi.sidebar.disable-clickable-workspace-icons` (boolean): Disables clickable workspace icons when
+  the workspaces toolbar button is set to display as an icons strip. **Floorp exclusive.**
+- `natsumi.sidebar.floorp-floating-panel`: Floats the Panel Sidebar similar to Compact Mode. **Floorp
+  exclusive.**
 - `natsumi.sidebar.hide-sidebar-controls` (boolean): Hides sidebar controls.
-- `natsumi.sidebar.use-floorp-statusbar-in-sidebar` (boolean): Uses Floorp's Status Bar as a toolbar for
-  the sidebar when the Status Bar is "hidden". **Floorp exclusive, Natsumi Append required.**
+- `natsumi.sidebar.use-statusbar-in-sidebar` (boolean): Uses Floorp or Waterfox's Status Bar as a toolbar
+  for the sidebar when the Status Bar is "hidden". **Floorp and Waterfox exclusive.**
 - `natsumi.sidebar.hide-workspace-indicator` (boolean): Hides the Floorp Workspace indicator added by
-  Natsumi Append. **Floorp exclusive.**
+  Natsumi. **Floorp exclusive.**
+- `natsumi.sidebar.legacy-workspace-indicator` (boolean): Uses the legacy Workspace indicator. Use this if
+  the indicator is misbehaving. **Floorp exclusive.**
+- `natsumi.sidebar.workspaces-as-icons` (boolean): Displays the Floorp Workspaces toolbar button as an icons
+  strip. **Floorp exclusive.**
 
 ### ⌨️ URL bar
 - `natsumi.urlbar.disabled` (boolean): Disables URL bar tweaks.
 - `natsumi.urlbar.do-not-float` (boolean): Disables the floating URL bar.
 - `natsumi.urlbar.always-expanded` (boolean): Disables the compact URL bar when inactive.
+- `natsumi.urlbar.single-toolbar-display-actions` (boolean): Displays URL bar actions when in Single
+  Toolbar.
 
 ### 🔎 Findbar
 - `natsumi.findbar.disabled` (boolean): Disables Natsumi Findbar and reverts the findbar style back.
@@ -260,17 +304,39 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
   results.
 - `natsumi.findbar.wider-findbar` (boolean): Increases maximum Findbar width back to 720px.
 
+### 🎛️ Miniplayer
+- `natsumi.miniplayer.disable-artwork` (boolean): Disables the artwork from showing in the Miniplayer.
+- `natsumi.miniplayer.scroll-view` (boolean): Sets the Miniplayer list to be scrollable.
+
+### 👀 Glimpse
+- `natsumi.glimpse.enabled` (boolean): Enables Natsumi Glimpse.
+- `natsumi.glimpse.multi` (boolean): Enables Multi Glimpse. Required for Glimpse Chaining.
+- `natsumi.glimpse.key` (string): Sets the activation method for Glimpse.
+  - `alt`: Alt key
+  - `ctrl`: Ctrl key
+  - `meta`: Meta (Command/Super) key
+  - `shift`: Shift key
+  - `hold`: Hold (click and hold)
+- `natsumi.glimpse.controls-on-right` (boolean): Moves Glimpse controls to the right.
+- `natsumi.glimpse.alt-border` (boolean): Uses an alternative border color to highlight Glimpse tabs more.
+- `natsumi.glimpse.show-indicator` (boolean): Shows a Glimpse indicator right above the Glimpse tab.
+
 ### 🖥️ Picture-in-Picture
 - `natsumi.pip.disabled` (boolean): Disables Natsumi PiP and reverts the PiP style back.
+- `natsumi.pip.disable-scroll-to-move` (boolean): Disables the ability to scroll to move the PiP window.
+- `natsumi.pip.legacy-style`: Merges PiP controls into one "island" like in Natsumi v3.
+- `natsumi.pdfjs.material` (string): Sets the material used in the PiP elements. Haze is used when this is
+  unset.
+    - `haze`: Haze
+    - `tinted-haze`: Tinted Haze
 - `natsumi.pip.rounded` (boolean): Makes the PiP window round, like in macOS. Only supports Windows.
-- `natsumi.pip.tinted-haze` (boolean): Uses Tinted Haze material instead of Haze.
 
 ### 📄 PDF Viewer
 - `natsumi.pdfjs.disabled` (boolean): Disables Natsumi PDF Viewer and reverts the PDF viewer back.
-- `natsumi.pdfjs.compact` (boolean): Enables compact mode for Natsumi PDF Viewer.
-- `natsumi.pdfjs.compact-dynamic` (boolean): Disables compact mode when the PDF Viewer's sidebar is
+- `natsumi.pdfjs.compact` (boolean): Enables toolbar autohide for Natsumi PDF Viewer.
+- `natsumi.pdfjs.compact-dynamic` (boolean): Disables toolbar autohide when the PDF Viewer's sidebar is
   expanded.
-- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Glass is used when
+- `natsumi.pdfjs.material` (string): Sets the material used in the PDF viewer elements. Haze is used when
   this is unset.
   - `haze`: Haze
   - `tinted-haze`: Tinted Haze
@@ -282,24 +348,32 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 
 ### 🔧 Compatibility
 - `natsumi.browser.type` (string): Sets the browser type to enable browser-exclusive features and patches.
-  This is needed for some features such as PiP where automatic detection isn't possible.
+  **If you use Natsumi Append, this preference will be automatically set.**
   - `firefox`: Mozilla Firefox
   - `floorp`: Floorp Browser
+  - `waterfox`: Waterfox
+  - `librewolf`: Librewolf
+  - `tor`: Tor Browser
+  - `mullvad`: Mullvad Browser
+  - `firedragon`: FireDragon
+- `natsumi.browser.disable-auto-detect` (boolean): Disables automatic browser detection. Use this if you
+  need to manually set the browser type. **Requires restart to take effect.**
+</details>
 
 ## Browser support
 All browsers must be based on Firefox 137 or above.
 
-| Browser     | Status                        | Versions | Notes                                                              |
-|-------------|-------------------------------|----------|--------------------------------------------------------------------|
-| Floorp      | :star: Recommended            | 12.3.0+  | Natsumi works best on Floorp!                                      |
-| Firefox     | :white_check_mark: Supported  | 137+     |                                                                    |
-| Waterfox    | :white_check_mark: Supported  | 6.6.0+   |                                                                    |
-| Librewolf   | :white_check_mark: Supported  | 137+     | May have performance issues, but other than that fully compatible. |
-| Glide       | :white_check_mark: Supported  | 0.1.54a+ | Not tested very thoroughly yet.                                    |
-| Firedragon  | :warning: Partially supported | 12+      | Theoretically supported, but not yet tested.                       |
-| Midori      | :x: Unsupported               | -        | Incompatible (based on ESR128)                                     |
-| Mullvad/Tor | :x: Unsupported               | 15.0+    | Incompatible (based on ESR128, version 15 is in alpha)             |
-| Zen         | :x: Unsupported               | -        | Incompatible since Natsumi v4 (see FAQ)                            |
+| Browser     | Status                       | Versions | Notes                                                                                     |
+|-------------|------------------------------|----------|-------------------------------------------------------------------------------------------|
+| Floorp      | :star: Recommended           | 12.3.0+  | Natsumi works best on Floorp!                                                             |
+| Firefox     | :white_check_mark: Supported | 137+     |                                                                                           |
+| Waterfox    | :white_check_mark: Supported | 6.6.0+   |                                                                                           |
+| Librewolf   | :white_check_mark: Supported | 137+     |                                                                                           |
+| Mullvad/Tor | :white_check_mark: Supported | 15.0+    | **Tor does not recommend installing plugins onto Tor Browser.** Proceed at your own risk. |
+| FireDragon  | :white_check_mark: Supported | 12+      | Default Sweet-Dark theme may cause contrast issues with Natsumi.                          |
+| Glide       | :white_check_mark: Supported | 0.1.54a+ |                                                                                           |
+| Midori      | :x: Unsupported              | -        | Incompatible (see FAQ)                                                                    |
+| Zen         | :x: Unsupported              | -        | Incompatible since Natsumi v4 (see FAQ)                                                   |
 
 ## FAQs
 ### "Can I use other userchromes with Natsumi?"
@@ -330,6 +404,13 @@ compatibility unintentionally.
 
 **Please do not try to port Natsumi to Zen.** I have my reasons why I left it, and I would
 really appreciate it if you respected my decision.
+
+### "Is Natsumi compatible with Midori?"
+Natsumi does not support Midori and will not do so for the foreseeable future due to ethical
+concerns. Please note that this is in no way related to Zen Browser being unsupported.
+
+For more information, refer to this [blog
+article](https://www.greeeen.dev/natsumi-midori-support.html).
 
 ### "When does Natsumi update?"
 There is no fixed schedule for updates, it all happens randomly.
@@ -415,6 +496,7 @@ Thank you to:
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I used in Natsumi
   v2 and v3
+- [InterstellarOne](https://github.com/InterstellarOne) for the Liquid Glass style Natsumi icons
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
@@ -423,7 +505,7 @@ EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
 THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-All screenshots displayed in this README are accurate as of July 31, 2025. If a feature was added,
+All screenshots displayed in this README are accurate as of December 2, 2025. If a feature was added,
 changed or removed after this date, it may not be accurately reflected in the screenshots.
 
 ## Attribution
