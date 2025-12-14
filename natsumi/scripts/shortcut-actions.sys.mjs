@@ -98,7 +98,7 @@ export class NatsumiShortcutActions {
             return;
         }
 
-        const workspaceIds = document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs();
+        const workspaceIds = document.body.natsumiWorkspacesWrapper.getAllWorkspaceIDs(true);
         const currentWorkspace = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
         let currentWorkspaceIndex = workspaceIds.indexOf(currentWorkspace);
 
@@ -118,11 +118,163 @@ export class NatsumiShortcutActions {
         document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(newWorkspaceId);
     }
 
-    static toggleNatsumiToolkit() {
-        if (document.body.hasAttribute("natsumi-toolkit")) {
-            document.body.removeAttribute("natsumi-toolkit");
+    static closeGlimpse() {
+        if (!window.natsumiGlimpse) {
+            return;
+        }
+
+        if (window.natsumiGlimpse.currentGlimpseTab) {
+            // Get Glimpse tab
+            let glimpseParentTabId = window.natsumiGlimpse.currentGlimpseTab.linkedPanel;
+            let glimpseData = window.natsumiGlimpse.glimpse[glimpseParentTabId];
+
+            if (glimpseData) {
+                let currentGlimpseIndex = glimpseData["index"];
+                let currentGlimpseTab = glimpseData["tabs"][currentGlimpseIndex];
+
+                if (glimpseData["tabs"].length <= 1) {
+                    window.natsumiGlimpse.deactivateGlimpseWithAnim(currentGlimpseTab);
+                } else {
+                    window.natsumiGlimpse.deactivateGlimpse(currentGlimpseTab, true);
+                }
+            }
+        }
+    }
+
+    static graduateGlimpse() {
+        if (!window.natsumiGlimpse) {
+            return;
+        }
+
+        if (window.natsumiGlimpse.currentGlimpseTab) {
+            // Get Glimpse tab
+            let glimpseParentTabId = window.natsumiGlimpse.currentGlimpseTab.linkedPanel;
+            let glimpseData = window.natsumiGlimpse.glimpse[glimpseParentTabId];
+
+            if (glimpseData) {
+                let currentGlimpseIndex = glimpseData["index"];
+                let currentGlimpseTab = glimpseData["tabs"][currentGlimpseIndex];
+                window.natsumiGlimpse.graduateGlimpseWithAnim(currentGlimpseTab);
+            }
+        }
+    }
+
+    static cycleGlimpse(forward = true) {
+        if (!window.natsumiGlimpse) {
+            return;
+        }
+
+        if (window.natsumiGlimpse.currentGlimpseTab) {
+            // Get Glimpse tab
+            let glimpseParentTabId = window.natsumiGlimpse.currentGlimpseTab.linkedPanel;
+            let glimpseData = window.natsumiGlimpse.glimpse[glimpseParentTabId];
+
+            if (glimpseData) {
+                window.natsumiGlimpse.cycleGlimpseTabs(glimpseParentTabId, forward);
+            }
+        }
+    }
+
+    static toggleGlimpseChain() {
+        if (document.body.natsumiGlimpseChainer) {
+            const chainActive = document.body.natsumiGlimpseChainer.chainingGlimpse;
+
+            if (chainActive) {
+                document.body.natsumiGlimpseChainer.cancelChain();
+            } else {
+                document.body.natsumiGlimpseChainer.activateChaining();
+            }
+        }
+    }
+
+    static releaseGlimpseChain() {
+        if (document.body.natsumiGlimpseChainer) {
+            const chainActive = document.body.natsumiGlimpseChainer.chainingGlimpse;
+
+            if (chainActive) {
+                document.body.natsumiGlimpseChainer.releaseChain();
+            }
+        }
+    }
+
+    static openNewTab() {
+        let replaceNewTab = false;
+
+        if (ucApi.Prefs.get("natsumi.tabs.replace-new-tab").exists()) {
+            replaceNewTab = ucApi.Prefs.get("natsumi.tabs.replace-new-tab").value;
+        }
+
+        if (replaceNewTab) {
+            let commandEvent = new Event("command", {bubbles: true, cancelable: true});
+            document.body.natsumiURLBarController.openAsNewTab(commandEvent);
         } else {
-            document.body.setAttribute("natsumi-toolkit", "");
+            // Open new tab
+            let keyElement = document.getElementById("key_newNavigatorTab");
+            keyElement.doCommand();
+        }
+    }
+
+    static clearUnpinnedTabs() {
+        if (document.body.natsumiUnpinnedTabsClearer) {
+            document.body.natsumiUnpinnedTabsClearer.clearTabs();
+        }
+    }
+
+    static openGlimpseLauncher() {
+        if (document.body.natsumiGlimpseLauncher) {
+            document.body.natsumiGlimpseLauncher.activateLauncher();
+        }
+    }
+
+    static splitTabs() {
+        // Firefox can't split more than 2 tabs yet
+        if (gBrowser.multiSelectedTabsCount > 2) {
+            return;
+        }
+
+        let selectedTabs = gBrowser.selectedTabs;
+        let unpinnedTabsNode = document.getElementById("tabbrowser-arrowscrollbox");
+        let unpinnedTabs = Array.from(unpinnedTabsNode.querySelectorAll(".tabbrowser-tab:not([hidden])"));
+        let firstTab = selectedTabs[0];
+        let secondTab;
+        let insertBefore = gBrowser.selectedTab;
+
+        if (selectedTabs.length === 1) {
+            // Get tab index
+            let tabIndex = unpinnedTabs.indexOf(firstTab);
+
+            if (tabIndex === unpinnedTabs.length - 1) {
+                // Split with previous tab
+                secondTab = unpinnedTabs[tabIndex - 1];
+            } else {
+                // Split with next tab
+                secondTab = unpinnedTabs[tabIndex + 1];
+            }
+        } else {
+            secondTab = selectedTabs[1];
+        }
+
+        // Check that tabs are not pinned and not in split view
+        for (let tab of [firstTab, secondTab]) {
+            if (tab.pinned || tab.splitview) {
+                return;
+            }
+        }
+
+        let additionalData = {};
+        if (insertBefore) {
+            additionalData = {insertBefore};
+        }
+
+        gBrowser.addTabSplitView([firstTab, secondTab], additionalData);
+    }
+
+    static unsplitTabs() {
+        // Use current selected tab
+        let selectedTab = gBrowser.selectedTab;
+
+        if (selectedTab.splitview) {
+            gBrowser.unsplitTabs(selectedTab.splitview);
         }
     }
 }

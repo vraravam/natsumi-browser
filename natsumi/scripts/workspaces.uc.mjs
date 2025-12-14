@@ -31,6 +31,12 @@ SOFTWARE.
 */
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
+import { applyCustomTheme } from "./custom-theme.sys.mjs";
+
+function convertToXUL(node) {
+    // noinspection JSUnresolvedReference
+    return window.MozXULElement.parseXULToFragment(node);
+}
 
 class NatsumiWorkspacesWrapper {
     // A wrapper class for managing workspaces in Floorp directly from the window
@@ -55,15 +61,29 @@ class NatsumiWorkspacesWrapper {
         // Get minor version
         let minorVersion = parseInt(floorpVersion.split(".")[1]);
 
+        // Get Firedragon status
+        let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
+
         if (minorVersion >= 8) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
         } else if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
         }
 
-        this.workspacesModule = await import(workspacesModulePath);
-        let workspacesContext = this.workspacesModule._.getCtx();
+        if (isFiredragon) {
+            workspacesModulePath = "chrome://noraneko/content/assets/js/modules/workspaces.js";
+        }
 
+        this.workspacesModule = await import(workspacesModulePath);
+        let workspacesContext;
+
+        if (isFiredragon) {
+            workspacesContext = this.workspacesModule.default.getCtx();
+        } else {
+            workspacesContext = this.workspacesModule._.getCtx();
+        }
+
+        // This can be lazy, so we can always initialize this later
         if (workspacesContext) {
             this.setManagers(workspacesContext);
         } else {
@@ -80,10 +100,20 @@ class NatsumiWorkspacesWrapper {
             return;
         }
 
+        // Get Firedragon status
+        let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
+
         this.initInterval = setInterval(() => {
-            let workspacesContext = this.workspacesModule._.getCtx();
+            let workspacesContext;
+
+            if (isFiredragon) {
+                workspacesContext = this.workspacesModule.default.getCtx();
+            } else {
+                workspacesContext = this.workspacesModule._.getCtx();
+            }
+
             if (workspacesContext) {
-                console.log("Workspaces context retrieved, initializing now.");
+                console.log("Workspaces context retrieved, initializing now.", workspacesContext);
 
                 // Set managers and init status
                 this.setManagers(workspacesContext);
@@ -117,10 +147,22 @@ class NatsumiWorkspacesWrapper {
         return this.workspacesContext.getSelectedWorkspaceID();
     }
 
-    getAllWorkspaceIDs() {
+    getDefaultWorkspaceID() {
+        if (!this.initialized) {
+            return;
+        }
+
+        return this.workspacesContext.getDefaultWorkspaceID();
+    }
+
+    getAllWorkspaceIDs(ordered = false) {
         if (ucApi.Prefs.get("floorp.workspaces.v4.store").exists()) {
             let workspacesData = JSON.parse(ucApi.Prefs.get("floorp.workspaces.v4.store").value);
             let workspaceIDs = [];
+
+            if (ordered && workspacesData["order"]) {
+                return workspacesData["order"];
+            }
 
             for (let index in workspacesData["data"]) {
                 workspaceIDs.push(workspacesData["data"][index][0]);
@@ -171,6 +213,240 @@ class NatsumiWorkspacesWrapper {
     }
 }
 
+class NatsumiWorkspaceIndicator {
+    // An indicator to show the current workspace in the tabs sidebar
+
+    constructor() {
+        this.workspacesWrapper = null;
+        this.indicatorNode = null;
+        this.tabsListNode = null;
+        this.verticalTabsMutationObserver = null;
+    }
+
+    init() {
+        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
+
+        // Set up observer
+        // This also runs the UI initialization so we can only run it once workspace data is available
+        if (this.workspacesWrapper.properInit) {
+            this.setVerticalTabsMutationObserver();
+        } else {
+            this.workspacesWrapper.dataRetrieveQueue.push(this.setVerticalTabsMutationObserver.bind(this));
+        }
+    }
+
+    addIndicator() {
+        // Remove existing indicator
+        let existingIndicator = document.getElementById("natsumi-workspace-indicator");
+        if (existingIndicator) {
+            existingIndicator.remove();
+        }
+
+        // Create workspace indicator
+        const indicatorXULString = `
+            <div id="natsumi-workspace-indicator">
+                <div id="natsumi-workspace-indicator-icon"></div>
+                <div id="natsumi-workspace-indicator-name"></div>
+                <div id="natsumi-workspace-indicator-clear"></div>
+            </div>
+        `
+        let indicatorFragment = convertToXUL(indicatorXULString);
+
+        // Append to sidebar then refetch indicator
+        let tabBrowserNode = document.getElementById("tabbrowser-tabs");
+        let tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
+        tabBrowserNode.insertBefore(indicatorFragment, tabsListNode); // We can't use appendChild otherwise Firefox will start breaking
+
+        // Refetch indicator node
+        this.indicatorNode = document.getElementById("natsumi-workspace-indicator");
+
+        // Ensure order
+        let tabsClearer = document.getElementById("natsumi-tabs-clearer");
+        if (tabsClearer) {
+            tabBrowserNode.insertBefore(this.indicatorNode, tabsClearer);
+        }
+
+        // Set click event listener
+        this.indicatorNode.addEventListener("click", () => {
+            if (this.workspacesWrapper) {
+                this.workspacesWrapper.showWorkspacesModal();
+            }
+        });
+
+        let clearButton = this.indicatorNode.querySelector("#natsumi-workspace-indicator-clear");
+        clearButton.addEventListener("click", (event) => {
+            event.stopPropagation();
+
+            // Clear all tabs
+            if (document.body.natsumiUnpinnedTabsClearer) {
+                document.body.natsumiUnpinnedTabsClearer.clearTabs();
+            }
+        });
+
+        // Refresh data
+        this.refreshIndicator();
+    }
+
+    setVerticalTabsMutationObserver() {
+        const verticalTabsElement = document.getElementById("vertical-tabs");
+
+        if (this.verticalTabsMutationObserver) {
+            this.verticalTabsMutationObserver.disconnect();
+        }
+
+        // Check if #tabbrowser-tabs exists
+        const tabsListNode = document.getElementById("tabbrowser-tabs");
+        if (tabsListNode) {
+            this.tabsListNode = tabsListNode;
+            this.addIndicator();
+        }
+
+        this.verticalTabsMutationObserver = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                const tabsListNode = document.getElementById("tabbrowser-tabs");
+                if (tabsListNode) {
+                    const needsUIInit = this.tabsListNode === null;
+                    this.tabsListNode = tabsListNode;
+
+                    if (needsUIInit) {
+                        this.addIndicator();
+                    }
+                } else {
+                    this.tabsListNode = null;
+                }
+            });
+        });
+
+        this.verticalTabsMutationObserver.observe(verticalTabsElement, {childList: true, subtree: true});
+    }
+
+    refreshIndicator() {
+        if (!this.indicatorNode) {
+            return;
+        }
+
+        // Get current workspace data
+        let currentWorkspaceData = getCurrentWorkspaceData();
+
+        // Set icon and name
+        this.indicatorNode.style.setProperty("--natsumi-workspace-icon", currentWorkspaceData["icon"]);
+        let nameNode = this.indicatorNode.querySelector("#natsumi-workspace-indicator-name");
+        nameNode.textContent = currentWorkspaceData["name"];
+    }
+}
+
+class NatsumiWorkspacePinsManager {
+    constructor() {
+        this.workspacesWrapper = null;
+    }
+
+    init() {
+        this.workspacesWrapper = document.body.natsumiWorkspacesWrapper;
+        document.addEventListener("select", this.onSelectEvent.bind(this));
+    }
+
+    onSelectEvent(event) {
+        if (event.target.id !== "tabbrowser-tabpanels") {
+            return;
+        }
+
+        let workspaceSpecificPinsEnabled = false;
+        if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
+            workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+        }
+
+        if (!workspaceSpecificPinsEnabled) {
+            return;
+        }
+
+        let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
+        let currentTabWorkspaceId = gBrowser.selectedTab.getAttribute("floorpWorkspaceId");
+
+        if (currentTabWorkspaceId !== currentWorkspaceId) {
+            // Somehow we've ended up in a different workspace
+            this.workspacesWrapper.setCurrentWorkspaceID(currentTabWorkspaceId);
+        }
+    }
+
+    updatePinnedTabs() {
+        // Check if workspace-specific pinned tabs are enabled
+        let workspaceSpecificPinsEnabled = false;
+        if (ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").exists()) {
+            workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+        }
+
+        if (!workspaceSpecificPinsEnabled) {
+            return;
+        }
+
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let pinnedTabs = pinnedTabsContainer.querySelectorAll("tab");
+
+        let defaultWorkspaceId = this.workspacesWrapper.getDefaultWorkspaceID();
+        let currentWorkspaceId = this.workspacesWrapper.getCurrentWorkspaceID();
+
+        let hiddenCount = 0;
+        let shownCount = 0;
+
+        for (let tab of pinnedTabs) {
+            let tabWorkspaceId = tab.getAttribute("floorpWorkspaceId") ?? defaultWorkspaceId;
+
+            if (tabWorkspaceId === currentWorkspaceId) {
+                tab.removeAttribute("hidden");
+                tab.removeAttribute("natsumi-workspace-hidden");
+                gBrowser.moveTabTo(tab, {elementIndex: shownCount});
+                shownCount++;
+            } else {
+                tab.setAttribute("hidden", "true");
+                tab.setAttribute("natsumi-workspace-hidden", "");
+                hiddenCount++;
+            }
+        }
+
+        gBrowser.tabContainer._invalidateCachedVisibleTabs();
+    }
+
+    updatePinnedTabsContainer() {
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let pinnedTabsSplitter = document.getElementById("vertical-pinned-tabs-splitter");
+
+        // Get visible pinned tabs
+        let visiblePinnedTabs = pinnedTabsContainer.querySelectorAll("tab:not([hidden='true'])");
+
+        if (visiblePinnedTabs.length === 0) {
+            pinnedTabsContainer.setAttribute("hidden", "true");
+
+            if (pinnedTabsSplitter) {
+                pinnedTabsSplitter.setAttribute("hidden", "true");
+            }
+        } else {
+            pinnedTabsContainer.removeAttribute("hidden");
+
+            if (pinnedTabsSplitter) {
+                pinnedTabsSplitter.removeAttribute("hidden");
+            }
+        }
+    }
+
+    freePinnedTabs(workspaceId = null) {
+        let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
+        let hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll("tab[natsumi-workspace-hidden]");
+
+        if (workspaceId) {
+            hiddenPinnedTabs = pinnedTabsContainer.querySelectorAll(`tab[natsumi-workspace-hidden][floorpWorkspaceId='${workspaceId}']`);
+        }
+
+        for (let tab of hiddenPinnedTabs) {
+            tab.removeAttribute("hidden");
+            tab.removeAttribute("natsumi-workspace-hidden");
+        }
+    }
+}
+
+let currentWorkspaceId = null;
+let currentWorkspaceIndex = 0;
+let currentWorkspaceAnimationTimeout = null;
+
 function getCurrentWorkspaceData() {
     const tabsListNode = document.getElementById("tabbrowser-arrowscrollbox");
     const availableTabs = tabsListNode.querySelectorAll("tab:not([hidden])");
@@ -189,6 +465,20 @@ function getCurrentWorkspaceData() {
                 workspaceId = availableTabs[0].attributes["floorpWorkspaceId"].value;
             }
         }
+    }
+
+    const newWorkspaceIndex = workspaceData["order"].indexOf(workspaceId);
+    let shouldAnimate = false;
+    let shouldAnimateLeft = false;
+    if (newWorkspaceIndex !== -1) {
+        if (currentWorkspaceIndex !== newWorkspaceIndex) {
+            shouldAnimate = true;
+            if (newWorkspaceIndex < currentWorkspaceIndex) {
+                shouldAnimateLeft = true;
+            }
+        }
+
+        currentWorkspaceIndex = newWorkspaceIndex;
     }
 
     for (let workspaceIndex in workspaceData["data"]) {
@@ -210,6 +500,26 @@ function getCurrentWorkspaceData() {
 
             break;
         }
+    }
+
+    if (shouldAnimate) {
+        if (currentWorkspaceAnimationTimeout) {
+            clearTimeout(currentWorkspaceAnimationTimeout);
+        }
+
+        let tabsList = document.getElementById("tabbrowser-tabs");
+        tabsList.removeAttribute("natsumi-workspace-animation");
+        tabsList.removeAttribute("natsumi-workspace-animation-left");
+
+        if (shouldAnimateLeft) {
+            tabsList.setAttribute("natsumi-workspace-animation-left", "");
+        }
+
+        tabsList.setAttribute("natsumi-workspace-animation", "");
+        currentWorkspaceAnimationTimeout = setTimeout(() => {
+            tabsList.removeAttribute("natsumi-workspace-animation");
+            tabsList.removeAttribute("natsumi-workspace-animation-left");
+        }, 300);
     }
 
     return {"id": workspaceId, "name": workspaceName, "icon": workspaceIcon};
@@ -242,10 +552,16 @@ function copyAllWorkspaces() {
         }
     });
 
+    let buttonAdded = false;
+    let perWorkspaceData = {};
     for (let index in workspaceData["data"]) {
         let workspace = workspaceData["data"][index];
-        let workspaceId = workspace[0];
-        let workspaceIcon = workspace[1]["icon"];
+        perWorkspaceData[workspace[0]] = workspace[1];
+    }
+
+    for (let workspaceId of workspaceData["order"]) {
+        let workspace = perWorkspaceData[workspaceId];
+        let workspaceIcon = workspace["icon"];
 
         if (!workspaceIcon) {
             workspaceIcon = `url(${document.body.natsumiWorkspacesWrapper.getWorkspaceIconUrl("fingerprint")})`;
@@ -261,11 +577,27 @@ function copyAllWorkspaces() {
             newButtonNode.classList.add("natsumi-workspace-active");
         }
 
+        newButtonNode.addEventListener("click", (event) => {
+            if (!event.shiftKey) {
+                event.stopPropagation();
+                event.preventDefault();
+                document.body.natsumiWorkspacesWrapper.setCurrentWorkspaceID(workspaceId);
+            }
+        })
+
         workspacesButton.appendChild(newButtonNode);
+        buttonAdded = true;
+    }
+
+    if (buttonAdded) {
+        workspacesButton.setAttribute("natsumi-has-workspaces", "");
+    } else {
+        workspacesButton.removeAttribute("natsumi-has-workspaces");
     }
 }
 
 let tabsList = document.getElementById("tabbrowser-arrowscrollbox");
+let pinnedTabsContainer = document.getElementById("pinned-tabs-container");
 let isFloorp = false;
 
 if (ucApi.Prefs.get("natsumi.browser.type").exists) {
@@ -273,84 +605,139 @@ if (ucApi.Prefs.get("natsumi.browser.type").exists) {
 }
 
 if (isFloorp) {
-    let workspacesButton = document.getElementById("workspaces-toolbar-button");
+    try {
+        let workspacesButton = document.getElementById("workspaces-toolbar-button");
 
-    if (workspacesButton) {
-        copyAllWorkspaces();
-    } else {
-        // Let mutation observers handle this
-        let toolbarsObserver = new MutationObserver(function (mutations) {
-            mutations.forEach(function (mutationRecord) {
-                let newWorkspacesButton = document.getElementById("workspaces-toolbar-button");
-                if (newWorkspacesButton) {
-                    copyAllWorkspaces();
+        if (workspacesButton) {
+            copyAllWorkspaces();
+        } else {
+            // Let mutation observers handle this
+            let toolbarsObserver = new MutationObserver(function (mutations) {
+                mutations.forEach(function (mutationRecord) {
+                    let newWorkspacesButton = document.getElementById("workspaces-toolbar-button");
+                    if (newWorkspacesButton) {
+                        copyAllWorkspaces();
 
-                    // Ensure workspace button is always visible
-                    let isVerticalTabs = ucApi.Prefs.get("sidebar.verticalTabs").value;
-                    if (isVerticalTabs && newWorkspacesButton.parentNode.id === "TabsToolbar-customization-target") {
-                        // This shouldn't be here
-                        let targetStatusbar = false;
-                        if (ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").exists) {
-                            targetStatusbar = ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").value;
+                        // Ensure workspace button is always visible
+                        let isVerticalTabs = ucApi.Prefs.get("sidebar.verticalTabs").value;
+                        if (isVerticalTabs && newWorkspacesButton.parentNode.id === "TabsToolbar-customization-target") {
+                            // This shouldn't be here
+                            let targetStatusbar = false;
+                            if (ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").exists) {
+                                targetStatusbar = ucApi.Prefs.get("natsumi.theme.patch-move-workspaces-to-statusbar").value;
+                            }
+
+                            if (targetStatusbar) {
+                                let statusBar = document.getElementById("nora-statusbar");
+                                let existingButtons = statusBar.querySelectorAll("toolbarbutton");
+
+                                if (existingButtons.length === 2) {
+                                    statusBar.insertBefore(newWorkspacesButton, existingButtons[1]);
+                                } else {
+                                    statusBar.appendChild(newWorkspacesButton);
+                                }
+                            } else {
+                                let navbarTarget = document.getElementById("nav-bar-customization-target");
+                                let sidebarNode = navbarTarget.querySelector("sidebar-button");
+
+                                if (sidebarNode) {
+                                    navbarTarget.insertBefore(newWorkspacesButton, sidebarNode.nextSibling);
+                                } else {
+                                    navbarTarget.insertBefore(newWorkspacesButton, navbarTarget.firstChild);
+                                }
+                            }
                         }
 
-                        if (targetStatusbar) {
-                            let statusBar = document.getElementById("nora-statusbar");
-                            let existingButtons = statusBar.querySelectorAll("toolbarbutton");
-
-                            if (existingButtons.length === 2) {
-                                statusBar.insertBefore(newWorkspacesButton, existingButtons[1]);
-                            } else {
-                                statusBar.appendChild(newWorkspacesButton);
-                            }
-                        } else {
-                            let navbarTarget = document.getElementById("nav-bar-customization-target");
-                            let sidebarNode = navbarTarget.querySelector("sidebar-button");
-
-                            if (sidebarNode) {
-                                navbarTarget.insertBefore(newWorkspacesButton, sidebarNode.nextSibling);
-                            } else {
-                                navbarTarget.insertBefore(newWorkspacesButton, navbarTarget.firstChild);
-                            }
-                        }
+                        toolbarsObserver.disconnect(); // Stop observing once the button exists
                     }
-
-                    toolbarsObserver.disconnect(); // Stop observing once the button exists
-                }
+                });
             });
-        });
 
-        let toolbox = document.getElementById("nav-bar-customization-target");
-        let statusBar = document.getElementById("nora-statusbar");
+            let toolbox = document.getElementById("nav-bar-customization-target");
+            let statusBar = document.getElementById("nora-statusbar");
 
-        toolbarsObserver.observe(toolbox, {attributes: true, childList: true, subtree: true});
+            toolbarsObserver.observe(toolbox, {attributes: true, childList: true, subtree: true});
 
-        if (statusBar) {
-            toolbarsObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
-        }
-    }
-
-    let tabsListObserver = new MutationObserver(function (mutations) {
-        // Prevent infinite loops
-        if (mutations.length === 1) {
-            let mutation = mutations[0];
-            if (mutation.target.id === "natsumi-workspace-indicator-name") {
-                return;
+            if (statusBar) {
+                toolbarsObserver.observe(statusBar, {attributes: true, childList: true, subtree: true});
             }
         }
 
-        copyWorkspaceName();
-        copyAllWorkspaces();
-        copyAllWorkspaces();
-    });
-    tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
+        let tabsListObserver = new MutationObserver(function (mutations) {
+            // Prevent infinite loops
+            if (mutations.length === 1) {
+                let mutation = mutations[0];
+                if (mutation.target.id === "natsumi-workspace-indicator-name") {
+                    return;
+                }
+            }
 
-    // Initialize workspaces wrapper
-    document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
-    document.body.natsumiWorkspacesWrapper.dataRetrieveQueue.push(() => {
-        copyWorkspaceName();
-    });
-    document.body.natsumiWorkspacesWrapper.init().then(() => {
-        // We don't really need to do anything here, but it's good to keep this just in case
-    })
+            copyWorkspaceName();
+            copyAllWorkspaces();
+
+            if (document.body.natsumiWorkspaceIndicator) {
+                document.body.natsumiWorkspaceIndicator.refreshIndicator();
+            }
+
+            if (document.body.natsumiWorkspacePinsManager) {
+                document.body.natsumiWorkspacePinsManager.updatePinnedTabs();
+                document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
+            }
+
+            // Get current workspace ID
+            if (document.body.natsumiWorkspacesWrapper) {
+                let newWorkspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
+                if (currentWorkspaceId !== newWorkspaceId) {
+                    currentWorkspaceId = newWorkspaceId;
+                    applyCustomTheme();
+                }
+            }
+        });
+        tabsListObserver.observe(tabsList, {attributes: true, childList: true, subtree: true});
+
+        let pinnedTabsObserver = new MutationObserver(function (mutations) {
+            if (document.body.natsumiWorkspacePinsManager) {
+                document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
+            }
+        });
+        pinnedTabsObserver.observe(pinnedTabsContainer, {childList: true});
+
+        Services.prefs.addObserver("natsumi.tabs.workspace-specific-pins", () => {
+            let workspaceSpecificPinsEnabled = ucApi.Prefs.get("natsumi.tabs.workspace-specific-pins").value;
+
+            if (document.body.natsumiWorkspacePinsManager) {
+                if (!workspaceSpecificPinsEnabled) {
+                    // Free all pinned tabs
+                    document.body.natsumiWorkspacePinsManager.freePinnedTabs();
+                } else {
+                    // Update pinned tabs to reflect current workspace
+                    document.body.natsumiWorkspacePinsManager.updatePinnedTabs();
+                }
+
+                document.body.natsumiWorkspacePinsManager.updatePinnedTabsContainer();
+            }
+        });
+        Services.prefs.addObserver("floorp.workspaces.v4.store", () => {
+            copyWorkspaceName();
+            copyAllWorkspaces();
+        });
+
+        // Initialize workspaces wrapper
+        document.body.natsumiWorkspacesWrapper = new NatsumiWorkspacesWrapper();
+        document.body.natsumiWorkspacesWrapper.dataRetrieveQueue.push(() => {
+            copyWorkspaceName();
+            applyCustomTheme();
+        });
+        document.body.natsumiWorkspacesWrapper.init().then(() => {
+            // Initialize workspace indicator
+            document.body.natsumiWorkspaceIndicator = new NatsumiWorkspaceIndicator();
+            document.body.natsumiWorkspaceIndicator.init();
+
+            // Initialize workspace pins manager
+            document.body.natsumiWorkspacePinsManager = new NatsumiWorkspacePinsManager();
+            document.body.natsumiWorkspacePinsManager.init();
+        })
+    } catch (e) {
+        console.error(e);
+    }
 }

@@ -1,0 +1,19 @@
+* {
+  /* SDL2's browser toolbar button colors should inherit SDL's */
+  --natsumi-sdl2-button-idle-color: var(--natsumi-button-idle-color);
+  --natsumi-sdl2-button-hover-color: var(--natsumi-button-hover-color);
+  --natsumi-sdl2-button-active-color: var(--natsumi-button-active-color);
+
+  /* Haze button colors */
+  --natsumi-sdl2-haze-button-idle-color: color-mix(in srgb, var(--natsumi-sdl2-haze-button-context-color, white) 50%, transparent);
+  --natsumi-sdl2-haze-button-idle-shadow: inset 0 0 2px rgba(0, 0, 0, 0.1), 0 0 2px rgba(0, 0, 0, 0.3);
+  --natsumi-sdl2-haze-button-hover-color: rgba(0, 0, 0, 0.1);
+  --natsumi-sdl2-haze-button-active-color: var(--natsumi-primary-color);
+
+  @media (prefers-color-scheme: dark) {
+    --natsumi-sdl2-haze-button-idle-color: color-mix(in srgb, var(--natsumi-sdl2-haze-button-context-color, rgba(255, 255, 255, 0.25)) 40%, transparent);
+    --natsumi-sdl2-haze-button-idle-shadow: inset 0 0 2px rgba(255, 255, 255, 0.2), 0 0 2px rgba(0, 0, 0, 0.3);
+    --natsumi-sdl2-haze-button-hover-color: rgba(255, 255, 255, 0.2) !important;
+    --natsumi-sdl2-haze-button-active-color: var(--natsumi-sdl2-button-active-color);
+  }
+}

@@ -50,10 +50,7 @@ chrome_manifest = [
 ]
 
 def get_admin():
-    if sys.platform == 'win32':
-        return ctypes.windll.shell32.IsUserAnAdmin() != 0
-    else:
-        return os.geteuid() == 0
+    return os.geteuid() == 0
 
 def download_from_git(repository, branch, destination, is_tag=False):
     heads_string = 'heads'
@@ -156,7 +153,7 @@ def get_profiles(path):
 
 def prompt_for_path(message):
     while True:
-        user_input = input(f"{message}\nEnter the full path to the profiles directory or type 'exit' to quit: ").strip()
+        user_input = input(f"{message}\nFile path (type 'exit' to quit): ").strip()
         if user_input.lower() == 'exit':
             sys.exit(0)
         if os.path.exists(user_input):
@@ -186,9 +183,6 @@ def detect_install_and_profiles(browser):
         if sys.platform == 'darwin':
             install_path = f'/Applications/{browser.name_macos}.app/Contents/Resources'
             profile_root = _get_macos_path(browser)
-        elif sys.platform == 'win32':
-            install_path = f'C:/Program Files/{browser.name_windows_binary}'
-            profile_root = _get_windows_path(browser)
         elif sys.platform.startswith('linux'):
             install_path = f'/usr/lib/{browser.name_universal}'
             try:
@@ -212,7 +206,14 @@ def detect_install_and_profiles(browser):
     print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root) if profile_root else 'N/A'}")
 
     if not install_path or not os.path.isdir(install_path):
-        install_path = prompt_for_path(f"Could not detect install location for {browser.name}.")
+        if sys.platform == 'darwin':
+            os_specific_instructions = "On macOS, this would be /path/to/Browser.app/Contents/Resources."
+        else:
+            os_specific_instructions = "On Linux, this would be the folder the browser's binary is located in."
+
+        install_path = prompt_for_path(
+            f"Could not detect install location for {browser.name}. Please enter the browser's install location.\n{os_specific_instructions}"
+        )
         print(f"[DEBUG] User provided install_path: {install_path}")
         print(f"[DEBUG] os.path.isdir(install_path): {os.path.isdir(install_path)}")
 
@@ -225,7 +226,15 @@ def detect_install_and_profiles(browser):
     profile_paths = get_profiles(profile_root)
     if not profile_paths:
         print(f"No profiles found in {profile_root}.")
-        profile_root = prompt_for_path(f"Please enter a valid profile directory for {browser.name}.")
+
+        if sys.platform == 'darwin':
+            os_specific_instructions = "On macOS, this would usually be /Users/user/Library/Application Support/Browser/Profiles."
+        else:
+            os_specific_instructions = "On Linux, this would be the parent folder to your profile folders (e.g. /home/user/.browser)."
+
+        profile_root = prompt_for_path(
+            f"Please enter a valid profile directory for {browser.name}.\n{os_specific_instructions}"
+        )
         print(f"[DEBUG] User provided profile_root (no profiles): {profile_root}")
         print(f"[DEBUG] os.path.isdir(profile_root): {os.path.isdir(profile_root)}")
         profile_paths = get_profiles(profile_root)
@@ -316,12 +325,7 @@ def main():
     fx_autoconfig_downloaded = False
     sine_support = False
 
-    if sys.platform == 'win32':
-        print('Due to permissions issues, fx-autoconfig cannot be installed on Windows through the Natsumi Installer.')
-        print('We will install the fx-autoconfig files for your profile, but you will have to install the browser files (program folder) manually.')
-        print('More info: https://github.com/MrOtherGuy/fx-autoconfig?tab=readme-ov-file#setting-up-configjs-from-program-folder')
-
-    if not fx_autoconfig_installed and not sys.platform == 'win32':
+    if not fx_autoconfig_installed:
         if needs_sudo and not get_admin():
             print('Sudo/administrator is required to install Natsumi to this browser.')
             sys.exit(1)
@@ -391,21 +395,34 @@ def main():
         with open(f'{profile}/chrome/utils/chrome.manifest', 'w+') as file:
             file.write('\n'.join(chrome_manifest))
 
-    if not sys.platform == 'win32' and get_admin():
+    if get_admin():
         print('Fixing permissions...')
         os.system(f'chown -R {os.environ["SUDO_USER"]} "{profile}/chrome"')
 
     print('Natsumi installed successfully! ^w^')
 
 if __name__ == '__main__':
-    try:
-        main()
-        if os.path.exists('.natsumi-installer'):
-            shutil.rmtree('.natsumi-installer')
-    except:
-        if os.path.exists('.natsumi-installer'):
-            shutil.rmtree('.natsumi-installer')
-        traceback.print_exc()
+    should_prompt_exit = True
+    if sys.platform == 'win32':
+        print('This installer only works for macOS and Linux. Please use the Windows installer instead.')
+    else:
+        try:
+            main()
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+        except KeyboardInterrupt:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            should_prompt_exit = False
+        except SystemExit:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            should_prompt_exit = False
+        except:
+            if os.path.exists('.natsumi-installer'):
+                shutil.rmtree('.natsumi-installer')
+            traceback.print_exc()
 
-    print('Press enter to exit:')
-    input()
+    if should_prompt_exit:
+        print('Press enter to exit:')
+        input()

@@ -35,12 +35,24 @@ SOFTWARE.
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 import {applyCustomColor, applyCustomTheme} from "./custom-theme.sys.mjs";
 
+// enjoy the excessively and absurdly long function name
 function makeCatNoisesAndDoSomeVeryCuteInitialSetupBecauseIFeltVeryCuteWhenWritingThisSoHereIsAFunctionWithAnExcessivelyLongNameThatMakesRandomCatNoisesAndSomeSetup() {
     // Set Natsumi Append installed status
     document.body.setAttribute("natsumi-append-installed", "");
 
     // Ensure icons work on Firefox
     ucApi.Prefs.set("svg.context-properties.content.enabled", true);
+
+    // Ensure translucency works on macOS and Windows
+    let isMac = Services.appinfo.OS.toLowerCase() === "darwin";
+    let isWindows = Services.appinfo.OS.toLowerCase() === "winnt";
+
+    if (isMac) {
+        ucApi.Prefs.set("widget.macos.sidebar-blend-mode.behind-window", true);
+        ucApi.Prefs.set("widget.macos.titlebar-blend-mode.behind-window", true);
+    } else if (isWindows) {
+        ucApi.Prefs.set("widget.windows.mica", true);
+    }
 
     // Apply customizations
     applyCustomTheme();

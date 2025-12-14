@@ -31,210 +31,228 @@ SOFTWARE.
 
 import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
-let sidebarHovered = 0;
-let sidebarTimeout;
-let navbarTimeout;
-
-function handleElementEnter(event) {
-    // Check if compact mode is enabled thru body attributes
-    if (!document.body.hasAttribute("natsumi-compact-mode")) {
-        return;
+class NatsumiCompactModeManager {
+    constructor() {
+        this.sidebarHovered = 0;
+        this.sidebarTimeout = null;
+        this.navbarTimeout = null;
     }
 
-    // Check single toolbar
-    let isSingleToolbar = false;
-    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
-        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
-            isSingleToolbar = true;
+    init() {
+        let sidebarNode = document.getElementById("sidebar-main");
+        let navigatorToolboxNode = document.getElementById("navigator-toolbox");
+        let navbarNode = document.getElementById("nav-bar");
+
+        if (sidebarNode) {
+            sidebarNode.addEventListener("mouseenter", this.handleElementEnter.bind(this), true);
+            sidebarNode.addEventListener("mouseleave", this.handleElementLeave.bind(this), true);
         }
-    }
 
-    // Check hidden elements
-    let sidebarHidden = true;
-    let toolbarHidden = true;
-    if (!isSingleToolbar) {
-        if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
-            if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
-                toolbarHidden = false;
-            } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
-                sidebarHidden = false;
+        if (navigatorToolboxNode) {
+            navigatorToolboxNode.addEventListener("mouseenter", this.handleElementEnter.bind(this), true);
+            navigatorToolboxNode.addEventListener("mouseleave", this.handleElementLeave.bind(this), true);
+        }
+
+        if (navbarNode) {
+            navbarNode.addEventListener("mouseenter", this.handleElementEnter.bind(this), true);
+            navbarNode.addEventListener("mouseleave", this.handleElementLeave.bind(this), true);
+        }
+
+        this.initStatusbar();
+
+        let bodyMutationOnserver = new MutationObserver((mutations) => {
+            mutations.forEach(() => {
+                if (!document.body.hasAttribute("natsumi-compact-mode")) {
+                    // Reset compact mode
+                    this.resetCompactMode();
+                }
+            });
+        });
+        bodyMutationOnserver.observe(document.body, {
+            attributes: true,
+            attributeFilter: ["natsumi-compact-mode"]
+        });
+
+        // Enable compact mode if set to be enabled by default
+        if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").exists()) {
+            if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").value) {
+                document.body.setAttribute("natsumi-compact-mode", "");
             }
         }
     }
 
-    if (event.target.id === "sidebar-main" && sidebarHidden) {
-        if (sidebarTimeout) {
-            clearTimeout(sidebarTimeout);
-            sidebarTimeout = null;
+    // initStatusbar can be deferred if the status bars tend to be lazy and take a while to load
+    initStatusbar() {
+        let statusbarNode = document.getElementById("nora-statusbar") || document.getElementById("status-bar");
+
+        if (statusbarNode) {
+            statusbarNode.addEventListener("mouseenter", this.handleElementEnter.bind(this), true);
+            statusbarNode.addEventListener("mouseleave", this.handleElementLeave.bind(this), true);
+        }
+    }
+
+    handleElementEnter(event) {
+        // Check if compact mode is enabled thru body attributes
+        if (!document.body.hasAttribute("natsumi-compact-mode")) {
+            return;
         }
 
-        sidebarHovered++;
-    } else if ((
-        event.target.id === "nav-bar" && isSingleToolbar ||
-        event.target.id === "navigator-toolbox" && !isSingleToolbar
-    ) && toolbarHidden) {
-        if (isSingleToolbar) {
-            if (sidebarTimeout) {
-                clearTimeout(sidebarTimeout);
-                sidebarTimeout = null;
+        // Check single toolbar
+        let isSingleToolbar = false;
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+            if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
+                isSingleToolbar = true;
             }
-
-            sidebarHovered++;
         }
 
+        // Check hidden elements
+        let sidebarHidden = true;
+        let toolbarHidden = true;
         if (!isSingleToolbar) {
-            if (navbarTimeout) {
-                clearTimeout(navbarTimeout);
-                navbarTimeout = null;
+            if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
+                if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
+                    toolbarHidden = false;
+                } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
+                    sidebarHidden = false;
+                }
             }
         }
 
-        document.body.setAttribute("natsumi-compact-navbar-hover", "")
-    } else if ((
-        event.target.id === "nora-statusbar" || event.target.id === "status-bar"
-    ) && sidebarHidden) {
-        if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
-            if (sidebarTimeout) {
-                clearTimeout(sidebarTimeout);
-                sidebarTimeout = null;
+        if (event.target.id === "sidebar-main" && sidebarHidden) {
+            if (this.sidebarTimeout) {
+                clearTimeout(this.sidebarTimeout);
+                this.sidebarTimeout = null;
             }
 
-            sidebarHovered++;
-        }
-    }
+            this.sidebarHovered++;
+        } else if ((
+            event.target.id === "nav-bar" && isSingleToolbar ||
+            event.target.id === "navigator-toolbox" && !isSingleToolbar
+        ) && toolbarHidden) {
+            if (isSingleToolbar) {
+                if (this.sidebarTimeout) {
+                    clearTimeout(this.sidebarTimeout);
+                    this.sidebarTimeout = null;
+                }
 
-    if (sidebarHovered > 0) {
-        document.body.setAttribute("natsumi-compact-sidebar-hover", "")
-    }
-}
+                this.sidebarHovered++;
+            }
 
-function handleElementLeave(event) {
-    // Check if compact mode is enabled thru body attributes
-    if (!document.body.hasAttribute("natsumi-compact-mode")) {
-        return;
-    }
+            if (!isSingleToolbar) {
+                if (this.navbarTimeout) {
+                    clearTimeout(this.navbarTimeout);
+                    this.navbarTimeout = null;
+                }
+            }
 
-    // Check single toolbar
-    let isSingleToolbar = false;
-    if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
-        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
-            isSingleToolbar = true;
-        }
-    }
+            document.body.setAttribute("natsumi-compact-navbar-hover", "")
+        } else if ((
+            event.target.id === "nora-statusbar" || event.target.id === "status-bar"
+        ) && sidebarHidden) {
+            if (event.target.classList.contains("hidden") || event.target.getAttribute("collapsed") === "true" || event.target.style.display === "none") {
+                if (this.sidebarTimeout) {
+                    clearTimeout(this.sidebarTimeout);
+                    this.sidebarTimeout = null;
+                }
 
-    // Check hidden elements
-    let sidebarHidden = true;
-    let toolbarHidden = true;
-    if (!isSingleToolbar) {
-        if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
-            if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
-                toolbarHidden = false;
-            } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
-                sidebarHidden = false;
+                this.sidebarHovered++;
             }
         }
+
+        if (this.sidebarHovered > 0) {
+            document.body.setAttribute("natsumi-compact-sidebar-hover", "")
+        }
     }
 
-    if (event.target.id === "sidebar-main" && sidebarHidden) {
-        sidebarHovered--;
-    } else if ((
-        event.target.id === "nav-bar" && isSingleToolbar ||
-        event.target.id === "navigator-toolbox" && !isSingleToolbar
-    ) && toolbarHidden) {
-        if (isSingleToolbar) {
-            sidebarHovered--;
+    handleElementLeave(event) {
+        // Check if compact mode is enabled thru body attributes
+        if (!document.body.hasAttribute("natsumi-compact-mode")) {
+            return;
+        }
+
+        // Check single toolbar
+        let isSingleToolbar = false;
+        if (ucApi.Prefs.get("natsumi.theme.single-toolbar").exists()) {
+            if (ucApi.Prefs.get("natsumi.theme.single-toolbar").value) {
+                isSingleToolbar = true;
+            }
+        }
+
+        // Check hidden elements
+        let sidebarHidden = true;
+        let toolbarHidden = true;
+        if (!isSingleToolbar) {
+            if (ucApi.Prefs.get("natsumi.theme.compact-style").exists()) {
+                if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "sidebar") {
+                    toolbarHidden = false;
+                } else if (ucApi.Prefs.get("natsumi.theme.compact-style").value === "toolbar") {
+                    sidebarHidden = false;
+                }
+            }
+        }
+
+        if (event.target.id === "sidebar-main" && sidebarHidden) {
+            this.sidebarHovered--;
+        } else if ((
+            event.target.id === "nav-bar" && isSingleToolbar ||
+            event.target.id === "navigator-toolbox" && !isSingleToolbar
+        ) && toolbarHidden) {
+            if (isSingleToolbar) {
+                this.sidebarHovered--;
+            }
+
+            if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
+                this.navbarTimeout = setTimeout(() => {
+                    document.body.removeAttribute("natsumi-compact-navbar-hover");
+                    this.navbarTimeout = null;
+                }, 1000);
+            }
+        } else if ((
+            event.target.id === "nora-statusbar" || event.target.id === "status-bar"
+        ) && sidebarHidden) {
+            if (event.target.classList.contains("hidden") || event.target.getAttribute("collapsed") === "true" || event.target.style.display === "none") {
+                this.sidebarHovered--;
+            }
+        }
+
+        if (this.sidebarHovered <= 0) {
+            this.sidebarTimeout = setTimeout(() => {
+                document.body.removeAttribute("natsumi-compact-sidebar-hover");
+                this.sidebarTimeout = null;
+            }, 1000);
+            this.sidebarHovered = 0;
+        }
+    }
+
+    resetCompactMode() {
+        if (document.body.hasAttribute("natsumi-compact-mode")) {
+            // Compact mode is still on
+            return;
+        }
+
+        if (document.body.hasAttribute("natsumi-compact-sidebar-hover")) {
+            document.body.removeAttribute("natsumi-compact-sidebar-hover");
         }
 
         if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
-            navbarTimeout = setTimeout(() => {
-                document.body.removeAttribute("natsumi-compact-navbar-hover");
-                navbarTimeout = null;
-            }, 1000);
+            document.body.removeAttribute("natsumi-compact-navbar-hover");
         }
-    } else if ((
-        event.target.id === "nora-statusbar" || event.target.id === "status-bar"
-    ) && sidebarHidden) {
-        if (event.target.classList.contains("hidden") || event.target.attributes["collapsed"].value === "true") {
-            sidebarHovered--;
+
+        if (this.sidebarTimeout) {
+            clearTimeout(this.sidebarTimeout);
+            this.sidebarTimeout = null;
         }
-    }
 
-    if (sidebarHovered <= 0) {
-        sidebarTimeout = setTimeout(() => {
-            document.body.removeAttribute("natsumi-compact-sidebar-hover");
-            sidebarTimeout = null;
-        }, 1000);
-        sidebarHovered = 0;
-    }
-}
-
-function resetCompactMode() {
-    if (document.body.hasAttribute("natsumi-compact-mode")) {
-        // Compact mode is still on
-        return;
-    }
-
-    if (document.body.hasAttribute("natsumi-compact-sidebar-hover")) {
-        document.body.removeAttribute("natsumi-compact-sidebar-hover");
-    }
-
-    if (document.body.hasAttribute("natsumi-compact-navbar-hover")) {
-        document.body.removeAttribute("natsumi-compact-navbar-hover");
-    }
-
-    if (sidebarTimeout) {
-        clearTimeout(sidebarTimeout);
-        sidebarTimeout = null;
-    }
-
-    if (navbarTimeout) {
-        clearTimeout(navbarTimeout);
-        navbarTimeout = null;
-    }
-
-    sidebarHovered = 0;
-}
-
-let sidebarNode = document.getElementById("sidebar-main");
-let navigatorToolboxNode = document.getElementById("navigator-toolbox");
-let navbarNode = document.getElementById("nav-bar");
-let statusbarNode = document.getElementById("nora-statusbar") || document.getElementById("status-bar");
-if (sidebarNode) {
-    sidebarNode.addEventListener("mouseenter", handleElementEnter, true);
-    sidebarNode.addEventListener("mouseleave", handleElementLeave, true);
-}
-
-if (statusbarNode) {
-    statusbarNode.addEventListener("mouseenter", handleElementEnter, true);
-    statusbarNode.addEventListener("mouseleave", handleElementLeave, true);
-}
-
-if (navigatorToolboxNode) {
-    navigatorToolboxNode.addEventListener("mouseenter", handleElementEnter, true);
-    navigatorToolboxNode.addEventListener("mouseleave", handleElementLeave, true);
-}
-
-if (navbarNode) {
-    navbarNode.addEventListener("mouseenter", handleElementEnter, true);
-    navbarNode.addEventListener("mouseleave", handleElementLeave, true);
-}
-
-let bodyMutationOnserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        if (!document.body.hasAttribute("natsumi-compact-mode")) {
-            // Reset compact mode
-            resetCompactMode();
+        if (this.navbarTimeout) {
+            clearTimeout(this.navbarTimeout);
+            this.navbarTimeout = null;
         }
-    });
-});
-bodyMutationOnserver.observe(document.body, {
-    attributes: true,
-    attributeFilter: ["natsumi-compact-mode"]
-});
 
-// Enable compact mode if set to be enabled by default
-if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").exists()) {
-    if (ucApi.Prefs.get("natsumi.theme.compact-on-new-window").value) {
-        document.body.setAttribute("natsumi-compact-mode", "");
+        this.sidebarHovered = 0;
     }
+}
+
+if (!document.body.natsumiCompactModeManager) {
+    document.body.natsumiCompactModeManager = new NatsumiCompactModeManager();
+    document.body.natsumiCompactModeManager.init();
 }

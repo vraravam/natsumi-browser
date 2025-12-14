@@ -42,9 +42,17 @@ SOFTWARE.
   #tabbrowser-arrowscrollbox {
     /*noinspection CssInvalidFunction*/
     .tabbrowser-tab {
-      --natsumi-tab-highlight-color: light-dark(var(--natsumi-primary-color), var(--natsumi-colors-primary));
+      --natsumi-tab-highlight-color: var(--natsumi-primary-color);
       --natsumi-tab-idle-width: 0;
       --natsumi-tab-idle-opacity: 0;
+
+      @media (prefers-color-scheme: dark) {
+        --natsumi-tab-highlight-color: color-mix(in srgb, var(--natsumi-primary-color) 70%, black);
+
+        @media -moz-pref("natsumi.tabs.blade-legacy-color") {
+          --natsumi-tab-highlight-color: var(--natsumi-colors-primary);
+        }
+      }
 
       &[usercontextid] {
         --natsumi-tab-highlight-color: var(--identity-icon-color);
@@ -54,6 +62,10 @@ SOFTWARE.
 
       @media -moz-pref("sidebar.verticalTabs") {
         padding: 0 !important;
+
+        .tab-group-line {
+          display: none !important;
+        }
       }
 
       .tab-loading-burst[bursting]::before {
@@ -72,12 +84,6 @@ SOFTWARE.
         scale: 0.95 !important;
       }
 
-      @media -moz-pref("sidebar.verticalTabs") {
-        .tab-group-line {
-          display: none !important;
-        }
-      }
-
       &:has(.tab-close-button:hover) {
         transition: opacity 0.2s ease !important;
         --natsumi-tab-highlight-color: rgb(255, 100, 100);
@@ -88,18 +94,25 @@ SOFTWARE.
         overflow: visible !important;
         border-radius: var(--natsumi-tab-border-radius) !important;
         outline: none !important;
+        display: grid;
+        grid-template-columns: 1fr;
         backdrop-filter: saturate(1) contrast(1);
-        --natsumi-tab-height: var(--floorp-tab-min-height, var(--tab-min-height));
 
         .tab-context-line {
           display: none !important;
         }
 
+        .tab-loading-burst, .tab-group-line {
+          grid-row-start: 1;
+          grid-column-start: 1;
+        }
+
         &::after {
           content: "";
-          position: absolute;
+          grid-row-start: 1;
+          grid-column-start: 1;
           width: var(--natsumi-tab-idle-width);
-          height: calc(var(--natsumi-tab-height) - 4px);
+          height: calc(100% - 4px);
           opacity: var(--natsumi-tab-idle-opacity);
           border: 2px solid var(--natsumi-tab-highlight-color) !important;
           background: color-mix(in srgb, var(--natsumi-tab-highlight-color) 40%, transparent);
@@ -107,12 +120,8 @@ SOFTWARE.
           mask-image: linear-gradient(to right, black, transparent 30%);
           transition: width 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, border 0.2s ease;
 
-          @media -moz-pref("natsumi.browser.type", "floorp") {
-            height: max(calc(var(--natsumi-tab-height) - 8px), 28px);
-          }
-
-          @media -moz-pref("sidebar.verticalTabs") {
-            left: 0;
+          @media -moz-pref("natsumi.browser.type-firedragon") {
+            height: 100%;
           }
         }
       }
@@ -126,7 +135,7 @@ SOFTWARE.
         }
       }
 
-      &[selected], &[visuallyselected] {
+      &[selected], &[visuallyselected], &[natsumi-glimpse-selected] {
         /*noinspection CssInvalidFunction*/
         & > .tab-stack > .tab-background {
           box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
@@ -142,6 +151,10 @@ SOFTWARE.
           &::after {
             width: calc(100% - 4px);
             opacity: 1;
+
+            @media -moz-pref("natsumi.browser.type-firedragon") {
+              width: 100%;
+            }
           }
         }
       }
@@ -169,6 +182,7 @@ SOFTWARE.
 
     .tab-background {
       border-radius: var(--natsumi-tab-border-radius) !important;
+      transition: background-color 0.2s ease;
     }
 
     .tabbrowser-tab {
@@ -197,8 +211,10 @@ SOFTWARE.
         background-color: transparent;
         transition: background-color 0.2s ease;
       }
+    }
 
-      .tabbrowser-tab[selected][style*="--natsumi-tab-icon"] {
+    .tabbrowser-tab[selected], .tabbrowser-tab[natsumi-glimpse-selected] {
+      &[style*="--natsumi-tab-icon"] {
         .tab-background {
           background: transparent !important;
           overflow: clip !important;
@@ -268,6 +284,16 @@ SOFTWARE.
         }
       }
     }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          .tab-icon-stack {
+            margin-inline: auto !important;
+          }
+        }
+      }
+    }
   }
 
   #tabs-newtab-button, #vertical-tabs-newtab-button {
@@ -282,5 +308,10 @@ SOFTWARE.
     .toolbarbutton-icon {
       margin-bottom: 1px !important;
     }
+  }
+
+  /* Ensure backdrop filters work */
+  #vertical-tabs {
+    will-change: unset !important;
   }
 }

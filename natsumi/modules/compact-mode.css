@@ -97,6 +97,10 @@ SOFTWARE.
       --natsumi-compact-offset: var(--natsumi-sidebar-width);
       overflow-x: visible !important;
 
+      @media (-moz-mac-tahoe-theme) {
+        border-radius: 12px !important;
+      }
+
       @media -moz-pref("sidebar.position_start") {
         margin: 6px 0 6px 6px !important;
         left: calc(var(--natsumi-compact-offset) * -1) !important;
@@ -364,6 +368,12 @@ SOFTWARE.
   body[natsumi-compact-mode] {
     #sidebar-main {
       padding-top: 0 !important;
+    }
+  }
+
+  body[natsumi-compact-sidebar-hover], body[natsumi-compact-sidebar-extend] {
+    #PersonalToolbar {
+      pointer-events: none;
     }
   }
 }

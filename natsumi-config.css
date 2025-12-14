@@ -9,11 +9,6 @@ as they use the correct format.
   /* Accent color */
   --natsumi-accent-color: #a0d490;
 
-  /* Natsumi Glass Effect */
-  --glass-blur-radius: 20px;
-  --glass-shadow-size: 10px;
-  --glass-shadow-opacity: 75%;
-
   /* pdf.js */
   --pdfjs-topbar-max-width: 750px; /* use calc(100% - 10px) for max width */
 

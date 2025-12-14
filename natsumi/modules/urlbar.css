@@ -120,7 +120,7 @@ SOFTWARE.
           border-radius: 13px !important;
         }
 
-        #identity-icon-box {
+        #identity-icon-box, #trust-icon-container {
           background-color: var(--natsumi-urlbar-button-accent-color) !important;
           border-radius: 13px !important;
           border-start-end-radius: var(--natsumi-urlbar-button-end-radius) !important;
@@ -130,6 +130,10 @@ SOFTWARE.
           &:hover, &[open] {
             background-color: var(--natsumi-button-hover-color) !important;
           }
+        }
+
+        #trust-icon-container {
+          height: 26px !important;
         }
 
         #tracking-protection-icon-container {
@@ -246,6 +250,11 @@ SOFTWARE.
           #identity-icon-box {
             border-radius: 0 !important;
           }
+
+          #trust-icon-container {
+            border-start-end-radius: 0 !important;
+            border-end-end-radius: 0 !important;
+          }
         }
 
         &:has(.notification-anchor-icon[showing]) {
@@ -304,6 +313,22 @@ SOFTWARE.
           }
         }
 
+        #trust-icon-container {
+          margin-block: auto !important;
+          border-radius: 8px !important;
+          background-color: transparent !important;
+          transition: background-color 0.2s ease, box-shadow 0.2s ease, margin 0.2s ease, opacity 0.2s ease !important;
+
+          &:hover {
+            background-color: var(--natsumi-button-hover-color) !important;
+          }
+
+          &:active, &[open] {
+            background-color: var(--natsumi-button-active-color) !important;
+            box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) !important;
+          }
+        }
+
         #page-action-buttons {
           padding-right: 4px !important;
         }
@@ -336,6 +361,10 @@ SOFTWARE.
 
           #urlbar-input {
             padding-left: 8px !important;
+
+            @media -moz-pref("browser.urlbar.trustPanel.featureGate") {
+              padding-left: 4px !important;
+            }
           }
 
           #identity-box {
@@ -349,12 +378,18 @@ SOFTWARE.
             }
           }
 
+          #trust-icon-container {
+            order: 1 !important;
+            margin-right: -28px !important;
+            opacity: 0 !important;
+          }
+
           &[pageproxystate="invalid"] #urlbar-input {
             padding-right: 8px !important;
           }
 
-          &:hover, &:has(#identity-icon-box[open]) {
-            #identity-icon-box, #identity-permission-box {
+          &:hover, &:has(#identity-icon-box[open], #trust-icon-container[open], #identity-permission-box[open]) {
+            #identity-icon-box, #identity-permission-box, #trust-icon-container {
               margin-right: 0 !important;
               opacity: 1 !important;
             }
@@ -391,6 +426,10 @@ SOFTWARE.
           #identity-box {
             margin-left: 4px !important;
             margin-right: 4px !important;
+
+            @media -moz-pref("browser.urlbar.trustPanel.featureGate") {
+              margin-left: 0 !important;
+            }
           }
 
           .urlbar-page-action {
@@ -403,6 +442,11 @@ SOFTWARE.
             opacity: 0 !important;
           }
 
+          #trust-icon-container {
+            margin-left: -28px !important;
+            opacity: 0 !important;
+          }
+
           &[pageproxystate="invalid"] #urlbar-input {
             padding-left: 8px !important;
           }
@@ -410,6 +454,17 @@ SOFTWARE.
           &:hover, &:has(#identity-icon-box[open]), &:has(.urlbar-page-action[open]) {
             #identity-icon-box, #identity-permission-box {
               margin-left: 0 !important;
+              opacity: 1 !important;
+            }
+
+            @media -moz-pref("browser.urlbar.trustPanel.featureGate") {
+              #identity-icon-box {
+                margin-left: 4px !important;
+              }
+            }
+
+            #trust-icon-container {
+              margin-left: 4px !important;
               opacity: 1 !important;
             }
 
@@ -526,6 +581,10 @@ SOFTWARE.
 
         .urlbarView-url {
           color: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color)) !important;
+        }
+
+        &:not(:has(.urlbarView-url[title])) .urlbarView-action {
+          padding-left: 0 !important;
         }
 
         &[searchmode] {
@@ -779,7 +838,7 @@ SOFTWARE.
           pointer-events: none !important;
         }
 
-        #identity-icon-box, #tracking-protection-icon-container, #identity-permission-box, #notification-popup-box {
+        #identity-icon-box, #trust-icon-container, #tracking-protection-icon-container, #identity-permission-box, #notification-popup-box {
           background-color: transparent !important;
         }
       }

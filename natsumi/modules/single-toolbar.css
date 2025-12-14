@@ -272,8 +272,10 @@ SOFTWARE.
         display: none !important;
       }
 
-      body:not([natsumi-bookmarks-hover]) #PersonalToolbar {
-        -moz-window-dragging: no-drag !important;
+      body:not([natsumi-bookmarks-hover]), body[natsumi-compact-sidebar-hover], body[natsumi-compact-sidebar-extend] {
+        #PersonalToolbar {
+          -moz-window-dragging: no-drag !important;
+        }
       }
 
       body[natsumi-bookmarks-hover] {

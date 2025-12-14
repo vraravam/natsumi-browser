@@ -54,13 +54,8 @@ call :DetectBrowser "Mozilla Firefox" "firefox.exe" "Mozilla\Firefox" "Mozilla F
 call :DetectBrowser "Floorp" "floorp.exe" "Floorp" "Floorp"
 :: 3. WATERFOX
 call :DetectBrowser "Waterfox" "waterfox.exe" "Waterfox" "Waterfox"
-call :DetectBrowser "Waterfox (G6/Current)" "waterfox.exe" "Waterfox" "Waterfox G6"
 :: 4. LIBREWOLF
 call :DetectBrowser "LibreWolf" "librewolf.exe" "LibreWolf" "LibreWolf"
-:: 5. MERCURY
-call :DetectBrowser "Mercury" "mercury.exe" "Mercury" "Mercury"
-:: 6. ZEN BROWSER
-call :DetectBrowser "Zen Browser" "zen.exe" "Zen" "Zen Browser"
 
 if %COUNT%==0 (
     echo [WARN] No browsers detected via Registry or Standard Paths.
@@ -136,12 +131,12 @@ if not exist "%TARGET_PROFILE%" (
 echo.
 echo [STEP 3] Select Natsumi Version
 echo.
-echo 1. Alpha (Dev branch)
-echo 2. Beta / Stable (Main branch)
+echo 1. Stable (Main branch, recommended)
+echo 2. Alpha/Beta/RC (Dev branch, experimental)
 echo.
 set /p "VER_CHOICE=Enter choice (1 or 2): "
 
-if "%VER_CHOICE%"=="1" (
+if "%VER_CHOICE%"=="2" (
     set "NATSUMI_BRANCH=dev"
     echo [INFO] Selected Alpha version (Branch: dev^)
 ) else (
@@ -157,7 +152,7 @@ cd /d "%TEMP_DIR%" || exit /b
 echo Cloning Natsumi Browser (%NATSUMI_BRANCH%)...
 git clone -b %NATSUMI_BRANCH% https://github.com/greeeen-dev/natsumi-browser.git natsumi
 if %errorlevel% neq 0 ( 
-    echo [ERROR] Git Clone failed. Check if branch '%NATSUMI_BRANCH%' exists. 
+    echo [ERROR] Git Clone failed. Check if branch '%NATSUMI_BRANCH%' exists and you've installed Git.
     pause 
     exit /b 
 )

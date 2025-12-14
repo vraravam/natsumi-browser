@@ -66,42 +66,11 @@ SOFTWARE.
     }
   }
 
-  #workspaces-toolbar-button {
-    height: 28px !important;
-    padding: 0 !important;
-    margin: 6px 4px !important;
-    border-radius: 4px !important;
-    border-left: none !important;
-    transition: background-color 0.2s ease, box-shadow 0.2s ease;
-
-    .toolbarbutton-icon {
-      --natsumi-button-hover-color: transparent !important;
-      --natsumi-button-active-color: transparent !important;
-    }
-
-    .toolbarbutton-text {
-      padding-left: 0 !important;
-    }
-
-    &:hover {
-      background-color: var(--natsumi-button-hover-color) !important;
-    }
-
-    &:active, &[open], &[checked] {
-      background-color: var(--natsumi-button-active-color) !important;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-
-      .toolbarbutton-icon {
-        box-shadow: none !important;
-      }
-    }
-  }
-
   #nora-statusbar {
     background: transparent !important;
     border: none !important;
 
-    &:not(.hidden), &:not([style*="display:none"]) {
+    &:not(.hidden), &:not([style*="display:none"]), &:not([style*="display: none"]) {
       min-height: 28px !important;
     }
 
@@ -110,13 +79,11 @@ SOFTWARE.
     }
   }
 
-  @media -moz-pref("natsumi.sidebar.hide-workspace-indicator") {
+  @media -moz-pref("natsumi.sidebar.legacy-workspace-indicator") and -moz-pref("floorp.workspaces.enabled") {
     #natsumi-workspace-indicator {
-      display: none;
+      display: none !important;
     }
-  }
 
-  @media (not -moz-pref("natsumi.sidebar.hide-workspace-indicator")) and -moz-pref("floorp.workspaces.enabled") {
     #sidebar-main[style*="--natsumi-workspace-name"] {
       #tabbrowser-arrowscrollbox {
         &::before {
@@ -189,54 +156,9 @@ SOFTWARE.
     }
   }
 
-  @media -moz-pref("natsumi.sidebar.workspaces-as-icons") {
-    #workspaces-toolbar-button {
-      overflow: hidden !important;
-
-      .toolbarbutton-icon, .toolbarbutton-text {
-        opacity: 0 !important;
-        position: absolute;
-      }
-
-      .natsumi-workspace-icon {
-        display: inline-flex !important;
-        position: relative;
-        width: 16px;
-        height: 16px;
-        background-image: var(--natsumi-workspace-icon) !important;
-        margin: 6px !important;
-
-        &::before {
-          content: "";
-          width: 4px;
-          height: 4px;
-          position: absolute;
-          background: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
-          border-radius: 50%;
-          left: 50%;
-          translate: -50% 0;
-          bottom: -6px;
-          opacity: 0;
-        }
-
-        &.natsumi-workspace-active::before {
-          opacity: 1;
-        }
-      }
-    }
-  }
-
-  @media not -moz-pref("natsumi.sidebar.workspaces-as-icons") {
-    #workspaces-toolbar-button {
-      .natsumi-workspace-icon {
-        display: none;
-      }
-    }
-  }
-
   @media -moz-pref("natsumi.sidebar.use-statusbar-in-sidebar") {
     &:not([customizing]) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
         display: flex !important;
         justify-content: space-between !important;
         flex-wrap: wrap;
@@ -264,27 +186,27 @@ SOFTWARE.
     }
 
     &:not([customizing]) body:not([natsumi-compact-mode]):has(sidebar-main:not([expanded])) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
         left: 7px;
       }
     }
 
     @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
       &:has(#panel-sidebar-select-box) body:not([natsumi-panel-sidebar-on-right]) {
-        #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+        #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display: none"] {
           left: calc(calc(var(--natsumi-browser-separation) * 3) + 36px);
         }
       }
     }
 
     &:has(#sidebar-main[hidden]) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display:none"] {
         display: none !important;
       }
     }
 
     &:not([customizing]):has(sidebar-main:not([expanded])) {
-      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"] {
+      #nora-statusbar.hidden, #nora-statusbar[style*="display:none"], #nora-statusbar[style*="display:none"] {
         flex-direction: column !important;
         bottom: calc(var(--natsumi-sidebar-options-height) + var(--space-small) + var(--natsumi-browser-separation));
         width: 36px !important;
@@ -325,7 +247,7 @@ SOFTWARE.
       }
     }
     
-    &:has(#nora-statusbar.hidden), &:has(#nora-statusbar[style*="display:none"]) {
+    &:has(#nora-statusbar.hidden), &:has(#nora-statusbar[style*="display:none"]), &:has(#nora-statusbar[style*="display: none"]) {
       #vertical-tabs {
         padding-bottom: calc(var(--natsumi-statusbar-height, 28px) + 3px + var(--natsumi-browser-separation)) !important;
       }

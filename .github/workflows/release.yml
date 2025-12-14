@@ -6,7 +6,7 @@ jobs:
     name: Build
     strategy:
       matrix:
-        os: [ macos-latest, ubuntu-latest ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
 
     runs-on: ${{ matrix.os }}
     permissions:
@@ -16,9 +16,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
+        if: ${{ matrix.os != 'windows-latest' }}
         with:
           python-version: '3.12'
       - name: Install dependencies
+        if: ${{ matrix.os != 'windows-latest' }}
         run: |
           python -m pip install --upgrade pip
           pip install -r installer/requirements.txt
@@ -28,15 +30,6 @@ jobs:
         with:
           nuitka-version: main
           script-name: installer/installer.py
-          mode: onefile
-          disable-cache: true
-          include-data-files: "installer/installer.json=installer.json"
-      - name: Build (Windows)
-        uses: Nuitka/Nuitka-Action@main
-        if: ${{ matrix.os == 'windows-latest' }}
-        with:
-          nuitka-version: main
-          script-name: installer/installer-windows.py
           mode: onefile
           disable-cache: true
           include-data-files: "installer/installer.json=installer.json"
@@ -59,9 +52,9 @@ jobs:
         run:
           mv build/installer.bin build/natsumi-installer-macos-arm64;
           mv build_intel/installer.bin build_intel/natsumi-installer-macos-intel
-      - name: Rename (PowerShell)
+      - name: Rename (Windows)
         if: ${{ matrix.os == 'windows-latest' }}
-        run: Rename-Item -Path build/installer-windows.exe -NewName natsumi-installer.exe
+        run: Rename-Item -Path installer/windows-installer.bat -NewName natsumi-installer.bat
       - name: Upload package (macOS arm64)
         uses: actions/upload-artifact@v4
         if: ${{ matrix.os == 'macos-latest' }}
@@ -88,7 +81,7 @@ jobs:
         if: ${{ matrix.os == 'windows-latest' }}
         with:
           name: natsumi-installer-windows
-          path: build/natsumi-installer.exe
+          path: installer/natsumi-installer.bat
           retention-days: 7
   publish:
     name: Release
@@ -122,7 +115,8 @@ jobs:
           artifactErrorsFailBuild: true
           artifacts: 'natsumi-installer-macos-arm64/natsumi-installer-macos-arm64,
             natsumi-installer-macos-x64/natsumi-installer-macos-intel,
-            natsumi-installer-linux/natsumi-installer-linux'
+            natsumi-installer-linux/natsumi-installer-linux,
+            natsumi-installer-windows/natsumi-installer.bat'
 
 
 

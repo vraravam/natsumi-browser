@@ -84,7 +84,7 @@ SOFTWARE.
         }
       }
 
-      &[selected], &[visuallyselected], &:hover {
+      &[selected], &[visuallyselected], &:hover, &[natsumi-glimpse-selected] {
         & > .tab-stack {
           & > .tab-background {
             clip-path: polygon(
@@ -99,13 +99,41 @@ SOFTWARE.
         }
       }
 
-      &[selected], &[visuallyselected] {
+      &[selected], &[visuallyselected], &[natsumi-glimpse-selected] {
         & > .tab-stack {
           filter: drop-shadow(0 0 2px rgba(50, 50, 0, 0.5));
         }
 
         .tab-icon-stack {
           background-color: var(--natsumi-tab-highlight-color);
+        }
+      }
+    }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          padding-left: 0 !important;
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs[orient="horizontal"] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        min-width: 90px !important;
+      }
+    }
+  }
+
+  #pinned-tabs-container {
+    .tabbrowser-tab {
+      &[natsumi-glimpse-selected] {
+        & > .tab-stack > .tab-background {
+          background-color: var(--tab-selected-bgcolor) !important;
+          box-shadow: var(--tab-selected-shadow);
+          outline-color: var(--tab-selected-outline-color);
         }
       }
     }

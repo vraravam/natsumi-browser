@@ -1,0 +1,338 @@
+/*
+
+Natsumi Browser - A userchrome for Firefox and more that makes things flow.
+
+Copyright (c) 2024-present Green (@greeeen-dev)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+*/
+
+/* ==== Tabs design (Bubble) ==== */
+/* Bubble is a tab design which adds the visuals of Natsumi SDL2 to tabs. */
+
+@media -moz-pref("natsumi.tabs.use-custom-type") and -moz-pref("natsumi.tabs.type", "bubble") {
+  #tabbrowser-arrowscrollbox {
+    .tabbrowser-tab {
+      min-height: 40px !important;
+      padding: 0 !important;
+      margin-block: 2px !important;
+
+      & > .tab-stack > .tab-background {
+        margin-block: 0 !important;
+        border-radius: 20px !important;
+
+        .tab-context-line, .tab-group-line {
+          display: none !important;
+        }
+      }
+
+      & > .tab-stack > .tab-content {
+        &::before {
+          content: "";
+          position: absolute;
+          width: calc(100% - calc(var(--tab-inner-inline-margin) * 2) - 8px);
+          left: calc(var(--tab-inner-inline-margin) + 4px);
+          height: 32px;
+          border-radius: 16px;
+          background-color: var(--natsumi-sdl2-haze-button-idle-color);
+          box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+          z-index: -1;
+          opacity: 0;
+        }
+      }
+
+      &:hover {
+        & > .tab-stack > .tab-content {
+          &::before {
+            opacity: 1;
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2) - 44px);
+          }
+        }
+      }
+
+      &[usercontextid] {
+        & > .tab-stack > .tab-content {
+          --natsumi-sdl2-haze-button-context-color: var(--identity-icon-color);
+
+          &::before {
+            opacity: 1;
+          }
+        }
+      }
+
+      &[selected], &[visuallyselected], &[natsumi-glimpse-selected] {
+        & > .tab-stack > .tab-background {
+          box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+          border: var(--natsumi-mat-hz-border);
+          background-color: var(--natsumi-mat-hz-background) !important;
+          backdrop-filter: var(--natsumi-mat-hz-backdrop) !important;
+        }
+
+        & > .tab-stack > .tab-content {
+          &::before {
+            opacity: 1;
+            width: calc(100% - calc(var(--tab-inner-inline-margin) * 2) - 44px) !important;
+          }
+        }
+      }
+    }
+
+    tab-group[collapsed] .tabbrowser-tab:not([selected]) {
+      min-height: 0 !important;
+      margin-block: 0 !important;
+    }
+  }
+
+  /* Pinned tabs */
+  #pinned-tabs-container, #vertical-pinned-tabs-container {
+    --tab-height-with-margin-padding: calc(41px + (2 * var(--tab-block-margin)));
+
+    .tab-background {
+      border-radius: var(--natsumi-tab-border-radius) !important;
+      transition: background-color 0.2s ease;
+    }
+
+    .tabbrowser-tab {
+      .tab-stack {
+        transition: scale 0.2s ease;
+      }
+
+      &:active:not([style*="transform"]) .tab-stack {
+        scale: 0.95 !important;
+      }
+    }
+
+    @media not -moz-pref("natsumi.tabs.disable-pinned-tabs-favicon") {
+      .tab-background::before {
+        content: "";
+        width: 200% !important;
+        height: 200% !important;
+        left: 50% !important;
+        top: 50% !important;
+        translate: -50% -50% !important;
+        opacity: 0;
+        transition: opacity 0.2s ease !important;
+      }
+
+      .tab-background::after {
+        background-color: transparent;
+        transition: background-color 0.2s ease;
+      }
+    }
+
+    .tabbrowser-tab[selected], .tabbrowser-tab[natsumi-glimpse-selected] {
+      &[style*="--natsumi-tab-icon"] {
+        .tab-background {
+          background: transparent !important;
+          overflow: clip !important;
+          position: relative !important;
+        }
+
+        .tab-background::before {
+          background-image: var(--natsumi-tab-icon);
+          background-position: center;
+          background-size: contain !important;
+          position: absolute;
+          background-clip: padding-box !important;
+          filter: blur(20px) saturate(200%);
+          border-radius: var(--natsumi-tab-border-radius);
+          opacity: 1;
+        }
+
+        .tab-background::after {
+          content: "";
+          position: absolute;
+          margin-right: 2px !important;
+          margin-top: 2px !important;
+          width: calc(100% - 4px);
+          height: calc(100% - 4px);
+          background: var(--natsumi-mat-hz-background);
+          border-radius: calc(var(--natsumi-tab-border-radius) - 2px);
+
+          @media not -moz-pref("sidebar.verticalTabs") {
+            margin-left: 2px !important;
+          }
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs[expanded], #tabbrowser-tabs[orient="horizontal"] {
+    #pinned-tabs-container, #vertical-pinned-tabs-container {
+      --tab-height-with-margin-padding: calc(45px + (2 * var(--tab-block-margin)));
+    }
+
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          & > .tab-close-button {
+            --natsumi-tab-close-button-padding: 8px !important;
+            width: 32px !important;
+            height: 32px !important;
+            margin-right: 0 !important;
+            margin-left: 8px !important;
+            border-radius: 16px !important;
+            background-color: var(--natsumi-sdl2-haze-button-idle-color);
+            box-shadow: var(--natsumi-sdl2-haze-button-idle-shadow);
+            transition: background-color 0.2s ease;
+
+            &:hover {
+              background-color: var(--natsumi-sdl2-haze-button-hover-color) !important;
+            }
+
+            &:active {
+              background-color: var(--natsumi-sdl2-haze-button-active-color) !important;
+            }
+          }
+        }
+      }
+
+      tab-split-view-wrapper {
+        .tabbrowser-tab {
+          & > .tab-stack > .tab-content {
+            padding-left: calc(var(--tab-inner-inline-margin) + 4px) !important;
+            padding-right: calc(var(--tab-inner-inline-margin) - 5px) !important;
+
+            &::before {
+              left: 6px !important;
+              width: calc(100% - 45px) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs[expanded] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          padding-left: calc(var(--tab-inner-inline-margin) + 12px) !important;
+          padding-right: calc(var(--tab-inner-inline-margin) + 4px) !important;
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs[orient="horizontal"] {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        min-width: 80px !important;
+
+        & > .tab-stack > .tab-background {
+          margin-inline: 2px !important;
+        }
+
+        & > .tab-stack > .tab-content {
+          padding-left: 14px !important;
+          padding-right: 6px !important;
+
+          &::before {
+            left: 6px !important;
+            width: calc(100% - 48px) !important;
+          }
+        }
+      }
+    }
+
+    &[closebuttons="activetab"] {
+      #tabbrowser-arrowscrollbox {
+        .tabbrowser-tab {
+          &:hover:not([selected]) {
+            & > .tab-stack > .tab-content::before {
+              width: calc(100% - 12px) !important;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #tabbrowser-tabs:not([expanded]):not([orient="horizontal"]) {
+    #tabbrowser-arrowscrollbox {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-background {
+          margin-block: 0 !important;
+          width: 40px !important;
+        }
+
+        & > .tab-stack > .tab-content {
+          &::before {
+            --natsumi-bubble-collapsed-padding: calc(var(--tab-inline-padding) - 8px);
+            width: 32px !important;
+            left: var(--natsumi-bubble-collapsed-padding) !important;
+          }
+        }
+      }
+    }
+
+    tab-split-view-wrapper {
+      .tabbrowser-tab {
+        & > .tab-stack > .tab-content {
+          .tab-icon-stack {
+            margin-inline: auto !important;
+          }
+
+          &::before {
+            --natsumi-bubble-collapsed-padding: 4px !important;
+          }
+        }
+      }
+    }
+  }
+
+  #sidebar-main:not([sidebar-launcher-expanded]) {
+    .tabbrowser-tab {
+      min-width: var(--floorp-tab-min-height, var(--tab-min-height)) !important;
+
+      & > .tab-stack > .tab-background {
+        min-width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
+        margin: 2px auto !important;
+      }
+    }
+
+    #tabbrowser-arrowscrollbox .tabbrowser-tab {
+      & > .tab-stack > .tab-background {
+        &::after {
+          width: calc(var(--floorp-tab-min-height, var(--tab-min-height)) - 4px) !important;
+        }
+      }
+    }
+  }
+
+  #tabs-newtab-button, #vertical-tabs-newtab-button {
+    min-height: calc(max(var(--floorp-tab-min-height, 36px), 36px) - 4px) !important;
+    transition: background-color 0.2s ease;
+    border-radius: var(--natsumi-tab-border-radius) !important;
+
+    .toolbarbutton-text {
+      font-size: 12px;
+    }
+
+    .toolbarbutton-icon {
+      margin-bottom: 1px !important;
+    }
+  }
+
+  /* Ensure backdrop filters work */
+  #vertical-tabs {
+    will-change: unset !important;
+  }
+}
