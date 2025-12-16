@@ -117,9 +117,15 @@ class CustomThemePicker {
     async init() {
         let node = document.getElementById(this.id);
         let isFloorp = false;
+        let floorpWorkspacesEnabled = false;
+
         if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
             if (ucApi.Prefs.get("natsumi.browser.type").value === "floorp") {
                 isFloorp = true;
+
+                if (ucApi.Prefs.get("floorp.workspaces.enabled").exists()) {
+                    floorpWorkspacesEnabled = ucApi.Prefs.get("floorp.workspaces.enabled").value;
+                }
             }
         }
 
@@ -341,7 +347,7 @@ class CustomThemePicker {
             this.shiftPressed = event.shiftKey;
         });
 
-        if (isFloorp) {
+        if (isFloorp && floorpWorkspacesEnabled) {
             // Set up workspace selector
             let workspaceSelectorContainerNode = this.node.querySelector(".natsumi-custom-theme-target-workspace");
 
