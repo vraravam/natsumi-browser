@@ -13,6 +13,10 @@
 
 ![](./images/main-backgroundless.png)
 
+> [!IMPORTANT]
+> If you're from [this Twitter post](https://x.com/moonyandfriends/status/2001035508558811142) and want
+> to learn more about this project, go [here](#twitter-questions-and-answers)
+
 ## Meet Natsumi! 🦋
 Meet Natsumi Browser (or Natsumi, for short) - a browser mod that truly puts you in control.
 
@@ -488,6 +492,53 @@ There may be userchromes that you're using alongside Natsumi Browser that breaks
 these then try again.
 
 If the issue still persists, open an issue or report the bug to the developer through Discord.
+
+## Twitter Questions and Answers
+because a specific twitter post about natsumi BLEW UP HOLY SH-
+
+### "I'm not using a browser called Floorp!"
+Natsumi is browser-independent. Feel free to use it with anything other than Firefox and Floorp as long
+as it's listed as compatible on the compatibility table!
+
+(but why do you take problems with the fact that it's called Floorp to begin with...)
+
+### "This is just a clone of Zen Browser!"
+Although both Natsumi and Zen share similar UIs, it's not really a "clone" of Zen. Natsumi aims to be
+polished AND as customizable as possible, while Zen gives maximum polish out of the box without much
+customization freedom. It's two different design philosophies for two different target audiences, those
+that want full control and those that just want "something that works".
+
+Also, if Natsumi is a clone of Zen, then might as well call Zen a clone of Arc because the same case
+applies here :wink:
+
+### "This is just Discord if they tried to make a browser. I hate it."
+Don't use it then.
+
+Natsumi just applies a fresh coat of paint on top of your browser and adds a lot of customization
+features as well as its own features. Pretty sure this is not really what Discord would do if they
+wanted to make a browser.
+
+### "Why not make something that's casual user centered?"
+This is not really what Natsumi's built for. It's made to empower user customization and freedom, not
+be a "works out of the box" thing like Zen or Arc is.
+
+### "What's the benefits to using Natsumi?"
+Natsumi lets you tweak a lot more things than a normal browser would. You can change your layours, pick
+your tab design, and a lot more!
+
+It also adds its own productivity features such as Glimpse, so feel free to try that out as well.
+
+### "Is it open source?"
+...yeah?
+
+### "Is there something similar for a Chromium-based browser?"
+Maybe for Vivaldi, but for other Chromium-based browsers I don't think so. Mods like Natsumi are only
+possible on Firefox-based browsers and Vivaldi because of their open architecture to CSS and JS modding.
+
+Please note that Natsumi is not compatible with any Chromium-based browsers including Vivaldi.
+
+### "NOBODY is using this."
+510 stars as of writing this says otherwise :3
 
 ## Acknowledgements
 Thank you to:
