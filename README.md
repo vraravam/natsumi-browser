@@ -496,6 +496,9 @@ If the issue still persists, open an issue or report the bug to the developer th
 ## Twitter Questions and Answers
 because a specific twitter post about natsumi BLEW UP HOLY SH-
 
+This is basically my answers to some of the comments I found interesting that was on the Twitter post in
+question. I had a blast writing these.
+
 ### "I'm not using a browser called Floorp!"
 Natsumi is browser-independent. Feel free to use it with anything other than Firefox and Floorp as long
 as it's listed as compatible on the compatibility table!
