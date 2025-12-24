@@ -133,6 +133,10 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
+> [!WARNING]
+> For Flatpak installation, you will needs to manually install Natsumi to make if functionnal.
+> See **Manual Install** for more details. 
+
 #### Installing via installer (Windows only)
 Download and run `windows-installer.bat` as Admin and follow the on-screen prompts. 
 
