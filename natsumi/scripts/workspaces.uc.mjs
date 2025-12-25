@@ -60,11 +60,20 @@ class NatsumiWorkspacesWrapper {
 
         // Get minor version
         let minorVersion = parseInt(floorpVersion.split(".")[1]);
+        let patchVersion = parseInt(floorpVersion.split(".")[2]);
 
         // Get Firedragon status
         let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
 
-        if (minorVersion >= 8) {
+        if (minorVersion >= 9) {
+            if (patchVersion < 2 && minorVersion === 9) {
+                // Floorp 12.9.0 and 12.9.1
+                workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
+            } else {
+                // Floorp 12.9.2+
+                workspacesModulePath = "chrome://noraneko/content/assets/js/index26.js";
+            }
+        } else if (minorVersion >= 8) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
         } else if (minorVersion >= 4) {
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
