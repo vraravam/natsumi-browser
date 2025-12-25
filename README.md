@@ -134,8 +134,8 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > after trying to run the installer.
 
 > [!WARNING]
-> For Flatpak installation, you will needs to manually install Natsumi to make if functionnal.
-> See **Manual Install** for more details. 
+> For Flatpak installations, you will need to manually install Natsumi to make it functional. See **Manual
+> Install** for more details.
 
 #### Installing via installer (Windows only)
 Download and run `windows-installer.bat` as Admin and follow the on-screen prompts. 
