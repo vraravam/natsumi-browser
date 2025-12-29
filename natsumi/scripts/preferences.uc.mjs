@@ -3004,6 +3004,13 @@ function addCompactStylesPane() {
         styleSelection.registerOption(style, compactStyles[style]);
     }
 
+    styleSelection.registerExtras("natsumiCompactBlur", new CheckboxChoice(
+        "natsumi.theme.compact-blur",
+        "natsumiCompactBlur",
+        "Make sidebar and toolbar translucent in Compact Mode",
+        "This adds a blur effect to the sidebar and toolbar when in Compact Mode."
+    ));
+
     styleSelection.registerExtras("natsumiCompactMarginless", new CheckboxChoice(
         "natsumi.theme.compact-marginless",
         "natsumiCompactMarginless",
