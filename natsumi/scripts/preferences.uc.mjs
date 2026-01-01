@@ -2377,7 +2377,7 @@ function addWindowMaterialPane() {
             if (targetPref === "natsumi.theme.use-legacy-translucency") {
                 ucApi.Prefs.set(targetPref, selectedValue === "true");
             } else {
-                setStringPreference(targetPref, selectedValue);
+                setStringPreference(targetPref, parseInt(selectedValue));
             }
             windowMaterialButtons.forEach((btn) => {
                 btn.removeAttribute("selected")
