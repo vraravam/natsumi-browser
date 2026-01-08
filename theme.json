@@ -9,8 +9,8 @@
   "readme": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/README.md",
   "image": "https://github.com/greeeen-dev/natsumi-browser/raw/dev/images/main-backgroundless.png",
   "style": {
-    "chrome": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/userChrome.css",
-    "content": "https://raw.githubusercontent.com/greeeen-dev/natsumi-browser/main/userContent.css"
+    "chrome": "userChrome.css",
+    "content": "userContent.css"
   },
   "chromeManifest": "sine-chrome.manifest",
   "tags": [
