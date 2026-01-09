@@ -23,7 +23,6 @@ SOFTWARE.
 """
 
 import os
-import ctypes
 import sys
 import shutil
 import json
