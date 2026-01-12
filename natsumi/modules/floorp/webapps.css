@@ -28,6 +28,12 @@ SOFTWARE.
 
 @media -moz-pref("natsumi.browser.type", "floorp") {
   :root[taskbartab] {
+    body {
+      &::after, #browser::before, #browser::after {
+        display: none;
+      }
+    }
+
     &:not([inDOMFullscreen="true"]):not([drawtitle]) body:not([natsumi-compact-mode]) {
       #navigator-toolbox {
         --natsumi-browser-border-color: light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
@@ -36,9 +42,14 @@ SOFTWARE.
         border-bottom: none !important;
         margin: var(--natsumi-browser-separation);
         margin-bottom: 0;
-        background-color: light-dark(white, #333) !important;
+        background-color: transparent !important;
         border-radius: var(--natsumi-browser-border-radius) var(--natsumi-browser-border-radius) 0 0;
         transform: none !important;
+        overflow: hidden;
+
+        #nav-bar {
+          background-color: light-dark(#ffffffaa, #333333aa) !important;
+        }
       }
 
       #browser:not([data-is-child="true"]) #tabbrowser-tabbox {
