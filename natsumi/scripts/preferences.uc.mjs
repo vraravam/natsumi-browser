@@ -1540,6 +1540,12 @@ const themes = {
         "A recreation of the Zen Dream and Zen Galaxy themes.",
         "<div id='lucid' class='natsumi-mc-choice-image-browser'></div>"
     ),
+    "frutiger-aero": new MCChoice(
+        "frutiger-aero",
+        "Frutiger Aero",
+        "A Windows Vista/7-like design.",
+        "<div id='frutiger-aero' class='natsumi-mc-choice-image-browser'></div>"
+    ),
     "oled": new MCChoice(
         "oled",
         "OLED",
@@ -2206,6 +2212,18 @@ function addLayoutPane() {
     }
 
     let layoutNode = layoutSelection.generateNode();
+
+    // Add notice if Vertical Tabs is disabled
+    let verticalTabsDisabledNotice = convertToXUL(`
+        <div id="natsumiVerticalTabsDisabledWarning" class="natsumi-settings-info warning">
+            <div class="natsumi-settings-info-icon"></div>
+            <div class="natsumi-settings-info-text">
+                You need to enable Vertical Tabs to customize these settings.
+            </div>
+        </div>
+    `)
+    let layoutSelector = layoutNode.querySelector(".natsumi-mc-chooser");
+    layoutSelector.parentNode.insertBefore(verticalTabsDisabledNotice, layoutSelector);
 
     // Set listeners for each button
     let layoutButtons = layoutNode.querySelectorAll(".natsumi-mc-choice");
