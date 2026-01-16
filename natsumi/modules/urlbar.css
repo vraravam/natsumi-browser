@@ -53,7 +53,7 @@ SOFTWARE.
     --urlbar-container-height: 40px !important;
   }
 
-  #urlbar {
+  &:not([taskbartab]) #urlbar {
     --natsumi-urlbar-button-end-radius: 6px;
     --natsumi-urlbar-button-accent-color: light-dark(var(--natsumi-colors-secondary-alt), var(--natsumi-button-active-color));
     --natsumi-urlbar-hover-background-color: var(--natsumi-colors-urlbar-background);
@@ -819,7 +819,7 @@ SOFTWARE.
   }
 
   @media (not -moz-pref("natsumi.urlbar.always-expanded")) and (not -moz-pref("natsumi.theme.single-toolbar")) {
-    &:not([customizing]) #navigator-toolbox:not(:hover) {
+    &:not([customizing]):not([taskbartab]) #navigator-toolbox:not(:hover) {
       #urlbar:not([open], [focused]):not(:has(box[open], .urlbar-page-action[open])) {
         --natsumi-urlbar-hover-background-color: transparent;
         border-color: transparent !important;
