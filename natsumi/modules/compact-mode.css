@@ -97,6 +97,11 @@ SOFTWARE.
       --natsumi-compact-offset: var(--natsumi-sidebar-width);
       overflow-x: visible !important;
 
+      @media -moz-pref("natsumi.theme.compact-blur") {
+        background-color: color-mix(in srgb, var(--natsumi-sidebar-color, var(--natsumi-toolbox-color)) 70%, transparent) !important;
+        backdrop-filter: blur(10px);
+      }
+
       @media (-moz-mac-tahoe-theme) {
         border-radius: 12px !important;
       }
@@ -236,6 +241,11 @@ SOFTWARE.
         --natsumi-compact-offset: calc(40px + var(--natsumi-compact-bookmarks-height) + var(--natsumi-compact-tabs-height) - var(--natsumi-compact-hoverable));
         top: calc(var(--natsumi-compact-offset) * -1) !important;
         opacity: 0 !important;
+
+        @media -moz-pref("natsumi.theme.compact-blur") {
+          background-color: color-mix(in srgb, var(--natsumi-sidebar-color, var(--natsumi-toolbox-color)) 70%, transparent) !important;
+          backdrop-filter: blur(10px);
+        }
 
         #nav-bar {
           padding-right: var(--natsumi-browser-separation) !important;

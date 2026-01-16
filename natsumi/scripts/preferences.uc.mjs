@@ -1540,6 +1540,12 @@ const themes = {
         "A recreation of the Zen Dream and Zen Galaxy themes.",
         "<div id='lucid' class='natsumi-mc-choice-image-browser'></div>"
     ),
+    "frutiger-aero": new MCChoice(
+        "frutiger-aero",
+        "Frutiger Aero",
+        "A Windows Vista/7-like design.",
+        "<div id='frutiger-aero' class='natsumi-mc-choice-image-browser'></div>"
+    ),
     "oled": new MCChoice(
         "oled",
         "OLED",
@@ -2207,6 +2213,18 @@ function addLayoutPane() {
 
     let layoutNode = layoutSelection.generateNode();
 
+    // Add notice if Vertical Tabs is disabled
+    let verticalTabsDisabledNotice = convertToXUL(`
+        <div id="natsumiVerticalTabsDisabledWarning" class="natsumi-settings-info warning">
+            <div class="natsumi-settings-info-icon"></div>
+            <div class="natsumi-settings-info-text">
+                You need to enable Vertical Tabs to customize these settings.
+            </div>
+        </div>
+    `)
+    let layoutSelector = layoutNode.querySelector(".natsumi-mc-chooser");
+    layoutSelector.parentNode.insertBefore(verticalTabsDisabledNotice, layoutSelector);
+
     // Set listeners for each button
     let layoutButtons = layoutNode.querySelectorAll(".natsumi-mc-choice");
     layoutButtons.forEach(button => {
@@ -2377,7 +2395,7 @@ function addWindowMaterialPane() {
             if (targetPref === "natsumi.theme.use-legacy-translucency") {
                 ucApi.Prefs.set(targetPref, selectedValue === "true");
             } else {
-                setStringPreference(targetPref, selectedValue);
+                setStringPreference(targetPref, parseInt(selectedValue));
             }
             windowMaterialButtons.forEach((btn) => {
                 btn.removeAttribute("selected")
@@ -2527,10 +2545,11 @@ function addSDL2Pane() {
     );
 
     sdl2Group.registerOption("natsumiEnableSDL2", new CheckboxChoice(
-        "natsumi.theme.enable-sdl2",
+        "natsumi.theme.disable-sdl2",
         "natsumiEnableSDL2",
         "Enable Starlight Design 2 (SDL2)",
-        "Please note that this feature will be enabled by default in a future release."
+        "",
+        true
     ));
 
     let sdl2Node = sdl2Group.generateNode();
@@ -3003,6 +3022,13 @@ function addCompactStylesPane() {
         styleSelection.registerOption(style, compactStyles[style]);
     }
 
+    styleSelection.registerExtras("natsumiCompactBlur", new CheckboxChoice(
+        "natsumi.theme.compact-blur",
+        "natsumiCompactBlur",
+        "Make sidebar and toolbar translucent in Compact Mode",
+        "This adds a blur effect to the sidebar and toolbar when in Compact Mode."
+    ));
+
     styleSelection.registerExtras("natsumiCompactMarginless", new CheckboxChoice(
         "natsumi.theme.compact-marginless",
         "natsumiCompactMarginless",
@@ -3252,6 +3278,14 @@ function addSidebarMiniplayerPane() {
         "natsumi.miniplayer.disable-artwork",
         "natsumiSidebarMiniplayerArtwork",
         "Show media thumbnail/artwork as Miniplayer background",
+        "",
+        true
+    ));
+
+    miniplayerLayoutSelection.registerExtras("natsumiSidebarMiniplayerAccent", new CheckboxChoice(
+        "natsumi.miniplayer.disable-dynamic-accent",
+        "natsumiSidebarMiniplayerAccent",
+        "Use artwork to determine Miniplayer's accent color",
         "",
         true
     ));

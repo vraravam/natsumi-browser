@@ -150,7 +150,7 @@ echo [STEP 4] Downloading files...
 cd /d "%TEMP_DIR%" || exit /b
 
 echo Cloning Natsumi Browser (%NATSUMI_BRANCH%)...
-git clone -b %NATSUMI_BRANCH% https://github.com/greeeen-dev/natsumi-browser.git natsumi
+git clone -b %NATSUMI_BRANCH% --depth 1 --single-branch https://github.com/greeeen-dev/natsumi-browser.git natsumi
 if %errorlevel% neq 0 ( 
     echo [ERROR] Git Clone failed. Check if branch '%NATSUMI_BRANCH%' exists and you've installed Git.
     pause 

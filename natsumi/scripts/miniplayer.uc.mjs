@@ -269,6 +269,11 @@ class NatsumiMiniplayer {
         this._node.style.setProperty("--natsumi-miniplayer-artwork", `url('${this.artwork}')`);
         this._node.style.setProperty("--natsumi-miniplayer-site-icon", `url('${this.siteIcon}')`);
 
+        if (!this.artwork.endsWith("defaultFavicon.svg")) {
+            // Only add has artwork attribute if the artwork is not the default favicon
+            this._node.setAttribute("miniplayer-has-artwork", "");
+        }
+
         // Set site data and media metadata
         this._node.querySelector(".natsumi-miniplayer-site-name").textContent = this.siteName || "Unknown site";
         this._node.querySelector(".natsumi-miniplayer-title").textContent = this.title || "Unknown";
@@ -329,7 +334,27 @@ class NatsumiMiniplayer {
             this.artwork = this.artwork[0].src;
 
             if (this._node) {
+                let usedArtwork;
                 this._node.style.setProperty("--natsumi-miniplayer-artwork", `url('${this.artwork}')`);
+
+                if (!this.artwork.endsWith("defaultFavicon.svg")) {
+                    // Only add has artwork attribute if the artwork is not the default favicon
+                    this._node.setAttribute("miniplayer-has-artwork", "");
+                    usedArtwork = this.artwork;
+                } else {
+                    this._node.removeAttribute("miniplayer-has-artwork");
+                    usedArtwork = this.siteIcon;
+                }
+
+                this.getAverageColor(usedArtwork).then((averageColor) => {
+                    if (averageColor) {
+                        this._node.style.setProperty("--natsumi-miniplayer-artwork-color", `rgb(${averageColor.r}, ${averageColor.g}, ${averageColor.b})`);
+                        this._node.setAttribute("miniplayer-has-custom-color", "");
+                    } else {
+                        this._node.style.removeProperty("--natsumi-miniplayer-artwork-color");
+                        this._node.removeAttribute("miniplayer-has-custom-color");
+                    }
+                });
             }
         }
 
@@ -404,6 +429,67 @@ class NatsumiMiniplayer {
         this._tab.linkedBrowser.browsingContext.mediaController.seekTo(seekPosition);
         this.position = seekPosition;
         this.updateSeekbar();
+    }
+
+    async getAverageColor(artworkUrl) {
+        const sampleSize = 3;
+
+        // Create offscreen canvas
+        const temporaryCanvas = document.createElement("canvas");
+        const canvasContext = temporaryCanvas.getContext("2d");
+
+        // Create image element
+        const temporaryImage = new Image();
+        temporaryImage.src = artworkUrl;
+        await temporaryImage.decode();
+
+        // Draw image
+        canvasContext.drawImage(temporaryImage, 0, 0, sampleSize, sampleSize);
+
+        // Get pixel data
+        let rArray = [];
+        let gArray = [];
+        let bArray = [];
+
+        for (let x = 0; x < sampleSize; x++) {
+            for (let y = 0; y < sampleSize; y++) {
+                const pixelData = canvasContext.getImageData(x, y, 1, 1).data;
+
+                if (!pixelData) {
+                    // Could not get pixel data for some reason
+                    temporaryCanvas.remove();
+                    temporaryImage.remove();
+                    return;
+                }
+
+                // Check that opacity is above 0
+                if (pixelData[3] === 0) {
+                    continue;
+                }
+
+                rArray.push(pixelData[0]);
+                gArray.push(pixelData[1]);
+                bArray.push(pixelData[2]);
+            }
+        }
+
+        // Remove canvas and image elements
+        temporaryCanvas.remove();
+        temporaryImage.remove();
+
+        // Calculate average color
+        const averageColors = [
+            Math.round(rArray.reduce((a, b) => a + b, 0) / rArray.length),
+            Math.round(gArray.reduce((a, b) => a + b, 0) / gArray.length),
+            Math.round(bArray.reduce((a, b) => a + b, 0) / bArray.length)
+        ]
+
+        // Return color data
+        return {
+            r: averageColors[0],
+            g: averageColors[1],
+            b: averageColors[2]
+        };
     }
 
     // UI updates

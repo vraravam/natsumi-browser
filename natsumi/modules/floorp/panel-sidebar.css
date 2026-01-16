@@ -45,6 +45,12 @@ SOFTWARE.
     }
   }
 
+  @media not -moz-pref("natsumi.sidebar.floorp-floating-panel") {
+    body[natsumi-panel-sidebar-on-right] #panel-sidebar-box {
+      margin-right: var(--natsumi-browser-separation) !important;
+    }
+  }
+
   #panel-sidebar-browser-box {
     background-color: var(--panel-sidebar-background-color);
   }
