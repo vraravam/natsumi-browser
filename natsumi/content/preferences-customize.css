@@ -648,12 +648,12 @@ SOFTWARE.
 
   #natsumiLayoutGroup {
     #natsumiVerticalTabsDisabledWarning {
-      display: none;
+      display: none !important;
     }
 
     @media not -moz-pref("sidebar.verticalTabs") {
       #natsumiVerticalTabsDisabledWarning {
-        display: flex;
+        display: flex !important;
       }
 
       .natsumi-mc-chooser {
