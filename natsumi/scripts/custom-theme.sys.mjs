@@ -28,9 +28,14 @@ import * as ucApi from "chrome://userchromejs/content/uc_api.sys.mjs";
 
 const themesPath = PathUtils.join(PathUtils.profileDir, "natsumi-themes");
 let isFloorp = false;
+let floorpWorkspacesEnabled = false;
 
-if (ucApi.Prefs.get("natsumi.browser.type").exists) {
+if (ucApi.Prefs.get("natsumi.browser.type").exists()) {
     isFloorp = ucApi.Prefs.get("natsumi.browser.type").value === "floorp";
+
+    if (ucApi.Prefs.get("floorp.workspaces.enabled").exists()) {
+        floorpWorkspacesEnabled = ucApi.Prefs.get("floorp.workspaces.enabled").value;
+    }
 }
 
 export const colorPresetNames = {
@@ -374,7 +379,7 @@ export async function applyCustomTheme() {
     let workspaces = [];
 
     // Try to get any window with workspaces wrapper if we're on Floorp
-    if (isFloorp) {
+    if (isFloorp && floorpWorkspacesEnabled) {
         for (let win of ucApi.Windows.getAll(true)) {
             if (win.document.body.natsumiWorkspacesWrapper) {
                 preliminaryBrowserWindow = win;

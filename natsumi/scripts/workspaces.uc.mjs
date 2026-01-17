@@ -53,24 +53,36 @@ class NatsumiWorkspacesWrapper {
     }
 
     async init() {
-        let workspacesModulePath = "chrome://noraneko/content/assets/js/index22.js";
+        let workspacesModulePath = "chrome://noraneko/content/assets/js/index26.js";
 
         // Get Floorp version
         let floorpVersion = AppConstants.MOZ_APP_VERSION_DISPLAY.split("@")[0];
 
         // Get minor version
         let minorVersion = parseInt(floorpVersion.split(".")[1]);
+        let patchVersion = parseInt(floorpVersion.split(".")[2]);
 
         // Get Firedragon status
         let isFiredragon = AppConstants.MOZ_APP_BASENAME.toLowerCase() === "firedragon";
 
-        if (minorVersion >= 8) {
+        if (minorVersion > 9 || minorVersion === 9 && patchVersion >= 2) {
+            // FLoorp 12.9.2+ (do nothing)
+        } else if (minorVersion === 9 && patchVersion < 2) {
+            // Floorp 12.9.0 and 12.9.1
+            workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
+        } else if (minorVersion >= 8) {
+            // Floorp 12.8.0+
             workspacesModulePath = "chrome://noraneko/content/assets/js/index25.js";
         } else if (minorVersion >= 4) {
+            // Floorp 12.4.0+
             workspacesModulePath = "chrome://noraneko/content/assets/js/index23.js";
+        } else {
+            // Everything else
+            workspacesModulePath = "chrome://noraneko/content/assets/js/index22.js";
         }
 
         if (isFiredragon) {
+            // Firedragon 12.3.0+ (overrides Floorp module path)
             workspacesModulePath = "chrome://noraneko/content/assets/js/modules/workspaces.js";
         }
 
@@ -211,6 +223,17 @@ class NatsumiWorkspacesWrapper {
     getWorkspaceIconUrl(icon) {
         return this.iconManager.getWorkspaceIconUrl(icon);
     }
+
+    dispatchWorkspaceChangeEvent() {
+        const event = new CustomEvent("natsumiWorkspaceChanged", {
+            bubbles: true,
+            cancelable: false,
+            detail: {
+                workspaceId: this.getCurrentWorkspaceID()
+            }
+        });
+        document.dispatchEvent(event);
+    }
 }
 
 class NatsumiWorkspaceIndicator {
@@ -264,6 +287,10 @@ class NatsumiWorkspaceIndicator {
         let tabsClearer = document.getElementById("natsumi-tabs-clearer");
         if (tabsClearer) {
             tabBrowserNode.insertBefore(this.indicatorNode, tabsClearer);
+        }
+        let staticTabsContainer = document.getElementById("natsumi-static-tabs-container");
+        if (staticTabsContainer) {
+            tabBrowserNode.insertBefore(this.indicatorNode, staticTabsContainer);
         }
 
         // Set click event listener
@@ -689,6 +716,7 @@ if (isFloorp) {
                 let newWorkspaceId = document.body.natsumiWorkspacesWrapper.getCurrentWorkspaceID();
                 if (currentWorkspaceId !== newWorkspaceId) {
                     currentWorkspaceId = newWorkspaceId;
+                    document.body.natsumiWorkspacesWrapper.dispatchWorkspaceChangeEvent();
                     applyCustomTheme();
                 }
             }

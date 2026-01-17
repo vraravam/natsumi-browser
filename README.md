@@ -129,6 +129,10 @@ Browser, Natsumi Browser Pages and Natsumi Append to your browser and profile of
 > not verify "App" is free of malware" warning) by going to System Preferences => Security & Privacy
 > after trying to run the installer.
 
+> [!WARNING]
+> For Flatpak installations, you will need to manually install Natsumi to make it functional. See **Manual
+> Install** for more details.
+
 #### Installing via installer (Windows only)
 Download and run `windows-installer.bat` as Admin and follow the on-screen prompts. 
 
@@ -200,7 +204,17 @@ If you have Natsumi Append installed, most of these can be tweaked through the p
 
 ### 🎨 Theming/General
 - `natsumi.theme.type` (string): Sets the browser theme type.
-  - Enter a theme ID from the themes list in the [Features](#features) section.
+  - **Default** (default) - No changes, just the default look.
+  - **Gradient** (`gradient`) - A light gradient of your accent color.
+  - **Complementary Gradient** (`gradient-complementary`) - A gradient of the accent color and its opposite color.
+  - **Colorful Solid** (`colorful`) - A solid color with a tint of the accent color.
+  - **Playful Solid** (`playful`) - A higher contrast version of Colorful Solid.
+  - **Lucid** (`lucid`) - A recreation of the Zen Dream and Zen Galaxy themes.
+  - **Frutiger Aero** (`frutiger-aero`) - A Windows Vista/7-like design.
+  - **OLED** (`oled`) - A completely black and white theme for the minimalists.
+  - **🏳️‍🌈 LGBTQ+** (`lgntq`) - Browsing with pride!
+  - **🏳️‍⚧️ Transgender** (`transgender`) - Trans rights are human rights!
+  - **Custom** (`custom`) - Create your own theme (in the preferences page)!
 - `natsumi.theme.accent-color` (string): Sets the browser theme color from a given accent color.
   - $${\color{#a0d490}■}$$ **Light green** (default) - #a0d490
   - $${\color{#aac7ff}■}$$ **Sky blue** (`sky-blue`) - #aac7ff

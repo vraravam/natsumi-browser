@@ -981,7 +981,7 @@ class NatsumiGlimpseLauncher {
     onKeyDownEvent(event) {
         // Check if text is selected
         let textSelected = this.launcherInputNode.selectionStart !== this.launcherInputNode.selectionEnd;
-        let autocompleteText = document.getElementById("natsumi-glimpse-launcher-input-autocomplete")
+        let autocompleteText = document.getElementById("natsumi-glimpse-launcher-input-autocomplete");
 
         if (event.key.toLowerCase() === "enter") {
             // Open in Glimpse
@@ -1110,10 +1110,15 @@ class NatsumiGlimpseLauncher {
     }
 
     resetLauncher() {
+        let autocompleteText = document.getElementById("natsumi-glimpse-launcher-input-autocomplete");
+
+        // Reset Glimpse Launcher
         this.launcherInputNode.value = "";
         this.searchEngine = null;
         this.launcherNode.removeAttribute("search-engine-selected");
         this.launcherNode.removeAttribute("open");
+        autocompleteText.textContent = "";
+        this.launcherInputContainer.removeAttribute("natsumi-glimpse-launcher-has-autocomplete");
         this.launcherInputNode.blur();
     }
 
