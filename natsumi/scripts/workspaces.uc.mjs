@@ -217,7 +217,7 @@ class NatsumiWorkspacesWrapper {
         }
 
         // Show workspaces config modal
-        await this.modalManager.showWorkspacesModal(workspaceId);
+        await this.workspacesContext.manageWorkspaceFromDialog(workspaceId);
     }
 
     getWorkspaceIconUrl(icon) {
