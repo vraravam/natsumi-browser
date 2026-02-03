@@ -718,6 +718,7 @@ class NatsumiKBSManager {
 
     initialApplyCustomShortcuts() {
         this.getCustomizationData().then(() => {
+            this.applyInterceptions();
             this.updateAllShortcuts();
             this.applyCustomShortcuts();
         });
@@ -784,6 +785,15 @@ class NatsumiKBSManager {
                 this.updateShortcut(shortcutName, data, false);
             } catch (e) {
                 console.error(`Failed to update shortcut ${shortcutName}:`, e);
+            }
+        }
+    }
+
+    applyInterceptions() {
+        for (const nativeShortcutId in this.interceptions) {
+            let shortcutObject = this.shortcuts[nativeShortcutId];
+            if (shortcutObject) {
+                shortcutObject.interceptedBy = this.interceptions[nativeShortcutId];
             }
         }
     }
