@@ -3006,6 +3006,46 @@ function addSidebarButtonsPane() {
     prefsView.insertBefore(sidebarButtonsNode, homePane);
 }
 
+function addTabsBehaviorPane() {
+    let prefsView = document.getElementById("mainPrefPane");
+    let homePane = prefsView.querySelector("#firefoxHomeCategory");
+
+    // Create choices group
+    let tabsBehaviorGroup = new OptionsGroup(
+        "natsumiTabsBehavior",
+        "Tabs behavior",
+        "Tweak how you want tabs to behave."
+    );
+
+    tabsBehaviorGroup.registerOption("natsumiTabsSwitcherUnpinnedOnly", new CheckboxChoice(
+        "natsumi.tabs.tab-switcher-unpinned-only",
+        "natsumiTabsSwitcherUnpinnedOnly",
+        "Only use unpinned tabs for tab switching keyboard shortcuts"
+    ));
+
+    let tabsBehaviorNode = tabsBehaviorGroup.generateNode();
+
+    // Set listeners for each checkbox
+    let checkboxes = tabsBehaviorNode.querySelectorAll("checkbox");
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("command", () => {
+            let prefName = checkbox.getAttribute("preference");
+            let isChecked = checkbox.checked;
+
+            if (checkbox.getAttribute("opposite") === "true") {
+                isChecked = !isChecked;
+            }
+
+            console.log(`Checkbox ${prefName} changed to ${isChecked}`);
+
+            // noinspection JSUnresolvedReference
+            ucApi.Prefs.set(prefName, isChecked);
+        });
+    });
+
+    prefsView.insertBefore(tabsBehaviorNode, homePane);
+}
+
 function addCompactStylesPane() {
     let prefsView = document.getElementById("mainPrefPane");
     let homePane = prefsView.querySelector("#firefoxHomeCategory");
@@ -3704,6 +3744,7 @@ function addPreferencesPanes() {
     addSidebarWorkspacesPane();
     addSidebarPanelSidebarPane();
     addSidebarButtonsPane();
+    addTabsBehaviorPane();
 
     prefsView.insertBefore(compactModeNode, homePane);
     addCompactStylesPane();
