@@ -5,6 +5,10 @@
 
 const cssFix = `
   @media (-moz-platform: linux) {
+    * {
+      --natsumi-browser-border-radius: calc(env(-moz-gtk-csd-titlebar-radius, 5px) - 2px) !important;
+    }
+    
     :root[windowtype="navigator:browser"]:not([gtktiledwindow="true"]):not([sizemode="maximized"]) body {
       &::after,
       &::before {
