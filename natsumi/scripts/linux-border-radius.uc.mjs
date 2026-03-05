@@ -13,6 +13,11 @@ const cssFix = `
       &::after,
       &::before {
         border-radius: env(-moz-gtk-csd-titlebar-radius, 5px) !important;
+        
+        @media not -moz-pref("widget.gtk.rounded-bottom-corners.enabled") {
+          border-bottom-left-radius: 0 !important;
+          border-bottom-right-radius: 0 !important;
+        }
       }
     }
   }
