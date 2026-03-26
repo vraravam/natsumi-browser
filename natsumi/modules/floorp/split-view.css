@@ -41,6 +41,18 @@ SOFTWARE.
         &[data-orientation*="-row"], &[data-orientation="vertical"] {
           height: var(--natsumi-browser-separation) !important;
         }
+
+        &[data-orientation="horizontal"] {
+          &::after {
+            translate: -25% 0;
+          }
+        }
+
+        &[data-orientation="vertical"] {
+          &::after {
+            translate: 0 -25%;
+          }
+        }
       }
 
       #tabbrowser-tabbox {
