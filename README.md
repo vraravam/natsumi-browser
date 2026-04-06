@@ -1,8 +1,6 @@
-<h1 align="center">
-  <img width="480" src="./images/kawaii.webp">
-</h1>
-
 <p align="center">
+  <img width="420" src="./images/kawaii.webp">
+  <br>
   Welcome to your <strong>personal</strong> internet.
 </p>
 <h5 align="center">
