@@ -29,9 +29,44 @@ SOFTWARE.
 @-moz-document url-prefix(about:settings), url-prefix(about:preferences) {
   @media not -moz-pref("natsumi.theme.classic-preferences") {
     body {
+      --natsumi-background-color: color-mix(in srgb, var(--natsumi-primary-color) 10%, white 90%);
+      background-color: var(--natsumi-background-color) !important;
+
       @media (prefers-color-scheme: dark) {
-        background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, #0f0f0f 80%) !important;
+        --natsumi-background-color: color-mix(in srgb, var(--natsumi-colors-secondary) 20%, #0f0f0f 80%);
       }
+    }
+
+    body:not([natsumi-preferences-redesign]) {
+      .pane-container {
+        padding-top: 88px !important;
+      }
+    }
+
+    body[natsumi-preferences-redesign] {
+      --color-accent-primary: light-dark(var(--natsumi-colors-primary), var(--natsumi-primary-color));
+
+      #search-container {
+        background: transparent !important;
+        padding-top: 72px !important;
+      }
+
+      .main-content {
+        margin-top: 0 !important;
+
+        &::before {
+          content: "";
+          position: absolute;
+          width: 100%;
+          height: 72px;
+          background: linear-gradient(180deg, black 40px, transparent 72px);
+        }
+      }
+    }
+
+    .page-nav-icon {
+      -moz-context-properties: fill, fill-opacity, stroke, stroke-opacity !important;
+      stroke: currentColor;
     }
 
     .pane-container {
@@ -50,10 +85,6 @@ SOFTWARE.
       .sticky-inner-container {
         min-width: 100% !important;
       }
-    }
-
-    .pane-container {
-      padding-top: 88px !important;
     }
 
     #searchInput {
