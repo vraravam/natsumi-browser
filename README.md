@@ -1,6 +1,10 @@
-<p align="center">
+<h1 align="center">
   <img width="420" src="./images/kawaii.webp">
   <br>
+  Natsumi Browser
+</h1>
+
+<p align="center">
   Welcome to your <strong>personal</strong> internet.
 </p>
 <h5 align="center">
@@ -509,7 +513,7 @@ Thank you to:
 - [vicky5124](https://github.com/vicky5124) for the Tab Groups CSS used until v2.4.0
 - [AlexCookieDev](https://github.com/AlexCookieDev) for inspiring some of the animations I used in Natsumi
   v2 and v3
-- [InterstellarOne](https://github.com/InterstellarOne) for the Liquid Glass style Natsumi icons and the kawaii logo
+- [InterstellarOne](https://github.com/InterstellarOne) for the Liquid Glass style Natsumi icons
 
 ## Disclaimer
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
