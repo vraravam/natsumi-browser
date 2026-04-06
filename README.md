@@ -1,8 +1,6 @@
-<p align="center">
-  <img width="120" height="120" src="./images/icon-glass.webp">
-  <br>
-  <img width="360" src="./images/kawaii.webp">
-</p>
+<h1 align="center">
+  <img width="480" src="./images/kawaii.webp">
+</h1>
 
 <p align="center">
   Welcome to your <strong>personal</strong> internet.
