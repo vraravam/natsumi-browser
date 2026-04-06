@@ -47,6 +47,14 @@ import {
 } from "./custom-theme.sys.mjs";
 import { resetTabStyleIfNeeded } from "./reset-tab-style.sys.mjs";
 
+// Get redesign status
+let categoryNode = document.getElementById("categories")
+const hasRedesign = categoryNode.nodeName === "html:moz-page-nav"
+
+if (hasRedesign) {
+    document.body.setAttribute("natsumi-preferences-redesign", "");
+}
+
 function convertToXUL(node) {
     // noinspection JSUnresolvedReference
     return window.MozXULElement.parseXULToFragment(node);
@@ -2162,7 +2170,8 @@ function toggleDisabled(node, disabled) {
     }
 }
 
-function addToSidebar() {
+function addToSidebarLegacy() {
+    // FF150 and below
     let customizeNodeString = `
         <richlistitem id="natsumi-settings" class="category" value="paneNatsumiSettings" data-l10n-id="category-natsumi-settings" data-l10n-attrs="tooltiptext" align="center" tooltiptext="Customize Natsumi">
             <image class="category-icon"/>
@@ -2194,6 +2203,54 @@ function addToSidebar() {
     sidebar.insertBefore(convertToXUL(customizeNodeString), generalPane.nextSibling);
     sidebar.insertBefore(convertToXUL(shortcutsNodeString), generalPane.nextSibling.nextSibling);
     sidebar.appendChild(convertToXUL(aboutNodeString));
+
+    // noinspection JSUnresolvedReference
+    gCategoryInits.set("paneNatsumiSettings", {
+        _initted: true,
+        init: () => {}
+    });
+}
+
+function addToSidebar() {
+    if (!hasRedesign) {
+        // Use legacy method
+        return addToSidebarLegacy();
+    }
+
+    // We'll clone the general settings button here instead of making our own
+    let generalNode = document.getElementById("category-general");
+
+    // Create Customize Natsumi button
+    let customizeNode = generalNode.cloneNode(true);
+    customizeNode.id = "natsumi-settings";
+    customizeNode.setAttribute("view", "paneNatsumiSettings");
+    customizeNode.setAttribute("iconsrc", "chrome://natsumi/content/icons/lucide/paintbrush.svg");
+    customizeNode.setAttribute("data-l10n-id", "category-natsumi-settings");
+    customizeNode.innerHTML = "Customize Natsumi";
+
+    // Create Keyboard Shortcuts button
+    let shortcutsNode = generalNode.cloneNode(true);
+    shortcutsNode.id = "natsumi-shortcuts";
+    shortcutsNode.setAttribute("view", "paneNatsumiShortcuts");
+    shortcutsNode.setAttribute("iconsrc", "chrome://natsumi/content/icons/lucide/meta.svg");
+    shortcutsNode.setAttribute("data-l10n-id", "category-natsumi-shortcuts");
+    shortcutsNode.innerHTML = "Keyboard Shortcuts";
+
+    // Create About Natsumi button
+    let aboutNode = generalNode.cloneNode(true);
+    aboutNode.id = "natsumi-about";
+    aboutNode.setAttribute("view", "paneNatsumiAbout");
+    aboutNode.setAttribute("iconsrc", "chrome://natsumi/content/icons/lucide/info.svg");
+    aboutNode.setAttribute("data-l10n-id", "category-natsumi-about");
+    aboutNode.innerHTML = "About Natsumi";
+
+    let sidebar = document.getElementById("categories");
+    const generalPane = sidebar.querySelector("#category-general");
+
+    // Add entries to sidebar all in one go to ensure consistent ordering
+    sidebar.insertBefore(customizeNode, generalPane.nextSibling);
+    sidebar.insertBefore(shortcutsNode, generalPane.nextSibling.nextSibling);
+    sidebar.appendChild(aboutNode);
 
     // noinspection JSUnresolvedReference
     gCategoryInits.set("paneNatsumiSettings", {
